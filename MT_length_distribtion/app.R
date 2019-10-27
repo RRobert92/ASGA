@@ -68,7 +68,7 @@ server <- function(input, output) {
     # This will check if the excel file has multiple or single sheets, and will read it acordingly ----
     tryCatch(
       {
-        if(input$multi == "Yes") {
+        if(input$multi == "yes") {
           return(df <- lapply(input$Amirafile$datapath,
                               function(x) read_excel(path = input$Amirafile$datapath, sheet = x))
           )
