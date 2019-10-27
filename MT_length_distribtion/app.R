@@ -31,7 +31,11 @@ ui <- fluidPage(
       radioButtons(
         "sht",
         "Display",
-        choices = c(nodes = "Nodes", points = "Points", segments = 'Segments'),
+        choices = c(
+          Nodes = "nodes",
+          Points = "points",
+          Segments = 'segments'
+        ),
         selected = "nodes"
       ),
       
@@ -68,9 +72,24 @@ server <- function(input, output) {
     })
     
     #Display table with only few first line or, whole table ----
- head(input$sht) 
-    
-
+   if (input$disp == "head" && input$sht == "nodes"){
+    return(head(Nodes))
+   }
+    if (input$disp == "all" && input$sht == "nodes"){
+      return(Nodes)
+    }
+    if (input$disp == "head" && input$sht == "points"){
+      return(head(Points))
+    }
+    if (input$disp == "all" && input$sht == "points"){
+      return(Points)
+    }
+    if (input$disp == "head" && input$sht == "segments"){
+      return(head(Segments))
+    }
+    if (input$disp == "all" && input$sht == "segments"){
+      return(Segments)
+    }
   })
 }
 
