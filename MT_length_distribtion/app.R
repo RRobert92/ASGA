@@ -1,10 +1,10 @@
 #library for this app
 library(shiny)
 library(readxl)
-library(plyr)
-library(tibble)
-# Define UI for application that draws a histogram
-# Define UI for data upload app ----
+library(dplyr)
+
+
+## Define UI for application
 ui <- fluidPage(
   
   # App title ----
@@ -22,16 +22,6 @@ ui <- fluidPage(
                 accept = c("text/xlsx",
                            "text/comma-separated-values,text/plain",
                            ".xlsx")),
-      # Horizontal space line ----
-     tags$hr(),
-     
-     # Input: select if Excel file has multiple sheets ----
-     radioButtons("multi","Multiple excel sheets?",
-                  choices = c(Yes = "yes",
-                              No = "no"),
-                  selected = "yes"
-       
-     ),
      
      # Horizontal space line ----
      tags$hr(),
@@ -47,12 +37,7 @@ ui <- fluidPage(
     
     
     # Main panel for displaying outputs ----
-    mainPanel(
-      
-      # Output: Data file ----
-      tableOutput("contents")
-      
-    )
+    
     
   )
 )
@@ -68,29 +53,19 @@ server <- function(input, output) {
     # This will check if the excel file has multiple or single sheets, and will read it acordingly ----
     tryCatch(
       {
-        if(input$multi == "yes") {
-          return(df <- lapply(input$Amirafile$datapath,
-                              function(x) read_excel(path = input$Amirafile$datapath, sheet = x))
-          )
-        }
-        else {
-          return(df <- lapply(input$Amirafile$datapath,
-                              function(x) read_excel(path = input$Amirafile$datapath))
-            
-          )
-        }
-        
-        
-      },
+        Nodes <- read_excel(input$Amirafile$datapath, sheet = "Nodes")
+        Points <- read_excel(input$Amirafile$datapath, sheet = "Points")
+        Segments <- read_excel(input$Amirafile$datapath, sheet = "Segments")
+      }
     )
 
     #Display table with only few first line or, whole table ----
     if(input$disp == "head") {
-      return(head(df))
+      return(head(Points))
     }
     
     else {
-      return(df)
+      return(Nodes)
     }
     
   })
