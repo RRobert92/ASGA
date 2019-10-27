@@ -1,8 +1,7 @@
 #library for this app
 library(shiny)
 library(readxl)
-library(plyr)
-library(openxlsx)
+
 ## Define UI for application
 ui <- fluidPage(
   # App title ----
