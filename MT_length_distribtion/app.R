@@ -1,6 +1,7 @@
 #library for this app
 library(shiny)
 library(readxl)
+library(dplyr)
 
 ## Define UI for application
 ui <- fluidPage(
@@ -26,19 +27,6 @@ ui <- fluidPage(
       # Horizontal space line ----
       tags$hr(),
       
-      # Input: Select which sheet to display
-      radioButtons(
-        "sht",
-        "Display",
-        choices = c(
-          Nodes = "nodes",
-          Points = "points",
-          Segments = 'segments'
-        ),
-        selected = "nodes"
-      ),
-      
-      tags$hr(),
       # Input: Select number of rows to display ----
       radioButtons(
         "disp",
@@ -50,43 +38,72 @@ ui <- fluidPage(
     
     
     # Main panel for displaying outputs ----
-    mainPanel(# Output: Data file ----
-              tableOutput("contents"))
+    mainPanel(
+              
+              tabsetPanel(
+                tabPanel("Nodes",  tableOutput("data.node")),
+                tabPanel("Points", tableOutput("data.point")),
+                tabPanel("Segments", tableOutput("data.segment"))
+              )),
   )
 )
 
 ## Define server logic to read selected file ----
 server <- function(input, output) {
-  output$contents <- renderTable({
+  output$data.node <- renderTable({
     req(input$Amirafile)
     
     # this will load specific datasheet from the Amira file - file have to be converted from XML to xlsx file
     tryCatch({
-      Nodes <-
-        read_excel(input$Amirafile$datapath, sheet = "Nodes")
+      Nodes <- read_excel(input$Amirafile$datapath, sheet = "Nodes")
+    })
+    
+    #Display table with only few first line or, whole table ----
+    if (input$disp == "head") {
+      return(head(Nodes %>% select(
+        "Node ID", "X Coord", "Y Coord", "Z Coord"
+      )))
+    }
+    if (input$disp == "all") {
+      return(Nodes)
+    }
+  })
+  output$data.point <- renderTable({
+    req(input$Amirafile)
+    
+    # this will load specific datasheet from the Amira file - file have to be converted from XML to xlsx file
+    tryCatch({
       Points <-
         read_excel(input$Amirafile$datapath, sheet = "Points")
+    })
+    
+    #Display table with only few first line or, whole table ----
+    if (input$disp == "head") {
+      return(head(
+        Points %>% select("Point ID", "X Coord", "Y Coord", "Z Coord")
+      ))
+    }
+    if (input$disp == "all") {
+      return(Points)
+    }
+  })
+  output$data.segment <- renderTable({
+    req(input$Amirafile)
+    
+    # this will load specific datasheet from the Amira file - file have to be converted from XML to xlsx file
+    tryCatch({
       Segments <-
         read_excel(input$Amirafile$datapath, sheet = "Segments")
     })
     
     #Display table with only few first line or, whole table ----
-   if (input$disp == "head" && input$sht == "nodes"){
-    return(head(Nodes))
-   }
-    if (input$disp == "all" && input$sht == "nodes"){
-      return(Nodes)
+    
+    if (input$disp == "head") {
+      return(head(
+        Segments %>% select("Segment ID", "X Coord", "Y Coord", "Z Coord")
+      ))
     }
-    if (input$disp == "head" && input$sht == "points"){
-      return(head(Points))
-    }
-    if (input$disp == "all" && input$sht == "points"){
-      return(Points)
-    }
-    if (input$disp == "head" && input$sht == "segments"){
-      return(head(Segments))
-    }
-    if (input$disp == "all" && input$sht == "segments"){
+    if (input$disp == "all") {
       return(Segments)
     }
   })
