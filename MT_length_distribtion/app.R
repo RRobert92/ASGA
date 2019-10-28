@@ -9,6 +9,7 @@ ui <- fluidPage(
   
   # App title ----
   navbarPage("MTs Length distribution", theme = shinytheme("slate"),
+             tabPanel("Info", "This panel is intentionally left blank"),
              tabPanel("Upload", 
                       sidebarLayout(
                         
