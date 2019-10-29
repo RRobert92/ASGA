@@ -9,7 +9,13 @@ ui <- fluidPage(
   
   # App title ----
   navbarPage("MTs Length distribution", theme = shinytheme("slate"),
-             tabPanel("Info", "Info and instruction about the page"),
+             tabPanel("Info", 
+                        navlistPanel(
+                          tabPanel("About", includeHTML("about.html")),
+                          tabPanel("User Manual", includeHTML("manual.html")),
+                          tabPanel("Resource", includeHTML("rescource.html"))
+                        )),
+                    
              tabPanel("Upload", 
                       sidebarLayout(
                         
