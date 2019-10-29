@@ -13,7 +13,7 @@ ui <- fluidPage(
                         navlistPanel(
                           tabPanel("About", includeHTML("about.html")),
                           tabPanel("User Manual", includeHTML("manual.html")),
-                          tabPanel("Resource", includeHTML("rescource.html"))
+                          tabPanel("Resource", includeHTML("resource.html"))
                         )),
                     
              tabPanel("Upload", 
