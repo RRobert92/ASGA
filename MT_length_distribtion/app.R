@@ -3,6 +3,7 @@ library(shiny)
 library(shinythemes)
 library(readxl)
 library(dplyr)
+library(shinydashboard)
 
 ## Define UI for application
 ui <- fluidPage(
@@ -41,10 +42,26 @@ ui <- fluidPage(
                         )),
                       )),
              
-             tabPanel("Data", "Work in progress"),
+             tabPanel("Data",
+                      sidebarPanel(
+                       
+                                 selectInput("analysis", h3("Select Analysis type"), 
+                                             choices = list("Normal Distribution" = 1, "Histogram Distribtuion" = 2,
+                                                            "LOgaritmic Disribtuin" = 3), selected = 1),
+                                 conditionalPanel(
+                                   condition = "input.analysis == 2",
+                                               sliderInput("bin", h3("Bins"), min = 0, max = 100, value = 50)),
+                                 ),
+                                 
+                      
+                      mainPanel(
+                        plotOutput(outputId = "distPlot"),
+                        tabPanel("Analysed data", tableOutput("data.histogram")),
+                      )
+                    ),
+                      
              tabPanel("Export", "Work in progress")
-  )
-)
+  ))
 
 ## Define server logic to read selected file ----
 server <- function(input, output) {
@@ -100,7 +117,25 @@ server <- function(input, output) {
       return(Segments)
     }
   })
-}
+  
+  
 
+output$data.histogram <- renderTable({
+  req(input$Amirafile)
+  
+  tryCatch({
+    Segments <- read_excel(input$Amirafile$datapath, sheet = "Segments")
+  })
+  
+  #Display table with only few first line for Nodes sheet
+  if (input$disp == "head") {
+    return(head(Segments %>% select("Segment ID", "length", "Node ID #1", "Node ID #2")))
+  }
+  
+  else{
+    return(Segments)
+  }
+})
+}
 # Run the application
 shinyApp(ui = ui, server = server)
