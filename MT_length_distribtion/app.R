@@ -2,9 +2,11 @@
 library(shiny)
 library(shinythemes)
 library(readxl)
-library(dplyr)
-library(shinydashboard)
+library(tidyverse)
+##library(shinydashboard)
 
+## Set file size lmit to 500mb 
+options(shiny.maxRequestSize = 500*1024^2)
 ## Define UI for application
 ui <- fluidPage(
   
@@ -46,17 +48,20 @@ ui <- fluidPage(
                       sidebarPanel(
                        
                                  selectInput("analysis", h3("Select Analysis type"), 
-                                             choices = list("Normal Distribution" = 1, "Histogram Distribtuion" = 2,
-                                                            "LOgaritmic Disribtuin" = 3), selected = 1),
+                                             choices = list("Histogram Distribtuion" = 1,
+                                                            "LOgaritmic Disribtuin" = 2), selected = 1),
                                  conditionalPanel(
-                                   condition = "input.analysis == 2",
-                                               sliderInput("bin", h3("Bins"), min = 0, max = 100, value = 50)),
+                                   condition = "input.analysis == 1",
+                                               numericInput("bin.min", "Bin start from (um):", value = 0),
+                                               numericInput("bin.max", "Bin stop at (um):", value = 10),
+                                               numericInput("bin.step", "Bin every (um);", value = 0.5)
+                                 )
                                  ),
                                  
                       
                       mainPanel(
-                        plotOutput(outputId = "distPlot"),
-                        tabPanel("Analysed data", tableOutput("data.histogram")),
+                        
+                        plotOutput(outputId = "histo.plot")
                       )
                     ),
                       
@@ -120,20 +125,26 @@ server <- function(input, output) {
   
   
 
-output$data.histogram <- renderTable({
+output$histo.plot <- renderPlot({
   req(input$Amirafile)
-  
+  req(input$analysis)
+  req(input$bin.min)
+  req(input$bin.max)
+  req(input$bin.step)
   tryCatch({
     Segments <- read_excel(input$Amirafile$datapath, sheet = "Segments")
   })
-  
-  #Display table with only few first line for Nodes sheet
-  if (input$disp == "head") {
-    return(head(Segments %>% select("Segment ID", "length", "Node ID #1", "Node ID #2")))
+  kmts <- Segments %>% filter_at(vars(starts_with("POle")), any_vars(.>= 1))
+  non_kmts <- setdiff(Segments, kmts)
+  if(input$analysis == 1){
+  xkmts <- kmts$length/10000
+  xnon_kmts <- non_kmts$length/10000
+  bins <- seq(min(input$bin.min), max(input$bin.max), length.out = (input$bin.max/input$bin.step) + 1)
+  hist(xkmts, breaks = bins, xlab = "Length (um)")
+
   }
-  
-  else{
-    return(Segments)
+  if(input$analysis == 2){
+    
   }
 })
 }
