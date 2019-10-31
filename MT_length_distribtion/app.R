@@ -61,7 +61,8 @@ ui <- fluidPage(
                       
                       mainPanel(
                         
-                        plotOutput(outputId = "histo.plot")
+                        plotOutput(outputId = "length.plot_kmts"),
+                        plotOutput(outputId = "length.plot_nonkmts")
                       )
                     ),
                       
@@ -125,7 +126,7 @@ server <- function(input, output) {
   
   
 
-output$histo.plot <- renderPlot({
+output$length.plot_kmts <- renderPlot({
   req(input$Amirafile)
   req(input$analysis)
   req(input$bin.min)
@@ -140,8 +141,8 @@ output$histo.plot <- renderPlot({
   xkmts <- kmts$length/10000
   xnon_kmts <- non_kmts$length/10000
   bins <- seq(min(input$bin.min), max(input$bin.max), length.out = (input$bin.max/input$bin.step) + 1)
-  hist(xkmts, breaks = bins, xlab = "Length (um)")
-
+  hist(xnon_kmts, breaks = bins, col = "yellow", xlab = "Length (um)")
+  hist(xkmts, breaks = bins, col = "red",add=T)
   }
   if(input$analysis == 2){
     
