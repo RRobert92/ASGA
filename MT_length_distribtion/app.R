@@ -46,7 +46,7 @@ ui <- dashboardPage(
       
       tabItem(tabName = "menu_analysis",
               fluidRow(
-                box(title = "Analysis Parameaters", width = 2,
+                box(title = "Analysis Parameaters", width = 2, style = "height:350px;",
                     selectInput("analysis", h3("Select Analysis type"), 
                                 choices = list("Histogram Distribtuion" = 1,
                                                "Logaritmic Disribtuin" = 2), selected = 1),
@@ -56,8 +56,13 @@ ui <- dashboardPage(
                       numericInput("bin.max", "Bin stop at (um):", value = 10),
                       numericInput("bin.step", "Bin every (um);", value = 0.5)),
                 ),
-                
-                box(title = "Graphs", width = 10,
+                box(title = "Graph Type", width = 2,style = "height:350px;"),
+                box(title = "Graph Parameaters", width = 2, style = "height:350px;"),
+                valueBoxOutput("avg.length.kmts", width = "2.5"),
+                valueBoxOutput("avg.length.non.kmts", width = 3)
+              ),
+              fluidRow(
+                box(title = "Graphs", width = 12,
                     plotOutput(outputId = "length.plot_kmts"))
               )
       ),
@@ -78,7 +83,8 @@ server <- function(input, output) {
     
     tryCatch({
       Nodes <- read_excel(input$amirafile$datapath, sheet = "Nodes")
-    })
+    }) 
+    
     if (input$disp == "head") {
       return(head(Nodes %>% select("Node ID", "X Coord", "Y Coord", "Z Coord")))
     }
@@ -93,6 +99,7 @@ server <- function(input, output) {
     tryCatch({
       Points <- read_excel(input$amirafile$datapath, sheet = "Points")
     })
+    
     if (input$disp == "head") {
       return(head(Points %>% select("Point ID", "X Coord", "Y Coord", "Z Coord")))
     }
@@ -107,6 +114,7 @@ server <- function(input, output) {
     tryCatch({
       Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
     })
+    
     if (input$disp == "head") {
       return(head(Segments %>% select("Segment ID", "length", "Node ID #1", "Node ID #2")))
     }
@@ -125,7 +133,8 @@ server <- function(input, output) {
     tryCatch({
       Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
     })
-    kmts <- Segments %>% filter_at(vars(starts_with("POle")), any_vars(.>= 1))
+    
+    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), any_vars(.>= 1))
     non_kmts <- setdiff(Segments, kmts)
     if(input$analysis == 1){
       xkmts <- kmts$length/10000
@@ -137,6 +146,37 @@ server <- function(input, output) {
     if(input$analysis == 2){
       
     }
+  })
+  
+  output$avg.length.kmts <- renderValueBox({
+    req(input$amirafile)
+    
+    tryCatch({
+      Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
+    })
+    
+    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), any_vars(.>= 1))
+    length.kmts <- round(mean(kmts$length/10000), 2)
+    sd.kmts <- round(sd(kmts$length/10000),2)
+    
+    valueBox(
+      paste(length.kmts, "±", sd.kmts), "Avg. KMTs length", icon = icon("calculator"), color = "red")
+  })
+  
+  output$avg.length.non.kmts <- renderValueBox({
+    req(input$amirafile)
+    
+    tryCatch({
+      Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
+    })
+    
+    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), any_vars(.>= 1))
+    non_kmts <- setdiff(Segments, kmts)
+    length.non_kmts <- round(mean(non_kmts$length/10000), 2)
+    sd.non.kmts <- round(sd(non_kmts$length/10000),2)
+    
+    valueBox(
+      paste(length.non_kmts, "±", sd.non.kmts), "Avg. Non-KMTs length", icon = icon("calculator"), color = "yellow")
   })
 }
 
