@@ -58,7 +58,7 @@ ui <- dashboardPage(
                 ),
                 box(title = "Graph Type", width = 2,style = "height:350px;"),
                 box(title = "Graph Parameaters", width = 2, style = "height:350px;"),
-                valueBoxOutput("avg.length.kmts", width = "2.5"),
+                valueBoxOutput("avg.length.kmts", width = 3),
                 valueBoxOutput("avg.length.non.kmts", width = 3)
               ),
               fluidRow(
