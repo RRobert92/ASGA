@@ -70,7 +70,7 @@ ui <- dashboardPage(
               
       ),
       tabItem(tabName = "menu_resource",
-              includeHTML("manual.html")
+              includeHTML("resource.html")
       )
     )
   )
