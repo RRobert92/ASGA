@@ -1,4 +1,4 @@
-library(shinydashboard)
+library(shinydashboardPlus)
 library(shiny)
 library(readxl)
 library(tidyverse)
@@ -6,9 +6,9 @@ library(tidyverse)
 ##Maximum size of memory used by R, set to 500mb
 options(shiny.maxRequestSize = 500*1024^2)
 
-ui <- dashboardPage(
-  dashboardHeader(title = "Length Distribtion"),
-  dashboardSidebar(
+ui <- dashboardPagePlus(
+  header = dashboardHeaderPlus(title = "Length Distribtion"),
+  sidebar = dashboardSidebar(
     sidebarMenu(
       menuItem("About", tabName = "menu_about", icon = icon("info-circle")),
       menuItem("Instruction", tabName = "menu_instruction", icon = icon("chalkboard-teacher")),
@@ -18,7 +18,7 @@ ui <- dashboardPage(
       menuItem("Resource", tabName = "menu_resource", icon = icon("github"))
     )
   ),
-  dashboardBody(
+  body = dashboardBody(
     tabItems(
       
       tabItem(tabName = "menu_about",
@@ -31,38 +31,53 @@ ui <- dashboardPage(
       
       tabItem(tabName = "menu_upload",
               fluidRow(
-                box(title = "Upload file", width = 3,
-                    fileInput("amirafile", "Choose .xlsx File", multiple = FALSE,
-                              accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")),
+                boxPlus(title = "Upload file", width = 3, status = "warning", closable = FALSE,
+                    p(fileInput("amirafile", "Choose .xlsx File", multiple = FALSE,
+                              accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")))
                 ),
-                box(title = "Lodate data:", width = 9,
-                    radioButtons("disp", "Display", choices = c(Head = "head", All = "all"), selected = "head"),
+                boxPlus(title = "Lodate data:", width = 9, status = "primary", closable = FALSE,
+                    p(radioButtons("disp", "Display", choices = c(Head = "head", All = "all"), selected = "head"),
                     tabsetPanel(
                       tabPanel("Nodes", tableOutput("data.node")),
                       tabPanel("Points", tableOutput("data.point")),
                       tabPanel("Segments", tableOutput("data.segment"))
-                    )))
+                    ))))
       ),
       
       tabItem(tabName = "menu_analysis",
               fluidRow(
-                box(title = "Analysis Parameaters", width = 2, style = "height:350px;",
+                boxPlus(title = "Analysis Parameaters", width = 2, style = "height:350px;", status = "warning", closable = FALSE,
                     selectInput("analysis", h3("Select Analysis type"), 
-                                choices = list("Histogram Distribtuion" = 1,
-                                               "Logaritmic Disribtuin" = 2), selected = 1),
+                                choices = list("Histogram Distribution" = 1,
+                                               "Density Distribtuion" = 2,
+                                               "Logaritmic Disribtuin" = 3), selected = 1),
                     conditionalPanel(
                       condition = "input.analysis == 1",
                       numericInput("bin.min", "Bin start from (um):", value = 0),
                       numericInput("bin.max", "Bin stop at (um):", value = 10),
-                      numericInput("bin.step", "Bin every (um);", value = 0.5)),
+                      numericInput("bin.step", "Bin every (um);", value = 0.5))
                 ),
-                box(title = "Graph Type", width = 2,style = "height:350px;"),
-                box(title = "Graph Parameaters", width = 2, style = "height:350px;"),
+                boxPlus(title = "Graph Type", width = 2,style = "height:350px;", status = "warning", collapsible = FALSE, closable = FALSE,
+                      actionButton("graph.bar", "Bar Graph"),
+                      br(),
+                      br(),
+                      actionButton("graph.line", "Line Graph"),
+                      br(),
+                      br(),
+                      actionButton("graph.area", "Area Graph")
+                ),
+                boxPlus(title = "Graph Parameaters", width = 2, style = "height:350px;", status = "warning", closable = FALSE,
+                      checkboxGroupInput("display.on.plot", "Select what to display:", choices = list(
+                        "KMTs" = 1, "Non_KMTs" = 2, selected = 1)
+                      ),
+                      textInput("x.label", "Label for the X axis", value = "MT Length (µm)"),
+                      textInput("y.label", "Label for the Y axis", value = "No. of MTs")
+                ),
                 valueBoxOutput("avg.length.kmts", width = 3),
                 valueBoxOutput("avg.length.non.kmts", width = 3)
               ),
               fluidRow(
-                box(title = "Graphs", width = 12,
+                boxPlus(title = "Graphs", width = 12, status = "primary", closable = FALSE,
                     plotOutput(outputId = "length.plot_kmts"))
               )
       ),
@@ -70,7 +85,6 @@ ui <- dashboardPage(
               
       ),
       tabItem(tabName = "menu_resource",
-              includeHTML("resource.html")
       )
     )
   )
