@@ -1,4 +1,5 @@
 library(shinydashboardPlus)
+library(shinydashboard)
 library(shiny)
 library(readxl)
 library(tidyverse)
@@ -7,85 +8,171 @@ library(tidyverse)
 options(shiny.maxRequestSize = 500*1024^2)
 
 ui <- dashboardPagePlus(
-  header = dashboardHeaderPlus(title = "Length Distribtion"),
-  sidebar = dashboardSidebar(
+  
+  dashboardHeaderPlus(title = "Length Distribtion"),
+  
+  dashboardSidebar(
     sidebarMenu(
-      menuItem("About", tabName = "menu_about", icon = icon("info-circle")),
-      menuItem("Instruction", tabName = "menu_instruction", icon = icon("chalkboard-teacher")),
-      menuItem("Upload", tabName = "menu_upload", icon = icon("upload")),
-      menuItem("Analysis", tabName = "menu_analysis", icon = icon("diagnoses")),
-      menuItem("Export", tabName = "menu_export", icon = icon("download")),
-      menuItem("Resource", tabName = "menu_resource", icon = icon("github"))
+      menuItem("About", 
+               tabName = "menu_about", 
+               icon = icon("info-circle")
+      ),
+      menuItem("Instruction", 
+               tabName = "menu_instruction", 
+               icon = icon("chalkboard-teacher")
+      ),
+      menuItem("Upload", 
+               tabName = "menu_upload", 
+               icon = icon("upload")
+      ),
+      menuItem("Analysis", 
+               tabName = "menu_analysis", 
+               icon = icon("diagnoses")
+      ),
+      menuItem("Export", 
+               tabName = "menu_export", 
+               icon = icon("download")
+      )
     )
   ),
-  body = dashboardBody(
+  
+  dashboardBody(
     tabItems(
-      
       tabItem(tabName = "menu_about",
               includeHTML("about.html")
       ),
-      
       tabItem(tabName = "menu_instruction",
               includeHTML("manual.html")
       ),
-      
       tabItem(tabName = "menu_upload",
               fluidRow(
-                boxPlus(title = "Upload file", width = 3, status = "warning", closable = FALSE,
-                    p(fileInput("amirafile", "Choose .xlsx File", multiple = FALSE,
-                              accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")))
+                boxPlus(title = "Upload file", 
+                        width = 3,
+                        status = "warning", 
+                        closable = FALSE,
+                        p(fileInput("amirafile", "Choose .xlsx File", multiple = FALSE,
+                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                        )
+                        )
                 ),
-                boxPlus(title = "Lodate data:", width = 9, status = "primary", closable = FALSE,
-                    p(radioButtons("disp", "Display", choices = c(Head = "head", All = "all"), selected = "head"),
-                    tabsetPanel(
-                      tabPanel("Nodes", tableOutput("data.node")),
-                      tabPanel("Points", tableOutput("data.point")),
-                      tabPanel("Segments", tableOutput("data.segment"))
-                    ))))
+                boxPlus(title = "Lodate data:", 
+                        width = 9,
+                        status = "primary", 
+                        closable = FALSE,
+                        p(radioButtons("disp",
+                                       "Display", 
+                                       choices = c(Head = "head", 
+                                                   All = "all"), 
+                                       selected = "head"),
+                          tabsetPanel(
+                            tabPanel("Nodes", 
+                                     tableOutput("data.node")
+                            ),
+                            tabPanel("Points", 
+                                     tableOutput("data.point")
+                            ),
+                            tabPanel("Segments", 
+                                     tableOutput("data.segment")
+                            )
+                          )
+                        )
+                )
+              )
       ),
       
       tabItem(tabName = "menu_analysis",
               fluidRow(
-                boxPlus(title = "Analysis Parameaters", width = 2, style = "height:350px;", status = "warning", closable = FALSE,
-                    selectInput("analysis", h3("Select Analysis type"), 
-                                choices = list("Histogram Distribution" = 1,
-                                               "Density Distribtuion" = 2,
-                                               "Logaritmic Disribtuin" = 3), selected = 1),
-                    conditionalPanel(
-                      condition = "input.analysis == 1",
-                      numericInput("bin.min", "Bin start from (um):", value = 0),
-                      numericInput("bin.max", "Bin stop at (um):", value = 10),
-                      numericInput("bin.step", "Bin every (um);", value = 0.5))
+                column(width = 2,
+                       box(title = "Analysis Parameaters", 
+                           width = NULL,
+                           style = "height:320px;", 
+                           status = "warning", 
+                           closable = FALSE,
+                           selectInput("analysis", 
+                                       "Select Analysis type", 
+                                       choices = list("Histogram Distribution" = 1,
+                                                      "Density Distribtuion" = 2,
+                                                      "Logaritmic Disribtuin" = 3), 
+                                       selected = 1),
+                           conditionalPanel(
+                             condition = "input.analysis == 1",
+                             numericInput("bin.min", "Bin start from (um):",
+                                          value = 0),
+                             numericInput("bin.max", "Bin stop at (um):", 
+                                          value = 10),
+                             numericInput("bin.step", "Bin every (um);", 
+                                          value = 0.5)
+                           )
+                       ),
+                       box(title = "Parameaters",
+                           width = NULL,
+                           style = "height:380px;",
+                           status = "warning",
+                           collapsible = FALSE,
+                           closable = FALSE,
+                           accordion(
+                             accordionItem(
+                               id = 1,
+                               title = "Graph Type",
+                               color = "navy",
+                               selectInput("select.graph",
+                                           "",
+                                           choices = list("Bar Graph" = 1,
+                                                          "Line Graph" = 2, 
+                                                          "Area Graph" = 3), 
+                                           selected = 1)
+                             ),
+                             accordionItem(
+                               id = 2, 
+                               title = "what to plot?", 
+                               color = "navy", 
+                               checkboxGroupInput("display.on.plot", 
+                                                  "Select what to display:", 
+                                                  choices = list("KMTs" = 1, 
+                                                                 "Non_KMTs" = 2), 
+                                                  selected = 1)
+                             ),
+                             accordionItem(id = 3, 
+                                           title = "Axis Labes", 
+                                           color = "navy",
+                                           textInput("x.label", 
+                                                     "Label for the X axis", 
+                                                     value = "MT Length (µm)"),
+                                           textInput("y.label", 
+                                                     "Label for the Y axis", 
+                                                     value = "No. of MTs")
+                             ),
+                             accordionItem(id = 4,
+                                           title = "Colors",
+                                           color = "navy",
+                                           textInput("color.kmts",
+                                                     "Color for the KMTs",
+                                                     value = "red"),
+                                           textInput("color.non.kmts",
+                                                     "Color for Non_KMTs",
+                                                     value = "yellow")
+                             )
+                           )
+                       ),
                 ),
-                boxPlus(title = "Graph Type", width = 2,style = "height:350px;", status = "warning", collapsible = FALSE, closable = FALSE,
-                      actionButton("graph.bar", "Bar Graph"),
-                      br(),
-                      br(),
-                      actionButton("graph.line", "Line Graph"),
-                      br(),
-                      br(),
-                      actionButton("graph.area", "Area Graph")
+                column(width = 7,
+                       boxPlus(title = "Graphs", 
+                               width = NULL, 
+                               style = "height:762px;", 
+                               status = "primary", 
+                               closable = FALSE,
+                               plotOutput(outputId = "length.plot_kmts")
+                       )
                 ),
-                boxPlus(title = "Graph Parameaters", width = 2, style = "height:350px;", status = "warning", closable = FALSE,
-                      checkboxGroupInput("display.on.plot", "Select what to display:", choices = list(
-                        "KMTs" = 1, "Non_KMTs" = 2, selected = 1)
-                      ),
-                      textInput("x.label", "Label for the X axis", value = "MT Length (µm)"),
-                      textInput("y.label", "Label for the Y axis", value = "No. of MTs")
-                ),
-                valueBoxOutput("avg.length.kmts", width = 3),
-                valueBoxOutput("avg.length.non.kmts", width = 3)
-              ),
-              fluidRow(
-                boxPlus(title = "Graphs", width = 12, status = "primary", closable = FALSE,
-                    plotOutput(outputId = "length.plot_kmts"))
+                column(width = 3,
+                       valueBoxOutput("avg.length.kmts",
+                                      width = NULL),
+                       valueBoxOutput("avg.length.non.kmts",
+                                      width = NULL)  
+                )
               )
       ),
-      tabItem(tabName = "menu_export",
-              
-      ),
-      tabItem(tabName = "menu_resource",
-      )
+      tabItem(tabName = "menu_export")
     )
   )
 )
@@ -96,11 +183,17 @@ server <- function(input, output) {
     req(input$amirafile)
     
     tryCatch({
-      Nodes <- read_excel(input$amirafile$datapath, sheet = "Nodes")
+      Nodes <- read_excel(input$amirafile$datapath, 
+                          sheet = "Nodes")
     }) 
     
     if (input$disp == "head") {
-      return(head(Nodes %>% select("Node ID", "X Coord", "Y Coord", "Z Coord")))
+      return(head(Nodes %>% select("Node ID", 
+                                   "X Coord", 
+                                   "Y Coord", 
+                                   "Z Coord")
+                  )
+             )
     }
     else{
       return(Nodes)
@@ -111,11 +204,17 @@ server <- function(input, output) {
     req(input$amirafile)
     
     tryCatch({
-      Points <- read_excel(input$amirafile$datapath, sheet = "Points")
+      Points <- read_excel(input$amirafile$datapath, 
+                           sheet = "Points")
     })
     
     if (input$disp == "head") {
-      return(head(Points %>% select("Point ID", "X Coord", "Y Coord", "Z Coord")))
+      return(head(Points %>% select("Point ID", 
+                                    "X Coord", 
+                                    "Y Coord", 
+                                    "Z Coord")
+                  )
+             )
     }
     else{
       return(Points)
@@ -126,11 +225,15 @@ server <- function(input, output) {
     req(input$amirafile)
     
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
+      Segments <- read_excel(input$amirafile$datapath, 
+                             sheet = "Segments")
     })
     
     if (input$disp == "head") {
-      return(head(Segments %>% select("Segment ID", "length", "Node ID #1", "Node ID #2")))
+      return(head(Segments %>% select("Segment ID", 
+                                      "length", 
+                                      "Node ID #1", 
+                                      "Node ID #2")))
     }
     else{
       return(Segments)
@@ -145,20 +248,33 @@ server <- function(input, output) {
     req(input$bin.step)
     
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
+      Segments <- read_excel(input$amirafile$datapath, 
+                             sheet = "Segments")
     })
     
-    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), any_vars(.>= 1))
+    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
+                                   any_vars(.>= 1))
     non_kmts <- setdiff(Segments, kmts)
     if(input$analysis == 1){
       xkmts <- kmts$length/10000
       xnon_kmts <- non_kmts$length/10000
-      bins <- seq(min(input$bin.min), max(input$bin.max), length.out = (input$bin.max/input$bin.step) + 1)
-      hist(xnon_kmts, breaks = bins, col = "yellow", xlab = "Length (um)", ylab = "No. of MTs")
-      hist(xkmts, breaks = bins, col = "red",add=T)
+      bins <- seq(min(input$bin.min), 
+                  max(input$bin.max), 
+                  length.out = (input$bin.max/input$bin.step) + 1)
+      hist(xnon_kmts, breaks = bins, 
+           col = "yellow", 
+           xlab = "Length (um)", 
+           ylab = "No. of MTs")
+      hist(xkmts, 
+           breaks = bins, 
+           col = "red",
+           add = T)
     }
     if(input$analysis == 2){
-      
+      ## density
+    }
+    if (input$analysis == 3){
+      ##logaritmic
     }
   })
   
@@ -166,31 +282,45 @@ server <- function(input, output) {
     req(input$amirafile)
     
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
+      Segments <- read_excel(input$amirafile$datapath, 
+                             sheet = "Segments")
     })
     
-    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), any_vars(.>= 1))
-    length.kmts <- round(mean(kmts$length/10000), 2)
-    sd.kmts <- round(sd(kmts$length/10000),2)
+    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
+                                   any_vars(.>= 1))
+    length.kmts <- round(mean(kmts$length/10000), 
+                         2)
+    sd.kmts <- round(sd(kmts$length/10000),
+                     2)
     
     valueBox(
-      paste(length.kmts, "±", sd.kmts), "Avg. KMTs length", icon = icon("calculator"), color = "red")
+      paste(length.kmts, "±", sd.kmts), 
+      "Avg. KMTs length", 
+      icon = icon("calculator"), 
+      color = "red")
   })
   
   output$avg.length.non.kmts <- renderValueBox({
     req(input$amirafile)
     
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, sheet = "Segments")
+      Segments <- read_excel(input$amirafile$datapath, 
+                             sheet = "Segments")
     })
     
-    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), any_vars(.>= 1))
+    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
+                                   any_vars(.>= 1))
     non_kmts <- setdiff(Segments, kmts)
-    length.non_kmts <- round(mean(non_kmts$length/10000), 2)
-    sd.non.kmts <- round(sd(non_kmts$length/10000),2)
+    length.non_kmts <- round(mean(non_kmts$length/10000), 
+                             2)
+    sd.non.kmts <- round(sd(non_kmts$length/10000),
+                         2)
     
     valueBox(
-      paste(length.non_kmts, "±", sd.non.kmts), "Avg. Non-KMTs length", icon = icon("calculator"), color = "yellow")
+      paste(length.non_kmts, "±", sd.non.kmts), 
+      "Avg. Non-KMTs length", 
+      icon = icon("calculator"), 
+      color = "yellow")
   })
 }
 
