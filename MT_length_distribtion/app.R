@@ -112,6 +112,17 @@ ui <- dashboardPagePlus(
                            closable = FALSE,
                            accordion(
                              accordionItem(
+                               id = 2, 
+                               title = "what to plot?", 
+                               color = "warning", 
+                               selectInput("display.on.plot", 
+                                           "Select what to display",
+                                           choices = c("All" = 1, 
+                                                       "KMTs" = 2,
+                                                       "Non_KMTs" = 3), 
+                                           selected = 1)
+                             ),
+                             accordionItem(
                                id = 1,
                                title = "Graph Type",
                                color = "warning",
@@ -121,16 +132,6 @@ ui <- dashboardPagePlus(
                                                           "Line Graph" = 2, 
                                                           "Area Graph" = 3), 
                                            selected = 1)
-                             ),
-                             accordionItem(
-                               id = 2, 
-                               title = "what to plot?", 
-                               color = "warning", 
-                               checkboxGroupInput("display.on.plot", 
-                                                  "Select what to display:", 
-                                                  choices = list("KMTs" = 1, 
-                                                                 "Non_KMTs" = 2), 
-                                                  selected = 1)
                              ),
                              accordionItem(id = 3, 
                                            title = "Axis Labes", 
@@ -246,7 +247,8 @@ server <- function(input, output) {
     req(input$bin.min)
     req(input$bin.max)
     req(input$bin.step)
-    
+    req(input$color.kmts)
+    req(input$color.non.kmts)
     tryCatch({
       Segments <- read_excel(input$amirafile$datapath, 
                              sheet = "Segments")
@@ -255,20 +257,38 @@ server <- function(input, output) {
     kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
                                    any_vars(.>= 1))
     non_kmts <- setdiff(Segments, kmts)
+    xkmts <- kmts$length/10000
+    xnon_kmts <- non_kmts$length/10000
+    ## Histogram
     if(input$analysis == 1){
-      xkmts <- kmts$length/10000
-      xnon_kmts <- non_kmts$length/10000
       bins <- seq(min(input$bin.min), 
                   max(input$bin.max), 
                   length.out = (input$bin.max/input$bin.step) + 1)
-      hist(xnon_kmts, breaks = bins, 
-           col = "yellow", 
+      if (input$display.on.plot == 1){
+      hist(xnon_kmts, 
+           breaks = bins, 
+           col = input$color.non.kmts, 
            xlab = "Length (um)", 
            ylab = "No. of MTs")
       hist(xkmts, 
            breaks = bins, 
-           col = "red",
+           col = input$color.kmts,
            add = T)
+      }
+      if (input$display.on.plot == 2){
+        hist(xkmts,
+             breaks = bins,
+             col = input$color.kmts,
+             xlab = "Length (um)", 
+             ylab = "No. of MTs")
+      }
+      if (input$display.on.plot == 3){
+        hist(xnon_kmts,
+             breaks = bins,
+             col = input$color.non.kmts,
+             xlab = "Length (um)", 
+             ylab = "No. of MTs")
+      }
     }
     if(input$analysis == 2){
       ## density
@@ -280,6 +300,7 @@ server <- function(input, output) {
   
   output$avg.length.kmts <- renderValueBox({
     req(input$amirafile)
+    req(input$color.kmts)
     
     tryCatch({
       Segments <- read_excel(input$amirafile$datapath, 
@@ -297,11 +318,12 @@ server <- function(input, output) {
       paste(length.kmts, "±", sd.kmts), 
       "Avg. KMTs length", 
       icon = icon("calculator"), 
-      color = "red")
+      color = input$color.kmts)
   })
   
   output$avg.length.non.kmts <- renderValueBox({
     req(input$amirafile)
+    req(input$color.non.kmts)
     
     tryCatch({
       Segments <- read_excel(input$amirafile$datapath, 
@@ -320,7 +342,7 @@ server <- function(input, output) {
       paste(length.non_kmts, "±", sd.non.kmts), 
       "Avg. Non-KMTs length", 
       icon = icon("calculator"), 
-      color = "yellow")
+      color = input$color.non.kmts)
   })
 }
 
