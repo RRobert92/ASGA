@@ -122,17 +122,7 @@ ui <- dashboardPagePlus(
                                                        "Non_KMTs" = 3), 
                                            selected = 1)
                              ),
-                             accordionItem(
-                               id = 1,
-                               title = "Graph Type",
-                               color = "warning",
-                               selectInput("select.graph",
-                                           "",
-                                           choices = list("Bar Graph" = 1,
-                                                          "Line Graph" = 2, 
-                                                          "Area Graph" = 3), 
-                                           selected = 1)
-                             ),
+
                              accordionItem(id = 3, 
                                            title = "Axis Labes", 
                                            color = "warning",
@@ -173,7 +163,22 @@ ui <- dashboardPagePlus(
                 )
               )
       ),
-      tabItem(tabName = "menu_export")
+      tabItem(tabName = "menu_export",
+      fluidPage(
+        column(width = 2,
+               boxPlus(title = "Exprt analysed data",
+                       width = NULL,
+                       style = "height:350px;",
+                       status = "idle",
+                       closable = FALSE,
+                 downloadButton("downloadData", 
+                                "Download")
+               )
+               
+          
+        )
+      )
+      )
     )
   )
 )
@@ -257,41 +262,86 @@ server <- function(input, output) {
     kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
                                    any_vars(.>= 1))
     non_kmts <- setdiff(Segments, kmts)
-    xkmts <- kmts$length/10000
-    xnon_kmts <- non_kmts$length/10000
+    xkmts <- data.frame(MTs = kmts$length/10000)
+    xnon_kmts <- data.frame(MTs = non_kmts$length/10000)
     ## Histogram
     if(input$analysis == 1){
-      bins <- seq(min(input$bin.min), 
-                  max(input$bin.max), 
-                  length.out = (input$bin.max/input$bin.step) + 1)
+      bins <- (input$bin.max/input$bin.step) + 1
+      
       if (input$display.on.plot == 1){
-      hist(xnon_kmts, 
-           breaks = bins, 
-           col = input$color.non.kmts, 
-           xlab = "Length (um)", 
-           ylab = "No. of MTs")
-      hist(xkmts, 
-           breaks = bins, 
-           col = input$color.kmts,
-           add = T)
+      p <-  ggplot() + geom_histogram(data = xnon_kmts, 
+                                  aes(x = MTs), 
+                                  bins = bins, 
+                                  position = "identity", 
+                                  alpha = 1, 
+                                  fill = input$color.non.kmts) +
+          geom_histogram(data = xkmts, 
+                         aes(x = MTs), 
+                         bins = bins, 
+                         position = "identity", 
+                         alpha = 0.8,
+                         fill = input$color.kmts)
+      print(p)
       }
+      
       if (input$display.on.plot == 2){
-        hist(xkmts,
-             breaks = bins,
-             col = input$color.kmts,
-             xlab = "Length (um)", 
-             ylab = "No. of MTs")
+        p <- ggplot() + geom_histogram(data = xkmts, 
+                                  aes(x = MTs), 
+                                  bins = bins,
+                                  alpha = 1, 
+                                  fill = "red")
+        print(p)
       }
+      
       if (input$display.on.plot == 3){
-        hist(xnon_kmts,
-             breaks = bins,
-             col = input$color.non.kmts,
-             xlab = "Length (um)", 
-             ylab = "No. of MTs")
+        p <- ggplot() + geom_histogram(data = xnon_kmts, 
+                                  aes(x = MTs), 
+                                  bins = bins,
+                                  alpha = 1,
+                                  fill = "yellow")
+        print(p)
       }
     }
     if(input$analysis == 2){
       ## density
+      bins <- (input$bin.max/input$bin.step) + 1
+      
+      if (input$display.on.plot == 1){
+        p <-  ggplot() + geom_density(data = xnon_kmts, 
+                                        aes(x = MTs), 
+                                        bins = bins, 
+                                        position = "identity", 
+                                        alpha = 1, 
+                                        fill = input$color.non.kmts) +
+          geom_density(data = xkmts, 
+                         aes(x = MTs), 
+                         bins = bins, 
+                         position = "identity", 
+                         alpha = 0.8,
+                         fill = input$color.kmts) +
+          labs(x = input$x.label, y = input$y.label)
+        print(p)
+      }
+      
+      if (input$display.on.plot == 2){
+        p <- ggplot() + geom_density(data = xkmts, 
+                                       aes(x = MTs), 
+                                       bins = bins,
+                                       alpha = 1, 
+                                       fill = "red") +
+          labs(x = input$x.label, y = input$y.label)
+        print(p)
+      }
+      
+      if (input$display.on.plot == 3){
+        p <- ggplot() + geom_density(data = xnon_kmts, 
+                                       aes(x = MTs), 
+                                       bins = bins,
+                                       alpha = 1,
+                                       fill = "yellow") +
+          labs(x = input$x.label, y = input$y.label)
+        print(p)
+      }
     }
     if (input$analysis == 3){
       ##logaritmic
