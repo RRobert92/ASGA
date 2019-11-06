@@ -89,7 +89,7 @@ ui <- dashboardPagePlus(
                         width = NULL,
                         status = "primary", 
                         closable = FALSE,
-                        p(radioButtons("disp",
+                        p(radioButtons("display",
                                        "Display", 
                                        choices = c(Head = "head", 
                                                    All = "all"), 
@@ -202,80 +202,107 @@ ui <- dashboardPagePlus(
 
 server <- function(input, output) {
   
- ## load files upload by user to check if data are loaded correctly 
+ ## load files upload by user to check if data are loaded correctly and use for global enviroment (<<-)
   output$data1.segment <- renderTable({
     req(input$amirafile1)
     tryCatch({
-      Segments <- read_excel(input$amirafile1$datapath, sheet = "Segments")
+      Segments_1 <<- read_excel(input$amirafile1$datapath, sheet = "Segments")
     })
-    if (input$disp == "head") {
-      return(head(Segments %>% select("Segment ID", "length")))
+    if (input$display == "head") {
+      return(head(Segments_1 %>% select("Segment ID", "length")))
     }
     else{
-      return(Segments)
+      return(Segments_1)
     }
   })
   
   output$data2.segment <- renderTable({
     req(input$amirafile2)
     tryCatch({
-      Segments <- read_excel(input$amirafile2$datapath, sheet = "Segments")
+      Segments_2 <<- read_excel(input$amirafile2$datapath, sheet = "Segments")
     })
-    if (input$disp == "head") {
-      return(head(Segments %>% select("Segment ID", "length")))
+    if (input$display == "head") {
+      return(head(Segments_2 %>% select("Segment ID", "length")))
     }
     else{
-      return(Segments)
+      return(Segments_2)
     }
   })
   
   output$data3.segment <- renderTable({
     req(input$amirafile3)
     tryCatch({
-      Segments <- read_excel(input$amirafile3$datapath, sheet = "Segments")
+      Segments_3 <<- read_excel(input$amirafile3$datapath, sheet = "Segments")
     })
-    if (input$disp == "head") {
-      return(head(Segments %>% select("Segment ID", "length")))
+    if (input$display == "head") {
+      return(head(Segments_3 %>% select("Segment ID", "length")))
     }
     else{
-      return(Segments)
+      return(Segments_3)
     }
   })
   
   output$data4.segment <- renderTable({
     req(input$amirafile4)
     tryCatch({
-      Segments <- read_excel(input$amirafile4$datapath, sheet = "Segments")
+      Segments_4 <<- read_excel(input$amirafile4$datapath, sheet = "Segments")
     })
-    if (input$disp == "head") {
-      return(head(Segments %>% select("Segment ID","length")))
+    if (input$display == "head") {
+      return(head(Segments_4 %>% select("Segment ID","length")))
     }
     else{
-      return(Segments)
+      return(Segments_4)
     }
   })
-  
+
+## Creat table used for all analyis, and export -> histogram and % of MTs analysis
   output$length.plot_kmts <- renderPlot({
     req(input$amirafile1)
-    req(input$analysis)
     req(input$bin.min)
     req(input$bin.max)
     req(input$bin.step)
     
-    tryCatch({
-      Segments <- read_excel(input$amirafile1$datapath, 
-                             sheet = "Segments")
-    })
-    
-    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
+    ##Dataset_1
+    kmts_1 <- Segments_1 %>% filter_at(vars(starts_with("Pole")), 
                                    any_vars(.>= 1))
-    non_kmts <- setdiff(Segments, kmts)
-    xkmts <- data.frame(MTs = kmts$length/10000)
-    xnon_kmts <- data.frame(MTs = non_kmts$length/10000)
+    non_kmts_1 <- setdiff(Segments_1, kmts)
+    xkmts_1 <- data.frame(KMTs_1 = kmts$length/10000) ## Lengh in (um) for KMTs
+    xnon_kmts_1 <- data.frame(NonKTs_1 = non_kmts$length/10000) ## Lengh in (um) for Non_KMTs
+    
+    ##Bins set up by user
+    bins = c(input$bin.min, 
+             seq(input$bin.min + input$bin.step, input$bin.max, input$bin.step))
+    
+    ##Creat data.frame of histogram data for global use with the name setb by "id"
+    CreatHist <- function(id, data, label){
+      id <- hist(data$label, 
+                      xlim = c(input$bin.min, input$bin.max),
+                      breaks = bins)
+      id <- data.frame(Bins = c(id$breaks), label = c(0,id$counts))
+    }
+    CreatHist(Hist_Segment_1, xkmts_1, KMTs_1)
+    CreatHist(Hist_Segment_2, xkmts_2, KMTs_2)
+    CreatHist(Hist_Segment_3, xkmts_3, KMTs_3)
+    CreatHist(Hist_Segment_4, xkmts_4, KMTs_4)
+    
+    CreatHist(Hist_Segment_1, xnon_kmts_1, NonKTs_1)
+    CreatHist(Hist_Segment_2, xnon_kmts_2, NonKTs_2)
+    CreatHist(Hist_Segment_3, xnon_kmts_3, NonKTs_3)
+    CreatHist(Hist_Segment_4, xnon_kmts_4, NonKTs_4)
+    
+    ##Marge dataset in one tabel for plot and export
+    if(!exists("Hist_Segment_2")){
+      ful_data_kmts <<- Hist_Segment_1
+    } else if (exists("Hist_Segment_1")){
+      ful_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2)
+    } else if (exists("Hist_Segment_3")){
+      ful_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3)
+    }else {
+      ful_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3, Hist_Segment_4)
+    }
+    
     ## Histogram
     if(input$analysis == 1){
-      bins <- (input$bin.max/input$bin.step) + 1
-      
       if (input$display.on.plot == 1){
         p <-  ggplot() + geom_histogram(data = xnon_kmts, 
                                         aes(x = MTs), 
@@ -356,12 +383,7 @@ server <- function(input, output) {
   output$avg.length.kmts <- renderValueBox({
     req(input$amirafile1)
     
-    tryCatch({
-      Segments <- read_excel(input$amirafile1$datapath, 
-                             sheet = "Segments")
-    })
-    
-    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
+    kmts <- Segments_1 %>% filter_at(vars(starts_with("Pole")), 
                                    any_vars(.>= 1))
     length.kmts <- round(mean(kmts$length/10000), 
                          2)
@@ -378,14 +400,9 @@ server <- function(input, output) {
   output$avg.length.non.kmts <- renderValueBox({
     req(input$amirafile1)
     
-    tryCatch({
-      Segments <- read_excel(input$amirafile1$datapath, 
-                             sheet = "Segments")
-    })
-    
-    kmts <- Segments %>% filter_at(vars(starts_with("Pole")), 
+    kmts <- Segments_1 %>% filter_at(vars(starts_with("Pole")), 
                                    any_vars(.>= 1))
-    non_kmts <- setdiff(Segments, kmts)
+    non_kmts <- setdiff(Segments_1, kmts)
     length.non_kmts <- round(mean(non_kmts$length/10000), 
                              2)
     sd.non.kmts <- round(sd(non_kmts$length/10000),
