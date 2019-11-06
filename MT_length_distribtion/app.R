@@ -121,60 +121,31 @@ ui <- dashboardPagePlus(
                            selectInput("analysis", 
                                        "Select Analysis type", 
                                        choices = list("Histogram Distribution" = 1,
-                                                      "Density Distribtuion" = 2,
-                                                      "Logaritmic Disribtuin" = 3), 
+                                                      "% of MTs" = 2), 
                                        selected = 1),
-                           conditionalPanel(
-                             condition = "input.analysis == 1",
-                             numericInput("bin.min", "Bin start from (um):",
-                                          value = 0),
-                             numericInput("bin.max", "Bin stop at (um):", 
-                                          value = 10),
-                             numericInput("bin.step", "Bin every (um);", 
-                                          value = 0.5)
-                           )
+                           condition = "input.analysis == 1",
+                           numericInput("bin.min", "Bin start from (um):",
+                                        value = 0),
+                           numericInput("bin.max", "Bin stop at (um):", 
+                                       value = 10),
+                           numericInput("bin.step", "Bin every (um);", 
+                                       value = 0.25)
                        ),
-                       box(title = "Parameaters",
+                       
+                       box(title = "Other Parameaters",
                            width = NULL,
                            style = "height:380px;",
                            status = "warning",
                            collapsible = FALSE,
                            closable = FALSE,
-                           accordion(
-                             accordionItem(
-                               id = 2, 
-                               title = "what to plot?", 
-                               color = "warning", 
                                selectInput("display.on.plot", 
                                            "Select what to display",
                                            choices = c("All" = 1, 
                                                        "KMTs" = 2,
                                                        "Non_KMTs" = 3), 
-                                           selected = 1)
-                             ),
-                             
-                             accordionItem(id = 3, 
-                                           title = "Axis Labes", 
-                                           color = "warning",
-                                           textInput("x.label", 
-                                                     "Label for the X axis", 
-                                                     value = "MT Length (µm)"),
-                                           textInput("y.label", 
-                                                     "Label for the Y axis", 
-                                                     value = "No. of MTs")
-                             ),
-                             accordionItem(id = 4,
-                                           title = "Colors",
-                                           color = "warning",
-                                           textInput("color.kmts",
-                                                     "Color for the KMTs",
-                                                     value = "red"),
-                                           textInput("color.non.kmts",
-                                                     "Color for Non_KMTs",
-                                                     value = "yellow")
-                             )
+                                           selected = 1),
+                               checkboxInput("show.avg", "Show Avg. Value", value = TRUE)
                            )
-                       ),
                 ),
                 column(width = 7,
                        boxPlus(title = "Graphs", 
@@ -188,8 +159,24 @@ ui <- dashboardPagePlus(
                 column(width = 3,
                        valueBoxOutput("avg.length.kmts",
                                       width = NULL),
+                       valueBoxOutput("avg.length.kmts1",
+                                      width = NULL),
+                       valueBoxOutput("avg.length.kmts2",
+                                      width = NULL),
+                       valueBoxOutput("avg.length.kmts3",
+                                      width = NULL),
+                       valueBoxOutput("avg.length.kmts4",
+                                      width = NULL),
                        valueBoxOutput("avg.length.non.kmts",
-                                      width = NULL)  
+                                      width = NULL),
+                       valueBoxOutput("avg.length.non.kmts1",
+                                      width = NULL),
+                       valueBoxOutput("avg.length.non.kmts2",
+                                      width = NULL),
+                       valueBoxOutput("avg.length.non.kmts3",
+                                      width = NULL),
+                       valueBoxOutput("avg.length.non.kmts4",
+                                      width = NULL)
                 )
               )
       ),
@@ -215,6 +202,7 @@ ui <- dashboardPagePlus(
 
 server <- function(input, output) {
   
+ ## load files upload by user to check if data are loaded correctly 
   output$data1.segment <- renderTable({
     req(input$amirafile1)
     tryCatch({
@@ -268,15 +256,14 @@ server <- function(input, output) {
   })
   
   output$length.plot_kmts <- renderPlot({
-    req(input$amirafile)
+    req(input$amirafile1)
     req(input$analysis)
     req(input$bin.min)
     req(input$bin.max)
     req(input$bin.step)
-    req(input$color.kmts)
-    req(input$color.non.kmts)
+    
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, 
+      Segments <- read_excel(input$amirafile1$datapath, 
                              sheet = "Segments")
     })
     
@@ -295,13 +282,13 @@ server <- function(input, output) {
                                         bins = bins, 
                                         position = "identity", 
                                         alpha = 1, 
-                                        fill = input$color.non.kmts) +
+                                        fill = "yellow") +
           geom_histogram(data = xkmts, 
                          aes(x = MTs), 
                          bins = bins, 
                          position = "identity", 
                          alpha = 0.8,
-                         fill = input$color.kmts)
+                         fill = "red")
         print(p)
       }
       
@@ -333,13 +320,13 @@ server <- function(input, output) {
                                       bins = bins, 
                                       position = "identity", 
                                       alpha = 1, 
-                                      fill = input$color.non.kmts) +
+                                      fill = "yellow") +
           geom_density(data = xkmts, 
                        aes(x = MTs), 
                        bins = bins, 
                        position = "identity", 
                        alpha = 0.8,
-                       fill = input$color.kmts) +
+                       fill = "red") +
           labs(x = input$x.label, y = input$y.label)
         print(p)
       }
@@ -364,17 +351,13 @@ server <- function(input, output) {
         print(p)
       }
     }
-    if (input$analysis == 3){
-      ##logaritmic
-    }
   })
   
   output$avg.length.kmts <- renderValueBox({
-    req(input$amirafile)
-    req(input$color.kmts)
+    req(input$amirafile1)
     
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, 
+      Segments <- read_excel(input$amirafile1$datapath, 
                              sheet = "Segments")
     })
     
@@ -389,15 +372,14 @@ server <- function(input, output) {
       paste(length.kmts, "±", sd.kmts), 
       "Avg. KMTs length", 
       icon = icon("calculator"), 
-      color = input$color.kmts)
+      color = "red")
   })
   
   output$avg.length.non.kmts <- renderValueBox({
-    req(input$amirafile)
-    req(input$color.non.kmts)
+    req(input$amirafile1)
     
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, 
+      Segments <- read_excel(input$amirafile1$datapath, 
                              sheet = "Segments")
     })
     
@@ -413,7 +395,8 @@ server <- function(input, output) {
       paste(length.non_kmts, "±", sd.non.kmts), 
       "Avg. Non-KMTs length", 
       icon = icon("calculator"), 
-      color = input$color.non.kmts)
+      color = "yellow",
+      style = "height:100px;")
   })
 }
 
