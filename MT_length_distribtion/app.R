@@ -46,17 +46,47 @@ ui <- dashboardPagePlus(
       ),
       tabItem(tabName = "menu_upload",
               fluidRow(
-                boxPlus(title = "Upload file", 
-                        width = 3,
+                column(width = 3,
+                boxPlus(title = "Upload file #1", 
+                        width = NULL,
                         status = "warning", 
                         closable = FALSE,
-                        p(fileInput("amirafile", "Choose .xlsx File", multiple = FALSE,
+                        p(fileInput("amirafile1", "Choose .xlsx File", multiple = FALSE,
                                     accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
                         )
                         )
                 ),
+                boxPlus(title = "Upload file #2", 
+                        width = NULL,
+                        status = "warning", 
+                        closable = FALSE,
+                        p(fileInput("amirafile2", "Choose .xlsx File", multiple = FALSE,
+                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                        )
+                        )
+                ),
+                boxPlus(title = "Upload file #3", 
+                        width = NULL,
+                        status = "warning", 
+                        closable = FALSE,
+                        p(fileInput("amirafile3", "Choose .xlsx File", multiple = FALSE,
+                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                        )
+                        )
+                ),
+                boxPlus(title = "Upload file #4", 
+                        width = NULL,
+                        status = "warning", 
+                        closable = FALSE,
+                        p(fileInput("amirafile4", "Choose .xlsx File", multiple = FALSE,
+                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                        )
+                        )
+                )
+                ),
+                column(width = 9,
                 boxPlus(title = "Lodate data:", 
-                        width = 9,
+                        width = NULL,
                         status = "primary", 
                         closable = FALSE,
                         p(radioButtons("disp",
@@ -65,18 +95,18 @@ ui <- dashboardPagePlus(
                                                    All = "all"), 
                                        selected = "head"),
                           tabsetPanel(
-                            tabPanel("Nodes", 
-                                     tableOutput("data.node")
-                            ),
-                            tabPanel("Points", 
-                                     tableOutput("data.point")
-                            ),
-                            tabPanel("Segments", 
-                                     tableOutput("data.segment")
-                            )
+                            tabPanel("Data_1_Segments", 
+                                     tableOutput("data1.segment")),
+                            tabPanel("Data_2_Segments",
+                                     tableOutput("data2.segment")),
+                            tabPanel("Data_3_Segments",
+                                     tableOutput("data3.segment")),
+                            tabPanel("Data_4_Segments",
+                                     tableOutput("data4.segment"))
                           )
                         )
                 )
+              )
               )
       ),
       
@@ -122,7 +152,7 @@ ui <- dashboardPagePlus(
                                                        "Non_KMTs" = 3), 
                                            selected = 1)
                              ),
-
+                             
                              accordionItem(id = 3, 
                                            title = "Axis Labes", 
                                            color = "warning",
@@ -164,20 +194,20 @@ ui <- dashboardPagePlus(
               )
       ),
       tabItem(tabName = "menu_export",
-      fluidPage(
-        column(width = 2,
-               boxPlus(title = "Exprt analysed data",
-                       width = NULL,
-                       style = "height:350px;",
-                       status = "idle",
-                       closable = FALSE,
-                 downloadButton("downloadData", 
-                                "Download")
-               )
-               
-          
-        )
-      )
+              fluidPage(
+                column(width = 2,
+                       boxPlus(title = "Exprt analysed data",
+                               width = NULL,
+                               style = "height:350px;",
+                               status = "info",
+                               closable = FALSE,
+                               downloadButton("downloadData", 
+                                              "Download")
+                       )
+                       
+                       
+                )
+              )
       )
     )
   )
@@ -185,61 +215,52 @@ ui <- dashboardPagePlus(
 
 server <- function(input, output) {
   
-  output$data.node <- renderTable({
-    req(input$amirafile)
-    
+  output$data1.segment <- renderTable({
+    req(input$amirafile1)
     tryCatch({
-      Nodes <- read_excel(input$amirafile$datapath, 
-                          sheet = "Nodes")
-    }) 
-    
+      Segments <- read_excel(input$amirafile1$datapath, sheet = "Segments")
+    })
     if (input$disp == "head") {
-      return(head(Nodes %>% select("Node ID", 
-                                   "X Coord", 
-                                   "Y Coord", 
-                                   "Z Coord")
-                  )
-             )
+      return(head(Segments %>% select("Segment ID", "length")))
     }
     else{
-      return(Nodes)
+      return(Segments)
     }
   })
   
-  output$data.point <- renderTable({
-    req(input$amirafile)
-    
+  output$data2.segment <- renderTable({
+    req(input$amirafile2)
     tryCatch({
-      Points <- read_excel(input$amirafile$datapath, 
-                           sheet = "Points")
+      Segments <- read_excel(input$amirafile2$datapath, sheet = "Segments")
     })
-    
     if (input$disp == "head") {
-      return(head(Points %>% select("Point ID", 
-                                    "X Coord", 
-                                    "Y Coord", 
-                                    "Z Coord")
-                  )
-             )
+      return(head(Segments %>% select("Segment ID", "length")))
     }
     else{
-      return(Points)
+      return(Segments)
     }
   })
   
-  output$data.segment <- renderTable({
-    req(input$amirafile)
-    
+  output$data3.segment <- renderTable({
+    req(input$amirafile3)
     tryCatch({
-      Segments <- read_excel(input$amirafile$datapath, 
-                             sheet = "Segments")
+      Segments <- read_excel(input$amirafile3$datapath, sheet = "Segments")
     })
-    
     if (input$disp == "head") {
-      return(head(Segments %>% select("Segment ID", 
-                                      "length", 
-                                      "Node ID #1", 
-                                      "Node ID #2")))
+      return(head(Segments %>% select("Segment ID", "length")))
+    }
+    else{
+      return(Segments)
+    }
+  })
+  
+  output$data4.segment <- renderTable({
+    req(input$amirafile4)
+    tryCatch({
+      Segments <- read_excel(input$amirafile4$datapath, sheet = "Segments")
+    })
+    if (input$disp == "head") {
+      return(head(Segments %>% select("Segment ID","length")))
     }
     else{
       return(Segments)
@@ -269,36 +290,36 @@ server <- function(input, output) {
       bins <- (input$bin.max/input$bin.step) + 1
       
       if (input$display.on.plot == 1){
-      p <-  ggplot() + geom_histogram(data = xnon_kmts, 
-                                  aes(x = MTs), 
-                                  bins = bins, 
-                                  position = "identity", 
-                                  alpha = 1, 
-                                  fill = input$color.non.kmts) +
+        p <-  ggplot() + geom_histogram(data = xnon_kmts, 
+                                        aes(x = MTs), 
+                                        bins = bins, 
+                                        position = "identity", 
+                                        alpha = 1, 
+                                        fill = input$color.non.kmts) +
           geom_histogram(data = xkmts, 
                          aes(x = MTs), 
                          bins = bins, 
                          position = "identity", 
                          alpha = 0.8,
                          fill = input$color.kmts)
-      print(p)
+        print(p)
       }
       
       if (input$display.on.plot == 2){
         p <- ggplot() + geom_histogram(data = xkmts, 
-                                  aes(x = MTs), 
-                                  bins = bins,
-                                  alpha = 1, 
-                                  fill = "red")
+                                       aes(x = MTs), 
+                                       bins = bins,
+                                       alpha = 1, 
+                                       fill = "red")
         print(p)
       }
       
       if (input$display.on.plot == 3){
         p <- ggplot() + geom_histogram(data = xnon_kmts, 
-                                  aes(x = MTs), 
-                                  bins = bins,
-                                  alpha = 1,
-                                  fill = "yellow")
+                                       aes(x = MTs), 
+                                       bins = bins,
+                                       alpha = 1,
+                                       fill = "yellow")
         print(p)
       }
     }
@@ -308,37 +329,37 @@ server <- function(input, output) {
       
       if (input$display.on.plot == 1){
         p <-  ggplot() + geom_density(data = xnon_kmts, 
-                                        aes(x = MTs), 
-                                        bins = bins, 
-                                        position = "identity", 
-                                        alpha = 1, 
-                                        fill = input$color.non.kmts) +
+                                      aes(x = MTs), 
+                                      bins = bins, 
+                                      position = "identity", 
+                                      alpha = 1, 
+                                      fill = input$color.non.kmts) +
           geom_density(data = xkmts, 
-                         aes(x = MTs), 
-                         bins = bins, 
-                         position = "identity", 
-                         alpha = 0.8,
-                         fill = input$color.kmts) +
+                       aes(x = MTs), 
+                       bins = bins, 
+                       position = "identity", 
+                       alpha = 0.8,
+                       fill = input$color.kmts) +
           labs(x = input$x.label, y = input$y.label)
         print(p)
       }
       
       if (input$display.on.plot == 2){
         p <- ggplot() + geom_density(data = xkmts, 
-                                       aes(x = MTs), 
-                                       bins = bins,
-                                       alpha = 1, 
-                                       fill = "red") +
+                                     aes(x = MTs), 
+                                     bins = bins,
+                                     alpha = 1, 
+                                     fill = "red") +
           labs(x = input$x.label, y = input$y.label)
         print(p)
       }
       
       if (input$display.on.plot == 3){
         p <- ggplot() + geom_density(data = xnon_kmts, 
-                                       aes(x = MTs), 
-                                       bins = bins,
-                                       alpha = 1,
-                                       fill = "yellow") +
+                                     aes(x = MTs), 
+                                     bins = bins,
+                                     alpha = 1,
+                                     fill = "yellow") +
           labs(x = input$x.label, y = input$y.label)
         print(p)
       }
