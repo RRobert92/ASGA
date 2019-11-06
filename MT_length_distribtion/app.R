@@ -395,8 +395,7 @@ server <- function(input, output) {
       paste(length.non_kmts, "±", sd.non.kmts), 
       "Avg. Non-KMTs length", 
       icon = icon("calculator"), 
-      color = "yellow",
-      style = "height:100px;")
+      color = "yellow")
   })
 }
 
