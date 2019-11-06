@@ -265,58 +265,41 @@ server <- function(input, output) {
     ##Dataset_1
     kmts_1 <- Segments_1 %>% filter_at(vars(starts_with("Pole")), 
                                    any_vars(.>= 1))
-    non_kmts_1 <- setdiff(Segments_1, kmts)
-    xkmts_1 <- data.frame(KMTs_1 = kmts$length/10000) ## Lengh in (um) for KMTs
-    xnon_kmts_1 <- data.frame(NonKTs_1 = non_kmts$length/10000) ## Lengh in (um) for Non_KMTs
+    non_kmts_1 <- setdiff(Segments_1, kmts_1)
+    xkmts_1 <- data.frame(KMTs_1 = kmts_1$length/10000) ## Lengh in (um) for KMTs
+    xnon_kmts_1 <- data.frame(NonKTs_1 = non_kmts_1$length/10000) ## Lengh in (um) for Non_KMTs
     
     ##Bins set up by user
     bins = c(input$bin.min, 
              seq(input$bin.min + input$bin.step, input$bin.max, input$bin.step))
     
     ##Creat data.frame of histogram data for global use with the name setb by "id"
-    CreatHist <- function(id, data, label){
-      id <- hist(data$label, 
-                      xlim = c(input$bin.min, input$bin.max),
-                      breaks = bins)
-      id <- data.frame(Bins = c(id$breaks), label = c(0,id$counts))
-    }
-    CreatHist(Hist_Segment_1, xkmts_1, KMTs_1)
-    CreatHist(Hist_Segment_2, xkmts_2, KMTs_2)
-    CreatHist(Hist_Segment_3, xkmts_3, KMTs_3)
-    CreatHist(Hist_Segment_4, xkmts_4, KMTs_4)
-    
-    CreatHist(Hist_Segment_1, xnon_kmts_1, NonKTs_1)
-    CreatHist(Hist_Segment_2, xnon_kmts_2, NonKTs_2)
-    CreatHist(Hist_Segment_3, xnon_kmts_3, NonKTs_3)
-    CreatHist(Hist_Segment_4, xnon_kmts_4, NonKTs_4)
+    Hist_Segment_1 <<- hist(xkmts_1$KMTs_1, 
+               xlim = c(input$bin.min, input$bin.max),
+               breaks = bins)
+    Hist_Segment_1 <<- data.frame(Bins = c(Hist_Segment_1$breaks), KMTs_1 = c(0,Hist_Segment_1$counts))
     
     ##Marge dataset in one tabel for plot and export
-    if(!exists("Hist_Segment_2")){
-      ful_data_kmts <<- Hist_Segment_1
-    } else if (exists("Hist_Segment_1")){
-      ful_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2)
+    if (exists("Hist_Segment_2")){
+      full_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2)
     } else if (exists("Hist_Segment_3")){
-      ful_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3)
-    }else {
-      ful_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3, Hist_Segment_4)
+      full_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3)
+    }else if (exists("Hist_Segment_4")){
+      full_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3, Hist_Segment_4)
+    } else {
+      full_data_kmts <<- Hist_Segment_1
     }
     
     ## Histogram
     if(input$analysis == 1){
       if (input$display.on.plot == 1){
-        p <-  ggplot() + geom_histogram(data = xnon_kmts, 
-                                        aes(x = MTs), 
-                                        bins = bins, 
-                                        position = "identity", 
-                                        alpha = 1, 
-                                        fill = "yellow") +
-          geom_histogram(data = xkmts, 
-                         aes(x = MTs), 
-                         bins = bins, 
-                         position = "identity", 
-                         alpha = 0.8,
-                         fill = "red")
-        print(p)
+        plot(full_data_kmts$Bins, 
+             full_data_kmts$KMTs_1, 
+             xlim=c(input$bin.min, input$bin.max), 
+             type = "o", 
+             col = "red", 
+             xlab = "Length (um)", ylab = "No. of KMTs",
+             main = "KMTs Length distribution")
       }
       
       if (input$display.on.plot == 2){
