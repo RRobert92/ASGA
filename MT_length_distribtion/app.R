@@ -95,14 +95,22 @@ ui <- dashboardPagePlus(
                                                    All = "all"), 
                                        selected = "head"),
                           tabsetPanel(
-                            tabPanel("Data_1_Segments", 
-                                     tableOutput("data1.segment")),
-                            tabPanel("Data_2_Segments",
-                                     tableOutput("data2.segment")),
-                            tabPanel("Data_3_Segments",
-                                     tableOutput("data3.segment")),
-                            tabPanel("Data_4_Segments",
-                                     tableOutput("data4.segment"))
+                            tabPanel("Data_Segments",
+                                     fluidRow(
+                                       column(width = 2, "Data set #1",
+                                              tableOutput("data1.segment")
+                                       ),
+                                       column(width = 2, "Data set #2",
+                                         tableOutput("data2.segment")
+                                       ),
+                                       column(width = 2, "Data set #3",
+                                              tableOutput("data3.segment")
+                                       ),
+                                       column(width = 2, "Data set #4",
+                                              tableOutput("data4.segment")
+                                       )
+                                     )
+                            )
                           )
                         )
                 )
@@ -262,23 +270,60 @@ server <- function(input, output) {
     req(input$bin.max)
     req(input$bin.step)
     
-    ##Dataset_1
-    kmts_1 <- Segments_1 %>% filter_at(vars(starts_with("Pole")), 
-                                   any_vars(.>= 1))
-    non_kmts_1 <- setdiff(Segments_1, kmts_1)
-    xkmts_1 <- data.frame(KMTs_1 = kmts_1$length/10000) ## Lengh in (um) for KMTs
-    xnon_kmts_1 <- data.frame(NonKTs_1 = non_kmts_1$length/10000) ## Lengh in (um) for Non_KMTs
-    
+    ##Function for computing
+    FilterForPole <- function(data.set){
+      data.set %>% filter_at(vars(starts_with("Pole")), 
+                              any_vars(.>= 1))
+    }
+    FindNonKMTs <- function(data.set, set1){
+      setdiff(data.set, set1)
+    }
+    CreatHist <- function(data.set) {
+      hist(data.set, 
+           xlim = c(input$bin.min, input$bin.max),
+           breaks = bins)
+    }
     ##Bins set up by user
     bins = c(input$bin.min, 
              seq(input$bin.min + input$bin.step, input$bin.max, input$bin.step))
     
-    ##Creat data.frame of histogram data for global use with the name setb by "id"
-    Hist_Segment_1 <<- hist(xkmts_1$KMTs_1, 
-               xlim = c(input$bin.min, input$bin.max),
-               breaks = bins)
-    Hist_Segment_1 <<- data.frame(Bins = c(Hist_Segment_1$breaks), KMTs_1 = c(0,Hist_Segment_1$counts))
+    ##Dataset_1
+    kmts_1 <<- FilterForPole(Segments_1)
+    non_kmts_1 <<- FindNonKMTs(Segments_1, kmts_1)
+    xkmts_1 <<- data.frame(KMTs_1 = kmts_1$length/10000)  ## Lengh in (um) for KMTs_1
+    xnon_kmts_1 <<- data.frame(Non_KMTs_1 = non_kmts_1$length/10000)## Lengh in (um) for non_KMTs_1
+      ##Creat data.frame of histogram data for global use with the name setb by "id"
+      Hist_Segment_1 <<- CreatHist(xkmts_1$KMTs_1)
+      Hist_Segment_1 <<- data.frame(Bins = c(Hist_Segment_1$breaks), KMTs_1 = c(0,Hist_Segment_1$counts))
     
+    if(exists("Segments_2")){
+      kmts_2 <<- FilterForPole(Segments_2)
+      non_kmts_2 <<- FindNonKMTs(Segments_2, kmts_2)
+      xkmts_2 <<- data.frame(KMTs_2 = kmts_2$length/10000)  ## Lengh in (um) for KMTs_1
+      xnon_kmts_2 <<- data.frame(Non_KMTs_2 = non_kmts_2$length/10000)## Lengh in (um) for non_KMTs_1
+      ##Creat data.frame of histogram data for global use with the name setb by "id"
+      Hist_Segment_2 <<- CreatHist(xkmts_2$KMTs_2)
+      Hist_Segment_2 <<- data.frame(Bins = c(Hist_Segment_2$breaks), KMTs_2 = c(0,Hist_Segment_2$counts))
+    }
+    if(exists("Segments_3")){
+      kmts_3 <<- FilterForPole(Segments_3)
+      non_kmts_3 <<- FindNonKMTs(Segments_3, kmts_3)
+      xkmts_3 <<- data.frame(KMTs_3 = kmts_3$length/10000)  ## Lengh in (um) for KMTs_1
+      xnon_kmts_3 <<- data.frame(Non_KMTs_3 = non_kmts_3$length/10000)## Lengh in (um) for non_KMTs_1
+      ##Creat data.frame of histogram data for global use with the name setb by "id"
+      Hist_Segment_3 <<- CreatHist(xkmts_3$KMTs_3)
+      Hist_Segment_3 <<- data.frame(Bins = c(Hist_Segment_3$breaks), KMTs_3 = c(0,Hist_Segment_3$counts))
+    }
+    if(exists("Segments_4")){
+      kmts_4 <<- FilterForPole(Segments_4)
+      non_kmts_4 <<- FindNonKMTs(Segments_4, kmts_4)
+      xkmts_4 <<- data.frame(KMTs_4 = kmts_4$length/10000)  ## Lengh in (um) for KMTs_1
+      xnon_kmts_4 <<- data.frame(Non_KMTs_4 = non_kmts_4$length/10000)## Lengh in (um) for non_KMTs_1
+      ##Creat data.frame of histogram data for global use with the name setb by "id"
+      Hist_Segment_4 <<- CreatHist(xkmts_4$KMTs_4)
+      Hist_Segment_4 <<- data.frame(Bins = c(Hist_Segment_4$breaks), KMTs_4 = c(0,Hist_Segment_4$counts))
+    }
+      
     ##Marge dataset in one tabel for plot and export
     if (exists("Hist_Segment_2")){
       full_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2)
@@ -366,11 +411,9 @@ server <- function(input, output) {
   output$avg.length.kmts <- renderValueBox({
     req(input$amirafile1)
     
-    kmts <- Segments_1 %>% filter_at(vars(starts_with("Pole")), 
-                                   any_vars(.>= 1))
-    length.kmts <- round(mean(kmts$length/10000), 
+    length.kmts <- round(mean(kmts_1$length/10000), 
                          2)
-    sd.kmts <- round(sd(kmts$length/10000),
+    sd.kmts <- round(sd(kmts_1$length/10000),
                      2)
     
     valueBox(
