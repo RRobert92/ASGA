@@ -403,7 +403,7 @@ server <- function(input, output) {
                col = "yellow", 
                xlab = "Length (um)", 
                ylab = "No. of KMTs",
-               main = "Avg. KMTs Length distribution",
+               main = "Avg. MT Length distribution",
                lwd = 3)
           lines(full_data$Bins,
                 full_data$avg_kmts,
@@ -416,7 +416,7 @@ server <- function(input, output) {
              col = "yellow", 
              xlab = "Length (um)", 
              ylab = "No. of KMTs",
-             main = "KMTs Length distribution",
+             main = "MT Length distribution",
              lwd = 3)
         lines(full_data$Bins,
               full_data$KMTs_1,
@@ -424,12 +424,179 @@ server <- function(input, output) {
               lwd = 3)
       }
       }
+      
+      ## if only KMTs -> plot
       if (input$display.on.plot == 2){
-        
+        if(exists("Hist_Segment_KMTs_2")){
+          plot(full_data$Bins,
+               full_data$avg_kmts,
+               type = "l", 
+               col = "red", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+          lines(full_data$Bins,
+                full_data$KMTs_1,
+                col = "gray50",
+                lwd = 1,
+                lty = 2)
+          lines(full_data$Bins,
+                full_data$KMTs_2,
+                col = "gray28",
+                lwd = 1,
+                lty = 3)
+          
+        } else if(exists("Hist_Segment_KMTs_3")){
+          plot(full_data$Bins,
+               full_data$avg_kmts,
+               type = "l", 
+               col = "red", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+          lines(full_data$Bins,
+                full_data$KMTs_1,
+                col = "gray50",
+                lwd = 1,
+                lty = 2)
+          lines(full_data$Bins,
+                full_data$KMTs_2,
+                col = "gray28",
+                lwd = 1,
+                lty = 3)
+          lines(full_data$Bins,
+                full_data$KMTs_3,
+                col = "gray15",
+                lwd = 1,
+                lty = 4)
+        } else if(exists("Hist_Segment_KMTs_4")){
+          plot(full_data$Bins,
+               full_data$avg_kmts,
+               type = "l", 
+               col = "red", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+          lines(full_data$Bins,
+                full_data$KMTs_1,
+                col = "gray50",
+                lwd = 1,
+                lty = 2)
+          lines(full_data$Bins,
+                full_data$KMTs_2,
+                col = "gray28",
+                lwd = 1,
+                lty = 3)
+          lines(full_data$Bins,
+                full_data$KMTs_3,
+                col = "gray15",
+                lwd = 1,
+                lty = 4)
+          lines(full_data$Bins,
+                full_data$KMTs_4,
+                col = "gray10",
+                lwd = 1,
+                lty = 5)
+        } else{
+          plot(full_data$Bins,
+               full_data$KMTs_1,
+               type = "l", 
+               col = "red", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+        }
       }
       
+      ## if only Non-KMTs -> plot
       if (input$display.on.plot == 3){
-        
+        if(exists("Hist_Segment_KMTs_2")){
+          plot(full_data$Bins,
+               full_data$avg_non_kmts,
+               type = "l", 
+               col = "yellow", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_1,
+                col = "gray50",
+                lwd = 1,
+                lty = 2)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_2,
+                col = "gray28",
+                lwd = 1,
+                lty = 3)
+          
+        } else if(exists("Hist_Segment_KMTs_3")){
+          plot(full_data$Bins,
+               full_data$avg_non_kmts,
+               type = "l", 
+               col = "yellow", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_1,
+                col = "gray50",
+                lwd = 1,
+                lty = 2)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_2,
+                col = "gray28",
+                lwd = 1,
+                lty = 3)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_3,
+                col = "gray15",
+                lwd = 1,
+                lty = 4)
+        } else if(exists("Hist_Segment_KMTs_4")){
+          plot(full_data$Bins,
+               full_data$avg_non_kmts,
+               type = "l", 
+               col = "yellow", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_1,
+                col = "gray50",
+                lwd = 1,
+                lty = 2)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_2,
+                col = "gray28",
+                lwd = 1,
+                lty = 3)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_3,
+                col = "gray15",
+                lwd = 1,
+                lty = 4)
+          lines(full_data$Bins,
+                full_data$Non_KMTs_4,
+                col = "gray10",
+                lwd = 1,
+                lty = 5)
+        } else{
+          plot(full_data$Bins,
+               full_data$Non_KMTs_1,
+               type = "l", 
+               col = "yellow", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "KMTs Length distribution",
+               lwd = 3)
+        }
       }
     }
     if(input$analysis == 2){
