@@ -3,6 +3,7 @@ library(shinydashboard)
 library(shiny)
 library(readxl)
 library(tidyverse)
+library(plyr)
 
 ##Maximum size of memory used by R, set to 500mb
 options(shiny.maxRequestSize = 500*1024^2)
@@ -151,8 +152,7 @@ ui <- dashboardPagePlus(
                                            choices = c("All" = 1, 
                                                        "KMTs" = 2,
                                                        "Non_KMTs" = 3), 
-                                           selected = 1),
-                               checkboxInput("show.avg", "Show Avg. Value", value = TRUE)
+                                           selected = 1)
                            )
                 ),
                 column(width = 7,
@@ -293,8 +293,12 @@ server <- function(input, output) {
     xkmts_1 <<- data.frame(KMTs_1 = kmts_1$length/10000)  ## Lengh in (um) for KMTs_1
     xnon_kmts_1 <<- data.frame(Non_KMTs_1 = non_kmts_1$length/10000)## Lengh in (um) for non_KMTs_1
       ##Creat data.frame of histogram data for global use with the name setb by "id"
-      Hist_Segment_1 <<- CreatHist(xkmts_1$KMTs_1)
-      Hist_Segment_1 <<- data.frame(Bins = c(Hist_Segment_1$breaks), KMTs_1 = c(0,Hist_Segment_1$counts))
+      Hist_Segment_KMTs_1 <- CreatHist(xkmts_1$KMTs_1)
+      Hist_Segment_KMTs_1 <- data.frame(Bins = c(Hist_Segment_KMTs_1$breaks), 
+                                         KMTs_1 = c(0,Hist_Segment_KMTs_1$counts))
+      Hist_Segment_Non_KMTs_1 <- CreatHist(xnon_kmts_1$Non_KMTs_1)
+      Hist_Segment_Non_KMTs_1 <- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$breaks), 
+                                             Non_KMTs_1 = c(0,Hist_Segment_Non_KMTs_1$counts))
     
     if(exists("Segments_2")){
       kmts_2 <<- FilterForPole(Segments_2)
@@ -302,8 +306,12 @@ server <- function(input, output) {
       xkmts_2 <<- data.frame(KMTs_2 = kmts_2$length/10000)  ## Lengh in (um) for KMTs_1
       xnon_kmts_2 <<- data.frame(Non_KMTs_2 = non_kmts_2$length/10000)## Lengh in (um) for non_KMTs_1
       ##Creat data.frame of histogram data for global use with the name setb by "id"
-      Hist_Segment_2 <<- CreatHist(xkmts_2$KMTs_2)
-      Hist_Segment_2 <<- data.frame(Bins = c(Hist_Segment_2$breaks), KMTs_2 = c(0,Hist_Segment_2$counts))
+      Hist_Segment_KMTs_2 <- CreatHist(xkmts_2$KMTs_2)
+      Hist_Segment_KMTs_2 <- data.frame(Bins = c(Hist_Segment_KMTs_2$breaks), 
+                                         KMTs_2 = c(0,Hist_Segment_KMTs_2$counts))
+      Hist_Segment_Non_KMTs_2 <- CreatHist(xnon_kmts_2$Non_KMTs_2)
+      Hist_Segment_Non_KMTs_2 <- data.frame(Bins = c(Hist_Segment_Non_KMTs_2$breaks), 
+                                             Non_KMTs_2 = c(0,Hist_Segment_Non_KMTs_2$counts))
     }
     if(exists("Segments_3")){
       kmts_3 <<- FilterForPole(Segments_3)
@@ -311,8 +319,12 @@ server <- function(input, output) {
       xkmts_3 <<- data.frame(KMTs_3 = kmts_3$length/10000)  ## Lengh in (um) for KMTs_1
       xnon_kmts_3 <<- data.frame(Non_KMTs_3 = non_kmts_3$length/10000)## Lengh in (um) for non_KMTs_1
       ##Creat data.frame of histogram data for global use with the name setb by "id"
-      Hist_Segment_3 <<- CreatHist(xkmts_3$KMTs_3)
-      Hist_Segment_3 <<- data.frame(Bins = c(Hist_Segment_3$breaks), KMTs_3 = c(0,Hist_Segment_3$counts))
+      Hist_Segment_KMTs_3 <- CreatHist(xkmts_3$KMTs_3)
+      Hist_Segment_KMTs_3 <- data.frame(Bins = c(Hist_Segment_KMTs_3$breaks), 
+                                         KMTs_3 = c(0,Hist_Segment_KMTs_3$counts))
+      Hist_Segment_Non_KMTs_3 <- CreatHist(xnon_kmts_3$Non_KMTs_3)
+      Hist_Segment_Non_KMTs_3 <- data.frame(Bins = c(Hist_Segment_Non_KMTs_3$breaks), 
+                                             Non_KMTs_3 = c(0,Hist_Segment_Non_KMTs_3$counts))
     }
     if(exists("Segments_4")){
       kmts_4 <<- FilterForPole(Segments_4)
@@ -320,91 +332,109 @@ server <- function(input, output) {
       xkmts_4 <<- data.frame(KMTs_4 = kmts_4$length/10000)  ## Lengh in (um) for KMTs_1
       xnon_kmts_4 <<- data.frame(Non_KMTs_4 = non_kmts_4$length/10000)## Lengh in (um) for non_KMTs_1
       ##Creat data.frame of histogram data for global use with the name setb by "id"
-      Hist_Segment_4 <<- CreatHist(xkmts_4$KMTs_4)
-      Hist_Segment_4 <<- data.frame(Bins = c(Hist_Segment_4$breaks), KMTs_4 = c(0,Hist_Segment_4$counts))
+      Hist_Segment_KMTs_4 <- CreatHist(xkmts_4$KMTs_4)
+      Hist_Segment_KMTs_4 <- data.frame(Bins = c(Hist_Segment_KMTs_4$breaks), 
+                                         KMTs_4 = c(0,Hist_Segment_KMTs_4$counts))
+      Hist_Segment_Non_KMTs_4 <- CreatHist(xnon_kmts_4$Non_KMTs_4)
+      Hist_Segment_Non_KMTs_4 <- data.frame(Bins = c(Hist_Segment_Non_KMTs_4$breaks), 
+                                             Non_KMTs_4 = c(0,Hist_Segment_Non_KMTs_4$counts))
     }
       
-    ##Marge dataset in one tabel for plot and export
-    if (exists("Hist_Segment_2")){
-      full_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2)
-    } else if (exists("Hist_Segment_3")){
-      full_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3)
-    }else if (exists("Hist_Segment_4")){
-      full_data_kmts <<- merge(Hist_Segment_1, Hist_Segment_2, Hist_Segment_3, Hist_Segment_4)
+    ##Marge dataset for KMTs in one tabel for plot and export
+    if (exists("Hist_Segment_KMTs_2")){
+      avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2)/2)
+      avg_kmts <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
+                             avg_kmts)
+      avg_non_kmts = c((Hist_Segment_Non_KMTs_1$Non_KMTs_1 + Hist_Segment_Non_KMTs_2$Non_KMTs_2)/2)
+      avg_non_kmts <- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$Bins),
+                                 avg_non_kmts)
+      full_data <<- join_all(list(Hist_Segment_KMTs_1,
+                                  Hist_Segment_Non_KMTs_1,
+                                  Hist_Segment_KMTs_2,
+                                  Hist_Segment_Non_KMTs_2,
+                                  avg_kmts,
+                                  avg_non_kmts), 
+                             by = "Bins", type = "full")
+    } else if (exists("Hist_Segment_KMTs_3")){
+      avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2 + Hist_Segment_KMTs_3$KMTs_3)/3)
+      avg_kmts <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
+                             avg_kmts)
+      avg_non_kmts = c((Hist_Segment_Non_KMTs_1$Non_KMTs_1 + Hist_Segment_Non_KMTs_2$Non_KMTs_2 + Hist_Segment_Non_KMTs_3$Non_KMTs_3)/3)
+      avg_non_kmts <- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$Bins),
+                                 avg_non_kmts)
+      full_data <<- join_all(list(Hist_Segment_KMTs_1,
+                          Hist_Segment_Non_KMTs_1,
+                          Hist_Segment_KMTs_2,
+                          Hist_Segment_Non_KMTs_2,
+                          Hist_Segment_KMTs_3,
+                          Hist_Segment_Non_KMTs_3,
+                          avg_kmts,
+                          avg_non_kmts), by = "Bins", type = "full")
+    }else if (exists("Hist_Segment_KMTs_4")){
+      avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2 + Hist_Segment_KMTs_3$KMTs_3 + Hist_Segment_KMTs_4)/4)
+      avg_kmts <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
+                             avg_kmts)
+      avg_non_kmts = c((Hist_Segment_Non_KMTs_1$Non_KMTs_1 + Hist_Segment_Non_KMTs_2$Non_KMTs_2 + Hist_Segment_Non_KMTs_3$Non_KMTs_3 + Hist_Segment_Non_KMTs_4)/4)
+      avg_non_kmts <- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$Bins),
+                                 avg_non_kmts)
+      full_data <<- join_all(list(Hist_Segment_KMTs_1,
+                                  Hist_Segment_Non_KMTs_1,
+                                  Hist_Segment_KMTs_2,
+                                  Hist_Segment_Non_KMTs_2,
+                                  Hist_Segment_KMTs_3,
+                                  Hist_Segment_Non_KMTs_3,
+                                  Hist_Segment_KMTs_4,
+                                  Hist_Segment_Non_KMTs_4,
+                                  avg_kmts,
+                                  avg_non_kmts), by = "Bins", type = "full")
     } else {
-      full_data_kmts <<- Hist_Segment_1
+      full_data <<- merge(Hist_Segment_KMTs_1,
+                          Hist_Segment_Non_KMTs_1)
     }
+      
     
     ## Histogram
     if(input$analysis == 1){
       if (input$display.on.plot == 1){
-        plot(full_data_kmts$Bins, 
-             full_data_kmts$KMTs_1, 
-             xlim=c(input$bin.min, input$bin.max), 
-             type = "o", 
-             col = "red", 
-             xlab = "Length (um)", ylab = "No. of KMTs",
-             main = "KMTs Length distribution")
+        if(exists("Hist_Segment_KMTs_2") || exists("Hist_Segment_KMTs_3") || exists("Hist_Segment_KMTs_4")){
+          plot(full_data$Bins,
+               full_data$avg_non_kmts,
+               type = "l", 
+               col = "yellow", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "Avg. KMTs Length distribution",
+               lwd = 3)
+          lines(full_data$Bins,
+                full_data$avg_kmts,
+                lwd = 3,
+                col = "red")
+        } else {
+          plot(full_data$Bins,
+             full_data$Non_KMTs_1,
+             type = "l", 
+             col = "yellow", 
+             xlab = "Length (um)", 
+             ylab = "No. of KMTs",
+             main = "KMTs Length distribution",
+             lwd = 3)
+        lines(full_data$Bins,
+              full_data$KMTs_1,
+              col = "red",
+              lwd = 3)
       }
-      
+      }
       if (input$display.on.plot == 2){
-        p <- ggplot() + geom_histogram(data = xkmts, 
-                                       aes(x = MTs), 
-                                       bins = bins,
-                                       alpha = 1, 
-                                       fill = "red")
-        print(p)
+        
       }
       
       if (input$display.on.plot == 3){
-        p <- ggplot() + geom_histogram(data = xnon_kmts, 
-                                       aes(x = MTs), 
-                                       bins = bins,
-                                       alpha = 1,
-                                       fill = "yellow")
-        print(p)
+        
       }
     }
     if(input$analysis == 2){
-      ## density
-      bins <- (input$bin.max/input$bin.step) + 1
-      
-      if (input$display.on.plot == 1){
-        p <-  ggplot() + geom_density(data = xnon_kmts, 
-                                      aes(x = MTs), 
-                                      bins = bins, 
-                                      position = "identity", 
-                                      alpha = 1, 
-                                      fill = "yellow") +
-          geom_density(data = xkmts, 
-                       aes(x = MTs), 
-                       bins = bins, 
-                       position = "identity", 
-                       alpha = 0.8,
-                       fill = "red") +
-          labs(x = input$x.label, y = input$y.label)
-        print(p)
-      }
-      
-      if (input$display.on.plot == 2){
-        p <- ggplot() + geom_density(data = xkmts, 
-                                     aes(x = MTs), 
-                                     bins = bins,
-                                     alpha = 1, 
-                                     fill = "red") +
-          labs(x = input$x.label, y = input$y.label)
-        print(p)
-      }
-      
-      if (input$display.on.plot == 3){
-        p <- ggplot() + geom_density(data = xnon_kmts, 
-                                     aes(x = MTs), 
-                                     bins = bins,
-                                     alpha = 1,
-                                     fill = "yellow") +
-          labs(x = input$x.label, y = input$y.label)
-        print(p)
-      }
+      ## % of MTs
+
     }
   })
   
