@@ -132,7 +132,6 @@ ui <- dashboardPagePlus(
                                        choices = list("Histogram Distribution" = 1,
                                                       "% of MTs" = 2), 
                                        selected = 1),
-                           condition = "input.analysis == 1",
                            numericInput("bin.min", "Bin start from (um):",
                                         value = 0),
                            numericInput("bin.max", "Bin stop at (um):", 
@@ -191,16 +190,32 @@ ui <- dashboardPagePlus(
       tabItem(tabName = "menu_export",
               fluidPage(
                 column(width = 2,
-                       boxPlus(title = "Exprt analysed data",
+                       boxPlus(title = "Exprt Histogram data",
                                width = NULL,
-                               style = "height:350px;",
+                               style = "height:80px;",
                                status = "info",
                                closable = FALSE,
-                               downloadButton("downloadData", 
+                               downloadButton("downloadData1", 
+                                              "Download")
+                       ),
+                       boxPlus(title = "Exprt % of MTs data",
+                               width = NULL,
+                               style = "height:80px;",
+                               status = "info",
+                               closable = FALSE,
+                               downloadButton("downloadData2", 
                                               "Download")
                        )
-                       
-                       
+                ),
+                column(width = 10,
+                       boxPlus(title = "Exported table",
+                               width = NULL,
+                               style = "height:50px;",
+                               status = "info",
+                               closable = FALSE,
+                               tableOutput("excel.data.hist"),
+                               tableOutput("excel.data.perc")
+                       )
                 )
               )
       )
@@ -969,9 +984,9 @@ server <- function(input, output) {
         color = "yellow")
     }
     if(exists("Segments_2")){
-      length.kmts <- round((mean(xnon_kmts_1$KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2))/2, 
+      length.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2))/2, 
                            2)
-      sd.kmts <- round((sd(xnon_kmts_1$KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2))/2, 
+      sd.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2))/2, 
                        2)
       show_avg()
     } else if (exists("Segments_3")){
@@ -1008,6 +1023,30 @@ server <- function(input, output) {
       icon = icon("calculator"), 
       color = "yellow")
   })
+  output$excel.data.hist <- renderTable({
+    req(input$amirafile1)
+    
+    if(exists("full_data_hist")){
+      return(full_data_hist)
+    }
+  })
+  
+  output$excel.data.perc <- renderTable({
+    req(input$amirafile1)
+    
+    if(exists("full_data_perc")){
+      return(full_data_perc)
+    }
+  })
+  
+  output$downloadData1 <- downloadHandler(
+    filename = function() { "full_data_hist.xlsx"},
+    content = function(file) {write_xlsx(data, path = file)}
+  )
+  output$downloadData2 <- downloadHandler(
+    filename = function() { "full_data_perc.xlsx"},
+    content = function(file) {write_xlsx(data, path = file)}
+  )
 }
 
 shinyApp(ui = ui, server = server)
