@@ -607,33 +607,100 @@ server <- function(input, output) {
   
   output$avg.length.kmts <- renderValueBox({
     req(input$amirafile1)
-    
-    length.kmts <- round(mean(kmts_1$length/10000), 
+    show_avg <- function(){
+      valueBox(
+        paste(length.kmts, "±", sd.kmts), 
+        "Avg. KMTs length", 
+        icon = icon("calculator"), 
+        color = "red")
+    }
+    if(exists("Segments_2")){
+      length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2))/2, 
                          2)
-    sd.kmts <- round(sd(kmts_1$length/10000),
+      sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2))/2, 
                      2)
-    
+      show_avg
+    } else if (exists("Segments_3")){
+      length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2) + mean(xkmts_3$KMTs_3))/3, 
+                           2)
+      sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2) + sd(xkmts_3$KMTs_3))/3, 
+                       2)
+      show_avg
+    } else if (exists("Segments_4")){
+      length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2) + mean(xkmts_3$KMTs_3) + mean(xkmts_4$KMTs_4)/4), 
+                           2)
+      sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2) + sd(xkmts_3$KMTs_3) + sd(xkmts_4$KMTs_4))/4, 
+                       2)
+      show_avg
+    } else {
+      valueBox(
+        paste("No multiple file"), 
+        "Avg. KMTs length", 
+        icon = icon("calculator"), 
+        color = "blue")
+    }
+  })
+  
+  output$avg.length.kmts1 <- renderValueBox({
+    req(input$amirafile1)
+
+    length.kmts <- round(mean(xkmts_1$KMTs_1), 
+                         2)
+    sd.kmts <- round(sd(xkmts_1$KMTs_1),
+                     2)
     valueBox(
       paste(length.kmts, "±", sd.kmts), 
-      "Avg. KMTs length", 
+      "Avg. #1 KMTs length", 
       icon = icon("calculator"), 
       color = "red")
   })
-  
+
   output$avg.length.non.kmts <- renderValueBox({
     req(input$amirafile1)
+    show_avg <- function(){
+      valueBox(
+        paste(length.kmts, "±", sd.kmts), 
+        "Avg. Non-KMTs length", 
+        icon = icon("calculator"), 
+        color = "red")
+    }
+    if(exists("Segments_2")){
+      length.kmts <- round((mean(xnon_kmts_1$KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2))/2, 
+                           2)
+      sd.kmts <- round((sd(xnon_kmts_1$KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2))/2, 
+                       2)
+      show_avg
+    } else if (exists("Segments_3")){
+      length.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2) + mean(xnon_kmts_3$Non_KMTs_3))/3, 
+                           2)
+      sd.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2) + sd(xnon_kmts_3$Non_KMTs_3))/3, 
+                       2)
+      show_avg
+    } else if (exists("Segments_4")){
+      length.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2) + mean(xnon_kmts_3$Non_KMTs_3) + mean(xnon_kmts_4$Non_KMTs_4)/4), 
+                           2)
+      sd.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2) + sd(xnon_kmts_3$Non_KMTs_3) + sd(xnon_kmts_4$Non_KMTs_4))/4, 
+                       2)
+      show_avg
+    } else {
+      valueBox(
+        paste("No multiple file"), 
+        "Avg. Non-KMTs length", 
+        icon = icon("calculator"), 
+        color = "blue")
+    }
+  })
+  
+  output$avg.length.non.kmts1 <- renderValueBox({
+    req(input$amirafile1)
     
-    kmts <- Segments_1 %>% filter_at(vars(starts_with("Pole")), 
-                                   any_vars(.>= 1))
-    non_kmts <- setdiff(Segments_1, kmts)
-    length.non_kmts <- round(mean(non_kmts$length/10000), 
+    length.non_kmts <- round(mean(xnon_kmts_1$Non_KMTs_1), 
                              2)
-    sd.non.kmts <- round(sd(non_kmts$length/10000),
+    sd.non.kmts <- round(sd(xnon_kmts_1$Non_KMTs_1),
                          2)
-    
     valueBox(
       paste(length.non_kmts, "±", sd.non.kmts), 
-      "Avg. Non-KMTs length", 
+      "Avg. #1 Non-KMTs length", 
       icon = icon("calculator"), 
       color = "yellow")
   })
