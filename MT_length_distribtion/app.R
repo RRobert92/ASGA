@@ -4,6 +4,7 @@ library(shiny)
 library(readxl)
 library(tidyverse)
 library(plyr)
+library(xlsx)
 
 ##Maximum size of memory used by R, set to 500mb
 options(shiny.maxRequestSize = 500*1024^2)
@@ -190,31 +191,26 @@ ui <- dashboardPagePlus(
       tabItem(tabName = "menu_export",
               fluidPage(
                 column(width = 2,
-                       boxPlus(title = "Exprt Histogram data",
+                       boxPlus(title = "Exprt data",
                                width = NULL,
-                               style = "height:80px;",
+                               style = "height:762pxpx;",
                                status = "info",
                                closable = FALSE,
+                               selectInput("data.download", "Choose a analysis:",
+                                           choices = c("Histogram", "% of MTs")),
                                downloadButton("downloadData1", 
                                               "Download")
                        ),
-                       boxPlus(title = "Exprt % of MTs data",
-                               width = NULL,
-                               style = "height:80px;",
-                               status = "info",
-                               closable = FALSE,
-                               downloadButton("downloadData2", 
-                                              "Download")
-                       )
                 ),
                 column(width = 10,
                        boxPlus(title = "Exported table",
                                width = NULL,
-                               style = "height:50px;",
+                               style = "height:400px;",
                                status = "info",
                                closable = FALSE,
-                               tableOutput("excel.data.hist"),
-                               tableOutput("excel.data.perc")
+                               fluidRow(
+                                 tableOutput("excel.data")
+                               )
                        )
                 )
               )
@@ -287,7 +283,7 @@ server <- function(input, output) {
     
     ##Function for computing
     FilterForPole <- function(data.set){
-      data.set %>% filter_at(vars(starts_with("Pole")), 
+      data.set %>% filter_at(vars(starts_with("Pole")),
                               any_vars(.>= 1))
     }
     FindNonKMTs <- function(data.set, set1){
@@ -356,7 +352,7 @@ server <- function(input, output) {
     }
       
     ##Marge dataset for KMTs in one tabel for plot and export
-    if (exists("Hist_Segment_KMTs_2")){
+    if (exists("Hist_Segment_KMTs_2") && !exists("Hist_Segment_KMTs_3")){
       avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2)/2)
       avg_kmts <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
                              avg_kmts)
@@ -370,7 +366,7 @@ server <- function(input, output) {
                                   avg_kmts,
                                   avg_non_kmts), 
                              by = "Bins", type = "full")
-    } else if (exists("Hist_Segment_KMTs_3")){
+    } else if (exists("Hist_Segment_KMTs_3") && !exists("Hist_Segment_KMTs_4")){
       avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2 + Hist_Segment_KMTs_3$KMTs_3)/3)
       avg_kmts <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
                              avg_kmts)
@@ -461,60 +457,19 @@ server <- function(input, output) {
                 col = "gray28",
                 lwd = 1,
                 lty = 3)
-          
-        } else if(exists("Hist_Segment_KMTs_3")){
-          plot(full_data_hist$Bins,
-               full_data_hist$avg_kmts,
-               type = "l", 
-               col = "red", 
-               xlab = "Length (um)", 
-               ylab = "No. of KMTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_hist$Bins,
-                full_data_hist$KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
-        } else if(exists("Hist_Segment_KMTs_4")){
-          plot(full_data_hist$Bins,
-               full_data_hist$avg_kmts,
-               type = "l", 
-               col = "red", 
-               xlab = "Length (um)", 
-               ylab = "No. of KMTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_hist$Bins,
-                full_data_hist$KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
-          lines(full_data_hist$Bins,
-                full_data_hist$KMTs_4,
-                col = "gray10",
-                lwd = 1,
-                lty = 5)
+          if(exists("Hist_Segment_KMTs_3")){
+            lines(full_data_hist$Bins,
+                  full_data_hist$KMTs_3,
+                  col = "gray15",
+                  lwd = 1,
+                  lty = 4)
+          } else if(exists("Hist_Segment_KMTs_4")){
+            lines(full_data_hist$Bins,
+                  full_data_hist$KMTs_4,
+                  col = "gray10",
+                  lwd = 1,
+                  lty = 5)
+          }
         } else{
           plot(full_data_hist$Bins,
                full_data_hist$KMTs_1,
@@ -548,60 +503,20 @@ server <- function(input, output) {
                 col = "gray28",
                 lwd = 1,
                 lty = 3)
-          
-        } else if(exists("Hist_Segment_KMTs_3")){
-          plot(full_data_hist$Bins,
-               full_data_hist$avg_non_kmts,
-               type = "l", 
-               col = "yellow", 
-               xlab = "Length (um)", 
-               ylab = "No. of KMTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$Non_KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_hist$Bins,
-                full_data_hist$Non_KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$Non_KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
-        } else if(exists("Hist_Segment_KMTs_4")){
-          plot(full_data_hist$Bins,
-               full_data_hist$avg_non_kmts,
-               type = "l", 
-               col = "yellow", 
-               xlab = "Length (um)", 
-               ylab = "No. of KMTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$Non_KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_hist$Bins,
-                full_data_hist$Non_KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
-          lines(full_data_hist$Bins,
-                full_data_hist$Non_KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
-          lines(full_data_hist$Bins,
-                full_data_hist$Non_KMTs_4,
-                col = "gray10",
-                lwd = 1,
-                lty = 5)
+          if(exists("Hist_Segment_KMTs_3")){
+            lines(full_data_hist$Bins,
+                  full_data_hist$Non_KMTs_3,
+                  col = "gray15",
+                  lwd = 1,
+                  lty = 4)
+          }
+          else if(exists("Hist_Segment_KMTs_4")){
+            lines(full_data_hist$Bins,
+                  full_data_hist$Non_KMTs_4,
+                  col = "gray10",
+                  lwd = 1,
+                  lty = 5)
+          }
         } else{
           plot(full_data_hist$Bins,
                full_data_hist$Non_KMTs_1,
@@ -617,7 +532,7 @@ server <- function(input, output) {
       
       ## % of MTs
     if(input$analysis == 2){
-      if(exists("Segments_2")){
+      if(exists("Segments_2") && !exists("Segments_3")){
         sum_kmts_1 <- sum(full_data_hist$KMTs_1)
         sum_kmts_2 <- sum(full_data_hist$KMTs_2)
         sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
@@ -641,7 +556,7 @@ server <- function(input, output) {
                                       avg_kmts = avg_kmts,
                                       avg_non_kmts = avg_non_kmts
                                       )
-      } else if(exists("Segments_3")){
+      } else if(exists("Segments_3") && !exists("Segments_4")){
         sum_kmts_1 <- sum(full_data_hist$KMTs_1)
         sum_kmts_2 <- sum(full_data_hist$KMTs_2)
         sum_kmts_3 <- sum(full_data_hist$KMTs_3)
@@ -716,6 +631,8 @@ server <- function(input, output) {
       }
       
       if (input$display.on.plot == 1){
+        
+        ##if more then one data exist, show only avg value, otherwish show only one data
         if(exists("Hist_Segment_KMTs_2") || exists("Hist_Segment_KMTs_3") || exists("Hist_Segment_KMTs_4")){
           plot(full_data_perc$Bins,
                full_data_perc$avg_non_kmts,
@@ -745,7 +662,7 @@ server <- function(input, output) {
         }
       }
       
-      ## if only KMTs -> plot
+      ## if only KMTs to plot
       if (input$display.on.plot == 2){
         if(exists("Hist_Segment_KMTs_2")){
           plot(full_data_perc$Bins,
@@ -754,6 +671,7 @@ server <- function(input, output) {
                col = "red", 
                xlab = "Length (um)", 
                ylab = "% of MTs",
+               xylim=c(0,60),
                main = "KMTs Length distribution",
                lwd = 3)
           lines(full_data_perc$Bins,
@@ -766,60 +684,20 @@ server <- function(input, output) {
                 col = "gray28",
                 lwd = 1,
                 lty = 3)
-          
-        } else if(exists("Hist_Segment_KMTs_3")){
-          plot(full_data_perc$Bins,
-               full_data_perc$avg_kmts,
-               type = "l", 
-               col = "red", 
-               xlab = "Length (um)", 
-               ylab = "% of MTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_perc$Bins,
-                full_data_perc$KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_perc$Bins,
-                full_data_perc$KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
-          lines(full_data_perc$Bins,
-                full_data_perc$KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
-        } else if(exists("Hist_Segment_KMTs_4")){
-          plot(full_data_perc$Bins,
-               full_data_perc$avg_kmts,
-               type = "l", 
-               col = "red", 
-               xlab = "Length (um)", 
-               ylab = "% of MTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_perc$Bins,
-                full_data_perc$KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_perc$Bins,
-                full_data_perc$KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
-          lines(full_data_perc$Bins,
-                full_data_perc$KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
-          lines(full_data_perc$Bins,
-                full_data_perc$KMTs_4,
-                col = "gray10",
-                lwd = 1,
-                lty = 5)
+          if(exists("Hist_Segment_KMTs_3")){
+            lines(full_data_perc$Bins,
+                  full_data_perc$KMTs_3,
+                  col = "gray15",
+                  lwd = 1,
+                  lty = 4)
+          }
+          if(exists("Hist_Segment_KMTs_4")){
+            lines(full_data_perc$Bins,
+                  full_data_perc$KMTs_4,
+                  col = "gray10",
+                  lwd = 1,
+                  lty = 5)
+           }
         } else{
           plot(full_data_perc$Bins,
                full_data_perc$KMTs_1,
@@ -853,61 +731,20 @@ server <- function(input, output) {
                 col = "gray28",
                 lwd = 1,
                 lty = 3)
-          
-        } else if(exists("Hist_Segment_KMTs_3")){
-          plot(full_data_perc$Bins,
-               full_data_perc$avg_non_kmts,
-               type = "l", 
-               col = "yellow", 
-               xlab = "Length (um)", 
-               ylab = "% of MTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_perc$Bins,
-                full_data_perc$Non_KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_perc$Bins,
-                full_data_perc$Non_KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
+          if(exists("Hist_Segment_KMTs_3")){
           lines(full_data_perc$Bins,
                 full_data_perc$Non_KMTs_3,
                 col = "gray15",
                 lwd = 1,
                 lty = 4)
-        } else if(exists("Hist_Segment_KMTs_4")){
-          plot(full_data_perc$Bins,
-               full_data_perc$avg_non_kmts,
-               type = "l", 
-               col = "yellow", 
-               xlab = "Length (um)", 
-               ylab = "% of MTs",
-               main = "KMTs Length distribution",
-               lwd = 3)
-          lines(full_data_perc$Bins,
-                full_data_perc$Non_KMTs_1,
-                col = "gray50",
-                lwd = 1,
-                lty = 2)
-          lines(full_data_perc$Bins,
-                full_data_perc$Non_KMTs_2,
-                col = "gray28",
-                lwd = 1,
-                lty = 3)
-          lines(full_data_perc$Bins,
-                full_data_perc$Non_KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
+            } else if(exists("Hist_Segment_KMTs_4")){
           lines(full_data_perc$Bins,
                 full_data_perc$Non_KMTs_4,
                 col = "gray10",
                 lwd = 1,
                 lty = 5)
-        } else{
+              }
+        } else {
           plot(full_data_perc$Bins,
                full_data_perc$Non_KMTs_1,
                type = "l", 
@@ -1023,29 +860,26 @@ server <- function(input, output) {
       icon = icon("calculator"), 
       color = "yellow")
   })
-  output$excel.data.hist <- renderTable({
-    req(input$amirafile1)
-    
-    if(exists("full_data_hist")){
-      return(full_data_hist)
-    }
+  ##show selected full_data talbe 
+  data.download.Input <- reactive({
+    switch(input$data.download,
+           "Histogram" = full_data_hist,
+           "% of MTs" = full_data_perc
+           )
   })
-  
-  output$excel.data.perc <- renderTable({
+  output$excel.data <- renderTable({
     req(input$amirafile1)
-    
-    if(exists("full_data_perc")){
-      return(full_data_perc)
-    }
+    data.download.Input()
   })
+
   
   output$downloadData1 <- downloadHandler(
-    filename = function() { "full_data_hist.xlsx"},
-    content = function(file) {write_xlsx(data, path = file)}
-  )
-  output$downloadData2 <- downloadHandler(
-    filename = function() { "full_data_perc.xlsx"},
-    content = function(file) {write_xlsx(data, path = file)}
+    filename = function() {
+      paste(input$dataset, ".csv", sep = "")
+    },
+    content = function(file) {
+      write.xlsx(data.download.Input(), file)
+    }
   )
 }
 
