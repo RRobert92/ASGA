@@ -4,7 +4,6 @@ library(shiny)
 library(readxl)
 library(tidyverse)
 library(plyr)
-library(xlsx)
 
 ##Maximum size of memory used by R, set to 500mb
 options(shiny.maxRequestSize = 500*1024^2)
@@ -445,6 +444,7 @@ server <- function(input, output) {
                col = "red", 
                xlab = "Length (um)", 
                ylab = "No. of KMTs",
+               ylim=c(0,60),
                main = "KMTs Length distribution",
                lwd = 3)
           lines(full_data_hist$Bins,
@@ -491,6 +491,7 @@ server <- function(input, output) {
                col = "yellow", 
                xlab = "Length (um)", 
                ylab = "No. of KMTs",
+               ylim = c(0,800),
                main = "KMTs Length distribution",
                lwd = 3)
           lines(full_data_hist$Bins,
@@ -539,20 +540,20 @@ server <- function(input, output) {
         sum_non_kmts_2 <- sum(full_data_hist$Non_KMTs_2)
         
         full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                     KMTs_1 = c(round((full_data_hist$KMTs_1/sum_kmts_1)*100, 2)),
-                                     Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1/sum_non_kmts_1)*100, 2)),
-                                     KMTs_2 = c(round((full_data_hist$KMTs_2/sum_kmts_2)*100, 2)),
-                                     Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2/sum_non_kmts_2)*100, 2))
+                                     KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                     KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                     Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                     Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2))
                                      )
         
         avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2)/2)
         avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2)/2)
         
         full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1/sum_kmts_1)*100, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2/sum_kmts_2)*100, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1/sum_non_kmts_1)*100, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2/sum_non_kmts_2)*100, 2)),
+                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
                                       avg_kmts = avg_kmts,
                                       avg_non_kmts = avg_non_kmts
                                       )
@@ -565,24 +566,24 @@ server <- function(input, output) {
         sum_non_kmts_3 <- sum(full_data_hist$Non_KMTs_3)
         
         full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1/sum_kmts_1)*100, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1/sum_non_kmts_1)*100, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2/sum_kmts_2)*100, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2/sum_non_kmts_2)*100, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3/sum_kmts_3)*100, 2)),
-                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3/sum_non_kmts_3)*100, 2))
+                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2))
         )
         
         avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2 + full_data_perc$KMTs_3)/3)
         avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2 + full_data_perc$Non_KMTs_3)/3)
         
         full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1/sum_kmts_1)*100, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2/sum_kmts_2)*100, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3/sum_kmts_3)*100, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1/sum_non_kmts_1)*100, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2/sum_non_kmts_2)*100, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_3/sum_non_kmts_3)*100, 2)),
+                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
                                       avg_kmts = avg_kmts,
                                       avg_non_kmts = avg_non_kmts
         )
@@ -597,28 +598,28 @@ server <- function(input, output) {
         sum_non_kmts_4 <- sum(full_data_hist$Non_KMTs_4)
         
         full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1/sum_kmts_1)*100, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1/sum_non_kmts_1)*100, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2/sum_kmts_2)*100, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2/sum_non_kmts_2)*100, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3/sum_kmts_3)*100, 2)),
-                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3/sum_non_kmts_3)*100, 2)),
-                                      KMTs_4 = c(round((full_data_hist$KMTs_4/sum_kmts_4)*100, 2)),
-                                      Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4/sum_non_kmts_4)*100, 2))
+                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                      KMTs_4 = c(round((full_data_hist$KMTs_4*100)/sum_kmts_4, 2)),
+                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
+                                      Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4*100)/sum_non_kmts_4, 2))
         )
         
         avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2 + full_data_perc$KMTs_3 + full_data_perc$KMTs_4)/4)
         avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2 + full_data_perc$Non_KMTs_3 + full_data_perc$Non_KMTs_4)/4)
         
         full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1/sum_kmts_1)*100, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2/sum_kmts_2)*100, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3/sum_kmts_3)*100, 2)),
-                                      KMTs_4 = c(round((full_data_hist$KMTs_4/sum_kmts_4)*100, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1/sum_non_kmts_1)*100, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2/sum_non_kmts_2)*100, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_3/sum_non_kmts_3)*100, 2)),
-                                      Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4/sum_non_kmts_4)*100, 2)),
+                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                      KMTs_4 = c(round((full_data_hist$KMTs_4*100)/sum_kmts_4, 2)),
+                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
+                                      Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4*100)/sum_non_kmts_4, 2)),
                                       avg_kmts = avg_kmts,
                                       avg_non_kmts = avg_non_kmts
         )
@@ -626,8 +627,8 @@ server <- function(input, output) {
         sum_kmts_1 <- sum(full_data_hist$KMTs_1)
         sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
         full_data_perc <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                     KMTs_1 = c(round((full_data_hist$KMTs_1/sum_kmts_1)*100, 2)),
-                                     Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1/sum_non_kmts_1)*100, 2)))
+                                     KMTs_1 = c(round((full_data_hist$KMTs_1*100),sum_kmts_1, 2)),
+                                     Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)))
       }
       
       if (input$display.on.plot == 1){
@@ -671,7 +672,7 @@ server <- function(input, output) {
                col = "red", 
                xlab = "Length (um)", 
                ylab = "% of MTs",
-               xylim=c(0,60),
+               ylim = c(0,15),
                main = "KMTs Length distribution",
                lwd = 3)
           lines(full_data_perc$Bins,
@@ -719,6 +720,7 @@ server <- function(input, output) {
                col = "yellow", 
                xlab = "Length (um)", 
                ylab = "% of MTs",
+               ylim=c(0,30),
                main = "KMTs Length distribution",
                lwd = 3)
           lines(full_data_perc$Bins,
@@ -878,7 +880,7 @@ server <- function(input, output) {
       paste(input$dataset, ".csv", sep = "")
     },
     content = function(file) {
-      write.xlsx(data.download.Input(), file)
+      write.csv(data.download.Input(), file)
     }
   )
 }
