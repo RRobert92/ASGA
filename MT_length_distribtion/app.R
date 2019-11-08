@@ -48,74 +48,74 @@ ui <- dashboardPagePlus(
       tabItem(tabName = "menu_upload",
               fluidRow(
                 column(width = 3,
-                boxPlus(title = "Upload file #1", 
-                        width = NULL,
-                        status = "warning", 
-                        closable = FALSE,
-                        p(fileInput("amirafile1", "Choose .xlsx File", multiple = FALSE,
-                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
-                        )
-                        )
-                ),
-                boxPlus(title = "Upload file #2", 
-                        width = NULL,
-                        status = "warning", 
-                        closable = FALSE,
-                        p(fileInput("amirafile2", "Choose .xlsx File", multiple = FALSE,
-                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
-                        )
-                        )
-                ),
-                boxPlus(title = "Upload file #3", 
-                        width = NULL,
-                        status = "warning", 
-                        closable = FALSE,
-                        p(fileInput("amirafile3", "Choose .xlsx File", multiple = FALSE,
-                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
-                        )
-                        )
-                ),
-                boxPlus(title = "Upload file #4", 
-                        width = NULL,
-                        status = "warning", 
-                        closable = FALSE,
-                        p(fileInput("amirafile4", "Choose .xlsx File", multiple = FALSE,
-                                    accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
-                        )
-                        )
-                )
+                       boxPlus(title = "Upload file #1", 
+                               width = NULL,
+                               status = "warning", 
+                               closable = FALSE,
+                               p(fileInput("amirafile1", "Choose .xlsx File", multiple = FALSE,
+                                           accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                               )
+                               )
+                       ),
+                       boxPlus(title = "Upload file #2", 
+                               width = NULL,
+                               status = "warning", 
+                               closable = FALSE,
+                               p(fileInput("amirafile2", "Choose .xlsx File", multiple = FALSE,
+                                           accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                               )
+                               )
+                       ),
+                       boxPlus(title = "Upload file #3", 
+                               width = NULL,
+                               status = "warning", 
+                               closable = FALSE,
+                               p(fileInput("amirafile3", "Choose .xlsx File", multiple = FALSE,
+                                           accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                               )
+                               )
+                       ),
+                       boxPlus(title = "Upload file #4", 
+                               width = NULL,
+                               status = "warning", 
+                               closable = FALSE,
+                               p(fileInput("amirafile4", "Choose .xlsx File", multiple = FALSE,
+                                           accept = c("text/xlsx", "text/comma-separated-values,text/plain", ".xlsx")
+                               )
+                               )
+                       )
                 ),
                 column(width = 9,
-                boxPlus(title = "Lodate data:", 
-                        width = NULL,
-                        status = "primary", 
-                        closable = FALSE,
-                        p(radioButtons("display",
-                                       "Display", 
-                                       choices = c(Head = "head", 
-                                                   All = "all"), 
-                                       selected = "head"),
-                          tabsetPanel(
-                            tabPanel("Data_Segments",
-                                     fluidRow(
-                                       column(width = 2, "Data set #1",
-                                              tableOutput("data1.segment")
-                                       ),
-                                       column(width = 2, "Data set #2",
-                                         tableOutput("data2.segment")
-                                       ),
-                                       column(width = 2, "Data set #3",
-                                              tableOutput("data3.segment")
-                                       ),
-                                       column(width = 2, "Data set #4",
-                                              tableOutput("data4.segment")
-                                       )
-                                     )
-                            )
-                          )
-                        )
+                       boxPlus(title = "Lodate data:", 
+                               width = NULL,
+                               status = "primary", 
+                               closable = FALSE,
+                               p(radioButtons("display",
+                                              "Display", 
+                                              choices = c(Head = "head", 
+                                                          All = "all"), 
+                                              selected = "head"),
+                                 tabsetPanel(
+                                   tabPanel("Data_Segments",
+                                            fluidRow(
+                                              column(width = 2, "Data set #1",
+                                                     tableOutput("data1.segment")
+                                              ),
+                                              column(width = 2, "Data set #2",
+                                                     tableOutput("data2.segment")
+                                              ),
+                                              column(width = 2, "Data set #3",
+                                                     tableOutput("data3.segment")
+                                              ),
+                                              column(width = 2, "Data set #4",
+                                                     tableOutput("data4.segment")
+                                              )
+                                            )
+                                   )
+                                 )
+                               )
+                       )
                 )
-              )
               )
       ),
       
@@ -135,9 +135,9 @@ ui <- dashboardPagePlus(
                            numericInput("bin.min", "Bin start from (um):",
                                         value = 0),
                            numericInput("bin.max", "Bin stop at (um):", 
-                                       value = 10),
+                                        value = 10),
                            numericInput("bin.step", "Bin every (um);", 
-                                       value = 0.25)
+                                        value = 0.25)
                        ),
                        
                        box(title = "Other Parameaters",
@@ -146,13 +146,13 @@ ui <- dashboardPagePlus(
                            status = "warning",
                            collapsible = FALSE,
                            closable = FALSE,
-                               selectInput("display.on.plot", 
-                                           "Select what to display",
-                                           choices = c("All" = 1, 
-                                                       "KMTs" = 2,
-                                                       "Non_KMTs" = 3), 
-                                           selected = 1)
-                           )
+                           selectInput("display.on.plot", 
+                                       "Select what to display",
+                                       choices = c("All" = 1, 
+                                                   "KMTs" = 2,
+                                                   "Non_KMTs" = 3), 
+                                       selected = 1)
+                       )
                 ),
                 column(width = 7,
                        boxPlus(title = "Graphs", 
@@ -166,23 +166,7 @@ ui <- dashboardPagePlus(
                 column(width = 3,
                        valueBoxOutput("avg.length.kmts",
                                       width = NULL),
-                       valueBoxOutput("avg.length.kmts1",
-                                      width = NULL),
-                       valueBoxOutput("avg.length.kmts2",
-                                      width = NULL),
-                       valueBoxOutput("avg.length.kmts3",
-                                      width = NULL),
-                       valueBoxOutput("avg.length.kmts4",
-                                      width = NULL),
                        valueBoxOutput("avg.length.non.kmts",
-                                      width = NULL),
-                       valueBoxOutput("avg.length.non.kmts1",
-                                      width = NULL),
-                       valueBoxOutput("avg.length.non.kmts2",
-                                      width = NULL),
-                       valueBoxOutput("avg.length.non.kmts3",
-                                      width = NULL),
-                       valueBoxOutput("avg.length.non.kmts4",
                                       width = NULL)
                 )
               )
@@ -199,7 +183,7 @@ ui <- dashboardPagePlus(
                                            choices = c("Histogram", "% of MTs")),
                                downloadButton("downloadData1", 
                                               "Download")
-                       ),
+                       )
                 ),
                 column(width = 10,
                        boxPlus(title = "Exported table",
@@ -220,7 +204,7 @@ ui <- dashboardPagePlus(
 
 server <- function(input, output) {
   
- ## load files upload by user to check if data are loaded correctly and use for global enviroment (<<-)
+  ## load files upload by user to check if data are loaded correctly and use for global enviroment (<<-)
   output$data1.segment <- renderTable({
     req(input$amirafile1)
     tryCatch({
@@ -272,8 +256,8 @@ server <- function(input, output) {
       return(Segments_4)
     }
   })
-
-## Creat table used for all analyis, and export -> histogram and % of MTs analysis
+  
+  ## Creat table used for all analyis, and export -> histogram and % of MTs analysis
   output$length.plot_kmts <- renderPlot({
     req(input$amirafile1)
     req(input$bin.min)
@@ -283,12 +267,12 @@ server <- function(input, output) {
     ##Function for computing
     FilterForPole <- function(data.set){
       tryCatch({
-       data.set %>% filter_at(vars(starts_with("Pole")),
-                              any_vars(.>= 1))
-        },
-       error = function(e) {
-         data.set %>% filter_at(vars(starts_with("KMT")),
-                                any_vars(.>= 1))
+        data.set %>% filter_at(vars(starts_with("Pole")),
+                               any_vars(.>= 1))
+      },
+      error = function(e) {
+        data.set %>% filter_at(vars(starts_with("KMT")),
+                               any_vars(.>= 1))
       })
     }
     
@@ -310,13 +294,13 @@ server <- function(input, output) {
     non_kmts_1 <<- FindNonKMTs(Segments_1, kmts_1)
     xkmts_1 <<- data.frame(KMTs_1 = kmts_1$length/10000)  ## Lengh in (um) for KMTs_1
     xnon_kmts_1 <<- data.frame(Non_KMTs_1 = non_kmts_1$length/10000)## Lengh in (um) for non_KMTs_1
-      ##Creat data.frame of histogram data for global use with the name setb by "id"
-      Hist_Segment_KMTs_1 <<- CreatHist(xkmts_1$KMTs_1)
-      Hist_Segment_KMTs_1 <<- data.frame(Bins = c(Hist_Segment_KMTs_1$breaks), 
-                                         KMTs_1 = c(0,Hist_Segment_KMTs_1$counts))
-      Hist_Segment_Non_KMTs_1 <<- CreatHist(xnon_kmts_1$Non_KMTs_1)
-      Hist_Segment_Non_KMTs_1 <<- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$breaks), 
-                                             Non_KMTs_1 = c(0,Hist_Segment_Non_KMTs_1$counts))
+    ##Creat data.frame of histogram data for global use with the name setb by "id"
+    Hist_Segment_KMTs_1 <<- CreatHist(xkmts_1$KMTs_1)
+    Hist_Segment_KMTs_1 <<- data.frame(Bins = c(Hist_Segment_KMTs_1$breaks), 
+                                       KMTs_1 = c(0,Hist_Segment_KMTs_1$counts))
+    Hist_Segment_Non_KMTs_1 <<- CreatHist(xnon_kmts_1$Non_KMTs_1)
+    Hist_Segment_Non_KMTs_1 <<- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$breaks), 
+                                           Non_KMTs_1 = c(0,Hist_Segment_Non_KMTs_1$counts))
     
     if(exists("Segments_2")){
       kmts_2 <<- FilterForPole(Segments_2)
@@ -357,7 +341,7 @@ server <- function(input, output) {
       Hist_Segment_Non_KMTs_4 <<- data.frame(Bins = c(Hist_Segment_Non_KMTs_4$breaks), 
                                              Non_KMTs_4 = c(0,Hist_Segment_Non_KMTs_4$counts))
     }
-      
+    
     ##Marge dataset for KMTs in one tabel for plot and export
     if (exists("Hist_Segment_KMTs_2") && !exists("Hist_Segment_KMTs_3")){
       avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2)/2)
@@ -367,12 +351,12 @@ server <- function(input, output) {
       avg_non_kmts <- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$Bins),
                                  avg_non_kmts)
       full_data_hist <<- join_all(list(Hist_Segment_KMTs_1,
-                                  Hist_Segment_Non_KMTs_1,
-                                  Hist_Segment_KMTs_2,
-                                  Hist_Segment_Non_KMTs_2,
-                                  avg_kmts,
-                                  avg_non_kmts), 
-                             by = "Bins", type = "full")
+                                       Hist_Segment_Non_KMTs_1,
+                                       Hist_Segment_KMTs_2,
+                                       Hist_Segment_Non_KMTs_2,
+                                       avg_kmts,
+                                       avg_non_kmts), 
+                                  by = "Bins", type = "full")
     } else if (exists("Hist_Segment_KMTs_3") && !exists("Hist_Segment_KMTs_4")){
       avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2 + Hist_Segment_KMTs_3$KMTs_3)/3)
       avg_kmts <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
@@ -381,13 +365,13 @@ server <- function(input, output) {
       avg_non_kmts <- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$Bins),
                                  avg_non_kmts)
       full_data_hist <<- join_all(list(Hist_Segment_KMTs_1,
-                          Hist_Segment_Non_KMTs_1,
-                          Hist_Segment_KMTs_2,
-                          Hist_Segment_Non_KMTs_2,
-                          Hist_Segment_KMTs_3,
-                          Hist_Segment_Non_KMTs_3,
-                          avg_kmts,
-                          avg_non_kmts), by = "Bins", type = "full")
+                                       Hist_Segment_Non_KMTs_1,
+                                       Hist_Segment_KMTs_2,
+                                       Hist_Segment_Non_KMTs_2,
+                                       Hist_Segment_KMTs_3,
+                                       Hist_Segment_Non_KMTs_3,
+                                       avg_kmts,
+                                       avg_non_kmts), by = "Bins", type = "full")
     }else if (exists("Hist_Segment_KMTs_4")){
       avg_kmts = c((Hist_Segment_KMTs_1$KMTs_1 + Hist_Segment_KMTs_2$KMTs_2 + Hist_Segment_KMTs_3$KMTs_3 + Hist_Segment_KMTs_4)/4)
       avg_kmts <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
@@ -396,20 +380,119 @@ server <- function(input, output) {
       avg_non_kmts <- data.frame(Bins = c(Hist_Segment_Non_KMTs_1$Bins),
                                  avg_non_kmts)
       full_data_hist <<- join_all(list(Hist_Segment_KMTs_1,
-                                  Hist_Segment_Non_KMTs_1,
-                                  Hist_Segment_KMTs_2,
-                                  Hist_Segment_Non_KMTs_2,
-                                  Hist_Segment_KMTs_3,
-                                  Hist_Segment_Non_KMTs_3,
-                                  Hist_Segment_KMTs_4,
-                                  Hist_Segment_Non_KMTs_4,
-                                  avg_kmts,
-                                  avg_non_kmts), by = "Bins", type = "full")
+                                       Hist_Segment_Non_KMTs_1,
+                                       Hist_Segment_KMTs_2,
+                                       Hist_Segment_Non_KMTs_2,
+                                       Hist_Segment_KMTs_3,
+                                       Hist_Segment_Non_KMTs_3,
+                                       Hist_Segment_KMTs_4,
+                                       Hist_Segment_Non_KMTs_4,
+                                       avg_kmts,
+                                       avg_non_kmts), by = "Bins", type = "full")
     } else {
       full_data_hist <<- merge(Hist_Segment_KMTs_1,
-                          Hist_Segment_Non_KMTs_1)
+                               Hist_Segment_Non_KMTs_1)
     }
+    
+    ##calculateig % of MTs
+    if(exists("Segments_2") && !exists("Segments_3")){
+      sum_kmts_1 <- sum(full_data_hist$KMTs_1)
+      sum_kmts_2 <- sum(full_data_hist$KMTs_2)
+      sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
+      sum_non_kmts_2 <- sum(full_data_hist$Non_KMTs_2)
       
+      full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
+                                    KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                    KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                    Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                    Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2))
+      )
+      
+      avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2)/2)
+      avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2)/2)
+      
+      full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
+                                    KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                    KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                    Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                    Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                    avg_kmts = avg_kmts,
+                                    avg_non_kmts = avg_non_kmts
+      )
+    } else if(exists("Segments_3") && !exists("Segments_4")){
+      sum_kmts_1 <- sum(full_data_hist$KMTs_1)
+      sum_kmts_2 <- sum(full_data_hist$KMTs_2)
+      sum_kmts_3 <- sum(full_data_hist$KMTs_3)
+      sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
+      sum_non_kmts_2 <- sum(full_data_hist$Non_KMTs_2)
+      sum_non_kmts_3 <- sum(full_data_hist$Non_KMTs_3)
+      
+      full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
+                                    KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                    KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                    KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                    Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                    Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                    Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2))
+      )
+      
+      avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2 + full_data_perc$KMTs_3)/3)
+      avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2 + full_data_perc$Non_KMTs_3)/3)
+      
+      full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
+                                    KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                    KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                    KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                    Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                    Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                    Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
+                                    avg_kmts = avg_kmts,
+                                    avg_non_kmts = avg_non_kmts
+      )
+    } else if(exists("Segments_4")){
+      sum_kmts_1 <- sum(full_data_hist$KMTs_1)
+      sum_kmts_2 <- sum(full_data_hist$KMTs_2)
+      sum_kmts_3 <- sum(full_data_hist$KMTs_3)
+      sum_kmts_4 <- sum(full_data_hist$KMTs_3)
+      sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
+      sum_non_kmts_2 <- sum(full_data_hist$Non_KMTs_2)
+      sum_non_kmts_3 <- sum(full_data_hist$Non_KMTs_3)
+      sum_non_kmts_4 <- sum(full_data_hist$Non_KMTs_4)
+      
+      full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
+                                    KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                    KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                    KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                    KMTs_4 = c(round((full_data_hist$KMTs_4*100)/sum_kmts_4, 2)),
+                                    Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                    Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                    Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
+                                    Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4*100)/sum_non_kmts_4, 2))
+      )
+      
+      avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2 + full_data_perc$KMTs_3 + full_data_perc$KMTs_4)/4)
+      avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2 + full_data_perc$Non_KMTs_3 + full_data_perc$Non_KMTs_4)/4)
+      
+      full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
+                                    KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                    KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
+                                    KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
+                                    KMTs_4 = c(round((full_data_hist$KMTs_4*100)/sum_kmts_4, 2)),
+                                    Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
+                                    Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
+                                    Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
+                                    Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4*100)/sum_non_kmts_4, 2)),
+                                    avg_kmts = avg_kmts,
+                                    avg_non_kmts = avg_non_kmts
+      )
+    } else {
+      sum_kmts_1 <- sum(full_data_hist$KMTs_1)
+      sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
+      full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins),
+                                    KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
+                                    Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)))
+    }
+    
     
     ## Histogram
     if(input$analysis == 1){
@@ -429,18 +512,18 @@ server <- function(input, output) {
                 col = "red")
         } else {
           plot(full_data_hist$Bins,
-             full_data_hist$Non_KMTs_1,
-             type = "l", 
-             col = "yellow", 
-             xlab = "Length (um)", 
-             ylab = "No. of KMTs",
-             main = "MT Length distribution",
-             lwd = 3)
-        lines(full_data_hist$Bins,
-              full_data_hist$KMTs_1,
-              col = "red",
-              lwd = 3)
-      }
+               full_data_hist$Non_KMTs_1,
+               type = "l", 
+               col = "yellow", 
+               xlab = "Length (um)", 
+               ylab = "No. of KMTs",
+               main = "MT Length distribution",
+               lwd = 3)
+          lines(full_data_hist$Bins,
+                full_data_hist$KMTs_1,
+                col = "red",
+                lwd = 3)
+        }
       }
       
       ## if only KMTs -> plot
@@ -538,107 +621,9 @@ server <- function(input, output) {
         }
       }
     }
-      
-      ## % of MTs
+    
+    ## % of MTs
     if(input$analysis == 2){
-      if(exists("Segments_2") && !exists("Segments_3")){
-        sum_kmts_1 <- sum(full_data_hist$KMTs_1)
-        sum_kmts_2 <- sum(full_data_hist$KMTs_2)
-        sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
-        sum_non_kmts_2 <- sum(full_data_hist$Non_KMTs_2)
-        
-        full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                     KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
-                                     KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
-                                     Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
-                                     Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2))
-                                     )
-        
-        avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2)/2)
-        avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2)/2)
-        
-        full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
-                                      avg_kmts = avg_kmts,
-                                      avg_non_kmts = avg_non_kmts
-                                      )
-      } else if(exists("Segments_3") && !exists("Segments_4")){
-        sum_kmts_1 <- sum(full_data_hist$KMTs_1)
-        sum_kmts_2 <- sum(full_data_hist$KMTs_2)
-        sum_kmts_3 <- sum(full_data_hist$KMTs_3)
-        sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
-        sum_non_kmts_2 <- sum(full_data_hist$Non_KMTs_2)
-        sum_non_kmts_3 <- sum(full_data_hist$Non_KMTs_3)
-        
-        full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
-                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2))
-        )
-        
-        avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2 + full_data_perc$KMTs_3)/3)
-        avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2 + full_data_perc$Non_KMTs_3)/3)
-        
-        full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
-                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
-                                      avg_kmts = avg_kmts,
-                                      avg_non_kmts = avg_non_kmts
-        )
-      } else if(exists("Segments_4")){
-        sum_kmts_1 <- sum(full_data_hist$KMTs_1)
-        sum_kmts_2 <- sum(full_data_hist$KMTs_2)
-        sum_kmts_3 <- sum(full_data_hist$KMTs_3)
-        sum_kmts_4 <- sum(full_data_hist$KMTs_3)
-        sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
-        sum_non_kmts_2 <- sum(full_data_hist$Non_KMTs_2)
-        sum_non_kmts_3 <- sum(full_data_hist$Non_KMTs_3)
-        sum_non_kmts_4 <- sum(full_data_hist$Non_KMTs_4)
-        
-        full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
-                                      KMTs_4 = c(round((full_data_hist$KMTs_4*100)/sum_kmts_4, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
-                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
-                                      Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4*100)/sum_non_kmts_4, 2))
-        )
-        
-        avg_kmts = c((full_data_perc$KMTs_1 + full_data_perc$KMTs_2 + full_data_perc$KMTs_3 + full_data_perc$KMTs_4)/4)
-        avg_non_kmts = c((full_data_perc$Non_KMTs_1 + full_data_perc$Non_KMTs_2 + full_data_perc$Non_KMTs_3 + full_data_perc$Non_KMTs_4)/4)
-        
-        full_data_perc <<- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                      KMTs_1 = c(round((full_data_hist$KMTs_1*100)/sum_kmts_1, 2)),
-                                      KMTs_2 = c(round((full_data_hist$KMTs_2*100)/sum_kmts_2, 2)),
-                                      KMTs_3 = c(round((full_data_hist$KMTs_3*100)/sum_kmts_3, 2)),
-                                      KMTs_4 = c(round((full_data_hist$KMTs_4*100)/sum_kmts_4, 2)),
-                                      Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)),
-                                      Non_KMTs_2 = c(round((full_data_hist$Non_KMTs_2*100)/sum_non_kmts_2, 2)),
-                                      Non_KMTs_3 = c(round((full_data_hist$Non_KMTs_3*100)/sum_non_kmts_3, 2)),
-                                      Non_KMTs_4 = c(round((full_data_hist$Non_KMTs_4*100)/sum_non_kmts_4, 2)),
-                                      avg_kmts = avg_kmts,
-                                      avg_non_kmts = avg_non_kmts
-        )
-      } else {
-        sum_kmts_1 <- sum(full_data_hist$KMTs_1)
-        sum_non_kmts_1 <- sum(full_data_hist$Non_KMTs_1)
-        full_data_perc <- data.frame(Bins = c(Hist_Segment_KMTs_1$Bins), 
-                                     KMTs_1 = c(round((full_data_hist$KMTs_1*100),sum_kmts_1, 2)),
-                                     Non_KMTs_1 = c(round((full_data_hist$Non_KMTs_1*100)/sum_non_kmts_1, 2)))
-      }
-      
       if (input$display.on.plot == 1){
         
         ##if more then one data exist, show only avg value, otherwish show only one data
@@ -706,7 +691,7 @@ server <- function(input, output) {
                   col = "gray10",
                   lwd = 1,
                   lty = 5)
-           }
+          }
         } else{
           plot(full_data_perc$Bins,
                full_data_perc$KMTs_1,
@@ -742,18 +727,18 @@ server <- function(input, output) {
                 lwd = 1,
                 lty = 3)
           if(exists("Hist_Segment_KMTs_3")){
-          lines(full_data_perc$Bins,
-                full_data_perc$Non_KMTs_3,
-                col = "gray15",
-                lwd = 1,
-                lty = 4)
-            } else if(exists("Hist_Segment_KMTs_4")){
-          lines(full_data_perc$Bins,
-                full_data_perc$Non_KMTs_4,
-                col = "gray10",
-                lwd = 1,
-                lty = 5)
-              }
+            lines(full_data_perc$Bins,
+                  full_data_perc$Non_KMTs_3,
+                  col = "gray15",
+                  lwd = 1,
+                  lty = 4)
+          } else if(exists("Hist_Segment_KMTs_4")){
+            lines(full_data_perc$Bins,
+                  full_data_perc$Non_KMTs_4,
+                  col = "gray10",
+                  lwd = 1,
+                  lty = 5)
+          }
         } else {
           plot(full_data_perc$Bins,
                full_data_perc$Non_KMTs_1,
@@ -770,6 +755,7 @@ server <- function(input, output) {
   
   output$avg.length.kmts <- renderValueBox({
     req(input$amirafile1)
+    
     show_avg <- function(){
       valueBox(
         paste(length.kmts, "±", sd.kmts), 
@@ -777,111 +763,93 @@ server <- function(input, output) {
         icon = icon("calculator"), 
         color = "red")
     }
-    if(exists("Segments_2")){
-      length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2))/2, 
+      tryCatch({
+        if(exists("Segments_2") && !exists("Segments_3")){
+          length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2))/2, 
+                               2)
+          sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2))/2, 
+                           2)
+          show_avg()
+          
+        } else if (exists("Segments_3") && !exists("Segments_4")){
+          length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2) + mean(xkmts_3$KMTs_3))/3, 
+                               2)
+          sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2) + sd(xkmts_3$KMTs_3))/3, 
+                           2)
+          show_avg()
+          
+        } else if (exists("Segments_4")){
+          length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2) + mean(xkmts_3$KMTs_3) + mean(xkmts_4$KMTs_4)/4), 
+                               2)
+          sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2) + sd(xkmts_3$KMTs_3) + sd(xkmts_4$KMTs_4))/4, 
+                           2)
+          show_avg()
+          
+        }
+      },
+      error = function(e) {
+        length.non.kmts <- round(mean(xkmts_1$KMTs_1), 
+                             2)
+        sd.kmts <- round(sd(xkmts_1$KMTs_1),
                          2)
-      sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2))/2, 
-                     2)
-      show_avg()
-      
-    } else if (exists("Segments_3")){
-      length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2) + mean(xkmts_3$KMTs_3))/3, 
-                           2)
-      sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2) + sd(xkmts_3$KMTs_3))/3, 
-                       2)
-      show_avg()
-      
-    } else if (exists("Segments_4")){
-      length.kmts <- round((mean(xkmts_1$KMTs_1) + mean(xkmts_2$KMTs_2) + mean(xkmts_3$KMTs_3) + mean(xkmts_4$KMTs_4)/4), 
-                           2)
-      sd.kmts <- round((sd(xkmts_1$KMTs_1) + sd(xkmts_2$KMTs_2) + sd(xkmts_3$KMTs_3) + sd(xkmts_4$KMTs_4))/4, 
-                       2)
-      show_avg()
-      
-    } else {
-      valueBox(
-        paste("No multiple file"), 
-        "Avg. KMTs length", 
-        icon = icon("calculator"), 
-        color = "blue")
-    }
+        show_avg()
+      })
+  
   })
   
-  output$avg.length.kmts1 <- renderValueBox({
-    req(input$amirafile1)
-
-    length.kmts <- round(mean(xkmts_1$KMTs_1), 
-                         2)
-    sd.kmts <- round(sd(xkmts_1$KMTs_1),
-                     2)
-    valueBox(
-      paste(length.kmts, "±", sd.kmts), 
-      "Avg. #1 KMTs length", 
-      icon = icon("calculator"), 
-      color = "red")
-  })
-
   output$avg.length.non.kmts <- renderValueBox({
     req(input$amirafile1)
+    
     show_avg <- function(){
       valueBox(
-        paste(length.kmts, "±", sd.kmts), 
+        paste(length.non.kmts, "±", sd.non.kmts), 
         "Avg. Non-KMTs length", 
         icon = icon("calculator"), 
         color = "yellow")
     }
-    if(exists("Segments_2")){
-      length.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2))/2, 
+    
+    tryCatch({
+    if(exists("Segments_2") && !exists("Segments_3")){
+      length.non.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2))/2, 
                            2)
-      sd.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2))/2, 
+      sd.non.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2))/2, 
                        2)
       show_avg()
-    } else if (exists("Segments_3")){
-      length.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2) + mean(xnon_kmts_3$Non_KMTs_3))/3, 
+    } else if (exists("Segments_3") && !exists("Segments_4")){
+      length.non.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2) + mean(xnon_kmts_3$Non_KMTs_3))/3, 
                            2)
-      sd.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2) + sd(xnon_kmts_3$Non_KMTs_3))/3, 
+      sd.non.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2) + sd(xnon_kmts_3$Non_KMTs_3))/3, 
                        2)
       show_avg()
     } else if (exists("Segments_4")){
-      length.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2) + mean(xnon_kmts_3$Non_KMTs_3) + mean(xnon_kmts_4$Non_KMTs_4)/4), 
+      length.non.kmts <- round((mean(xnon_kmts_1$Non_KMTs_1) + mean(xnon_kmts_2$Non_KMTs_2) + mean(xnon_kmts_3$Non_KMTs_3) + mean(xnon_kmts_4$Non_KMTs_4)/4), 
                            2)
-      sd.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2) + sd(xnon_kmts_3$Non_KMTs_3) + sd(xnon_kmts_4$Non_KMTs_4))/4, 
+      sd.non.kmts <- round((sd(xnon_kmts_1$Non_KMTs_1) + sd(xnon_kmts_2$Non_KMTs_2) + sd(xnon_kmts_3$Non_KMTs_3) + sd(xnon_kmts_4$Non_KMTs_4))/4, 
                        2)
       show_avg()
-    } else {
-      valueBox(
-        paste("No multiple file"), 
-        "Avg. Non-KMTs length", 
-        icon = icon("calculator"), 
-        color = "blue")
     }
-  })
+      },
+    error = function(e) {
+      length.non.kmts <- round(mean(xnon_kmts_1$Non_KMTs_1), 
+                           2)
+      sd.non.kmts <- round(sd(xnon_kmts_1$Non_KMTs_1),
+                       2)
+      show_avg()
+    })
+    })
   
-  output$avg.length.non.kmts1 <- renderValueBox({
-    req(input$amirafile1)
-    
-    length.non_kmts <- round(mean(xnon_kmts_1$Non_KMTs_1), 
-                             2)
-    sd.non.kmts <- round(sd(xnon_kmts_1$Non_KMTs_1),
-                         2)
-    valueBox(
-      paste(length.non_kmts, "±", sd.non.kmts), 
-      "Avg. #1 Non-KMTs length", 
-      icon = icon("calculator"), 
-      color = "yellow")
-  })
   ##show selected full_data talbe 
   data.download.Input <- reactive({
     switch(input$data.download,
            "Histogram" = full_data_hist,
            "% of MTs" = full_data_perc
-           )
+    )
   })
   output$excel.data <- renderTable({
     req(input$amirafile1)
     data.download.Input()
   })
-
+  
   
   output$downloadData1 <- downloadHandler(
     filename = function() {
