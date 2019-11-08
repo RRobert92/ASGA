@@ -282,12 +282,20 @@ server <- function(input, output) {
     
     ##Function for computing
     FilterForPole <- function(data.set){
-      data.set %>% filter_at(vars(starts_with("Pole")),
+      tryCatch({
+       data.set %>% filter_at(vars(starts_with("Pole")),
                               any_vars(.>= 1))
+        },
+       error = function(e) {
+         data.set %>% filter_at(vars(starts_with("KMT")),
+                                any_vars(.>= 1))
+      })
     }
+    
     FindNonKMTs <- function(data.set, set1){
       setdiff(data.set, set1)
     }
+    
     CreatHist <- function(data.set) {
       hist(data.set, 
            xlim = c(input$bin.min, input$bin.max),
@@ -877,7 +885,7 @@ server <- function(input, output) {
   
   output$downloadData1 <- downloadHandler(
     filename = function() {
-      paste(input$dataset, ".csv", sep = "")
+      paste(input$dataset, "full_data.csv", sep = "")
     },
     content = function(file) {
       write.csv(data.download.Input(), file)
