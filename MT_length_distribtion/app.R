@@ -5,8 +5,8 @@ library(readxl)
 library(tidyverse)
 library(plyr)
 
-##Maximum size of memory used by R, set to 500mb
-options(shiny.maxRequestSize = 500*1024^2)
+##Maximum size of memory used by R, set to 1024mb
+options(shiny.maxRequestSize = 1024*1024^2)
 
 ui <- dashboardPagePlus(
   
