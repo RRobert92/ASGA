@@ -40,10 +40,10 @@ ui <- dashboardPagePlus(
   dashboardBody(
     tabItems(
       tabItem(tabName = "menu_about",
-              includeHTML("about.html")
+              includeHTML("html/about.html")
       ),
       tabItem(tabName = "menu_instruction",
-              includeHTML("manual.html")
+              includeHTML("html/manual.html")
       ),
       tabItem(tabName = "menu_upload",
               fluidRow(
