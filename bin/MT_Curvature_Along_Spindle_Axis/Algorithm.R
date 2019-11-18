@@ -213,64 +213,64 @@ for(i in nrow_1){
 
 
 ##Spread data for bins Pole1
-Pole1_full_1.0 <- data.frame(To_0.1_c = Pole1_full[with(Pole1_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,3],
-                             To_0.1_p = Pole1_full[with(Pole1_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,4])
-Pole1_full_0.9 <- data.frame(To_0.2_c = Pole1_full[with(Pole1_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,3],
-                             To_0.2_p = Pole1_full[with(Pole1_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,4])
-Pole1_full_0.8 <- data.frame(To_0.3_c = Pole1_full[with(Pole1_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,3],
-                             To_0.3_p = Pole1_full[with(Pole1_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,4])
-Pole1_full_0.7 <- data.frame(To_0.4_c = Pole1_full[with(Pole1_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,3],
-                             To_0.4_p = Pole1_full[with(Pole1_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,4])
-Pole1_full_0.6 <- data.frame(To_0.5_c = Pole1_full[with(Pole1_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,3],
-                             To_0.5_p = Pole1_full[with(Pole1_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,4])
-Pole1_full_0.5 <- data.frame(To_0.6_c = Pole1_full[with(Pole1_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,3],
-                             To_0.6_p = Pole1_full[with(Pole1_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,4])
-Pole1_full_0.4 <- data.frame(To_0.7_c = Pole1_full[with(Pole1_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,3],
-                             To_0.7_p = Pole1_full[with(Pole1_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,4])
-Pole1_full_0.3 <- data.frame(To_0.8_c = Pole1_full[with(Pole1_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,3],
-                             To_0.8_p = Pole1_full[with(Pole1_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,4])
-Pole1_full_0.2 <- data.frame(To_0.9_c = Pole1_full[with(Pole1_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,3],
-                             To_0.9_p = Pole1_full[with(Pole1_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,4])
-Pole1_full_0.1 <- data.frame(To_1.0_c = Pole1_full[with(Pole1_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,3],
-                             To_1.0_p = Pole1_full[with(Pole1_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,4])
-Pole1_full_0.0 <- data.frame(To_1.1_c = Pole1_full[with(Pole1_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,3],
-                             To_1.1_p = Pole1_full[with(Pole1_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,4])
-Pole1_full_m0.1 <- data.frame(To_1.2_c = Pole1_full[with(Pole1_full, Mean_Position < -0.1 & Mean_Position > -0.201),][,3],
-                             To_1.2_p = Pole1_full[with(Pole1_full, Mean_Position < -0.1 & Mean_Position > -0.201),][,4])
-Pole1_full_m0.2 <- data.frame(To_1.3_c = Pole1_full[with(Pole1_full, Mean_Position < -0.2 & Mean_Position > -0.301),][,3],
-                             To_1.3_p = Pole1_full[with(Pole1_full, Mean_Position < -0.2 & Mean_Position > -0.301),][,4])
-Pole1_full_m0.3 <- data.frame(To_1.3_c = Pole1_full[with(Pole1_full, Mean_Position < -0.3),][,3],
-                              To_1.3_p = Pole1_full[with(Pole1_full, Mean_Position < -0.3),][,4])
+Pole1_full_1.0 <- data.frame(To_1.0_c = Pole1_full[with(Pole1_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,3],
+                             To_1.0_p = Pole1_full[with(Pole1_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,4])
+Pole1_full_0.9 <- data.frame(To_0.9_c = Pole1_full[with(Pole1_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,3],
+                             To_0.9_p = Pole1_full[with(Pole1_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,4])
+Pole1_full_0.8 <- data.frame(To_0.8_c = Pole1_full[with(Pole1_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,3],
+                             To_0.8_p = Pole1_full[with(Pole1_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,4])
+Pole1_full_0.7 <- data.frame(To_0.7_c = Pole1_full[with(Pole1_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,3],
+                             To_0.7_p = Pole1_full[with(Pole1_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,4])
+Pole1_full_0.6 <- data.frame(To_0.6_c = Pole1_full[with(Pole1_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,3],
+                             To_0.6_p = Pole1_full[with(Pole1_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,4])
+Pole1_full_0.5 <- data.frame(To_0.5_c = Pole1_full[with(Pole1_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,3],
+                             To_0.5_p = Pole1_full[with(Pole1_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,4])
+Pole1_full_0.4 <- data.frame(To_0.4_c = Pole1_full[with(Pole1_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,3],
+                             To_0.4_p = Pole1_full[with(Pole1_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,4])
+Pole1_full_0.3 <- data.frame(To_0.3_c = Pole1_full[with(Pole1_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,3],
+                             To_0.3_p = Pole1_full[with(Pole1_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,4])
+Pole1_full_0.2 <- data.frame(To_0.2_c = Pole1_full[with(Pole1_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,3],
+                             To_0.2_p = Pole1_full[with(Pole1_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,4])
+Pole1_full_0.1 <- data.frame(To_0.1_c = Pole1_full[with(Pole1_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,3],
+                             To_0.1_p = Pole1_full[with(Pole1_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,4])
+Pole1_full_0.0 <- data.frame(To_0.0_c = Pole1_full[with(Pole1_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,3],
+                             To_0.0_p = Pole1_full[with(Pole1_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,4])
+Pole1_full_m0.1 <- data.frame(To_m0.1_c = Pole1_full[with(Pole1_full, Mean_Position < -0.1 & Mean_Position > -0.201),][,3],
+                             To_m0.1_p = Pole1_full[with(Pole1_full, Mean_Position < -0.1 & Mean_Position > -0.201),][,4])
+Pole1_full_m0.2 <- data.frame(To_m0.2_c = Pole1_full[with(Pole1_full, Mean_Position < -0.2 & Mean_Position > -0.301),][,3],
+                             To_m0.2_p = Pole1_full[with(Pole1_full, Mean_Position < -0.2 & Mean_Position > -0.301),][,4])
+Pole1_full_m0.3 <- data.frame(To_m0.3_c = Pole1_full[with(Pole1_full, Mean_Position < -0.3),][,3],
+                              To_m0.3_p = Pole1_full[with(Pole1_full, Mean_Position < -0.3),][,4])
 
 ##Spread data for bins Pole1
-Pole2_full_1.0 <- data.frame(To_0.1_c = Pole2_full[with(Pole2_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,3],
-                             To_0.1_p = Pole2_full[with(Pole2_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,4])
-Pole2_full_0.9 <- data.frame(To_0.2_c = Pole2_full[with(Pole2_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,3],
-                             To_0.2_p = Pole2_full[with(Pole2_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,4])
-Pole2_full_0.8 <- data.frame(To_0.3_c = Pole2_full[with(Pole2_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,3],
-                             To_0.3_p = Pole2_full[with(Pole2_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,4])
-Pole2_full_0.7 <- data.frame(To_0.4_c = Pole2_full[with(Pole2_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,3],
-                             To_0.4_p = Pole2_full[with(Pole2_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,4])
-Pole2_full_0.6 <- data.frame(To_0.5_c = Pole2_full[with(Pole2_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,3],
-                             To_0.5_p = Pole2_full[with(Pole2_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,4])
-Pole2_full_0.5 <- data.frame(To_0.6_c = Pole2_full[with(Pole2_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,3],
-                             To_0.6_p = Pole2_full[with(Pole2_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,4])
-Pole2_full_0.4 <- data.frame(To_0.7_c = Pole2_full[with(Pole2_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,3],
-                             To_0.7_p = Pole2_full[with(Pole2_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,4])
-Pole2_full_0.3 <- data.frame(To_0.8_c = Pole2_full[with(Pole2_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,3],
-                             To_0.8_p = Pole2_full[with(Pole2_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,4])
-Pole2_full_0.2 <- data.frame(To_0.9_c = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,3],
-                             To_0.9_p = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,4])
-Pole2_full_0.1 <- data.frame(To_1.0_c = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,3],
-                             To_1.0_p = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,4])
-Pole2_full_0.0 <- data.frame(To_1.1_c = Pole2_full[with(Pole2_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,3],
-                             To_1.1_p = Pole2_full[with(Pole2_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,4])
-Pole2_full_m0.1 <- data.frame(To_1.2_c = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > -0.201),][,3],
-                              To_1.2_p = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > -0.201),][,4])
-Pole2_full_m0.2 <- data.frame(To_1.3_c = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > -0.301),][,3],
-                              To_1.3_p = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > -0.301),][,4])
-Pole2_full_m0.3 <- data.frame(To_1.3_c = Pole2_full[with(Pole2_full, Mean_Position < -0.3),][,3],
-                              To_1.3_p = Pole2_full[with(Pole2_full, Mean_Position < -0.3),][,4])
+Pole2_full_1.0 <- data.frame(To_1.0_c = Pole2_full[with(Pole2_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,3],
+                             To_1.0_p = Pole2_full[with(Pole2_full, Mean_Position < 1.0 & Mean_Position > 0.899),][,4])
+Pole2_full_0.9 <- data.frame(To_0.9_c = Pole2_full[with(Pole2_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,3],
+                             To_0.9_p = Pole2_full[with(Pole2_full, Mean_Position < 0.9 & Mean_Position > 0.799),][,4])
+Pole2_full_0.8 <- data.frame(To_0.8_c = Pole2_full[with(Pole2_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,3],
+                             To_0.8_p = Pole2_full[with(Pole2_full, Mean_Position < 0.8 & Mean_Position > 0.699),][,4])
+Pole2_full_0.7 <- data.frame(To_0.7_c = Pole2_full[with(Pole2_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,3],
+                             To_0.7_p = Pole2_full[with(Pole2_full, Mean_Position < 0.7 & Mean_Position > 0.599),][,4])
+Pole2_full_0.6 <- data.frame(To_0.6_c = Pole2_full[with(Pole2_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,3],
+                             To_0.6_p = Pole2_full[with(Pole2_full, Mean_Position < 0.6 & Mean_Position > 0.499),][,4])
+Pole2_full_0.5 <- data.frame(To_0.5_c = Pole2_full[with(Pole2_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,3],
+                             To_0.5_p = Pole2_full[with(Pole2_full, Mean_Position < 0.5 & Mean_Position > 0.399),][,4])
+Pole2_full_0.4 <- data.frame(To_0.4_c = Pole2_full[with(Pole2_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,3],
+                             To_0.4_p = Pole2_full[with(Pole2_full, Mean_Position < 0.4 & Mean_Position > 0.299),][,4])
+Pole2_full_0.3 <- data.frame(To_0.3_c = Pole2_full[with(Pole2_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,3],
+                             To_0.3_p = Pole2_full[with(Pole2_full, Mean_Position < 0.3 & Mean_Position > 0.199),][,4])
+Pole2_full_0.2 <- data.frame(To_0.2_c = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,3],
+                             To_0.2_p = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > 0.099),][,4])
+Pole2_full_0.1 <- data.frame(To_0.1_c = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,3],
+                             To_0.1_p = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > 0.000),][,4])
+Pole2_full_0.0 <- data.frame(To_0.0_c = Pole2_full[with(Pole2_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,3],
+                             To_0.0_p = Pole2_full[with(Pole2_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,4])
+Pole2_full_m0.1 <- data.frame(To_m0.1_c = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > -0.201),][,3],
+                              To_m0.1_p = Pole2_full[with(Pole2_full, Mean_Position < 0.1 & Mean_Position > -0.201),][,4])
+Pole2_full_m0.2 <- data.frame(To_m0.2_c = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > -0.301),][,3],
+                              To_m0.2_p = Pole2_full[with(Pole2_full, Mean_Position < 0.2 & Mean_Position > -0.301),][,4])
+Pole2_full_m0.3 <- data.frame(To_m0.3_c = Pole2_full[with(Pole2_full, Mean_Position < -0.3),][,3],
+                              To_m0.3_p = Pole2_full[with(Pole2_full, Mean_Position < -0.3),][,4])
 
 ##Marge data
 Pole1_full_bins <- rbind.fill(Pole1_full_1.0,
@@ -304,5 +304,5 @@ Pole2_full_bins <- rbind.fill(Pole2_full_1.0,
                               Pole1_full_m0.3)
 
 ##save data as CSV
-write.csv(Pole1_full_bins, "Pole1_full_bins.csv")
-write.csv(Pole2_full_bins, "Pole2_full_bins.csv")
+write.csv(Pole1_full_bins, "Pole1_full_bins.csv", row.names = FALSE)
+write.csv(Pole2_full_bins, "Pole2_full_bins.csv", row.names = FALSE)
