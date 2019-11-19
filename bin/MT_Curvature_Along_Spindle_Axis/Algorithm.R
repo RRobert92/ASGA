@@ -12,7 +12,7 @@ Segments_1 <- Segments %>% filter_at(vars(starts_with("Pole1")),
 Segments_2 <- Segments %>% filter_at(vars(starts_with("Pole2")), 
                                      any_vars(.>= 1))
 
-##define Pole1 and Pole2 position
+##define Pole1 and Pole2 position in um
 Pole1 <- data.frame(X = c(3.63459), Y = c(9.58781), Z = c(2.99921))
 Pole2 <- data.frame(X = c(5.03459), Y = c(2.58781), Z = c(2.79921))
 
@@ -51,6 +51,7 @@ for (i in nrow_2) {
   name <- paste("Pole2_", i, sep = "")
   assign(name, Select_Points(i, Segments_2))
 }
+
 ## combin point_id with xyz
 library(plyr)
 Find_XYZ <- function(x){
@@ -185,10 +186,11 @@ count_curvature <- function(x){
     i=i+5
   }
   
-  cbind.data.frame(Full_Length = output_full$Full_L,
+  full_data <- cbind.data.frame(Full_Length = output_full$Full_L,
                    Curve_Length = output_curve$Curve,
                    Curvature = output_full$Full_L/output_curve$Curve,
                    Mean_Position = output_mean$Mean_Position)
+  full_data[complete.cases(full_data),]
 }
 for(i in nrow_1){
   name <- paste("Pole1_", i, sep = "")
