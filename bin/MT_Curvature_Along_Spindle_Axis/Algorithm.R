@@ -45,10 +45,12 @@ Select_Points <- function(x, y){
 
 for (i in nrow_1) {
   name <- paste("Pole1_", i, sep = "")
+  i=i+1
   assign(name, Select_Points(i, Segments_1))
 }
 for (i in nrow_2) {
   name <- paste("Pole2_", i, sep = "")
+  i=i+1
   assign(name, Select_Points(i, Segments_2))
 }
 
@@ -63,10 +65,12 @@ Find_XYZ <- function(x){
 
 for(i in nrow_1){
   name <- paste("Pole1_", i, sep = "")
+  i=i+1
   assign(name, Find_XYZ(get(name)))
 }
 for(i in nrow_2){
   name <- paste("Pole2_", i, sep = "")
+  i=i+1
   assign(name, Find_XYZ(get(name)))
 }
 
@@ -87,6 +91,7 @@ sort_by_Y_Coord_pole1 <- function(y){
     y %>% arrange(Point_ID)
   }
 }
+
 for(i in nrow_1){
   name <- paste("Pole1_", i, sep = "")
   assign(name, sort_by_Y_Coord_pole1(get(name)))
@@ -151,7 +156,6 @@ relativ_pos_2 <- function(y){
              Y_Coord = y$Y_Coord,
              Z_Coord = y$Z_Coord)
 }
-t <- relativ_pos_2(Pole1_7)
 for(i in nrow_2){
   name <- paste("Pole2_", i, sep = "")
   assign(name, relativ_pos_2(get(name)))
@@ -185,11 +189,26 @@ count_curvature <- function(x){
     output_mean[i,] <- (x[i,2] + x[i+5,2])/2
     i=i+5
   }
+
+  output_mean_x <- data.frame(Mean_Position_x = as.numeric())
+  i = 1  
+  while(i < nrow(x)){
+    output_mean_x[i,] <- (x[i,3] + x[i+5,3])/2
+    i=i+5
+  }
+  output_mean_y <- data.frame(Mean_Position_y = as.numeric())
+  i = 1  
+  while(i < nrow(x)){
+    output_mean_y[i,] <- (x[i,4] + x[i+5,4])/2
+    i=i+5
+  }
   
   full_data <- cbind.data.frame(Full_Length = output_full$Full_L,
                    Curve_Length = output_curve$Curve,
                    Curvature = output_full$Full_L/output_curve$Curve,
-                   Mean_Position = output_mean$Mean_Position)
+                   Mean_Position = output_mean$Mean_Position,
+                   Mean_Position_x = output_mean_x$Mean_Position_x,
+                   Mean_Position_y = output_mean_y$Mean_Position_y)
   full_data[complete.cases(full_data),]
 }
 for(i in nrow_1){
@@ -305,6 +324,7 @@ Pole2_full_bins <- rbind.fill(Pole2_full_1.0,
                               Pole2_full_m0.2,
                               Pole1_full_m0.3)
 
-##save data as CSV
-write.csv(Pole1_full_bins, "Pole1_full_bins.csv", row.names = FALSE)
-write.csv(Pole2_full_bins, "Pole2_full_bins.csv", row.names = FALSE)
+##save data as xlsx
+library(xlsx) 
+write.xlsx(Pole1_full_bins, "Pole1_full_bins.xlsx", row.names = FALSE)
+write.xlsx(Pole2_full_bins, "Pole2_full_bins.xlsx", row.names = FALSE)
