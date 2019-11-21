@@ -1,7 +1,3 @@
-##  |(y2 - y1)x0 - (x2 - x1)y0 + x2y1 - y2x1|
-## _________________________________________
-##     sqrt((y2 - y1)^2 + (x2 - x1_^2))
-
 ## Load data
 library(readxl)
 library(tidyverse)
@@ -36,7 +32,13 @@ Nodes <- Nodes %>% select(1,
 ## Select only minus ends
 
 ## calculate distance of the minus end to the PoleToPole_axis
+##                                       |(y2 - y1)x0 - (x2 - x1)y0 + x2y1 - y2x1|
+## Node_To_Pole_To_Pole_axis_distance =  _________________________________________
+##                                          sqrt((y2 - y1)^2 + (x2 - x1_^2))
 
-## with pitagoras calculate position on a POleToPOle_axis 
+
+## with pitagoras calculate position on a POleToPOle_axis
+##              
+## Node_position = sqrt(Node_To_Pole1/2_Distance - Node_To_Pole_To_Pole_axis_distance)
 
 ## Normalized all data between 0 and 1 
