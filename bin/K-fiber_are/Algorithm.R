@@ -74,6 +74,7 @@ Sort_by_distance_to_pole <- function(y){
     y %>% arrange(Point_ID)
   }
 }
+
 for(i in 2:99){
   j = 1
   while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
@@ -82,13 +83,26 @@ for(i in 2:99){
   }
 }
 
-##function
-  ## leading_KMTs <- find KMTs last point is farest point in Y coord
-    ## creat table which contain points, for each plain given by i = i + 5 for leading_kmts
-    ## c(Point ID, Position, X, Y, Z)
-    ## save as (colnames(Segments)[i])
+##function per fiber
+  ## leading_KMTs <- find longest KMTs
+leading_KMTs <- function(x){
+  j = 1
+  leading <- data.frame(Leading = as.numeric())
+  while (j <= as.numeric(nrow(get(colnames(Segments)[x])))) {
+    leading[j,] <- as.numeric(nrow(get(paste(colnames(Segments)[x], j, sep = "_"))))
+    j = j + 1
+  }
+  bind_cols(get(paste(colnames(Segments)[x])), leading)
+}
+
+for(i in 2:99){
+  assign(paste(colnames(Segments)[i]), leading_KMTs(i))
+}
+ ## creat table which contain points, for each plain given by i = i + 5 for leading_kmts
+    ## save as (colnames(Segments)[i,], "points", sep = "_")
 
 
-  ##for each position creat sf file library(raster)
-  ##calculate area and mediana position
+  ##creat alphasphear
+  ##calculate volume and area
   ##dataframe of area data/normlaized position 
+##for loop for each fiber
