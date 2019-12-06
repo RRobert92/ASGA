@@ -39,6 +39,7 @@ for (i in 2:99) {
   }
 }
 
+library(plyr)
 ## combin point_id with xyz
 nrow_1 <- seq(from = 1, to = nrow(Segments),by = 1)
 
@@ -98,11 +99,46 @@ leading_KMTs <- function(x){
 for(i in 2:99){
   assign(paste(colnames(Segments)[i]), leading_KMTs(i))
 }
+
  ## creat table which contain points, for each plain given by i = i + 5 for leading_kmts
     ## save as (colnames(Segments)[i,], "points", sep = "_")
-
+polygon_points <- function(x){
+  ##find lead
+  ##x = number of Pole1_X
+  i = 1
+  leading_points <- data.frame(Point_ID = as.numeric())
+  while (i <= nrow(get(paste(colnames(Segments)[x], which.max(as.matrix(get(colnames(Segments)[x])[3])), sep = "_")))) {
+    leading_points[i,] <- get(paste(colnames(Segments)[x], which.max(as.matrix(get(colnames(Segments)[x])[3])), sep = "_"))[i,1]
+    i=i+5
+  }
+  leading_points <- na.omit(leading_points)
+  
+  ##calculate distance for each lead
+  i = 1
+  for (j in 1:as.numeric(nrow(get(colnames(Segments)[x])))) {
+      while (i <= nrow(leading_points)) {
+    ##get table
+    lead_kmts <- data.frame(X_lead = Points[as.numeric(leading_points[i,] + 1), 2],
+                            Y_lead = Points[as.numeric(leading_points[i,] + 1), 3],
+                            Z_lead = Points[as.numeric(leading_points[i,] + 1), 4])
+    lead_kmts <- matrix(rep(lead_kmts[1,1:3], each = nrow(Pole1_00_1)), nrow = nrow(Pole1_00_1))
+    lead_kmts <- cbind(lead_kmts, Pole1_00_1[2:4]) 
+    ##get dist
+    lead_kmts$distance <- apply(lead_kmts, 1, function(x) dist(matrix(x, nrow = 2, byrow = TRUE)))
+    ##put in the table
+    Pole1_0_fiber[i,1] <- Pole1_00_1[as.numeric(which.min(lead_kmts$distance)),1]
+    i = i + 1
+  }
+  Pole1_0_fiber$`Segment ID`[duplicated(Pole1_00$`Segment ID`)] <- NA
+  names(Pole1_0_fiber)[1] <- "Position_1"
+  }
+}
 
   ##creat alphasphear
   ##calculate volume and area
   ##dataframe of area data/normlaized position 
 ##for loop for each fiber
+##for(i in 2:99){
+##  rm(list = paste(colnames(Segments)[i]))
+##}
+                                
