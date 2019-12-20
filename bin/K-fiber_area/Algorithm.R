@@ -99,34 +99,36 @@ Leadig_Points <- function(x){
 }
 
 find_polygon <- function(x){
-  ## take n+1 point from the lead, rep for n= nrow, make a matrix
-  ##cont a distance between each points 
-  ##find the closest point 
-  ## write ID in a table
-  ## left only unique rest is NA 
-  #bind with lead
   i = 1
   lead_points_id <- data.frame(Distance = as.numeric())
+  Distance <- data.frame(t = as.numeric())
   while (i <= as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
     lead_points_id <- data.frame(X_lead = Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_")) [i,] + 1), 2],
                                  Y_lead = Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_")) [i,] + 1), 3],
                                  Z_lead = Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_")) [i,] + 1), 4])
     j = 1
+    lead_points_id_full <- data.frame(t = as.numeric())
     for (j in 1:as.numeric(nrow(get(paste(colnames(Segments)[x]))))) {
-      lead_points_id <- apply(lead_points_id, MARGIN = 2, function(y) rep(y,as.numeric(nrow(get(paste(colnames(Segments)[x], j, sep = "_"))))))
-      lead_points_id <- cbind(get(paste(colnames(Segments)[x], j, sep = "_"))[1], lead_points_id, get(paste(colnames(Segments)[x], j, sep = "_"))[2:4])
-      lead_points_id$distance <- apply(lead_points_id[2:7], 1, function(x) dist(matrix(x, nrow = 2, byrow = TRUE)))
+      lead_points_id_full <- apply(lead_points_id, MARGIN = 2, function(y) rep(y,as.numeric(nrow(get(paste(colnames(Segments)[x], j, sep = "_"))))))
+      lead_points_id_full <- cbind(get(paste(colnames(Segments)[x], j, sep = "_"))[1], lead_points_id, get(paste(colnames(Segments)[x], j, sep = "_"))[2:4])
+      lead_points_id_full$distance <- apply(lead_points_id_full[2:7], 1, function(x) dist(matrix(x, nrow = 2, byrow = TRUE)))
       ##find the closest point 
+      Distance[i,j] <- lead_points_id_full[as.numeric(which.min(lead_points_id_full$distance)),1]
+      j = j + 1
+      lead_points_id_full <- data.frame(t = as.numeric())
       ## write ID in a table
       ## left only unique rest is NA
-      }
+    }
+    i = i + 1
   }
- 
-  
+  bind_cols(get(paste(colnames(Segments)[x], "fiber", sep = "_")),Distance)
 }
 
 ##4->101
-for (i in 2:as.numeric(ncol(Segments)-101)) {
+library(tcltk)
+total <- as.numeric(ncol(Segments)-4)
+pb <- tkProgressBar(title = "Progress", min = 0, max =  total, width = 300)
+for (i in 2:as.numeric(ncol(Segments)-4)) {
   ##find individual fiber
   assign(colnames(Segments)[i], Sort_by_fiber(colnames(Segments)[i]))
   ##select individual KMTs from fiber naming it POleX_YY_ZZ
@@ -150,16 +152,23 @@ for (i in 2:as.numeric(ncol(Segments)-101)) {
     assign(paste(colnames(Segments)[i], j, sep = "_"), Sort_by_distance_to_pole(get(paste(colnames(Segments)[i], j, sep = "_"))))
     j = j + 1
   }
+  Sys.sleep(0.1)
+  setTkProgressBar(pb, i, label = paste(round(i/total*100, 0),
+                                         "% Done"))
 }
-##find leading KMTs in the fiber ..... 1->48
-for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 49)) {
+close(pb)
+##find leading KMTs in the fiber ..... 1->49
+for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   assign(paste(colnames(Segments)[i]), leading_KMTsv2(i, Pole1))
 }
 for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments)-4)) {
   assign(paste(colnames(Segments)[i]), leading_KMTsv2(i, Pole2))
 }
 ##find leading poits for each fiber, creat new frame Segments[i]_fiber
-for (i in 2) {
+for (i in 2:99) {
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), Leadig_Points(i))
 }
-
+##find point on the plane
+for (i in 2:99) {
+  assign(paste(colnames(Segments)[i], "fiber", sep = "_"), find_polygon(i))
+}
