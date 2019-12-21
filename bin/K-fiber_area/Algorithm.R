@@ -163,7 +163,17 @@ median_point <- function(x){
   cbind(Median_id, get(paste(colnames(Segments)[x], "fiber", sep = "_")))
 }
 ##count geometry and find polygon area
-
+circular_area <- function(x){
+  ##calcdistance of a point to the median point
+  ##find largest distance
+  #calculate area of a circle
+  ## store data in POle1_00_fiber$Circl_Area
+  
+}
+library(alphashape3d)
+polygon_area <- function(x){
+  
+}
 
 ##4->101
 library(tcltk)
@@ -202,8 +212,7 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
     j = j + 1
   }
   Sys.sleep(0.1)
-  setTkProgressBar(pb, i, label = paste(round(i / total * 100, 0),
-                                        "% Done"))
+  setTkProgressBar(pb, i, label = paste(round(i / total * 100, 0), "% Done"))
 }
 close(pb)
 ##find leading KMTs in the fiber ..... 1->49
@@ -217,14 +226,13 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
 for (i in 2:99) {
   ##find leading poits for each fiber, creat new frame Segments[i]_fiber
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), Leadig_Points(i))
-  ##
+  ##find points which correspond to the leading fier
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), find_polygon(i))
   ##Remove all duplicates
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), duplicated_points(i))
-  ##
+  ##for each position find medan point
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), median_point(i))
   Sys.sleep(0.1)
-  setTkProgressBar(pb, i, label = paste(round(i / total * 100, 0),
-                                        "% Done"))
+  setTkProgressBar(pb, i, label = paste(round(i / total * 100, 0), "% Done"))
 }
 close(pb)
