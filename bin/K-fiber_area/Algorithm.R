@@ -138,20 +138,40 @@ duplicated_points <- function(x){
   }
   DF
 }
-
+##get a median point for each positin and put cbin in first col
+median_point <- function(x){
+  ##for looop to creat df of x y z coord for eahc position
+  ##mediana of x y z coord
+  ## writ it in a table
+  ##cbin with Pole1_00_fiber
+  Median_id <- data.frame(X_Coord = as.numeric(),
+                          Y_Coord = as.numeric(),
+                          Z_Coord = as.numeric())
+  for (i in 1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
+    DF <- data.frame(X_Coord = as.numeric(),
+                     Y_Coord = as.numeric(),
+                     Z_Coord = as.numeric())
+    for (j in 1:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
+      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),2]
+      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),3]
+      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),4]
+    }
+    Median_id[i,1] <- median(na.omit(DF$X_Coord))
+    Median_id[i,2] <- median(na.omit(DF$Y_Coord))
+    Median_id[i,3] <- median(na.omit(DF$Z_Coord))
+  }
+  cbind(Median_id, get(paste(colnames(Segments)[x], "fiber", sep = "_")))
+}
 ##count geometry and find polygon area
 
 
 ##4->101
 library(tcltk)
 total <- as.numeric(ncol(Segments) - 4)
-pb <-
-  tkProgressBar(
-    title = "Progress",
-    min = 0,
-    max =  total,
-    width = 300
-  )
+pb <- tkProgressBar(title = "Progress",
+                    min = 0,
+                    max =  total,
+                    width = 300)
 for (i in 2:as.numeric(ncol(Segments) - 4)) {
   ##find individual fiber
   assign(colnames(Segments)[i], Sort_by_fiber(colnames(Segments)[i]))
@@ -190,19 +210,21 @@ close(pb)
 for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   assign(paste(colnames(Segments)[i]), leading_KMTsv2(i, Pole1))
 }
-for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) -
-                                                                         4)) {
+for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
   assign(paste(colnames(Segments)[i]), leading_KMTsv2(i, Pole2))
 }
-##find leading poits for each fiber, creat new frame Segments[i]_fiber
+
 for (i in 2:99) {
+  ##find leading poits for each fiber, creat new frame Segments[i]_fiber
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), Leadig_Points(i))
-}
-##
-for (i in 2:99) {
+  ##
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), find_polygon(i))
-}
-##Remove all duplicates
-for (i in 2:99) {
+  ##Remove all duplicates
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), duplicated_points(i))
+  ##
+  assign(paste(colnames(Segments)[i], "fiber", sep = "_"), median_point(i))
+  Sys.sleep(0.1)
+  setTkProgressBar(pb, i, label = paste(round(i / total * 100, 0),
+                                        "% Done"))
 }
+close(pb)
