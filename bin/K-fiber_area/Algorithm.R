@@ -199,9 +199,9 @@ median_point <- function(x){
                      Y_Coord = as.numeric(),
                      Z_Coord = as.numeric())
     for (j in 1:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
-      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),2]
-      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),3]
-      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),4]
+      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),2]
+      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),3]
+      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),4]
     }
     Median_id[i,1] <- median(na.omit(DF$X_Coord))
     Median_id[i,2] <- median(na.omit(DF$Y_Coord))
@@ -214,26 +214,37 @@ median_point <- function(x){
 }
 ##count geometry and find polygon area
 circular_area <- function(x){
-  ##calc distance of a point to the median point
-  ##find largest distance
-  #calculate area of a circle
-  ## store data in POle1_00_fiber$Circl_Area
-  Point_id <- data.frame(X_Coord = as.numeric(),
-                         Y_Coord = as.numeric(),
-                         Z_Coord = as.numeric())
+  area <- data.frame(Circular_area = as.numeric())
   for (i in 1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
     DF <- data.frame(X_Coord = as.numeric(),
                      Y_Coord = as.numeric(),
                      Z_Coord = as.numeric())
-    for (j in 4:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
-      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),2]
-      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),3]
-      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]),4]
+    for (j in 5:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
+      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),2]
+      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),3]
+      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),4]
     }
-  
+  DF <- na.omit(DF)
+  median_point <- as.data.frame(lapply(get(paste(colnames(Segments)[x], 
+                                                 "fiber", 
+                                                 sep = "_"))[i,1:3],
+                                       rep, 
+                                       as.numeric(nrow(DF))))
+  DF <- cbind(DF, median_point)
+  DF$distance <- apply(DF,
+                       1,
+                       function(y) dist(matrix(y,
+                                               nrow = 2,
+                                               byrow = TRUE)))
+  area[i,] <- round(pi * DF[as.numeric(which.max(DF$distance)), as.numeric(ncol(DF))]^2,
+                    3)
   }
-  
+  cbind(area, 
+        get(paste(colnames(Segments)[x], 
+                  "fiber", 
+                  sep = "_")))
 }
+
 library(alphashape3d)
 polygon_area <- function(x){
   
@@ -311,20 +322,28 @@ pb <- winProgressBar(title = "Progress",
 for (i in 2:99) {
   ##find leading poits for each fiber, creat new frame Segments[i]_fiber
   assign(paste(colnames(Segments)[i], 
-               "fiber", sep = "_"), 
+               "fiber", 
+               sep = "_"), 
          Leadig_Points(i))
   ##find points which correspond to the leading fier
   assign(paste(colnames(Segments)[i], 
-               "fiber", sep = "_"),
+               "fiber", 
+               sep = "_"),
          find_polygon(i))
   ##Remove all duplicates
   assign(paste(colnames(Segments)[i], 
-               "fiber", sep = "_"), 
+               "fiber", 
+               sep = "_"), 
          duplicated_points(i))
   ##for each position find medan point
   assign(paste(colnames(Segments)[i], 
-               "fiber", sep = "_"),
+               "fiber", 
+               sep = "_"),
          median_point(i))
+  assign(paste(colnames(Segments)[i],
+               "fiber",
+               sep = "_"),
+         circular_area(i))
   Sys.sleep(0.1)
   setWinProgressBar(pb, 
                     i, 
