@@ -78,21 +78,6 @@ Sort_by_distance_to_pole <- function(y) {
   }
 }
 
-##function per fiber
-## leading_KMTs <- find longest KMTs
-leading_KMTs <- function(x) {
-  j = 1
-  leading <- data.frame(Leading = as.numeric())
-  while (j <= as.numeric(nrow(get(colnames(Segments)[x])))) {
-    leading[j, ] <- as.numeric(nrow(get(paste(colnames(Segments)[x], 
-                                              j, 
-                                              sep = "_"))))
-    j = j + 1
-  }
-  bind_cols(get(paste(colnames(Segments)[x])), 
-            leading)
-}
-
 ##Calculate ratio of KMT_length / (-) end distance to the pole
 leading_KMTsv2 <- function(x, y) {
   j = 1
@@ -247,7 +232,74 @@ circular_area <- function(x){
 
 library(alphashape3d)
 polygon_area <- function(x){
-  
+  area <- data.frame(Alpha_area = as.numeric())
+  for (i in 1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
+    DF <- data.frame(X_Coord = as.numeric(),
+                     Y_Coord = as.numeric(),
+                     Z_Coord = as.numeric())
+    for (j in 6:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
+      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),2]
+      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),3]
+      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),4]
+    }
+    DF1 <- as.matrix(na.omit(DF))
+    DF2 <- DF1 + 1
+    DF3 <- as.matrix(rbind(DF1,DF2))
+    if(as.numeric(nrow(DF1))<= 2){
+      area[i,] <- 0
+    }
+    else{
+      alphashape.obj <- ashape3d(DF3, alpha = 10)
+    area[i,] <- round(volume_ashape3d(alphashape.obj) / 1,
+                      3)
+    }
+  }
+  cbind(area, 
+        get(paste(colnames(Segments)[x], 
+                  "fiber", 
+                  sep = "_")))
+}
+
+relativ_pos_1 <- function(x){
+  relativ_pos_part1 <- lapply(get(paste(colnames(Segments)[x], 
+                                        "fiber", 
+                                        sep = "_"))[4], 
+                              function(y){get(paste(colnames(Segments)[x], 
+                                                    "fiber", 
+                                                    sep = "_"))[4] - Pole1[1,2]})
+  relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
+  relativ_pos_part2 <- get(paste(colnames(Segments)[x], 
+                                 "fiber", 
+                                 sep = "_"))[which.min(get(paste(colnames(Segments)[x], 
+                                                                 "fiber", 
+                                                                 sep = "_"))[1,4]),4] - Pole1[1,2]
+  relativ_positon <- lapply(relativ_pos_part1, function(y){round(relativ_pos_part1[1] / relativ_pos_part2, 2)})
+  relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
+  cbind(relat_pos,
+        get(paste(colnames(Segments)[x], 
+                  "fiber", 
+                  sep = "_")))
+}
+
+relativ_pos_2 <- function(x){
+  relativ_pos_part1 <- lapply(get(paste(colnames(Segments)[x], 
+                                        "fiber", 
+                                        sep = "_"))[4], 
+                              function(y){get(paste(colnames(Segments)[x], 
+                                                    "fiber", 
+                                                    sep = "_"))[4] - Pole2[1,2]})
+  relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
+  relativ_pos_part2 <- get(paste(colnames(Segments)[x], 
+                                 "fiber", 
+                                 sep = "_"))[which.max(get(paste(colnames(Segments)[x], 
+                                                                 "fiber", 
+                                                                 sep = "_"))[1,4]),4] - Pole2[1,2]
+  relativ_positon <- lapply(relativ_pos_part1, function(y){round(relativ_pos_part1[1] / relativ_pos_part2, 2)})
+  relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
+  cbind(relat_pos,
+        get(paste(colnames(Segments)[x], 
+                  "fiber", 
+                  sep = "_")))
 }
 
 ##4->101
@@ -344,6 +396,10 @@ for (i in 2:99) {
                "fiber",
                sep = "_"),
          circular_area(i))
+  assign(paste(colnames(Segments)[i],
+               "fiber",
+               sep = "_"),
+         polygon_area(i))
   Sys.sleep(0.1)
   setWinProgressBar(pb, 
                     i, 
@@ -352,3 +408,17 @@ for (i in 2:99) {
                                   "% Done"))
 }
 close(pb)
+
+for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+  assign(paste(colnames(Segments)[i],
+               "fiber",
+               sep = "_"), 
+         relativ_pos_1(i))
+}
+
+for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
+  assing(paste(colnames(Segments)[i],
+        "fiber",
+        sep = "_"),
+        relativ_pos_2(i))
+}
