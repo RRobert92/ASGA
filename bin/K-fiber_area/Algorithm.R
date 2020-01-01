@@ -243,15 +243,14 @@ polygon_area <- function(x){
       DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),4]
     }
     DF1 <- as.matrix(na.omit(DF))
-    DF2 <- DF1 + 1
-    DF3 <- as.matrix(rbind(DF1,DF2))
-    if(as.numeric(nrow(DF1))<= 2){
+    DF2 <- as.matrix(DF1 + 1)
+    DF3 <- as.matrix(merge(DF1, DF2, all=TRUE))
+    if(as.numeric(nrow(DF1)) < 3) {
       area[i,] <- 0
-    }
-    else{
+    } else {
       alphashape.obj <- ashape3d(DF3, alpha = 10)
-    area[i,] <- round(volume_ashape3d(alphashape.obj) / 1,
-                      3)
+      area[i,] <- round(volume_ashape3d(alphashape.obj) / 1,
+                        3)
     }
   }
   cbind(area, 
@@ -371,7 +370,7 @@ pb <- winProgressBar(title = "Progress",
                     min = 0,
                     max =  total,
                     width = 300)
-for (i in 2:99) {
+for (i in 2:as.numeric(ncol(Segments) - 4)) {
   ##find leading poits for each fiber, creat new frame Segments[i]_fiber
   assign(paste(colnames(Segments)[i], 
                "fiber", 
@@ -392,14 +391,6 @@ for (i in 2:99) {
                "fiber", 
                sep = "_"),
          median_point(i))
-  assign(paste(colnames(Segments)[i],
-               "fiber",
-               sep = "_"),
-         circular_area(i))
-  assign(paste(colnames(Segments)[i],
-               "fiber",
-               sep = "_"),
-         polygon_area(i))
   Sys.sleep(0.1)
   setWinProgressBar(pb, 
                     i, 
@@ -408,6 +399,21 @@ for (i in 2:99) {
                                   "% Done"))
 }
 close(pb)
+for (i in 2:as.numeric(ncol(Segments) - 4)) {
+    assign(paste(colnames(Segments)[i],
+               "fiber",
+               sep = "_"),
+         circular_area(i))
+}
+
+for (i in 4:as.numeric(ncol(Segments) - 4)) {
+  assign(paste(colnames(Segments)[i],
+               "fiber",
+               sep = "_"),
+         polygon_area(i))
+}
+  
+
 
 for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   assign(paste(colnames(Segments)[i],
