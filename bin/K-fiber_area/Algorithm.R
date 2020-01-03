@@ -2,14 +2,14 @@
 library(readxl)
 library(tidyverse)
 
-Points <- read_excel("C:/Users/kerth/Desktop/Metaphase_1.am.xlsx", 
+Points <- read_excel("Pulpit/Metaphase_1_KMTs.xlsx", 
                      sheet = "Points")
 Points <- data.frame(Point_ID = c(Points$`Point ID`),
-                     X_Coord = c(Points$`X Coord`) / 10000,
-                     Y_Coord = c(Points$`Y Coord`) / 10000,
-                     Z_Coord = c(Points$`Z Coord`) / 10000)
+                     X_Coord = c(Points$`X Coord`)/10000,
+                     Y_Coord = c(Points$`Y Coord`)/10000,
+                     Z_Coord = c(Points$`Z Coord`)/10000)
 
-Segments <- read_excel("C:/Users/kerth/Desktop/Metaphase_1.am.xlsx", 
+Segments <- read_excel("Pulpit/Metaphase_1_KMTs.xlsx", 
                        sheet = "Segments")
 
 ##Define Pole1 and Pole2 position in um
@@ -52,26 +52,34 @@ Find_XYZ <- function(x) {
 }
 
 ##sort point by there position in spindle pole axis first point is kinetochore
-Sort_by_distance_to_pole <- function(y) {
-  position <- data.frame(x = c(Pole1[1, 1], 
-                               Pole1[1, 1]),
-                         y = c(Pole1[1, 2],
-                               Pole1[1, 2]),
-                         z = c(Pole1[1, 3], 
-                               Pole1[1, 3]),
-                         x1 = c(y[1, 2], 
-                                y[nrow(y), 2]),
-                         y1 = c(y[1, 3], 
-                                y[nrow(y), 3]),
-                         z1 = c(y[1, 4], 
-                                y[nrow(y), 4]))
+Sort_by_distance_to_pole1 <- function(y){
+  position <- data.frame(x = c(Pole1[1,1], Pole1[1,1]),
+                         y = c(Pole1[1,2], Pole1[1,2]),
+                         z = c(Pole1[1,3], Pole1[1,3]),
+                         x1 = c(y[1,2], y[nrow(y),2]),
+                         y1 = c(y[1,3], y[nrow(y),3]),
+                         z1 = c(y[1,4], y[nrow(y),4]))
   
-  position$distance <- apply(position, 1, 
-                             function(z) dist(matrix(z, 
-                                                     nrow = 2, 
-                                                     byrow = TRUE)))
+  position$distance <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
   
-  if (position[1, 7] < position[2, 7]) {
+  if(position[1,7] < position[2,7]){
+    y %>% arrange(desc(Point_ID))
+  } else {
+    y %>% arrange(Point_ID)
+  }
+}
+
+Sort_by_distance_to_pole2 <- function(y){
+  position <- data.frame(x = c(Pole2[1,1], Pole2[1,1]),
+                         y = c(Pole2[1,2], Pole2[1,2]),
+                         z = c(Pole2[1,3], Pole2[1,3]),
+                         x1 = c(y[1,2], y[nrow(y),2]),
+                         y1 = c(y[1,3], y[nrow(y),3]),
+                         z1 = c(y[1,4], y[nrow(y),4]))
+  
+  position$distance <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
+  
+  if(position[1,7] > position[2,7]){
     y %>% arrange(desc(Point_ID))
   } else {
     y %>% arrange(Point_ID)
@@ -194,35 +202,37 @@ median_point <- function(x){
   }
   cbind(Median_id, 
         get(paste(colnames(Segments)[x], 
-                             "fiber", 
+                  "fiber", 
                   sep = "_")))
 }
 ##count geometry and find polygon area
 circular_area <- function(x){
   area <- data.frame(Circular_area = as.numeric())
+  i=1
   for (i in 1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
     DF <- data.frame(X_Coord = as.numeric(),
                      Y_Coord = as.numeric(),
                      Z_Coord = as.numeric())
+    j=5
     for (j in 5:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
       DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),2]
       DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),3]
       DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),4]
     }
-  DF <- na.omit(DF)
-  median_point <- as.data.frame(lapply(get(paste(colnames(Segments)[x], 
-                                                 "fiber", 
-                                                 sep = "_"))[i,1:3],
-                                       rep, 
-                                       as.numeric(nrow(DF))))
-  DF <- cbind(DF, median_point)
-  DF$distance <- apply(DF,
-                       1,
-                       function(y) dist(matrix(y,
-                                               nrow = 2,
-                                               byrow = TRUE)))
-  area[i,] <- round(pi * DF[as.numeric(which.max(DF$distance)), as.numeric(ncol(DF))]^2,
-                    3)
+    DF <- na.omit(DF)
+    median_point <- as.data.frame(lapply(get(paste(colnames(Segments)[x], 
+                                                   "fiber", 
+                                                   sep = "_"))[i,1:3],
+                                         rep, 
+                                         as.numeric(nrow(DF))))
+    DF <- cbind(DF, median_point)
+    DF$distance <- apply(DF,
+                         1,
+                         function(y) dist(matrix(y,
+                                                 nrow = 2,
+                                                 byrow = TRUE)))
+    area[i,] <- round(pi * DF[as.numeric(which.max(DF$distance)), as.numeric(ncol(DF))]^2,
+                      3)
   }
   cbind(area, 
         get(paste(colnames(Segments)[x], 
@@ -233,10 +243,12 @@ circular_area <- function(x){
 library(alphashape3d)
 polygon_area <- function(x){
   area <- data.frame(Alpha_area = as.numeric())
+  i=1
   for (i in 1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
     DF <- data.frame(X_Coord = as.numeric(),
                      Y_Coord = as.numeric(),
                      Z_Coord = as.numeric())
+    j=6
     for (j in 6:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
       DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),2]
       DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,j]+1),3]
@@ -248,7 +260,7 @@ polygon_area <- function(x){
     if(as.numeric(nrow(DF1)) < 3) {
       area[i,] <- 0
     } else {
-      alphashape.obj <- ashape3d(DF3, alpha = 10)
+      alphashape.obj <- ashape3d(DF3,pert = TRUE, alpha = 10)
       area[i,] <- round(volume_ashape3d(alphashape.obj) / 1,
                         3)
     }
@@ -286,13 +298,17 @@ relativ_pos_2 <- function(x){
                                         sep = "_"))[4], 
                               function(y){get(paste(colnames(Segments)[x], 
                                                     "fiber", 
-                                                    sep = "_"))[4] - Pole2[1,2]})
+                                                    sep = "_"))[4] - get(paste(colnames(Segments)[x], 
+                                                                                       "fiber", 
+                                                                                        sep = "_"))[which.max(get(paste(colnames(Segments)[x], 
+                                                                                                                                "fiber", 
+                                                                                                                                 sep = "_"))[1,4]),4]})
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
-  relativ_pos_part2 <- get(paste(colnames(Segments)[x], 
-                                 "fiber", 
-                                 sep = "_"))[which.max(get(paste(colnames(Segments)[x], 
-                                                                 "fiber", 
-                                                                 sep = "_"))[1,4]),4] - Pole2[1,2]
+  relativ_pos_part2 <- Pole2[1,2] - get(paste(colnames(Segments)[x], 
+                                              "fiber", 
+                                              sep = "_"))[which.max(get(paste(colnames(Segments)[x], 
+                                                                              "fiber", 
+                                                                              sep = "_"))[1,4]),4]
   relativ_positon <- lapply(relativ_pos_part1, function(y){round(relativ_pos_part1[1] / relativ_pos_part2, 2)})
   relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
   cbind(relat_pos,
@@ -301,13 +317,13 @@ relativ_pos_2 <- function(x){
                   sep = "_")))
 }
 
-##4->101
+
 library(tcltk)
 total <- as.numeric(ncol(Segments) - 4)
 pb <- winProgressBar(title = "Progress",
-                    min = 0,
-                    max =  total,
-                    width = 300)
+                     min = 0,
+                     max =  total,
+                     width = 300)
 for (i in 2:as.numeric(ncol(Segments) - 4)) {
   ##find individual fiber
   assign(colnames(Segments)[i], 
@@ -336,17 +352,6 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
                               sep = "_"))))
     j = j + 1
   }
-  ##Sort points in the individual fiber, make 1 point in df corespond to (+) end
-  j = 1
-  while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
-    assign(paste(colnames(Segments)[i], 
-                 j, 
-                 sep = "_"),
-           Sort_by_distance_to_pole(get(paste(colnames(Segments)[i], 
-                                              j, 
-                                              sep = "_"))))
-    j = j + 1
-  }
   Sys.sleep(0.1)
   setWinProgressBar(pb, 
                     i, 
@@ -355,6 +360,37 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
                                   "% Done"))
 }
 close(pb)
+  ##Sort points in the individual fiber, make 1 point in df corespond to (+) end
+for(i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+  j = 1
+  tryCatch({
+     while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
+    assign(paste(colnames(Segments)[i], 
+                 j, 
+                 sep = "_"),
+           Sort_by_distance_to_pole1(get(paste(colnames(Segments)[i], 
+                                              j, 
+                                              sep = "_"))))
+    j = j + 1
+  }
+  },
+  error = function(e){})
+}
+for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)){
+  j = 1
+  tryCatch({
+    while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
+      assign(paste(colnames(Segments)[i], 
+                   j, 
+                   sep = "_"),
+             Sort_by_distance_to_pole2(get(paste(colnames(Segments)[i], 
+                                                 j, 
+                                                 sep = "_"))))
+      j = j + 1
+    }
+  },
+  error = function(e){})
+}
 ##find leading KMTs in the fiber ..... 1->49
 for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   assign(paste(colnames(Segments)[i]), 
@@ -367,30 +403,32 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
                         Pole2))
 }
 pb <- winProgressBar(title = "Progress",
-                    min = 0,
-                    max =  total,
-                    width = 300)
+                     min = 0,
+                     max =  total,
+                     width = 300)
 for (i in 2:as.numeric(ncol(Segments) - 4)) {
-  ##find leading poits for each fiber, creat new frame Segments[i]_fiber
-  assign(paste(colnames(Segments)[i], 
-               "fiber", 
-               sep = "_"), 
-         Leadig_Points(i))
-  ##find points which correspond to the leading fier
-  assign(paste(colnames(Segments)[i], 
-               "fiber", 
-               sep = "_"),
-         find_polygon(i))
-  ##Remove all duplicates
-  assign(paste(colnames(Segments)[i], 
-               "fiber", 
-               sep = "_"), 
-         duplicated_points(i))
-  ##for each position find medan point
-  assign(paste(colnames(Segments)[i], 
-               "fiber", 
-               sep = "_"),
-         median_point(i))
+  tryCatch({
+    assign(paste(colnames(Segments)[i], 
+                 "fiber", 
+                 sep = "_"), 
+           Leadig_Points(i))
+    ##find points which correspond to the leading fier
+    assign(paste(colnames(Segments)[i], 
+                 "fiber", 
+                 sep = "_"),
+           find_polygon(i))
+    ##Remove all duplicates
+    assign(paste(colnames(Segments)[i], 
+                 "fiber", 
+                 sep = "_"), 
+           duplicated_points(i))
+    ##for each position find medan point
+    assign(paste(colnames(Segments)[i], 
+                 "fiber", 
+                 sep = "_"),
+           median_point(i))
+  },
+  error = function(e){})
   Sys.sleep(0.1)
   setWinProgressBar(pb, 
                     i, 
@@ -400,31 +438,40 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
 }
 close(pb)
 for (i in 2:as.numeric(ncol(Segments) - 4)) {
+  tryCatch({
     assign(paste(colnames(Segments)[i],
-               "fiber",
-               sep = "_"),
-         circular_area(i))
+                 "fiber",
+                 sep = "_"),
+           circular_area(i))   
+  },
+  error = function(e){})
 }
 
-for (i in 4:as.numeric(ncol(Segments) - 4)) {
+for (i in 2:as.numeric(ncol(Segments) - 4)) {
+tryCatch({
   assign(paste(colnames(Segments)[i],
                "fiber",
                sep = "_"),
          polygon_area(i))
+  },
+  error = function(e){})
 }
-  
-
 
 for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
-  assign(paste(colnames(Segments)[i],
+  tryCatch({
+    assign(paste(colnames(Segments)[i],
                "fiber",
                sep = "_"), 
-         relativ_pos_1(i))
+         relativ_pos_1(i))},
+    error = function(e){})
+  
 }
-
 for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
-  assing(paste(colnames(Segments)[i],
-        "fiber",
-        sep = "_"),
-        relativ_pos_2(i))
+  tryCatch({
+    assign(paste(colnames(Segments)[i],
+               "fiber",
+               sep = "_"),
+         relativ_pos_2(i))
+  },
+  error = function(e){})
 }
