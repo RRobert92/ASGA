@@ -19,5 +19,5 @@ Data also should also be prepared prior to the analysis
 ## Using the code
 Up to now, the program is analog and require user interaction upon uploading your data.
 ###
-      lines 10-12 -> dir of the file
+      lines 4-8 -> dir of the file
       lines 339-340 -> names and dir for the output files
