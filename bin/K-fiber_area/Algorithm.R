@@ -2,23 +2,27 @@
 library(readxl)
 library(tidyverse)
 
-Points <- read_excel("Pulpit/Metaphase_1_KMTs_t.am.xlsx", 
+Points <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.am.xlsx", 
                      sheet = "Points")
 Points <- data.frame(Point_ID = c(Points$`Point ID`),
                      X_Coord = c(Points$`X Coord`)/10000,
                      Y_Coord = c(Points$`Y Coord`)/10000,
                      Z_Coord = c(Points$`Z Coord`)/10000)
 
-Segments <- read_excel("Pulpit/Metaphase_1_KMTs_t.am.xlsx", 
+Segments <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.am.xlsx",
                        sheet = "Segments")
 
 ##Define Pole1 and Pole2 position in um
-Pole1 <- data.frame(X = c(3.63459),
-                    Y = c(9.58781),
-                    Z = c(2.99921))
-Pole2 <- data.frame(X = c(5.03459),
-                    Y = c(2.58781),
-                    Z = c(2.79921))
+Nodes <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.am.xlsx",
+                    sheet = "Nodes")
+Pole1 <- data.frame(X = c(Pole1 %>% select("X Coord")/10000), 
+                    Y = c(Pole1 %>% select("Y Coord")/10000), 
+                    Z = c(Pole1 %>% select("Z Coord")/10000))
+Pole2 <- Nodes %>% filter_at(vars("Pole2"),
+                             any_vars(.>=1))
+Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000), 
+                    Y = c(Pole2 %>% select("Y Coord")/10000), 
+                    Z = c(Pole2 %>% select("Z Coord")/10000))
 
 ##Select one fiber
 Sort_by_fiber <- function(x) {
