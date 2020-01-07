@@ -1,14 +1,29 @@
+##This program calculates how the curvature of given MTS (KMTs) is changing along the spindle axis 
+      ##For this You need exported data from ZIB Amira, and formatted into .xlsx file using excel
+
+##Data also should also be prepared prior to the analysis
+      ##Prefarable data should be resampled for 1000A ~ 0.1um, and cleaned out for any MTs which is not fully in the volume, and also fibers which 
+      ##do does not have all KMTs that should be deleted for the best accuracy of the program.
+      ##For proper calculation of the relative position, spindle pole to pole axis, should be aligned with the spindle Y-axis
+      ##The last requirement is to label all fiber with names PoleX_YY
+        ##X -> Pole 1 or 2
+        ##YY -> number of the fiber
+
+##Up to now, the program is analog and require user interaction upon uploading your data.
+      ##lines 10-12 -> dir of the file
+      ##lines 23-24 -> xyz pole position
+
 ## load data
 library(readxl)
 library(tidyverse)
 Segments <- read_excel("Pulpit/Metaphase_1_KMTs.xlsx", 
                        sheet = "Segments")
 Points <- read_excel("Pulpit/Metaphase_1_KMTs.xlsx", 
-                       sheet = "Points")
+                     sheet = "Points")
 
 ## select KTMs for one pole
 Segments_1 <- Segments %>% filter_at(vars(starts_with("Pole1")), 
-                                      any_vars(.>= 1))
+                                     any_vars(.>= 1))
 Segments_2 <- Segments %>% filter_at(vars(starts_with("Pole2")), 
                                      any_vars(.>= 1))
 
@@ -21,10 +36,10 @@ ncol<- ncol(Segments_1)
 nrow_1 <- seq(from = 1, to = nrow(Segments_1),by = 1)
 nrow_2 <- seq(from = 1, to = nrow(Segments_1),by = 1)
 Segments_1 <- Segments_1 %>% select(1,
-                                      ncol-3, 
-                                      ncol-2, 
-                                      ncol-1,
-                                      ncol)
+                                    ncol-3, 
+                                    ncol-2, 
+                                    ncol-1,
+                                    ncol)
 Segments_2 <- Segments_2 %>% select(1,
                                     ncol-3, 
                                     ncol-2, 
@@ -76,13 +91,13 @@ for(i in nrow_2){
 
 ##sort if y Coord[1,3] is higher then coord Y Coord of Pole_1[1,2] -> sord decreasingly
 sort_by_Y_Coord_pole1 <- function(y){
- position <- data.frame(x = c(Pole1[1,1], Pole1[1,1]),
-                    y = c(Pole1[1,2], Pole1[1,2]),
-                    z = c(Pole1[1,3], Pole1[1,3]),
-                    x1 = c(y[1,2], y[nrow(y),2]),
-                    y1 = c(y[1,3], y[nrow(y),3]),
-                    z1 = c(y[1,4], y[nrow(y),4]))
- 
+  position <- data.frame(x = c(Pole1[1,1], Pole1[1,1]),
+                         y = c(Pole1[1,2], Pole1[1,2]),
+                         z = c(Pole1[1,3], Pole1[1,3]),
+                         x1 = c(y[1,2], y[nrow(y),2]),
+                         y1 = c(y[1,3], y[nrow(y),3]),
+                         z1 = c(y[1,4], y[nrow(y),4]))
+  
   position$distance <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
   
   if(position[1,7] < position[2,7]){
@@ -124,16 +139,16 @@ for(i in nrow_2){
 ## __________
 ## (max - min) part_2
 relativ_pos_1 <- function(y){
-relativ_pos_part1 <- lapply(y, function(x){y[3] - Pole1[1,2]})
-relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
-relativ_pos_part2 <- y[which.min(y[1,3]),3] - Pole1[1,2]
-relativ_positon <- lapply(relativ_pos_part1, function(x){round(relativ_pos_part1[1] / relativ_pos_part2, 2)})
-relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
-data.frame(Point_ID = y$Point_ID,
-           Relative_Position = relat_pos$relativ_pos_part1...Y_Coord......Y_Coord...,
-           X_Coord = y$X_Coord,
-           Y_Coord = y$Y_Coord,
-           Z_Coord = y$Z_Coord)
+  relativ_pos_part1 <- lapply(y, function(x){y[3] - Pole1[1,2]})
+  relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
+  relativ_pos_part2 <- y[which.min(y[1,3]),3] - Pole1[1,2]
+  relativ_positon <- lapply(relativ_pos_part1, function(x){round(relativ_pos_part1[1] / relativ_pos_part2, 2)})
+  relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
+  data.frame(Point_ID = y$Point_ID,
+             Relative_Position = relat_pos$relativ_pos_part1...Y_Coord......Y_Coord...,
+             X_Coord = y$X_Coord,
+             Y_Coord = y$Y_Coord,
+             Z_Coord = y$Z_Coord)
 }
 for(i in nrow_1){
   name <- paste("Pole1_", i, sep = "")
@@ -189,7 +204,7 @@ count_curvature <- function(x){
     output_mean[i,] <- (x[i,2] + x[i+5,2])/2
     i=i+5
   }
-
+  
   output_mean_x <- data.frame(Mean_Position_x = as.numeric())
   i = 1  
   while(i < nrow(x)){
@@ -204,11 +219,11 @@ count_curvature <- function(x){
   }
   
   full_data <- cbind.data.frame(Full_Length = output_full$Full_L,
-                   Curve_Length = output_curve$Curve,
-                   Curvature = output_full$Full_L/output_curve$Curve,
-                   Mean_Position = output_mean$Mean_Position,
-                   Mean_Position_x = output_mean_x$Mean_Position_x,
-                   Mean_Position_y = output_mean_y$Mean_Position_y)
+                                Curve_Length = output_curve$Curve,
+                                Curvature = output_full$Full_L/output_curve$Curve,
+                                Mean_Position = output_mean$Mean_Position,
+                                Mean_Position_x = output_mean_x$Mean_Position_x,
+                                Mean_Position_y = output_mean_y$Mean_Position_y)
   full_data[complete.cases(full_data),]
 }
 for(i in nrow_1){
@@ -257,9 +272,9 @@ Pole1_full_0.1 <- data.frame(To_0.1_c = Pole1_full[with(Pole1_full, Mean_Positio
 Pole1_full_0.0 <- data.frame(To_0.0_c = Pole1_full[with(Pole1_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,3],
                              To_0.0_p = Pole1_full[with(Pole1_full, Mean_Position < 0.0 & Mean_Position > -0.101),][,4])
 Pole1_full_m0.1 <- data.frame(To_m0.1_c = Pole1_full[with(Pole1_full, Mean_Position < -0.1 & Mean_Position > -0.201),][,3],
-                             To_m0.1_p = Pole1_full[with(Pole1_full, Mean_Position < -0.1 & Mean_Position > -0.201),][,4])
+                              To_m0.1_p = Pole1_full[with(Pole1_full, Mean_Position < -0.1 & Mean_Position > -0.201),][,4])
 Pole1_full_m0.2 <- data.frame(To_m0.2_c = Pole1_full[with(Pole1_full, Mean_Position < -0.2 & Mean_Position > -0.301),][,3],
-                             To_m0.2_p = Pole1_full[with(Pole1_full, Mean_Position < -0.2 & Mean_Position > -0.301),][,4])
+                              To_m0.2_p = Pole1_full[with(Pole1_full, Mean_Position < -0.2 & Mean_Position > -0.301),][,4])
 Pole1_full_m0.3 <- data.frame(To_m0.3_c = Pole1_full[with(Pole1_full, Mean_Position < -0.3),][,3],
                               To_m0.3_p = Pole1_full[with(Pole1_full, Mean_Position < -0.3),][,4])
 
