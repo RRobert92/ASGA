@@ -145,13 +145,22 @@ find_polygon <- function(x) {
   }
   bind_cols(get(paste(colnames(Segments)[x], "fiber", sep = "_")), Distance)
 }
-
+library(base)
 ##remove duplicated points
 duplicated_points <- function(x){
   DF <- get(paste(colnames(Segments)[x], "fiber",  sep = "_"))
   
   for(i in 1:ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_")))){
     DF[,i][duplicated(DF[,i])] <- NA
+  }
+  ##check if there is no hole in dataset if yes remove 
+  for(i in 1:ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_")))){
+    for(j in 2:nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_")))){
+      if(is.na(DF[j-1,i]) && is.na(DF[j+2,i])){
+      DF[j,i] <- NA
+    }
+    else{}
+    }
   }
   DF
 }
@@ -241,6 +250,7 @@ polygon_area <- function(x){
         get(paste(colnames(Segments)[x], "fiber",  sep = "_")))
 }
 
+## Relative postion of points between kinetochore and the pole1
 relativ_pos_1 <- function(x){
   relativ_pos_part1 <- lapply(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[4], 
                               function(y){get(paste(colnames(Segments)[x], "fiber", sep = "_"))[4] - Pole1[1,2]})
@@ -252,6 +262,7 @@ relativ_pos_1 <- function(x){
         get(paste(colnames(Segments)[x], "fiber", sep = "_")))
 }
 
+## Relative postion of points between kinetochore and the pole2
 relativ_pos_2 <- function(x){
   relativ_pos_part1 <- lapply(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[4], 
                               function(y){get(paste(colnames(Segments)[x], "fiber", sep = "_"))[4] - Pole2[1,2]})
@@ -263,6 +274,10 @@ relativ_pos_2 <- function(x){
         get(paste(colnames(Segments)[x], "fiber", sep = "_")))
 }
 
+##KMTs denisty
+Density_of_KMTs <- function(x){
+  
+}
 
 library(tcltk)
 total <- as.numeric(ncol(Segments) - 4)
@@ -636,8 +651,8 @@ library(xlsx)
 write.xlsx(Data, "Data#1.xlsx")
 
 ##Spread data for bins_circular
-Data_full_1.0 <- data.frame(To_1.0_c = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,1],
-                             To_1.0_p = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,3])
+Data_full_1.0 <- data.frame(To_1.0_RP = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,1],
+                             To_1.0_Area = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,3])
 Data_full_0.9 <- data.frame(To_0.9_c = Data[with(Data, Relativ_pos < 0.9 & Relativ_pos > 0.799),][,1],
                              To_0.9_p = Data[with(Data, Relativ_pos < 0.9 & Relativ_pos > 0.799),][,3])
 Data_full_0.8 <- data.frame(To_0.8_c = Data[with(Data, Relativ_pos < 0.8 & Relativ_pos > 0.699),][,1],
