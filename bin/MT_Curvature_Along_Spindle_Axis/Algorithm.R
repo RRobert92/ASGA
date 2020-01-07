@@ -118,7 +118,7 @@ sort_by_Y_Coord_pole2 <- function(y){
   
   position$distance <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
   
-  if(position[1,7] > position[2,7]){
+  if(position[1,7] < position[2,7]){
     y %>% arrange(desc(Point_ID))
   } else {
     y %>% arrange(Point_ID)
@@ -332,9 +332,9 @@ Pole2_full_bins <- rbind.fill(Pole2_full_1.0,
                               Pole2_full_0.0,
                               Pole2_full_m0.1,
                               Pole2_full_m0.2,
-                              Pole1_full_m0.3)
+                              Pole2_full_m0.3)
 
 ##save data as xlsx
 library(xlsx) 
-write.xlsx(Pole1_full_bins, "Pole1_full_bins.xlsx", row.names = FALSE)
-write.xlsx(Pole2_full_bins, "Pole2_full_bins.xlsx", row.names = FALSE)
+write.xlsx(Pole1_full_bins, "Data#1_Pole1_curv_distrib_bins.xlsx", row.names = FALSE)
+write.xlsx(Pole2_full_bins, "Data#1_Pole2_curv_distrib_bins.xlsx", row.names = FALSE)
