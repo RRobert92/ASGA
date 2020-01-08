@@ -206,7 +206,7 @@ pb <- winProgressBar(title = "Progress",
                      max =  total,
                      width = 300)
 
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   ##find individual fiber
   assign(colnames(Segments)[i], 
          Sort_by_fiber(colnames(Segments)[i]))
@@ -233,8 +233,9 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
 }
 close(pb)
 
+
 ##Sort points in the individual fiber, make 1 point in df corespond to (+) end
-for(i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+for(i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   j = 1
   tryCatch({
     while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
@@ -244,7 +245,7 @@ for(i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     }
   },
   error = function(e){})
-}
+} 
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)){
   j = 1
   tryCatch({
@@ -257,9 +258,8 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Seg
   error = function(e){}
   )
 }
-
 ##find leading KMTs in the fiber ..... 1->49
-for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   assign(paste(colnames(Segments)[i]), 
          leading_KMTsv2(i, Pole1))
 }
@@ -273,7 +273,7 @@ pb <- winProgressBar(title = "Progress",
                      max =  total,
                      width = 300)
 
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
            Leadig_Points(i))
@@ -315,11 +315,11 @@ k_fiber_length <- function(x){
   cbind(position[ncol(position)], get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1:3])
 }
 
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   tryCatch({
-  assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
-         k_fiber_length(i))
-    },
+    assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
+           k_fiber_length(i))
+  },
   error = function(e){}
   )
 }
@@ -327,19 +327,20 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
 ##Curbature of the fiber
 Fiber_curvature <- function(x){
   position <- data.frame()
-    position[1,1] <- data.frame(x = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1,2]))
-    position[1,2] <- data.frame(y = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1,3]))
-    position[1,3] <- data.frame(z = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1,4]))
-    position[1,4] <- data.frame(x1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),2]))
-    position[1,5] <- data.frame(y1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),3]))
-    position[1,6] <- data.frame(z1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),4]))
-    position[1,1] <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
-    position[1,1] <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1] - position[1,1]
-    data.frame(Ratio = c(position[1,1]),
-                           Length = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1]))
+  position[1,1] <- data.frame(x = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1,2]))
+  position[1,2] <- data.frame(y = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1,3]))
+  position[1,3] <- data.frame(z = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1,4]))
+  position[1,4] <- data.frame(x1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),2]))
+  position[1,5] <- data.frame(y1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),3]))
+  position[1,6] <- data.frame(z1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),4]))
+  position$dist <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
+  ratio <- data.frame()
+  ratio[1,1] <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1] / position$dist
+  data.frame(Ratio = c(ratio[1,1]),
+             Length = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1]))
 }
 
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
            Fiber_curvature(i))
@@ -359,5 +360,6 @@ for (i in 2:as.numeric(ncol(Segments) - 4)){
   )
 }
 
+library(xlsx)
 ##save output
 write.xlsx(Data, "Data#1_fiber_curve.xlsx", row.names = FALSE)
