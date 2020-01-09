@@ -15,6 +15,8 @@ Segments <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.a
 ##Define Pole1 and Pole2 position in um
 Nodes <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.am.xlsx",
                     sheet = "Nodes")
+Pole1 <- Nodes %>% filter_at(vars("Pole1"),
+                             any_vars(.>=1))
 Pole1 <- data.frame(X = c(Pole1 %>% select("X Coord")/10000), 
                     Y = c(Pole1 %>% select("Y Coord")/10000), 
                     Z = c(Pole1 %>% select("Z Coord")/10000))
@@ -161,9 +163,9 @@ duplicated_points <- function(x){
   for(i in 1:ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_")))){
     for(j in 2:nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_")))){
       if(is.na(DF[j-1,i]) && is.na(DF[j+2,i])){
-      DF[j,i] <- NA
-    }
-    else{}
+        DF[j,i] <- NA
+      }
+      else{}
     }
   }
   DF
@@ -194,7 +196,19 @@ median_point <- function(x){
     Median_id[i,2] <- median(na.omit(DF$Y_Coord))
     Median_id[i,3] <- median(na.omit(DF$Z_Coord))
   }
-  cbind(Median_id, get(paste(colnames(Segments)[x], "fiber", sep = "_")))
+  
+  DF <- cbind(Median_id, get(paste(colnames(Segments)[x], "fiber", sep = "_")))
+  for (i in 1:nrow(DF)){
+    if(sum(na.omit(colSums(DF[i, which(colnames(DF) == "V1"):ncol(DF)] != 0))) < 3){
+      DF[i,1:12] <- NA
+      } else {}
+  }
+  if (sum(which(is.na(DF[1]))) != 0){
+    DF[-c(which(is.na(DF[1]))),]
+  } else {
+    DF
+  }
+  
 }
 
 ##count geometry and find circular area
@@ -408,9 +422,9 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
            relativ_pos_1(i))
-    },
-    error = function(e){}
-    )
+  },
+  error = function(e){}
+  )
   
 }
 
@@ -644,7 +658,7 @@ Data <- Pole1_00_fiber[1:3]
 for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(ncol(Segments) - 4)){
   tryCatch({
     Data <- rbind(Data,
-                   get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1:3])
+                  get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1:3])
   },
   error = function(e){}
   )
@@ -656,33 +670,33 @@ write.xlsx(Data, "Data#1.xlsx")
 
 ##Spread data for bins_circular
 Data_full_1.0 <- data.frame(To_1.0_RP = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,1],
-                             To_1.0_Area = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,3])
+                            To_1.0_Area = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,3])
 Data_full_0.9 <- data.frame(To_0.9_c = Data[with(Data, Relativ_pos < 0.9 & Relativ_pos > 0.799),][,1],
-                             To_0.9_p = Data[with(Data, Relativ_pos < 0.9 & Relativ_pos > 0.799),][,3])
+                            To_0.9_p = Data[with(Data, Relativ_pos < 0.9 & Relativ_pos > 0.799),][,3])
 Data_full_0.8 <- data.frame(To_0.8_c = Data[with(Data, Relativ_pos < 0.8 & Relativ_pos > 0.699),][,1],
-                             To_0.8_p = Data[with(Data, Relativ_pos < 0.8 & Relativ_pos > 0.699),][,3])
+                            To_0.8_p = Data[with(Data, Relativ_pos < 0.8 & Relativ_pos > 0.699),][,3])
 Data_full_0.7 <- data.frame(To_0.7_c = Data[with(Data, Relativ_pos < 0.7 & Relativ_pos > 0.599),][,1],
-                             To_0.7_p = Data[with(Data, Relativ_pos < 0.7 & Relativ_pos > 0.599),][,3])
+                            To_0.7_p = Data[with(Data, Relativ_pos < 0.7 & Relativ_pos > 0.599),][,3])
 Data_full_0.6 <- data.frame(To_0.6_c = Data[with(Data, Relativ_pos < 0.6 & Relativ_pos > 0.499),][,1],
-                             To_0.6_p = Data[with(Data, Relativ_pos < 0.6 & Relativ_pos > 0.499),][,3])
+                            To_0.6_p = Data[with(Data, Relativ_pos < 0.6 & Relativ_pos > 0.499),][,3])
 Data_full_0.5 <- data.frame(To_0.5_c = Data[with(Data, Relativ_pos < 0.5 & Relativ_pos > 0.399),][,1],
-                             To_0.5_p = Data[with(Data, Relativ_pos < 0.5 & Relativ_pos > 0.399),][,3])
+                            To_0.5_p = Data[with(Data, Relativ_pos < 0.5 & Relativ_pos > 0.399),][,3])
 Data_full_0.4 <- data.frame(To_0.4_c = Data[with(Data, Relativ_pos < 0.4 & Relativ_pos > 0.299),][,1],
-                             To_0.4_p = Data[with(Data, Relativ_pos < 0.4 & Relativ_pos > 0.299),][,3])
+                            To_0.4_p = Data[with(Data, Relativ_pos < 0.4 & Relativ_pos > 0.299),][,3])
 Data_full_0.3 <- data.frame(To_0.3_c = Data[with(Data, Relativ_pos < 0.3 & Relativ_pos > 0.199),][,1],
-                             To_0.3_p = Data[with(Data, Relativ_pos < 0.3 & Relativ_pos > 0.199),][,3])
+                            To_0.3_p = Data[with(Data, Relativ_pos < 0.3 & Relativ_pos > 0.199),][,3])
 Data_full_0.2 <- data.frame(To_0.2_c = Data[with(Data, Relativ_pos < 0.2 & Relativ_pos > 0.099),][,1],
-                             To_0.2_p = Data[with(Data, Relativ_pos < 0.2 & Relativ_pos > 0.099),][,3])
+                            To_0.2_p = Data[with(Data, Relativ_pos < 0.2 & Relativ_pos > 0.099),][,3])
 Data_full_0.1 <- data.frame(To_0.1_c = Data[with(Data, Relativ_pos < 0.1 & Relativ_pos > 0.000),][,1],
-                             To_0.1_p = Data[with(Data, Relativ_pos < 0.1 & Relativ_pos > 0.000),][,3])
+                            To_0.1_p = Data[with(Data, Relativ_pos < 0.1 & Relativ_pos > 0.000),][,3])
 Data_full_0.0 <- data.frame(To_0.0_c = Data[with(Data, Relativ_pos < 0.0 & Relativ_pos > -0.101),][,1],
-                             To_0.0_p = Data[with(Data, Relativ_pos < 0.0 & Relativ_pos > -0.101),][,3])
+                            To_0.0_p = Data[with(Data, Relativ_pos < 0.0 & Relativ_pos > -0.101),][,3])
 Data_full_m0.1 <- data.frame(To_m0.1_c = Data[with(Data, Relativ_pos < -0.1 & Relativ_pos > -0.201),][,1],
-                              To_m0.1_p = Data[with(Data, Relativ_pos < -0.1 & Relativ_pos > -0.201),][,3])
+                             To_m0.1_p = Data[with(Data, Relativ_pos < -0.1 & Relativ_pos > -0.201),][,3])
 Data_full_m0.2 <- data.frame(To_m0.2_c = Data[with(Data, Relativ_pos < -0.2 & Relativ_pos > -0.301),][,1],
-                              To_m0.2_p = Data[with(Data, Relativ_pos < -0.2 & Relativ_pos > -0.301),][,3])
+                             To_m0.2_p = Data[with(Data, Relativ_pos < -0.2 & Relativ_pos > -0.301),][,3])
 Data_full_m0.3 <- data.frame(To_m0.3_c = Data[with(Data, Relativ_pos < -0.3),][,1],
-                              To_m0.3_p = Data[with(Data, Relativ_pos < -0.3),][,3])
+                             To_m0.3_p = Data[with(Data, Relativ_pos < -0.3),][,3])
 
 Data_circular_bins <- cbind.na(Data_full_1.0,
                                Data_full_0.9,
@@ -730,18 +744,18 @@ Data_full_m0.3 <- data.frame(To_m0.3_c = Data[with(Data, Relativ_pos < -0.3),][,
                              To_m0.3_p = Data[with(Data, Relativ_pos < -0.3),][,2])
 
 Data_alpha_bins <- cbind.na(Data_full_1.0,
-                               Data_full_0.9,
-                               Data_full_0.8,
-                               Data_full_0.7,
-                               Data_full_0.6,
-                               Data_full_0.5,
-                               Data_full_0.4,
-                               Data_full_0.3,
-                               Data_full_0.2,
-                               Data_full_0.1,
-                               Data_full_0.0,
-                               Data_full_m0.1,
-                               Data_full_m0.2,
-                               Data_full_m0.3)
+                            Data_full_0.9,
+                            Data_full_0.8,
+                            Data_full_0.7,
+                            Data_full_0.6,
+                            Data_full_0.5,
+                            Data_full_0.4,
+                            Data_full_0.3,
+                            Data_full_0.2,
+                            Data_full_0.1,
+                            Data_full_0.0,
+                            Data_full_m0.1,
+                            Data_full_m0.2,
+                            Data_full_m0.3)
 write.xlsx(Data_alpha_bins, "Data#1_alpha.xlsx")
 write.xlsx(Data_circular_bins, "Data#1_circular.xlsx")
