@@ -29,7 +29,6 @@ Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
 ## count n. of columns and selected only needed one + ! end polaritis
 ncol<- ncol(Segments_1)
 nrow_1 <- seq(from = 1, to = nrow(Segments_1),by = 1)
-nrow_2 <- seq(from = 1, to = nrow(Segments_1),by = 1)
 Segments_1 <- Segments_1 %>% select(1,
                                     ncol-3, 
                                     ncol-2, 
@@ -40,7 +39,7 @@ Segments_2 <- Segments_2 %>% select(1,
                                     ncol-2, 
                                     ncol-1,
                                     ncol)
-
+nrow_2 <- seq(from = 1, to = nrow(Segments_2),by = 1)
 ## extract xyz coord for each points in um
 Points <- data.frame(Point_ID = c(Points$`Point ID`),
                      X_Coord = c(Points$`X Coord`)/10000,
