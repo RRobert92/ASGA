@@ -290,7 +290,7 @@ pb <- winProgressBar(title = "Progress",
                      max =  total,
                      width = 300)
 
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   ##find individual fiber
   assign(colnames(Segments)[i], 
          Sort_by_fiber(colnames(Segments)[i]))
@@ -318,7 +318,7 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
 close(pb)
 
 ##Sort points in the individual fiber, make 1 point in df corespond to (+) end
-for(i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+for(i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   j = 1
   tryCatch({
     while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
@@ -343,7 +343,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Seg
 }
 
 ##find leading KMTs in the fiber ..... 1->49
-for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   assign(paste(colnames(Segments)[i]), 
          leading_KMTsv2(i, Pole1))
 }
@@ -357,7 +357,7 @@ pb <- winProgressBar(title = "Progress",
                      max =  total,
                      width = 300)
 
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
            Leadig_Points(i))
@@ -384,7 +384,7 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
 close(pb)
 
 ## Calculate circular area
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
            circular_area(i))   
@@ -394,7 +394,7 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
 }
 
 ## Calculate polygone area
-for (i in 2:as.numeric(ncol(Segments) - 4)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
            polygon_area(i))
@@ -404,7 +404,7 @@ for (i in 2:as.numeric(ncol(Segments) - 4)) {
 }
 
 ## Ralative position for Pole1
-for (i in 2:as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
            relativ_pos_1(i))
@@ -641,7 +641,7 @@ rbind.na <- function (..., deparse.level = 1)
 }
 
 Data <- Pole1_00_fiber[1:3]
-for (i in 4:as.numeric(ncol(Segments) - 4)){
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(ncol(Segments) - 4)){
   tryCatch({
     Data <- rbind(Data,
                    get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1:3])
