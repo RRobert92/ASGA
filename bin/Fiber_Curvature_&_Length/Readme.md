@@ -1,4 +1,4 @@
-# Analyzing the k-fiber curvature
+# Analyzing the k-fiber curvature & length
 
 To retrive a length and curvature data of the whole fiber. This tool firstly cread for each fiber median position of all KMTs in the fiber.
 This created median MT is then used to calculate full lenght of the fiber and the length between plus and minus end of the fiber.
