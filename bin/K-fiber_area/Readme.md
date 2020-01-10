@@ -6,7 +6,7 @@ The tool is calculating both circular and polygon areas.<br/><br/>
       **Polygon area**: is calculated by creating a polygon using a [3D alpha sphear method](https://graphics.stanford.edu/courses/cs268-11-spring/handouts/AlphaShapes/as_fisher.pdf). This creat a triangle .obj file of a polygon shape k-fiber cross-section. In order to calculate the area of any k-fiber cross-section, the tool is multiplying points and shifting them in XYZ direction by a fixed distance. This allows creating a prism with an n-side polygonal base.
       Used "alphashape3d" library, which allows calculating the volume of a prism. 
       Area of the k-fiber cross-section is measured by Area_prism = Volume_prism/ High_prism (which is a fixed distance of a shift)
-      
+![cross-sections](/img/k_fiber_area/k-fiber_cross-section.jpg)
 ## Data preparation
 Data also should be prepared prior to the analysis<br/>
       - Preferably data should be resampled for 1000A ~ 0.1um and cleaned out for any MTs/KMTs which are not fully in the volume<br/>
