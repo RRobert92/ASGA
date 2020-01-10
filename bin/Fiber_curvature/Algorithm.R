@@ -196,7 +196,17 @@ median_point <- function(x){
     Median_id[i,2] <- median(na.omit(DF$Y_Coord))
     Median_id[i,3] <- median(na.omit(DF$Z_Coord))
   }
-  cbind(Median_id, get(paste(colnames(Segments)[x], "fiber", sep = "_")))
+  DF <- cbind(Median_id, get(paste(colnames(Segments)[x], "fiber", sep = "_")))
+  for (i in 1:nrow(DF)){
+    if(sum(na.omit(colSums(DF[i, which(colnames(DF) == "V1"):ncol(DF)] != 0))) < 3){
+      DF[i,1:12] <- NA
+      } else {}
+  }
+  if (sum(which(is.na(DF[1]))) != 0){
+    DF[-c(which(is.na(DF[1]))),]
+  } else {
+    DF
+  }
 }
 
 library(tcltk)
