@@ -1,8 +1,9 @@
 # Analyzing the k-fiber curvature & length
 
-To retrive a length and curvature data of the whole fiber. This tool firstly cread for each fiber median position of all KMTs in the fiber.
-This created median MT is then used to calculate full lenght of the fiber and the length between plus and minus end of the fiber.
-As a final output,  user retrivind .xlsx file with curvature ratio and full length of th fiber
+To retrieve a length and curvature data of the whole fiber. This tool determined which KMTs belong to the fiber-based on the labels created with Zib Amira. Nextly from all KMTs in the fiber program is selecting leading KMTs based on its length and position of the minus ends to the pole. The leading KMTs are used to create cross-section planes of the fiber. In order to do that, the tool is selecting points on the leading KMTs (i   5) and finding the closest point to it on each KMTs in the fiber. This ensures that selected points are in the right orientation plane of the fiber.
+The selected points are used to create a median position of the fiber and calculate the area of the cross-section plane.
+This created median MT is then used to calculate the full length of the fiber and the length between plus and minus end of the fiber.
+As a final output, the user retrieving .xlsx file with curvature ratio and the full length of the fiber.
 
 ## Data preparation
 Data also should be prepared prior to the analysis
