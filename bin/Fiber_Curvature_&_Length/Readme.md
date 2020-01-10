@@ -6,15 +6,15 @@ This created median MT is then used to calculate the full length of the fiber an
 As a final output, the user retrieving .xlsx file with curvature ratio and the full length of the fiber.
 
 ## Data preparation
-Data also should be prepared prior to the analysis
-
-      - Prefarable data should be resampled for 1000A ~ 0.1um, and cleaned out for any MTs/KMTs which are not fully in the volume
-      - Fiber which does not have all KMTs, should be deleted for the best accuracy of the program.
-      - Pole coordinate should be marked as a Node and named Pole1 and Pole2
-      - Also spindle poles should be aligned in a way that Pole1 corespond to the bottom of the spindle and Pole2 to the top (*this will be fixed later)
-      - For proper calculation of the relative position, spindle pole-to-pole axis, should be aligned with the spindle Y-axis 
-        - This can be done with "Transfor Editior" in Zib Amira
-      - The last requirement is to label all fiber with names PoleX_YY
+Data also should be prepared prior to the analysis<br/>
+      - Preferably data should be resampled for 1000A ~ 0.1um and cleaned out for any MTs/KMTs which are not fully in the volume<br/>
+      - Fiber which does not have all KMTs should be deleted for the best accuracy of the program.<br/>
+      - Pole coordinate should be marked as a Node and named Pole1 and Pole2<br/>
+      - Also, spindle poles should be aligned in a way that Pole1 correspond to the bottom of the spindle and Pole2 to the top (*this will be fixed later)<br/>
+      - For proper calculation of the relative position, the spindle pole-to-pole axis should be aligned with the spindle Y-axis <br/>
+        - This can be done with "Transfor Editor" in Zib Amira<br/>
+      - The last requirement is to label all fiber with names PoleX_YY<br/>
+      
         X -> Pole 1 or 2
         YY -> number of the fiber
         
