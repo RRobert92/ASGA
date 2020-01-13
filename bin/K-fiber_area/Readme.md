@@ -1,4 +1,4 @@
-# Calculate k-fiber cross-section with polygon and circular approach 
+# Calculate k-fiber cross-section area & KTMs density with polygon and circular approach
 To calculate the fiber area, this tool determined which KMTs belong to the fiber-based on the labels created with Zib Amira. Nextly from all KMTs in the fiber program is selecting leading KMTs based on its length and position of the minus ends to the pole. The leading KMTs are used to create cross-section planes of the fiber. In order to do that, the tool is selecting points on the leading KMTs (i + 5) and finding the closest point to it on each KMTs in the fiber. This ensures that selected points are in the right orientation plane of the fiber.
 The selected points are used to create a median position of the fiber and calculate the area of the cross-section plane.
 The tool is calculating both circular and polygon areas.<br/><br/>
