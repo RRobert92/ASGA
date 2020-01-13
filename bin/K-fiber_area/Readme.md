@@ -10,7 +10,7 @@ The tool is calculating both circular and polygon areas.<br/><br/>
       **Density analysis**: is calculated by dividing at each cross-sectional plane no. of the KMTs by the cross-section polygon area.
 ## Data preparation
 Data also should be prepared prior to the analysis<br/>
-      - Preferably data should be resampled for 10A or 1 nm and cleaned out for any MTs/KMTs which are not fully in the volume<br/>
+      - Preferably data should be resampled for 200A or 20 nm and cleaned out for any MTs/KMTs which are not fully in the volume<br/>
       - Fiber which does not have all KMTs should be deleted for the best accuracy of the program.<br/>
       - Pole coordinate should be marked as a Node and named Pole1 and Pole2<br/>
       - Also, spindle poles should be aligned in a way that Pole1 correspond to the bottom of the spindle and Pole2 to the top (*this will be fixed later)<br/>
