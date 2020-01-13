@@ -1,8 +1,7 @@
 # Analyzing the k-fiber curvature & length
 
-To retrieve a length and curvature data of the whole fiber. This tool determined which KMTs belong to the fiber-based on the labels created with Zib Amira. Nextly from all KMTs in the fiber program is selecting leading KMTs based on its length and position of the minus ends to the pole. The leading KMTs are used to create cross-section planes of the fiber. In order to do that, the tool is selecting points on the leading KMTs (i   5) and finding the closest point to it on each KMTs in the fiber. This ensures that selected points are in the right orientation plane of the fiber.
-The selected points are used to create a median position of the fiber and calculate the area of the cross-section plane.
-This created median MT is then used to calculate the full length of the fiber and the length between plus and minus end of the fiber.
+To retrieve a length and curvature data of the whole fiber. This tool determined which KMTs belong to the fiber-based on the labels created with Zib Amira. Nextly, from all KMTs in the fiber program, is selecting leading KMTs based on its length and position of the minus ends to the pole. The leading KMTs are used to create cross-section planes of the fiber. In order to do that, the tool is selecting points on the leading KMTs (i + 5, each 500 nm) and finding the closest point to it on each KMTs in the fiber. This ensures that selected points are in the right orientation plane of the fiber.
+The selected points are used to create a median position of the fiber at the given plane. This created median MT is then used to calculate the full length of the fiber and the length between plus and minus end of the fiber.
 As a final output, the user retrieving .xlsx file with curvature ratio and the full length of the fiber.
 
 ## Data preparation
@@ -22,8 +21,7 @@ Data also should be prepared prior to the analysis<br/>
         Pole1_00, Pole1_01 etc.
         
 ## Getting Started
-Tool is fully automatic, and required for the user to only feed information about file directory which has to be analysed and the name and directory of the output file.
+The tool is fully automatic and required for the user to only feed information about file directory which has to be analyzed and the name and directory of the output file.
 
       - lines 5, 7 & 12 -> dir of the file
       - lines 365 -> names and dir for the output files
-      
