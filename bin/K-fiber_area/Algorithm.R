@@ -686,7 +686,6 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(ncol(
 names(Data)[1] <- "Density[KMTs/um^2]" 
 names(Data)[2] <- "Relativ_pos"
 library(xlsx)
-write.xlsx(Data, "Data#1_full.xlsx")
 
 ##Spread data for bins_circular
 Data_full_1.0 <- data.frame(To_1.0_RP = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,1],
@@ -809,7 +808,7 @@ Mean <- data.frame()
 SD <- data.frame()
 for (i in 1:nrow(Data_full_area)){
     Mean[i,1] <- mean(na.omit(as.numeric(Data_full_area[i, 2:ncol(Data_full_area)]), na.rm = TRUE))
-    SD[i,1] <- sd(na.omit(as.numeric(Data_full_area[i, 2:ncol(Data_full_area)]), na.rm = TRUE))/sqrt(length(na.omit(Data_full_area[13,2:ncol(Data_full_area)])))
+    SD[i,1] <- sd(na.omit(as.numeric(Data_full_area[i, 2:ncol(Data_full_area)]), na.rm = TRUE))/sqrt(length(na.omit(Data_full_area[i,2:ncol(Data_full_area)])))
 }
 Data_full_area <- cbind.na(Data_full_area,
                             Mean,
@@ -832,7 +831,7 @@ Mean <- data.frame()
 SD <- data.frame()
 for (i in 1:nrow(Data_full_density)){
   Mean[i,1] <- mean(as.numeric(Data_full_density[i, 2:ncol(Data_full_density)]), na.rm = TRUE)
-  SD[i,1] <- sd(as.numeric(Data_full_density[i, 2:ncol(Data_full_density)]), na.rm = TRUE)/sqrt(length(Data_full_density[13,2:ncol(Data_full_density)]))
+  SD[i,1] <- sd(as.numeric(Data_full_density[i, 2:ncol(Data_full_density)]), na.rm = TRUE)/sqrt(length(Data_full_density[i,2:ncol(Data_full_density)]))
 }
 Data_full_density <- cbind.na(Data_full_density,
                            Mean,
@@ -841,5 +840,5 @@ names(Data_full_density)[ncol(Data_full_density)-1] <- "Mean"
 names(Data_full_density)[ncol(Data_full_density)] <- "SD"
 
 plot(x = Data_full_area$V1, y= Data_full_area$Mean)
-write.xlsx(Data_full_density, "Data#1_full_area.xlsx")
+write.xlsx(Data_full_area, "Data#1_full_area.xlsx")
 write.xlsx(Data_full_density, "Data#1_full_density.xlsx")
