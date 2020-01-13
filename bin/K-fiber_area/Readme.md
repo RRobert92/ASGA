@@ -7,6 +7,7 @@ The tool is calculating both circular and polygon areas.<br/><br/>
       Used "alphashape3d" library, which allows calculating the volume of a prism. 
       Area of the k-fiber cross-section is measured by Area_prism = Volume_prism/ High_prism (which is a fixed distance of a shift)
 ![cross-sections](/img/k_fiber_area/k-fiber_cross-section.jpg)
+      **Density analysis**: is calculated by dividing at each cross-sectional plane no. of the KMTs by the cross-section polygon area.
 ## Data preparation
 Data also should be prepared prior to the analysis<br/>
       - Preferably data should be resampled for 10A or 1 nm and cleaned out for any MTs/KMTs which are not fully in the volume<br/>
