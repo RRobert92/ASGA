@@ -1,19 +1,20 @@
-##Load data, bin of 1000A or 0.1um
+rm(list = ls(.GlobalEnv))
+##Load data, bin of 10A or 1 nm  
 library(readxl)
 library(tidyverse)
 
-Points <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.am.xlsx", 
+Points <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled10.xlsx", 
                      sheet = "Points")
 Points <- data.frame(Point_ID = c(Points$`Point ID`),
                      X_Coord = c(Points$`X Coord`)/10000,
                      Y_Coord = c(Points$`Y Coord`)/10000,
                      Z_Coord = c(Points$`Z Coord`)/10000)
 
-Segments <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.am.xlsx",
+Segments <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled10.xlsx",
                        sheet = "Segments")
 
 ##Define Pole1 and Pole2 position in um
-Nodes <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.am.xlsx",
+Nodes <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled10.xlsx",
                     sheet = "Nodes")
 Pole1 <- Nodes %>% filter_at(vars("Pole1"),
                              any_vars(.>=1))
@@ -163,7 +164,7 @@ duplicated_points <- function(x){
   for(i in 1:ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_")))){
     for(j in 2:nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_")))){
       if(is.na(DF[j-1,i]) && is.na(DF[j+2,i])){
-        DF[j,i] <- NA
+        DF[j:nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),i] <- NA
       }
       else{}
     }
@@ -201,7 +202,7 @@ median_point <- function(x){
   for (i in 1:nrow(DF)){
     if(sum(na.omit(colSums(DF[i, which(colnames(DF) == "V1"):ncol(DF)] != 0))) < 3){
       DF[i,1:12] <- NA
-      } else {}
+    } else {}
   }
   if (sum(which(is.na(DF[1]))) != 0){
     DF[-c(which(is.na(DF[1]))),]
@@ -294,12 +295,18 @@ relativ_pos_2 <- function(x){
 
 ##KMTs denisty
 Density_of_KMTs <- function(x){
-  
+  Density <- data.frame()
+  for (i in 1:nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_")))) {
+    Density[i,1] <- sum(na.omit(colSums(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i, which(colnames(get(paste(colnames(Segments)[x], "fiber", sep = "_"))) == "V1"):ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_")))] != 0)))
+  }
+  Density <- Density / get(paste(colnames(Segments)[x], "fiber", sep = "_"))$Alpha_area
+  cbind(Density,
+        get(paste(colnames(Segments)[x], "fiber", sep = "_")))
 }
 
 library(tcltk)
 total <- as.numeric(ncol(Segments) - 4)
-pb <- winProgressBar(title = "Progress",
+pb <- tkProgressBar(title = "Finding KMTs for each fiber...",
                      min = 0,
                      max =  total,
                      width = 300)
@@ -326,7 +333,7 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)
     j = j + 1
   }
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i, 
+  setTkProgressBar(pb, i, 
                     label = paste(round(i / total * 100, 0), "% Done"))
 }
 close(pb)
@@ -366,7 +373,7 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
          leading_KMTsv2(i, Pole2))
 }
 
-pb <- winProgressBar(title = "Progress",
+pb <- tkProgressBar(title = "Finding polygon...",
                      min = 0,
                      max =  total,
                      width = 300)
@@ -392,30 +399,32 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)
   )
   
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i, 
+  setTkProgressBar(pb, i, 
                     label = paste(round(i / total * 100, 0), "% Done"))
 }
 close(pb)
 
 ## Calculate circular area
+## Calculate polygone area
+pb <- tkProgressBar(title = "Calculating area...",
+                    min = 0,
+                    max =  total,
+                    width = 300)
+
 for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
-           circular_area(i))   
-  },
-  error = function(e){}
-  )
-}
-
-## Calculate polygone area
-for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
-  tryCatch({
+           circular_area(i))    
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
            polygon_area(i))
   },
   error = function(e){}
   )
+  Sys.sleep(0.1)
+  setTkProgressBar(pb, i, 
+                   label = paste(round(i / total * 100, 0), "% Done"))
 }
+close(pb)
 
 ## Ralative position for Pole1
 for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
@@ -433,6 +442,16 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
   tryCatch({
     assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
            relativ_pos_2(i))
+  },
+  error = function(e){}
+  )
+}
+
+##Density of KMTs in a polygons
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")):as.numeric(ncol(Segments) - 4)) {
+  tryCatch({
+    assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
+           Density_of_KMTs(i))
   },
   error = function(e){}
   )
@@ -664,9 +683,10 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(ncol(
   )
 }
 
-names(Data)[1] <- "Relativ_pos" 
+names(Data)[1] <- "Density[KMTs/um^2]" 
+names(Data)[2] <- "Relativ_pos"
 library(xlsx)
-write.xlsx(Data, "Data#1.xlsx")
+write.xlsx(Data, "Data#1_full.xlsx")
 
 ##Spread data for bins_circular
 Data_full_1.0 <- data.frame(To_1.0_RP = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,1],
@@ -713,49 +733,113 @@ Data_circular_bins <- cbind.na(Data_full_1.0,
                                Data_full_m0.2,
                                Data_full_m0.3)
 
-##Spread data for bins_alpha
-Data_full_1.0 <- data.frame(To_1.0_c = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,1],
-                            To_1.0_p = Data[with(Data, Relativ_pos <= 1.0 & Relativ_pos > 0.899),][,2])
-Data_full_0.9 <- data.frame(To_0.9_c = Data[with(Data, Relativ_pos < 0.9 & Relativ_pos > 0.799),][,1],
-                            To_0.9_p = Data[with(Data, Relativ_pos < 0.9 & Relativ_pos > 0.799),][,2])
-Data_full_0.8 <- data.frame(To_0.8_c = Data[with(Data, Relativ_pos < 0.8 & Relativ_pos > 0.699),][,1],
-                            To_0.8_p = Data[with(Data, Relativ_pos < 0.8 & Relativ_pos > 0.699),][,2])
-Data_full_0.7 <- data.frame(To_0.7_c = Data[with(Data, Relativ_pos < 0.7 & Relativ_pos > 0.599),][,1],
-                            To_0.7_p = Data[with(Data, Relativ_pos < 0.7 & Relativ_pos > 0.599),][,2])
-Data_full_0.6 <- data.frame(To_0.6_c = Data[with(Data, Relativ_pos < 0.6 & Relativ_pos > 0.499),][,1],
-                            To_0.6_p = Data[with(Data, Relativ_pos < 0.6 & Relativ_pos > 0.499),][,2])
-Data_full_0.5 <- data.frame(To_0.5_c = Data[with(Data, Relativ_pos < 0.5 & Relativ_pos > 0.399),][,1],
-                            To_0.5_p = Data[with(Data, Relativ_pos < 0.5 & Relativ_pos > 0.399),][,2])
-Data_full_0.4 <- data.frame(To_0.4_c = Data[with(Data, Relativ_pos < 0.4 & Relativ_pos > 0.299),][,1],
-                            To_0.4_p = Data[with(Data, Relativ_pos < 0.4 & Relativ_pos > 0.299),][,2])
-Data_full_0.3 <- data.frame(To_0.3_c = Data[with(Data, Relativ_pos < 0.3 & Relativ_pos > 0.199),][,1],
-                            To_0.3_p = Data[with(Data, Relativ_pos < 0.3 & Relativ_pos > 0.199),][,2])
-Data_full_0.2 <- data.frame(To_0.2_c = Data[with(Data, Relativ_pos < 0.2 & Relativ_pos > 0.099),][,1],
-                            To_0.2_p = Data[with(Data, Relativ_pos < 0.2 & Relativ_pos > 0.099),][,2])
-Data_full_0.1 <- data.frame(To_0.1_c = Data[with(Data, Relativ_pos < 0.1 & Relativ_pos > 0.000),][,1],
-                            To_0.1_p = Data[with(Data, Relativ_pos < 0.1 & Relativ_pos > 0.000),][,2])
-Data_full_0.0 <- data.frame(To_0.0_c = Data[with(Data, Relativ_pos < 0.0 & Relativ_pos > -0.101),][,1],
-                            To_0.0_p = Data[with(Data, Relativ_pos < 0.0 & Relativ_pos > -0.101),][,2])
-Data_full_m0.1 <- data.frame(To_m0.1_c = Data[with(Data, Relativ_pos < -0.1 & Relativ_pos > -0.201),][,1],
-                             To_m0.1_p = Data[with(Data, Relativ_pos < -0.1 & Relativ_pos > -0.201),][,2])
-Data_full_m0.2 <- data.frame(To_m0.2_c = Data[with(Data, Relativ_pos < -0.2 & Relativ_pos > -0.301),][,1],
-                             To_m0.2_p = Data[with(Data, Relativ_pos < -0.2 & Relativ_pos > -0.301),][,2])
-Data_full_m0.3 <- data.frame(To_m0.3_c = Data[with(Data, Relativ_pos < -0.3),][,1],
-                             To_m0.3_p = Data[with(Data, Relativ_pos < -0.3),][,2])
-
-Data_alpha_bins <- cbind.na(Data_full_1.0,
-                            Data_full_0.9,
-                            Data_full_0.8,
-                            Data_full_0.7,
-                            Data_full_0.6,
-                            Data_full_0.5,
-                            Data_full_0.4,
-                            Data_full_0.3,
-                            Data_full_0.2,
-                            Data_full_0.1,
-                            Data_full_0.0,
-                            Data_full_m0.1,
-                            Data_full_m0.2,
-                            Data_full_m0.3)
-write.xlsx(Data_alpha_bins, "Data#1_alpha.xlsx")
 write.xlsx(Data_circular_bins, "Data#1_circular.xlsx")
+
+##Clean data <- for each fiber bin it example:
+## find all areas in realtive position between 1 and 0.9 -> take avg. of this number and put in table in 1 <- avg. of 1-0.9
+Clean_data <-  function(x){
+  DF <- get(paste(colnames(Segments)[x], "fiber",  sep = "_"))
+  Fiber <- data.frame()
+  Fiber[1,1] <- 1
+  Fiber[1,2] <- mean(DF[with(DF, DF[2] <= 1 & DF[2] > .899),][,1])
+  Fiber[1,3] <- mean(DF[with(DF, DF[2] <= 1 & DF[2] > .899),][,3])
+  Fiber[2,1] <- .9
+  Fiber[2,2] <- mean(DF[with(DF, DF[2] <= .9 & DF[2] > .799),][,1])
+  Fiber[2,3] <- mean(DF[with(DF, DF[2] <= .9 & DF[2] > .799),][,3])
+  Fiber[3,1] <- .8
+  Fiber[3,2] <- mean(DF[with(DF, DF[2] <= .8 & DF[2] > .699),][,1])
+  Fiber[3,3] <- mean(DF[with(DF, DF[2] <= .8 & DF[2] > .699),][,3])
+  Fiber[4,1] <- .7
+  Fiber[4,2] <- mean(DF[with(DF, DF[2] <= .7 & DF[2] > .599),][,1])
+  Fiber[4,3] <- mean(DF[with(DF, DF[2] <= .7 & DF[2] > .599),][,3])
+  Fiber[5,1] <- .6
+  Fiber[5,2] <- mean(DF[with(DF, DF[2] <= .6 & DF[2] > .499),][,1])
+  Fiber[5,3] <- mean(DF[with(DF, DF[2] <= .6 & DF[2] > .499),][,3])
+  Fiber[6,1] <- .5
+  Fiber[6,2] <- mean(DF[with(DF, DF[2] <= .5 & DF[2] > .399),][,1])
+  Fiber[6,3] <- mean(DF[with(DF, DF[2] <= .5 & DF[2] > .399),][,3])
+  Fiber[7,1] <- .4
+  Fiber[7,2] <- mean(DF[with(DF, DF[2] <= .4 & DF[2] > .299),][,1])
+  Fiber[7,3] <- mean(DF[with(DF, DF[2] <= .4 & DF[2] > .299),][,3])
+  Fiber[8,1] <- .3
+  Fiber[8,2] <- mean(DF[with(DF, DF[2] <= .3 & DF[2] > .199),][,1])
+  Fiber[8,3] <- mean(DF[with(DF, DF[2] <= .3 & DF[2] > .199),][,3])
+  Fiber[9,1] <- .2
+  Fiber[9,2] <- mean(DF[with(DF, DF[2] <= .2 & DF[2] > .099),][,1])
+  Fiber[9,3] <- mean(DF[with(DF, DF[2] <= .2 & DF[2] > .099),][,3])
+  Fiber[10,1] <- .1
+  Fiber[10,2] <- mean(DF[with(DF, DF[2] <= .1 & DF[2] > 0),][,1])
+  Fiber[10,3] <- mean(DF[with(DF, DF[2] <= .1 & DF[2] > 0),][,3])
+  Fiber[11,1] <- .0
+  Fiber[11,2] <- mean(DF[with(DF, DF[2] <= 0 & DF[2] > -.101),][,1])
+  Fiber[11,3] <- mean(DF[with(DF, DF[2] <= 0 & DF[2] > -.101),][,3])
+  Fiber[12,1] <- -0.1
+  Fiber[12,2] <- mean(DF[with(DF, DF[2] <= -.1 & DF[2] > -.201),][,1])
+  Fiber[12,3] <- mean(DF[with(DF, DF[2] <= -.1 & DF[2] > -.201),][,3])
+  Fiber[13,1] <- -0.2
+  Fiber[13,2] <- mean(DF[with(DF, DF[2] <= -.2 & DF[2] > -.301),][,1])
+  Fiber[13,3] <- mean(DF[with(DF, DF[2] <= -.2 & DF[2] > -.301),][,3])
+  names(Data)[1] <- "Relativ_pos" 
+  names(Data)[2] <- "Density[KMTs/um^2]"
+  names(Data)[2] <- "Alpha_area"
+  Fiber
+}
+
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")):as.numeric(ncol(Segments) - 4)){
+  tryCatch({
+    assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
+           Clean_data(i))   
+  },
+  error = function(e){}
+  )
+}
+
+Data_full_area <- data.frame()
+Data_full_area <- data.frame(get(paste(colnames(Segments)[as.numeric(which(colnames(Segments) == "Pole1_00"))], "fiber", sep = "_"))[1])
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")):as.numeric(ncol(Segments) - 4)){
+  tryCatch({
+    Data_full_area <- cbind.na(Data_full_area,
+                  get(paste(colnames(Segments)[i], "fiber", sep = "_"))[3])
+  },
+  error = function(e){}
+  )
+}
+
+Mean <- data.frame()
+SD <- data.frame()
+for (i in 1:nrow(Data_full_area)){
+    Mean[i,1] <- mean(na.omit(as.numeric(Data_full_area[i, 2:ncol(Data_full_area)]), na.rm = TRUE))
+    SD[i,1] <- sd(na.omit(as.numeric(Data_full_area[i, 2:ncol(Data_full_area)]), na.rm = TRUE))/sqrt(length(na.omit(Data_full_area[13,2:ncol(Data_full_area)])))
+}
+Data_full_area <- cbind.na(Data_full_area,
+                            Mean,
+                            SD)
+names(Data_full_area)[ncol(Data_full_area)-1] <- "Mean"
+names(Data_full_area)[ncol(Data_full_area)] <- "SD"
+
+Data_full_density <- data.frame()
+Data_full_density <- data.frame(get(paste(colnames(Segments)[as.numeric(which(colnames(Segments) == "Pole1_00"))], "fiber", sep = "_"))[1])
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")):as.numeric(ncol(Segments) - 4)){
+  tryCatch({
+    Data_full_density <- cbind.na(Data_full_density,
+                                get(paste(colnames(Segments)[i], "fiber", sep = "_"))[2])
+  },
+  error = function(e){}
+  )
+}
+
+Mean <- data.frame()
+SD <- data.frame()
+for (i in 1:nrow(Data_full_density)){
+  Mean[i,1] <- mean(as.numeric(Data_full_density[i, 2:ncol(Data_full_density)]), na.rm = TRUE)
+  SD[i,1] <- sd(as.numeric(Data_full_density[i, 2:ncol(Data_full_density)]), na.rm = TRUE)/sqrt(length(Data_full_density[13,2:ncol(Data_full_density)]))
+}
+Data_full_density <- cbind.na(Data_full_density,
+                           Mean,
+                           SD)
+names(Data_full_density)[ncol(Data_full_density)-1] <- "Mean"
+names(Data_full_density)[ncol(Data_full_density)] <- "SD"
+
+plot(x = Data_full_area$V1, y= Data_full_area$Mean)
+write.xlsx(Data_full_density, "Data#1_full_area.xlsx")
+write.xlsx(Data_full_density, "Data#1_full_density.xlsx")
