@@ -3,18 +3,18 @@ rm(list = ls(.GlobalEnv))
 library(readxl)
 library(tidyverse)
 
-Points <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled10.xlsx", 
+Points <- read_excel("Pulpit/Metaphase_2_KMTs.resampled.rotated.6_15.0.-8_35.resampled200.xlsx", 
                      sheet = "Points")
 Points <- data.frame(Point_ID = c(Points$`Point ID`),
                      X_Coord = c(Points$`X Coord`)/10000,
                      Y_Coord = c(Points$`Y Coord`)/10000,
                      Z_Coord = c(Points$`Z Coord`)/10000)
 
-Segments <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled10.xlsx",
+Segments <- read_excel("Pulpit/Metaphase_2_KMTs.resampled.rotated.6_15.0.-8_35.resampled200.xlsx",
                        sheet = "Segments")
 
 ##Define Pole1 and Pole2 position in um
-Nodes <- read_excel("Pulpit/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled10.xlsx",
+Nodes <- read_excel("Pulpit/Metaphase_2_KMTs.resampled.rotated.6_15.0.-8_35.resampled200.xlsx",
                     sheet = "Nodes")
 Pole1 <- Nodes %>% filter_at(vars("Pole1"),
                              any_vars(.>=1))
@@ -30,7 +30,7 @@ Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
 ##Select one fiber
 Sort_by_fiber <- function(x) {
   fiber <- Segments %>% filter_at(vars(starts_with(x)), any_vars(. >= 1))
-  fiber %>% select(1, ncol(fiber))
+  fiber %>% select(1, which(colnames(Segments) == "Point IDs"))
 }
 
 ## remove "," and spread numbers in single cells
@@ -732,7 +732,7 @@ Data_circular_bins <- cbind.na(Data_full_1.0,
                                Data_full_m0.2,
                                Data_full_m0.3)
 
-write.xlsx(Data_circular_bins, "Data#1_circular.xlsx")
+write.xlsx(Data_circular_bins, "Data#2_circular.xlsx")
 
 ##Clean data <- for each fiber bin it example:
 ## find all areas in realtive position between 1 and 0.9 -> take avg. of this number and put in table in 1 <- avg. of 1-0.9
@@ -840,5 +840,5 @@ names(Data_full_density)[ncol(Data_full_density)-1] <- "Mean"
 names(Data_full_density)[ncol(Data_full_density)] <- "SD"
 
 plot(x = Data_full_area$V1, y= Data_full_area$Mean)
-write.xlsx(Data_full_area, "Data#1_full_area.xlsx")
-write.xlsx(Data_full_density, "Data#1_full_density.xlsx")
+write.xlsx(Data_full_area, "Data#2_full_area.xlsx")
+write.xlsx(Data_full_density, "Data#2_full_density.xlsx")
