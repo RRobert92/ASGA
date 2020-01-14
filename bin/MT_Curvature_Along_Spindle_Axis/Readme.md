@@ -1,9 +1,13 @@
-# MT Curvature Along Spindle Axis
-Analyzing the changes in the KMTs curvature along the spindle pole axis 
+# Analyzing the KMTs curvature
 
-## Getting Started
-This program calculates how the curvature of given MTS (KMTs) is changing along the spindle axis .<br/>
-For this You need exported data from ZIB Amira, and formatted into .xlsx file using excel
+To retrieve a curvature data of the single KMTs. This tool determined which KMTs belong to which pole based on the labels created with Zib Amira. Nextly, the program is selecting information about the IDs of the points associated with each KMTs. These ID points are containing XYZ coordinates of the KMTsposition in the 3D space. The relative position of each point on the Pole-to-Pole axis is calculated in a way, that kinetochore position starts as (1) and pole position finished at (0) (Figure 1).
+![Relative_position](/img/MT_Curvature_Along_Spindle_Axis/Relative_Position.jpg)
+**Figure 1:** Illustration presenting calculation of the relative position for each KMTs at the spindle pole to kinetochore axis.<br/>
+As a final step, the tool is selecting points on the each KMT (i + 5, each 500 nm), calculating the distance between selected points (KMTs Length_y), and the full length between selected points (KMTs Length_x). The curvature is calculated as a ratio between KMTs Length_x and KMTs Length_y (Figure 2).
+As a final output, the user retrieving separate .xlsx file with a curvature ratio and their relative position at the spindle pole-to-kinetochore axis for each KMTs that belong other to Pole_1 or Pole_2.
+
+![KMTs_Curvature](/img/MT_Curvature_Along_Spindle_Axis/MT_Curvature_Along_Spindle_Axis.jpg)
+**Figure 2:** Illustration presenting KMTs curature distribution analysis along spindle pole to kinetochore. <br/>
 
 ## Data preparation
 Data also should be prepared prior to the analysis<br/>
@@ -21,8 +25,8 @@ Data also should be prepared prior to the analysis<br/>
         Example
         Pole1_00, Pole1_01 etc.
         
-## Using the code
-Up to now, the program is analog and require user interaction upon uploading your data.
+## Getting Started
+The tool is fully automatic and required for the user to only feed information about file directory which has to be analyzed and the name and directory of the output file.
 
-      lines 4-8 -> dir of the file
-      lines 339-340 -> names and dir for the output files
+      - lines 4, 6 & 8 -> dir of the file
+      - lines 338-339 -> names and dir for the output files
