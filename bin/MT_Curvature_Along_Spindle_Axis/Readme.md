@@ -2,14 +2,14 @@
 
 To retrieve a curvature data of the single KMTs. This tool determined which KMTs belong to which pole based on the labels created with Zib Amira. Nextly, the program is selecting information about the IDs of the points associated with each KMTs. These ID points are containing XYZ coordinates of the KMTsposition in the 3D space. The relative position of each point on the Pole-to-Pole axis is calculated in a way, that kinetochore position starts as (1) and pole position finished at (0) (Figure 1).<br/>
 
-![Relative_position](/img/MT_Curvature_Along_Spindle_Axis/Relative_Position.jpg)
+![Relative_position](/img/MT_Curvature_Along_Spindle_Axis/Relative_Position.jpg)<br/>
 
-**Figure 1:** Illustration presenting calculation of the relative position for each KMTs at the spindle pole to kinetochore axis.<br/>
+**Figure 1:** Illustration presenting calculation of the relative position for each KMTs at the spindle pole to kinetochore axis.<br/><br/>
 As a final step, the tool is selecting points on the each KMT (i + 5, each 500 nm), calculating the distance between selected points (KMTs Length_y), and the full length between selected points (KMTs Length_x). The curvature is calculated as a ratio between KMTs Length_x and KMTs Length_y (Figure 2).
 As a final output, the user retrieving separate .xlsx file with a curvature ratio and their relative position at the spindle pole-to-kinetochore axis for each KMTs that belong other to Pole_1 or Pole_2.<br/>
 
-![KMTs_Curvature](/img/MT_Curvature_Along_Spindle_Axis/MT_Curvature_Along_Spindle_Axis.jpg)
-**Figure 2:** Illustration presenting KMTs curature distribution analysis along spindle pole to kinetochore. <br/>
+![KMTs_Curvature](/img/MT_Curvature_Along_Spindle_Axis/MT_Curvature_Along_Spindle_Axis.jpg)<br/>
+**Figure 2:** Illustration presenting KMTs curature distribution analysis along spindle pole to kinetochore. <br/><br/>
 
 ## Data preparation
 Data also should be prepared prior to the analysis<br/>
