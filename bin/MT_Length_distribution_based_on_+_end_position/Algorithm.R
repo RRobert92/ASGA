@@ -29,7 +29,7 @@ Pole2 <- "POle2" ## Name of the label for the Pole2 in the Node section
 ##Select one fiber
 Sort_by_fiber <- function(x) {
   fiber <- Segments %>% filter_at(vars(starts_with(x)), any_vars(. >= 1))
-  fiber %>% select(1, which(colnames(Segments) == "Point IDs"))
+  fiber %>% select(1, which(colnames(Segments) == "Point IDs"), which(colnames(Segments) == "length")) 
 }
 
 ## remove "," and spread numbers in single cells
@@ -85,6 +85,25 @@ Sort_by_distance_to_pole2 <- function(y){
 ##find median of the (+) ends and calculate distance to the pole
 ##find (-) end distance to the pole
 ##find length of KMTs and marge table
+Analyse_LD <- function(x,y,z){ ## x <- name of the DF y <- KMTs ID, z <- Pole1 or Pole2
+ for (i in nrow(y)){
+   DF[i,] <- x[1,2:4]
+ }
+  DF <- data.frame(X_Median = c(median(DF[1])),
+                   Y_Median = c(median(DF[2])),
+                   Z_Median = c(median(DF[3])))
+  Bind_Data <- data.frame(length = c(),
+                          minus_dist_to_pole = c(),
+                          plus_dist_to_pole = c())
+  for (i in nrow(y)) {
+  Plus_Distst_to_the_pole <- sqrt((z[1,1] - (x[1,2]/10000)^2 + (z[1,2] - (x[1,3]/10000))^2 + (z[1,3] - (x[1,3]/10000))^2)
+  Minus_Distst_to_the_pole <-sqrt((z[1,1] - (x[nrow(x),2]/10000))^2 + (z[1,2] - (x[nrow(x),3]/10000))^2 + (z[1,3] - (x[nrow(x),4]/10000))^2)
+  Bind_Data [i,1] <- y[i,3]/10000
+  Bind_Data [i,2] <- Minus_Distst_to_the_pole
+  Bind_Data [i,3] <- Plus_Distst_to_the_pole
+  }
+  Bind_Data
+}
 
 #############
 # Load Data #
