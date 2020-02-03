@@ -20,8 +20,8 @@ Segments <- read_excel("H:/Robert/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_5
 Nodes <- read_excel("H:/Robert/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled200.xlsx",
                     sheet = "Nodes")
 
-Pole1 <- "POle1" ## Name of the label for the Pole1 in the Node section
-Pole2 <- "POle2" ## Name of the label for the Pole2 in the Node section
+Pole1 <- "Pole1" ## Name of the label for the Pole1 in the Node section
+Pole2 <- "Pole2" ## Name of the label for the Pole2 in the Node section
 
 #############
 # Functions #
