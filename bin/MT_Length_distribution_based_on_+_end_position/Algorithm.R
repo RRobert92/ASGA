@@ -85,26 +85,28 @@ Sort_by_distance_to_pole2 <- function(y){
 ##find median of the (+) ends and calculate distance to the pole
 ##find (-) end distance to the pole
 ##find length of KMTs and marge table
-Analyse_LD <- function(x,y,z){ ## x <- name of the DF y <- KMTs ID, z <- Pole1 or Pole2
- for (i in nrow(y)){
-   DF[i,] <- x[1,2:4]
+Analyse_LD <- function(x,y){ ##  y <- KMTs ID, z <- Pole1 or Pole2..
+  Plus_end <- data.frame()
+ for (i in 1:nrow(get(colnames(Segments)[x]))){
+   Plus_end[i,1:3] <- get(paste(colnames(Segments)[x], i, sep = "_"))[1,2:4]
  }
-  DF <- data.frame(X_Median = c(median(DF[1])),
-                   Y_Median = c(median(DF[2])),
-                   Z_Median = c(median(DF[3])))
-  Bind_Data <- data.frame(length = c(),
-                          minus_dist_to_pole = c(),
-                          plus_dist_to_pole = c())
-  for (i in nrow(y)) {
-  Plus_Distst_to_the_pole <- sqrt((z[1,1] - (x[1,2]/10000)^2 + (z[1,2] - (x[1,3]/10000))^2 + (z[1,3] - (x[1,3]/10000))^2)
-  Minus_Distst_to_the_pole <-sqrt((z[1,1] - (x[nrow(x),2]/10000))^2 + (z[1,2] - (x[nrow(x),3]/10000))^2 + (z[1,3] - (x[nrow(x),4]/10000))^2)
-  Bind_Data [i,1] <- y[i,3]/10000
+  Plus_end <- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
+                   Y_Median = c(median(as.matrix(Plus_end[2]))),
+                   Z_Median = c(median(as.matrix(Plus_end[3]))))
+  Bind_Data <- data.frame()
+  Plus_Distst_to_the_pole <- sqrt((y[1,1] - (Plus_end[1,1]/10000)^2 + (y[1,2] - (Plus_end[1,2]/10000))^2 + (y[1,3] - (Plus_end[1,3]/10000))^2))
+  for (i in 1:nrow(get(colnames(Segments)[x]))){
+  Minus_end <- paste(colnames(Segments)[x], i, sep = "_")
+  Minus_Distst_to_the_pole <- sqrt((y[1,1] - (get(Minus_end)[nrow(get(Minus_end)),2]))^2 + (y[1,2] - (get(Minus_end)[nrow(get(Minus_end)),3]))^2 + (y[1,3] - (get(Minus_end)[nrow(get(Minus_end)),4]))^2)
+  Bind_Data [i,1] <- get(colnames(Segments)[x])[i,3]/10000
   Bind_Data [i,2] <- Minus_Distst_to_the_pole
   Bind_Data [i,3] <- Plus_Distst_to_the_pole
   }
+  names(Bind_Data)[2] <- "minus_dist_to_pole"
+  names(Bind_Data)[3] <- "plus_dist_to_pole"
   Bind_Data
 }
-
+  
 #############
 # Load Data #
 #############
@@ -117,7 +119,7 @@ Pole1 <- Nodes %>% filter_at(vars(Pole1),
 Pole1 <- data.frame(X = c(Pole1 %>% select("X Coord")/10000), 
                     Y = c(Pole1 %>% select("Y Coord")/10000), 
                     Z = c(Pole1 %>% select("Z Coord")/10000))
-Pole2 <- Nodes %>% filter_at(vars(POle2),
+Pole2 <- Nodes %>% filter_at(vars(Pole2),
                              any_vars(.>=1))
 Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000), 
                     Y = c(Pole2 %>% select("Y Coord")/10000), 
@@ -159,18 +161,36 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)
 }
 close(pb)
 
+total <- as.numeric(as.numeric(which(colnames(Segments) == "Pole2_00") - 1) - which(colnames(Segments) == "Pole1_00"))
+pb <- tkProgressBar(title = "Calculate dist. of (+) and (-) ends to the Pole1",
+                    min = 2,
+                    max =  total,
+                    width = 500)
 ##Sort points in the individual fiber, make 1 point in df corespond to (+) end
 for(i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
-  j = 1
   tryCatch({
+    j = 1
     while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
       assign(paste(colnames(Segments)[i], j, sep = "_"),
              Sort_by_distance_to_pole1(get(paste(colnames(Segments)[i], j, sep = "_"))))
       j = j + 1
     }
+    assign(paste(colnames(Segments)[i]),
+           Analyse_LD(i, Pole1))
+
   },
   error = function(e){})
+  Sys.sleep(0.1)
+  setTkProgressBar(pb, i, 
+                   label = paste(round(i / total * 100, 0), "% Done"))
 }
+close(pb)
+
+total <- as.numeric(which(colnames(Segments) == "Pole2_00") - 1) - which(colnames(Segments) == "Pole1_00")
+pb <- tkProgressBar(title = "Calculate dist. of (+) and (-) ends to the Pole2",
+                    min = 0,
+                    max =  total,
+                    width = 500)
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)){
   j = 1
   tryCatch({
@@ -178,8 +198,15 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Seg
       assign(paste(colnames(Segments)[i], j, sep = "_"),
              Sort_by_distance_to_pole2(get(paste(colnames(Segments)[i], j, sep = "_"))))
       j = j + 1
+      
     }
+    
+    assign(paste(colnames(Segments)[i]),
+           Analyse_LD(i, Pole2))
   },
-  error = function(e){}
-  )
+  error = function(e){})
+  Sys.sleep(0.1)
+  setTkProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
+                   label = paste(round((i - as.numeric(which(colnames(Segments) == "Pole2_00"))) / total * 100, 0), "% Done"))
 }
+close(pb)
