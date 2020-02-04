@@ -11,6 +11,7 @@ library(plyr)
 library(tcltk) 
 library(ggpubr)
 library(ggplot2)
+library(xlsx)
 
 ############
 # Settings #
@@ -25,6 +26,7 @@ Nodes <- read_excel("H:/Robert/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.r
 Pole1 <- "Pole1" ## Name of the label for the Pole1 in the Node section
 Pole2 <- "Pole2" ## Name of the label for the Pole2 in the Node section
 
+Output <- "H:/Robert/Meta#1.xlsx"
 #############
 # Functions #
 #############
@@ -266,3 +268,8 @@ ggarrange(minus, plus,
           labels = c("A", "B"),
           ncol = 2, nrow = 1)
 ggplot(Data, aes(relative_pos, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method="lm", se=T) + theme_classic2()
+
+########################
+# Export data to .xlsx #
+########################
+write.xlsx(Data, Output)
