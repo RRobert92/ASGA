@@ -9,6 +9,8 @@ library(readxl)
 library(tidyverse)
 library(plyr)
 library(tcltk) 
+library(ggpubr)
+library(ggplot2)
 
 ############
 # Settings #
@@ -85,7 +87,7 @@ Sort_by_distance_to_pole2 <- function(y){
 ##find median of the (+) ends and calculate distance to the pole
 ##find (-) end distance to the pole
 ##find length of KMTs and marge table
-Analyse_LD <- function(x,y){ ##  y <- KMTs ID, z <- Pole1 or Pole2..
+Analyse_LD <- function(x, y){ ##  x <- KMTs ID "1, 2, 3...", y <- Pole1 or Pole2..
   Plus_end <- data.frame()
  for (i in 1:nrow(get(colnames(Segments)[x]))){
    Plus_end[i,1:3] <- get(paste(colnames(Segments)[x], i, sep = "_"))[1,2:4]
@@ -94,7 +96,7 @@ Analyse_LD <- function(x,y){ ##  y <- KMTs ID, z <- Pole1 or Pole2..
                    Y_Median = c(median(as.matrix(Plus_end[2]))),
                    Z_Median = c(median(as.matrix(Plus_end[3]))))
   Bind_Data <- data.frame()
-  Plus_Distst_to_the_pole <- sqrt((y[1,1] - (Plus_end[1,1]/10000)^2 + (y[1,2] - (Plus_end[1,2]/10000))^2 + (y[1,3] - (Plus_end[1,3]/10000))^2))
+  Plus_Distst_to_the_pole <- sqrt((y[1,1] - (Plus_end[1,1]))^2 + (y[1,2] - (Plus_end[1,2]))^2 + (y[1,3] - (Plus_end[1,3]))^2)
   for (i in 1:nrow(get(colnames(Segments)[x]))){
   Minus_end <- paste(colnames(Segments)[x], i, sep = "_")
   Minus_Distst_to_the_pole <- sqrt((y[1,1] - (get(Minus_end)[nrow(get(Minus_end)),2]))^2 + (y[1,2] - (get(Minus_end)[nrow(get(Minus_end)),3]))^2 + (y[1,3] - (get(Minus_end)[nrow(get(Minus_end)),4]))^2)
@@ -102,11 +104,40 @@ Analyse_LD <- function(x,y){ ##  y <- KMTs ID, z <- Pole1 or Pole2..
   Bind_Data [i,2] <- Minus_Distst_to_the_pole
   Bind_Data [i,3] <- Plus_Distst_to_the_pole
   }
+  names(Bind_Data)[1] <- "length"
   names(Bind_Data)[2] <- "minus_dist_to_pole"
   names(Bind_Data)[3] <- "plus_dist_to_pole"
   Bind_Data
 }
   
+## Relative postion of points between kinetochore and the pole1
+Relativ_Pos_1 <- function(x){##  x <- KMTs ID "1, 2, 3..."
+  relativ_position_fiber<- data.frame()
+  for (i in 1:nrow(get(colnames(Segments)[x]))){
+    relativ_pos_part1 <- get(paste(colnames(Segments)[x], i, sep = "_"))[nrow(get(paste(colnames(Segments)[x], i, sep = "_"))),3] - Pole1[1,2]
+    relativ_pos_part2 <- get(paste(colnames(Segments)[x], i, sep = "_"))[which.min(get(paste(colnames(Segments)[x], i, sep = "_"))[1,3]),3] - Pole1[1,2]
+    relativ_position_fiber[i,1] <- round(relativ_pos_part1 / relativ_pos_part2, 2)
+  }
+  All <- cbind(get(paste(colnames(Segments)[x])),
+               relativ_position_fiber)
+  names(All)[4] <- "relative_pos"
+  All
+}
+
+## Relative postion of points between kinetochore and the pole2
+Relativ_Pos_2 <- function(x){
+  relativ_position_fiber<- data.frame()
+  for (i in 1:nrow(get(colnames(Segments)[x]))){
+    relativ_pos_part1 <- get(paste(colnames(Segments)[x], i, sep = "_"))[nrow(get(paste(colnames(Segments)[x], i, sep = "_"))),3] - Pole2[1,2]
+    relativ_pos_part2 <- get(paste(colnames(Segments)[x], i, sep = "_"))[which.max(get(paste(colnames(Segments)[x], i, sep = "_"))[1,3]),3] - Pole2[1,2]
+    relativ_position_fiber[i,1] <- round(relativ_pos_part1 / relativ_pos_part2, 2)
+  }
+  All <- cbind(get(paste(colnames(Segments)[x])),
+               relativ_position_fiber)
+  names(All)[4] <- "relative_pos"
+  All
+}
+
 #############
 # Load Data #
 #############
@@ -165,7 +196,7 @@ total <- as.numeric(as.numeric(which(colnames(Segments) == "Pole2_00") - 1) - wh
 pb <- tkProgressBar(title = "Calculate dist. of (+) and (-) ends to the Pole1",
                     min = 2,
                     max =  total,
-                    width = 500)
+                    width = 380)
 ##Sort points in the individual fiber, make 1 point in df corespond to (+) end
 for(i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
@@ -177,6 +208,9 @@ for(i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segme
     }
     assign(paste(colnames(Segments)[i]),
            Analyse_LD(i, Pole1))
+    
+    assign(paste(colnames(Segments)[i]),
+           Relativ_Pos_1(i))
 
   },
   error = function(e){})
@@ -190,7 +224,7 @@ total <- as.numeric(which(colnames(Segments) == "Pole2_00") - 1) - which(colname
 pb <- tkProgressBar(title = "Calculate dist. of (+) and (-) ends to the Pole2",
                     min = 0,
                     max =  total,
-                    width = 500)
+                    width = 380)
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)){
   j = 1
   tryCatch({
@@ -203,6 +237,8 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Seg
     
     assign(paste(colnames(Segments)[i]),
            Analyse_LD(i, Pole2))
+    assign(paste(colnames(Segments)[i]),
+           Relativ_Pos_2(i))
   },
   error = function(e){})
   Sys.sleep(0.1)
@@ -210,3 +246,23 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Seg
                    label = paste(round((i - as.numeric(which(colnames(Segments) == "Pole2_00"))) / total * 100, 0), "% Done"))
 }
 close(pb)
+
+Data <- Pole1_00
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(ncol(Segments) - 4)){
+  tryCatch({
+    Data <- rbind(Data,
+                  get(paste(colnames(Segments)[i]))[1:4])
+  },
+  error = function(e){}
+  )
+}
+
+#########
+# Plots #
+#########
+minus <- ggplot(Data, aes(length, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method="lm", se=T) + theme_classic2()
+plus <- ggplot(Data, aes(length, plus_dist_to_pole)) + geom_point() + ylim(c(1, 6)) + geom_smooth(method="lm", se=T) + theme_classic2()
+ggarrange(minus, plus,
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1)
+ggplot(Data, aes(relative_pos, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method="lm", se=T) + theme_classic2()
