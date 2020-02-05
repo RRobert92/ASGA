@@ -115,12 +115,20 @@ Analyse_LD <- function(x, y){ ##  x <- KMTs ID "1, 2, 3...", y <- Pole1 or Pole2
   Bind_Data
 }
   
-## Relative postion of points between kinetochore and the pole1
+## Relative postion of points between kinetochore and the Pole1
 Relativ_Pos_1 <- function(x){##  x <- KMTs ID "1, 2, 3..."
+  Plus_end <- data.frame()
+  for (i in 1:nrow(get(colnames(Segments)[x]))){
+    Plus_end[i,1:3] <- get(paste(colnames(Segments)[x], i, sep = "_"))[1,2:4]
+  }
+  Plus_end <- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
+                         Y_Median = c(median(as.matrix(Plus_end[2]))),
+                         Z_Median = c(median(as.matrix(Plus_end[3]))))
+  
   relativ_position_fiber<- data.frame()
   for (i in 1:nrow(get(colnames(Segments)[x]))){
     relativ_pos_part1 <- get(paste(colnames(Segments)[x], i, sep = "_"))[nrow(get(paste(colnames(Segments)[x], i, sep = "_"))),3] - Pole1[1,2]
-    relativ_pos_part2 <- get(paste(colnames(Segments)[x], i, sep = "_"))[which.min(get(paste(colnames(Segments)[x], i, sep = "_"))[1,3]),3] - Pole1[1,2]
+    relativ_pos_part2 <- Plus_end[1,2] - Pole1[1,2]
     relativ_position_fiber[i,1] <- round(relativ_pos_part1 / relativ_pos_part2, 2)
   }
   All <- cbind(get(paste(colnames(Segments)[x])),
@@ -129,12 +137,20 @@ Relativ_Pos_1 <- function(x){##  x <- KMTs ID "1, 2, 3..."
   All
 }
 
-## Relative postion of points between kinetochore and the pole2
+## Relative postion of points between kinetochore and the Pole2
 Relativ_Pos_2 <- function(x){
+  Plus_end <- data.frame()
+  for (i in 1:nrow(get(colnames(Segments)[x]))){
+    Plus_end[i,1:3] <- get(paste(colnames(Segments)[x], i, sep = "_"))[1,2:4]
+  }
+  Plus_end <- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
+                         Y_Median = c(median(as.matrix(Plus_end[2]))),
+                         Z_Median = c(median(as.matrix(Plus_end[3]))))
+  
   relativ_position_fiber<- data.frame()
   for (i in 1:nrow(get(colnames(Segments)[x]))){
     relativ_pos_part1 <- get(paste(colnames(Segments)[x], i, sep = "_"))[nrow(get(paste(colnames(Segments)[x], i, sep = "_"))),3] - Pole2[1,2]
-    relativ_pos_part2 <- get(paste(colnames(Segments)[x], i, sep = "_"))[which.max(get(paste(colnames(Segments)[x], i, sep = "_"))[1,3]),3] - Pole2[1,2]
+    relativ_pos_part2 <-  Plus_end[1,2] - Pole2[1,2]
     relativ_position_fiber[i,1] <- round(relativ_pos_part1 / relativ_pos_part2, 2)
   }
   All <- cbind(get(paste(colnames(Segments)[x])),
@@ -174,10 +190,6 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)
   ##find individual fiber
   assign(colnames(Segments)[i], 
          Sort_by_fiber(colnames(Segments)[i]))
-  ##select individual KMTs from fiber naming it POleX_YY_ZZ
-  ##X  - pole 1 or 3
-  ##YY - number of fiber
-  ##ZZ - number of KMTs in the fiber
   j = 1
   while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
     assign(paste(colnames(Segments)[i], j, sep = "_"), 
@@ -262,17 +274,32 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(ncol(
   )
 }
 
-######################################################
-# Plots MT ends distribution alone POle-to-Pole axis #
-######################################################
-minus <- ggplot(Data, aes(length, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method="lm", se=T) + theme_classic2()
-plus <- ggplot(Data, aes(length, plus_dist_to_pole)) + geom_point() + ylim(c(1, 6)) + geom_smooth(method="lm", se=T) + theme_classic2()
-ggarrange(minus, plus,
-          labels = c("A", "B"),
-          ncol = 2, nrow = 1)
-ggplot(Data, aes(relative_pos, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method="lm", se=T) + theme_classic2()
-
 ########################
 # Export data to .xlsx #
 ########################
+
 write.xlsx(Data, Output)
+
+##################################################################
+# MT length dependency from MT ends distance to the spindle pole #
+##################################################################
+
+minus <- ggplot(Data, aes(length, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth() + theme_classic2()
+plus <- ggplot(Data, aes(length, plus_dist_to_pole)) + geom_point() + ylim(c(1, 6)) + geom_smooth() + theme_classic2()
+ggarrange(minus, plus,
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1)
+
+#################################################################################################################
+# MT (-) ends distribution alone Pole-to-Pole axis based on the position of the (+) end along Pole-to-Pole axis #
+#################################################################################################################
+
+bm1 <- ggplot(Data[with(Data, plus_dist_to_pole <= 6 & plus_dist_to_pole > 4),], 
+              aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'red') + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2()
+bm2 <- ggplot(Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 2),], 
+              aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'blue') + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2()
+bm3 <- ggplot(Data[with(Data, plus_dist_to_pole <= 2 & plus_dist_to_pole > 0),], 
+              aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'green') + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2()
+ggarrange(bm1, bm2, bm3,
+          labels = c("A", "B", "C"),
+          ncol = 3, nrow = 1)
