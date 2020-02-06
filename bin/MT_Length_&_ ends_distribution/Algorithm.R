@@ -294,12 +294,34 @@ ggarrange(minus, plus,
 # MT (-) ends distribution alone Pole-to-Pole axis based on the position of the (+) end along Pole-to-Pole axis #
 #################################################################################################################
 
-bm1 <- ggplot(Data[with(Data, plus_dist_to_pole <= 6 & plus_dist_to_pole > 4),], 
+BM1 <- ggplot(Data[with(Data, plus_dist_to_pole <= 6 & plus_dist_to_pole > 4),], 
               aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'red') + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2()
-bm2 <- ggplot(Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 2),], 
+BM2 <- ggplot(Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 2),], 
               aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'blue') + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2()
-bm3 <- ggplot(Data[with(Data, plus_dist_to_pole <= 2 & plus_dist_to_pole > 0),], 
+BM3 <- ggplot(Data[with(Data, plus_dist_to_pole <= 2 & plus_dist_to_pole > 0),], 
               aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'green') + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2()
-ggarrange(bm1, bm2, bm3,
+ggarrange(BM1, BM2, BM3,
           labels = c("A", "B", "C"),
           ncol = 3, nrow = 1)
+
+#######################################################################################
+# MT length distribution based on the position of the (+) end along Pole-to-Pole axis #
+#######################################################################################
+LD1DF <- Data[with(Data, plus_dist_to_pole <= 6 & plus_dist_to_pole > 4),1]
+LD1DF <- data.frame(c(LD1DF),
+                    c("6 - 4 um"))
+names(LD1DF)[1] <- "Length"
+names(LD1DF)[2] <- "Plus_end_distance"
+LD2DF <- Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 2),1]
+LD2DF <- data.frame(c(LD2DF),
+                    c("4 - 2 um"))
+names(LD2DF)[1] <- "Length"
+names(LD2DF)[2] <- "Plus_end_distance"
+LD3DF <- Data[with(Data, plus_dist_to_pole <= 2 & plus_dist_to_pole > 0),1]
+LD3DF <- data.frame(c(LD3DF),
+                    c("2 - 0 um"))
+names(LD3DF)[1] <- "Length"
+names(LD3DF)[2] <- "Plus_end_distance"
+LD <- rbind(LD1DF, LD2DF, LD3DF)
+
+ggplot(LD, aes(Plus_end_distance, Length)) + geom_violin(alpha = 0.8, aes(fill = Plus_end_distance)) + geom_jitter(height = 0, width = 0.1, alpha = 0.1) + theme_classic2() + stat_summary(fun.y='mean', geom='point', size=2, col='red')
