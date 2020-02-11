@@ -404,5 +404,4 @@ write.xlsx(Data, Output)
   ########################################################################
   # No. of KMTs per fiber with (-) end within 1um distance from the pole #
   ########################################################################
-  ggplot(KMTs_to_the_Pole_and_length, aes(c.nrow.DF.., length)) + geom_jitter(aes(group=c.nrow.DF..), width = 0.2) + xlim(c(1, 7))+ theme_classic2()  + labs(x = "No. of KMTs on the Pole", y = "KMTs length (um)")  + stat_summary(fun.y='median', geom='point', size=2, col='red') + geom_smooth(method = "lm")
-  
+  ggplot(KMTs_to_the_Pole_and_length, aes(c.nrow.DF.., length)) + geom_boxplot(aes(group=c.nrow.DF..),width = 0.2) + geom_jitter(aes(group=c.nrow.DF..), width = 0.2) + xlim(c(0.8, 7.2))+ theme_classic2()  + labs(x = "No. of KMTs on the Pole", y = "KMTs length (um)")  + stat_summary(fun.y='median', geom='point', size=2, col='red') + geom_smooth(method = "lm")
