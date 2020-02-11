@@ -19,11 +19,11 @@ library(xlsx)
 ############
 # Settings #
 ############
-Points <- read_excel("H:/Robert/Metaphase_2_KMTs.resampled.rotated.6_15.0.-8_35.resampled200.xlsx", 
+Points <- read_excel("H:/Robert/Metaphase_3_KMTs.resampled.rotated.-13_15.0.79_3.resampled200.xlsx", 
                      sheet = "Points")
-Segments <- read_excel("H:/Robert/Metaphase_2_KMTs.resampled.rotated.6_15.0.-8_35.resampled200.xlsx",
+Segments <- read_excel("H:/Robert/Metaphase_3_KMTs.resampled.rotated.-13_15.0.79_3.resampled200.xlsx",
                        sheet = "Segments")
-Nodes <- read_excel("H:/Robert/Metaphase_2_KMTs.resampled.rotated.6_15.0.-8_35.resampled200.xlsx",
+Nodes <- read_excel("H:/Robert/Metaphase_3_KMTs.resampled.rotated.-13_15.0.79_3.resampled200.xlsx",
                     sheet = "Nodes")
 
 Pole1 <- "Pole1" ## Name of the label for the Pole1 in the Node section
@@ -310,7 +310,11 @@ for (i in which(colnames(Segments) == "Pole1_01"):as.numeric(ncol(Segments) - 4)
   tryCatch({
     assign("DF1",
            KMTs_to_the_Pole_vs_length(i))
-    KMTs_to_the_Pole_and_length <- rbind(KMTs_to_the_Pole_and_length, DF1)
+    if(DF1 == 0){
+      KMTs_to_the_Pole_and_length <- rbind(KMTs_to_the_Pole_and_length, 0)
+    }else{
+      KMTs_to_the_Pole_and_length <- rbind(KMTs_to_the_Pole_and_length, DF1)
+    }
   },
   error = function(e){}
   )
@@ -401,3 +405,4 @@ write.xlsx(Data, Output)
   # No. of KMTs per fiber with (-) end within 1um distance from the pole #
   ########################################################################
   ggplot(KMTs_to_the_Pole_and_length, aes(c.nrow.DF.., length)) + geom_jitter(aes(group=c.nrow.DF..), width = 0.2) + xlim(c(1, 7))+ theme_classic2()  + labs(x = "No. of KMTs on the Pole", y = "KMTs length (um)")  + stat_summary(fun.y='median', geom='point', size=2, col='red') + geom_smooth(method = "lm")
+  
