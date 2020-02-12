@@ -19,11 +19,11 @@ library(xlsx)
 ############
 # Settings #
 ############
-Points <- read_excel("H:/Robert/Metaphase_3_KMTs.resampled.rotated.-13_15.0.79_3.resampled200.xlsx", 
+Points <- read_excel("H:/Robert/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled200.xlsx", 
                      sheet = "Points")
-Segments <- read_excel("H:/Robert/Metaphase_3_KMTs.resampled.rotated.-13_15.0.79_3.resampled200.xlsx",
+Segments <- read_excel("H:/Robert/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled200.xlsx",
                        sheet = "Segments")
-Nodes <- read_excel("H:/Robert/Metaphase_3_KMTs.resampled.rotated.-13_15.0.79_3.resampled200.xlsx",
+Nodes <- read_excel("H:/Robert/Metaphase_1_KMTs.resampled.rotated.2_75.0.-9_55.resampled200.xlsx",
                     sheet = "Nodes")
 
 Pole1 <- "Pole1" ## Name of the label for the Pole1 in the Node section
@@ -91,12 +91,42 @@ Sort_by_distance_to_pole2 <- function(y){
     y %>% arrange(Point_ID)
   }
 }
+##Get all kinetochore and fide average point, and project this point to the spindle pole axis
+Kinetochore_position <- function(){
+  Plus_end <- data.frame()
+  Kinetochore_Avg <- data.frame()
+  for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)){
+    j = 1
+    while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
+      Plus_end[j,1:3] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,2:4]
+      j = j + 1
+    }
+    Plus_end <- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
+                           Y_Median = c(median(as.matrix(Plus_end[2]))),
+                           Z_Median = c(median(as.matrix(Plus_end[3]))))
+    Kinetochore_Avg[i,1:3] <- Plus_end
+  }
+  Kinetochore_Avg <- na.omit(Kinetochore_Avg)
+  Kinetochore_Avg <- data.frame(X_Median = c(mean(as.matrix(Kinetochore_Avg[1]))),
+                                Y_Median = c(mean(as.matrix(Kinetochore_Avg[2]))),
+                                Z_Median = c(mean(as.matrix(Kinetochore_Avg[3]))))
+  Pole_avg <- rbind(Pole1, Pole2)
+  Pole_avg <- data.frame(X_Median = c(mean(as.matrix(Pole_avg[1]))),
+                         Y_Median = c(mean(as.matrix(Pole_avg[2]))),
+                         Z_Median = c(mean(as.matrix(Pole_avg[3]))))
+  Kinetochore_projected <- data.frame(X_Median = c(mean(as.matrix(Pole_avg[1]))),
+                                      Y_Median = c(mean(as.matrix(Kinetochore_Avg[2]))),
+                                      Z_Median = c(mean(as.matrix(Pole_avg[3]))))
+  Kinetochore_projected
+}
+assign("Kinetochore_projected", 
+       Kinetochore_position())
 
 ##find median of the (+) ends and calculate distance to the pole
 ##find (-) end distance to the pole
 ##find length of KMTs and marge table
 Analyse_LD <- function(x, y){ ##  x <- KMTs ID "1, 2, 3...", y <- Pole1 or Pole2..
-  Plus_end <- data.frame()
+ Plus_end <- data.frame()
  for (i in 1:nrow(get(colnames(Segments)[x]))){
    Plus_end[i,1:3] <- get(paste(colnames(Segments)[x], i, sep = "_"))[1,2:4]
  }
@@ -104,7 +134,7 @@ Analyse_LD <- function(x, y){ ##  x <- KMTs ID "1, 2, 3...", y <- Pole1 or Pole2
                    Y_Median = c(median(as.matrix(Plus_end[2]))),
                    Z_Median = c(median(as.matrix(Plus_end[3]))))
   Bind_Data <- data.frame()
-  Plus_Distst_to_the_pole <- sqrt((y[1,1] - (Plus_end[1,1]))^2 + (y[1,2] - (Plus_end[1,2]))^2 + (y[1,3] - (Plus_end[1,3]))^2)
+  Plus_Distst_to_the_pole <- sqrt((y[1,1] - (Kinetochore_projected[1,1]))^2  + (y[1,3] - (Kinetochore_projected[1,3]))^2)
   for (i in 1:nrow(get(colnames(Segments)[x]))){
   Minus_end <- paste(colnames(Segments)[x], i, sep = "_")
   Minus_Distst_to_the_pole <- sqrt((y[1,1] - (get(Minus_end)[nrow(get(Minus_end)),2]))^2 + (y[1,2] - (get(Minus_end)[nrow(get(Minus_end)),3]))^2 + (y[1,3] - (get(Minus_end)[nrow(get(Minus_end)),4]))^2)
@@ -405,3 +435,4 @@ write.xlsx(Data, Output)
   # No. of KMTs per fiber with (-) end within 1um distance from the pole #
   ########################################################################
   ggplot(KMTs_to_the_Pole_and_length, aes(c.nrow.DF.., length)) + geom_boxplot(aes(group=c.nrow.DF..),width = 0.2) + geom_jitter(aes(group=c.nrow.DF..), width = 0.2) + xlim(c(0.8, 7.2))+ theme_classic2()  + labs(x = "No. of KMTs on the Pole", y = "KMTs length (um)")  + stat_summary(fun.y='median', geom='point', size=2, col='red') + geom_smooth(method = "lm")
+  
