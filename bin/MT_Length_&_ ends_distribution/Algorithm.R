@@ -91,13 +91,15 @@ Sort_by_distance_to_pole2 <- function(y){
     y %>% arrange(Point_ID)
   }
 }
+
 ##Get all kinetochore and fide average point, and project this point to the spindle pole axis
 Kinetochore_position <- function(){
   Plus_end <- data.frame()
   Kinetochore_Avg <- data.frame()
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)){
     j = 1
-    while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
+    tryCatch({
+       while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
       Plus_end[j,1:3] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,2:4]
       j = j + 1
     }
@@ -105,7 +107,11 @@ Kinetochore_position <- function(){
                            Y_Median = c(median(as.matrix(Plus_end[2]))),
                            Z_Median = c(median(as.matrix(Plus_end[3]))))
     Kinetochore_Avg[i,1:3] <- Plus_end
-  }
+    },
+    error = function(e){
+      Kinetochore_Avg[i,1:3] <- NA
+    })
+    }
   Kinetochore_Avg <- na.omit(Kinetochore_Avg)
   Kinetochore_Avg <- data.frame(X_Median = c(mean(as.matrix(Kinetochore_Avg[1]))),
                                 Y_Median = c(mean(as.matrix(Kinetochore_Avg[2]))),
@@ -119,8 +125,6 @@ Kinetochore_position <- function(){
                                       Z_Median = c(mean(as.matrix(Pole_avg[3]))))
   Kinetochore_projected
 }
-assign("Kinetochore_projected", 
-       Kinetochore_position())
 
 ##find median of the (+) ends and calculate distance to the pole
 ##find (-) end distance to the pole
@@ -134,7 +138,7 @@ Analyse_LD <- function(x, y){ ##  x <- KMTs ID "1, 2, 3...", y <- Pole1 or Pole2
                    Y_Median = c(median(as.matrix(Plus_end[2]))),
                    Z_Median = c(median(as.matrix(Plus_end[3]))))
   Bind_Data <- data.frame()
-  Plus_Distst_to_the_pole <- sqrt((y[1,1] - (Kinetochore_projected[1,1]))^2  + (y[1,3] - (Kinetochore_projected[1,3]))^2)
+  Plus_Distst_to_the_pole <- sqrt((Plus_end[1,1] - (Kinetochore_projected[1,1]))^2  + (Plus_end[1,3] - (Kinetochore_projected[1,3]))^2)
   for (i in 1:nrow(get(colnames(Segments)[x]))){
   Minus_end <- paste(colnames(Segments)[x], i, sep = "_")
   Minus_Distst_to_the_pole <- sqrt((y[1,1] - (get(Minus_end)[nrow(get(Minus_end)),2]))^2 + (y[1,2] - (get(Minus_end)[nrow(get(Minus_end)),3]))^2 + (y[1,3] - (get(Minus_end)[nrow(get(Minus_end)),4]))^2)
@@ -267,11 +271,15 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)
 }
 close(pb)
 
+assign("Kinetochore_projected", 
+       Kinetochore_position())
+
 total <- as.numeric(as.numeric(which(colnames(Segments) == "Pole2_00") - 1) - which(colnames(Segments) == "Pole1_00"))
 pb <- tkProgressBar(title = "Calculate dist. of (+) and (-) ends to the Pole1",
                     min = 2,
                     max =  total,
                     width = 380)
+
 ##Sort points in the individual fiber, make 1 point in df corespond to (+) end
 for(i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
@@ -374,7 +382,7 @@ write.xlsx(Data, Output)
   # MT length dependency from MT ends distance to the spindle pole #
   ##################################################################
     minus <- ggplot(Data, aes(length, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method = "loess") + theme_classic2() + labs(x = "KMT length", y = "(-) end distance to the pole")
-    plus <- ggplot(Data, aes(length, plus_dist_to_pole)) + geom_point() + ylim(c(1, 6)) + geom_smooth(method = "loess") + theme_classic2() + labs(x = "KMT length", y = "(+) end distance to the pole")
+    plus <- ggplot(Data, aes(length, plus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method = "loess") + theme_classic2() + labs(x = "KMT length", y = "(+) end distance to the pole")
     ggarrange(minus, plus,
               labels = c("A", "B"),
               ncol = 2, nrow = 1)
@@ -382,12 +390,12 @@ write.xlsx(Data, Output)
   #######################################################################################
   # MT length distribution based on the position of the (+) end along Pole-to-Pole axis #
   #######################################################################################
-  LD1DF <- Data[with(Data, plus_dist_to_pole <= 6 & plus_dist_to_pole > 4),1]
+  LD1DF <- Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 3),1]
   LD1DF <- data.frame(c(LD1DF),
                       c("6 - 4 um"))
   names(LD1DF)[1] <- "Length"
   names(LD1DF)[2] <- "Plus_end_distance"
-  LD2DF <- Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 2),1]
+  LD2DF <- Data[with(Data, plus_dist_to_pole <= 3 & plus_dist_to_pole > 2),1]
   LD2DF <- data.frame(c(LD2DF),
                       c("4 - 2 um"))
   names(LD2DF)[1] <- "Length"
@@ -404,12 +412,12 @@ write.xlsx(Data, Output)
   #################################################################################################################
   # MT (-) ends distribution alone Pole-to-Pole axis based on the position of the (+) end along Pole-to-Pole axis #
   #################################################################################################################
-  BM1 <- ggplot(Data[with(Data, plus_dist_to_pole <= 6 & plus_dist_to_pole > 4),], 
-                aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'red', alpha = 1/5) + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2() + labs(x = "Relative position", y = "(-) end distance to the pole")
-  BM2 <- ggplot(Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 2),], 
-                aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'green', alpha = 1/5) + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2() + labs(x = "Relative position", y = "(-) end distance to the pole")
+  BM1 <- ggplot(Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 3),], 
+                aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'red', alpha = 1/5) + ylim(c(0, 5)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2() + labs(x = "Relative position", y = "(-) end distance to the pole")
+  BM2 <- ggplot(Data[with(Data, plus_dist_to_pole <= 3 & plus_dist_to_pole > 2),], 
+                aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'green', alpha = 1/5) + ylim(c(0, 5)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2() + labs(x = "Relative position", y = "(-) end distance to the pole")
   BM3 <- ggplot(Data[with(Data, plus_dist_to_pole <= 2 & plus_dist_to_pole > 0),], 
-                aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'blue', alpha = 1/5) + ylim(c(0, 6)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2() + labs(x = "Relative position", y = "(-) end distance to the pole")
+                aes(relative_pos, minus_dist_to_pole)) + geom_point(colour = 'blue', alpha = 1/5) + ylim(c(0, 5)) + xlim(c(-0.3, 1)) + geom_smooth(colour = 'black') + theme_classic2() + labs(x = "Relative position", y = "(-) end distance to the pole")
   ggarrange(BM1, BM2, BM3,
             labels = c("A", "B", "C"),
             ncol = 3, nrow = 1)
