@@ -381,8 +381,8 @@ write.xlsx(Data, Output)
   ##################################################################
   # MT length dependency from MT ends distance to the spindle pole #
   ##################################################################
-    minus <- ggplot(Data, aes(length, minus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method = "loess") + theme_classic2() + labs(x = "KMT length", y = "(-) end distance to the pole")
-    plus <- ggplot(Data, aes(length, plus_dist_to_pole)) + geom_point() + ylim(c(0, 6)) + geom_smooth(method = "loess") + theme_classic2() + labs(x = "KMT length", y = "(+) end distance to the pole")
+    minus <- ggplot(Data, aes(minus_dist_to_pole, length)) + geom_point() + ylim(c(0, 7)) + geom_smooth(method = "loess") + theme_classic2() + labs(y = "KMT length", x = "(-) end distance to the pole")
+    plus <- ggplot(Data, aes(plus_dist_to_pole, length)) + geom_point() + ylim(c(0, 7)) + geom_smooth(method = "loess") + theme_classic2() + labs(y = "KMT length", x = "(+) end distance to the pole")
     ggarrange(minus, plus,
               labels = c("A", "B"),
               ncol = 2, nrow = 1)
@@ -392,12 +392,12 @@ write.xlsx(Data, Output)
   #######################################################################################
   LD1DF <- Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 3),1]
   LD1DF <- data.frame(c(LD1DF),
-                      c("6 - 4 um"))
+                      c("4 - 3 um"))
   names(LD1DF)[1] <- "Length"
   names(LD1DF)[2] <- "Plus_end_distance"
   LD2DF <- Data[with(Data, plus_dist_to_pole <= 3 & plus_dist_to_pole > 2),1]
   LD2DF <- data.frame(c(LD2DF),
-                      c("4 - 2 um"))
+                      c("3 - 2 um"))
   names(LD2DF)[1] <- "Length"
   names(LD2DF)[2] <- "Plus_end_distance"
   LD3DF <- Data[with(Data, plus_dist_to_pole <= 2 & plus_dist_to_pole > 0),1]
@@ -407,7 +407,7 @@ write.xlsx(Data, Output)
   names(LD3DF)[2] <- "Plus_end_distance"
   LD <- rbind(LD1DF, LD2DF, LD3DF)
 
-  ggplot(LD, aes(Plus_end_distance, Length)) + geom_violin(alpha = 0.8, aes(fill = Plus_end_distance)) + geom_jitter(height = 0, width = 0.05, alpha = 0.1) + theme_classic2() + stat_summary(fun.y='median', geom='point', size=2, col='red') + labs(x = "(+) end distance to the pole", y = "KMT length")
+  ggplot(LD, aes(Length, colour = Plus_end_distance)) + geom_freqpoly(binwidth = 0.5, size = 1.5) + theme_classic2()  + labs(x = "KMT length", y = "KMT numbers") + ylim(c(0, 60))
 
   #################################################################################################################
   # MT (-) ends distribution alone Pole-to-Pole axis based on the position of the (+) end along Pole-to-Pole axis #
@@ -426,9 +426,7 @@ write.xlsx(Data, Output)
   # MT (-) ends distribution alone Pole-to-Pole axis based on the position of the (+) end along Pole-to-Pole axis #
   #################################################################################################################
   M1 <- Data[with(Data, minus_dist_to_pole <= 1.1 & minus_dist_to_pole > 0),]
-  M1 <- data.frame(c(M1[2]),
-                  c("1"))
-  ggplot(M1, aes(c..1.., minus_dist_to_pole)) + labs(x = "KMTs at the Pole", y = "KMTs (-) end distance to the pole (um)") + geom_violin(fill = "red", alpha = 0.5) + geom_jitter(height = 0, width = 0.05, alpha = 0.1) + stat_summary(fun.y='median', geom='point', size=2, col='red')+ theme_classic2()
+  ggplot(M1, aes(minus_dist_to_pole)) + labs(y = "KMT numbers", x = "KMTs (-) end distance to the pole (um)") + geom_freqpoly(binwidth = 0.025, size = 1.5) + theme_classic2()
 
   ########################################################################
   # No. of KMTs per fiber with (-) end within 1um distance from the pole #
@@ -437,10 +435,22 @@ write.xlsx(Data, Output)
                   "1")
   names(M2)[1] <- "KMTs_no."
   names(M2)[2] <- "KMTs_at_a_Pole_per_fiber"
-  ggplot(M2, aes(KMTs_at_a_Pole_per_fiber, KMTs_no.)) + geom_violin(fill = "red", alpha = 0.5) + labs(x = "KMTs at the Pole per fiber", y = "KMTs no.") + geom_jitter(height = 0, width = 0.05, alpha = 0.1) + stat_summary(fun.y='median', geom='point', size=2, col='red') + theme_classic2()
+  ggplot(M2, aes(KMTs_at_a_Pole_per_fiber, KMTs_no.)) + geom_boxplot(fill = "red", alpha = 0.5) + labs(x = "KMTs at the Pole per fiber", y = "KMTs no.") + geom_jitter(height = 0, width = 0.05, alpha = 0.1) + theme_classic2()
 
   ########################################################################
   # No. of KMTs per fiber with (-) end within 1um distance from the pole #
   ########################################################################
-  ggplot(KMTs_to_the_Pole_and_length, aes(c.nrow.DF.., length)) + geom_boxplot(aes(group=c.nrow.DF..),width = 0.2) + geom_jitter(aes(group=c.nrow.DF..), width = 0.2) + xlim(c(0.8, 7.2))+ theme_classic2()  + labs(x = "No. of KMTs on the Pole", y = "KMTs length (um)")  + stat_summary(fun.y='median', geom='point', size=2, col='red') + geom_smooth(method = "lm")
+  ggplot(KMTs_to_the_Pole_and_length, aes(c.nrow.DF.., length)) + geom_boxplot(aes(group=c.nrow.DF..),width = 0.2) + geom_jitter(aes(group=c.nrow.DF..), width = 0.2) + xlim(c(0.9, 8))+ theme_classic2()  + labs(x = "No. of KMTs on the Pole", y = "KMTs length (um)")  + stat_summary(fun.y='median', geom='point', size=2, col='red') + geom_smooth(method = "lm")
   
+  #########################################################################################
+  # KMTs length distribution based on the position of the (+) end along Pole-to-Pole axis #
+  #########################################################################################
+  LM1 <- ggplot(Data[with(Data, plus_dist_to_pole <= 4 & plus_dist_to_pole > 3),], 
+                aes(plus_dist_to_pole, minus_dist_to_pole)) + geom_point(colour = 'red', alpha = 1/5) + geom_smooth(colour = 'black') + theme_classic2() + labs(y = "KMT length", x = "(-) end distance to the pole")
+  LM2 <- ggplot(Data[with(Data, plus_dist_to_pole <= 3 & plus_dist_to_pole > 2),], 
+                aes(plus_dist_to_pole, minus_dist_to_pole)) + geom_point(colour = 'green', alpha = 1/5) + geom_smooth(colour = 'black') + theme_classic2() + labs(y = "KMT length", x = "(-) end distance to the pole")
+  LM3 <- ggplot(Data[with(Data, plus_dist_to_pole <= 2 & plus_dist_to_pole > 0),], 
+                aes(plus_dist_to_pole, minus_dist_to_pole)) + geom_point(colour = 'blue', alpha = 1/5) + geom_smooth(colour = 'black') + theme_classic2() + labs(y = "KMT length", x = "(-) end distance to the pole")
+  ggarrange(LM1, LM2, LM3,
+            labels = c("A", "B", "C"),
+            ncol = 3, nrow = 1) 
