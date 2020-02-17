@@ -40,10 +40,6 @@ Select_Points <- function(x, y) {
 }
 
 ## combin point_id with xyz
-nrow_1 <- seq(from = 1,
-              to = nrow(Segments),
-              by = 1)
-
 library(plyr)
 Find_XYZ <- function(x) {
   joined_data <- join_all(list(x, Points),
