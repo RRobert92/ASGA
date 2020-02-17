@@ -1,5 +1,5 @@
 ## combin point_id with xyz
-## x is a number of a column contain KMTs information
+## x is a number of a column contain KMTs information like Pole1_00_1
 Find_XYZ <- function(x) {
   joined_data <- join_all(list(x, Points),
                           by = "Point_ID")
