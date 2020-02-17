@@ -53,6 +53,7 @@ source("Functions/Sort_by_Fiber.r")
 source("Functions/Select_Points.r")
 source("Functions/Find_XYZ.r")
 source("Functions/Kinetochore_Position.r")
+source("Functions/Sort_All_Points_to_Start_From_the_Kinetochore.r")
 ###########################
 # !Check files structure! #
 ###########################
@@ -75,6 +76,8 @@ source("Functions/Load_Data.r")
 ## Extract individual KMTs
 source("Analysis/Get_Single_KMTs_From_Labels.r")
 
+## Sort point in each KMT. Always the first point will be a point on a kinetochore
+source("Analysis/Sort_KMTs_by_Kinetochore_Position.r")
 ##############
 # Plots Data #
 ##############
