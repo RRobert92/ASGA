@@ -36,6 +36,7 @@ source("Tools/Core/Select_Points.r")
 source("Tools/Core/Find_XYZ.r")
 source("Tools/Core/Kinetochore_Position.r")
 source("Tools/Core/Sort_All_Points_to_Start_From_the_Kinetochore.r")
+source("Tools/Analysis/Length_Distiribution.R")
 
 #############
 # Read data #
@@ -61,11 +62,15 @@ if(res == "yes"){
 rm(res)
 
 if(analysis == "all"){
-  source("Analysis/...")
-  source("Analysis/...")
-  source("Analysis/...")
+  source("Packages/Analyse_Length_Distiribution.R")
+  source("Packages/....R")
+  
 } else if (analysis == "LD"){
-  source("Analysis/...")
+  source("Packages/Analyse_Length_Distribution.R")
+  
+} else if (analysis == ""){
+  source("Packages/....R")
+  
 }
 
 ##############

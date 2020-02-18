@@ -3,7 +3,7 @@
 ###########################
 
 total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
-pb <- tkProgressBar(title = "Sorting points based on (+) and (-) ends for the Pole_1",
+pb <- tkProgressBar(title = "Calcualting legnth and ends positions for Pole_1",
                     min = 2,
                     max =  total,
                     width = 400)
@@ -11,24 +11,17 @@ pb <- tkProgressBar(title = "Sorting points based on (+) and (-) ends for the Po
 #####################################
 # Sort points in the individual KMT #
 #####################################
-  ## The output of this function are sorted points in each KMT
-  ## After points are sorted. In each PoleX_YY_ZZ the fist Point ID correspond to the (+) end and last point to the (-) end. 
+## The output of this function are sorted points in each KMT
+## After points are sorted. In each PoleX_YY_ZZ the fist Point ID correspond to the (+) end and last point to the (-) end. 
 
 ## Pole_1
 
 for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
-    j = 1
-    while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
-      assign(paste(colnames(Segments)[i], 
-                   j, 
-                   sep = "_"),
-             Sort_by_distance_to_pole1(get(paste(colnames(Segments)[i], 
-                                                 j, 
-                                                 sep = "_"))))
-      j = j + 1
-    }
-    },
+    assign(paste(colnames(Segments)[i]),
+           Analyse_LD(i, 
+                      Pole1))
+  },
   error = function(e){})
   Sys.sleep(0.1)
   setTkProgressBar(pb, i, 
@@ -43,7 +36,7 @@ close(pb)
 ###########################
 
 total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
-pb <- tkProgressBar(title = "Sorting points based on (+) and (-) ends for the Pole_2",
+pb <- tkProgressBar(title = "Calcualting legnth and ends positions for Pole_2",
                     min = 0,
                     max =  total,
                     width = 400)
@@ -52,17 +45,10 @@ pb <- tkProgressBar(title = "Sorting points based on (+) and (-) ends for the Po
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)){
   j = 1
   tryCatch({
-    while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
-      assign(paste(colnames(Segments)[i], 
-                   j, 
-                   sep = "_"),
-             Sort_by_distance_to_pole2(get(paste(colnames(Segments)[i], 
-                                                 j, 
-                                                 sep = "_"))))
-      j = j + 1
-      
-    }
- },
+    assign(paste(colnames(Segments)[i]),
+           Analyse_LD(i, 
+                      Pole2))
+  },
   error = function(e){})
   Sys.sleep(0.1)
   setTkProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
