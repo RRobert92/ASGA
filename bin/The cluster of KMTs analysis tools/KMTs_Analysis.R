@@ -44,10 +44,10 @@ source("Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
 #############
 
 ## Extract individual KMTs
-source("Packages/Get_Single_KMTs_From_Labels.r")
+source("Packages/Core/Get_Single_KMTs_From_Labels.r")
 
 ## Sort point in each KMT. Always the first point will be a point on a kinetochore
-source("Packages/Sort_KMTs_by_Kinetochore_Position.r")
+source("Packages/Core/Sort_KMTs_by_Kinetochore_Position.r")
 
 ############
 # Analysis #
@@ -64,20 +64,20 @@ if(res == "yes"){
 }
 rm(res)
 
-source("Packages/Analyse_Length_Distiribution.R")
+source("Packages/Analysis/Analyse_Length_Distiribution.R")
 
 if(analysis == 0){
-  source("Packages/Analyse_No_of_KMTs_Reaching_the_Pole.R")
-  source("Packages/....R")
+  source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
+  source("Packages/Analysis/....R")
   
 } else if (analysis == "1"){
-  source("Packages/Analyse_No_of_KMTs_Reaching_the_Pole.R")
+  source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
   
 } else if (analysis == "2"){
-  source("Packages/....R")
+  source("Packages/Analysis/....R")
   
 } else if (analysis == ""){
-  source("Packages/....R")
+  source("Packages/Analysis/....R")
   
 }
 
