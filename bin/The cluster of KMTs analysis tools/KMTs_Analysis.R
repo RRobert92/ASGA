@@ -37,6 +37,7 @@ source("Tools/Core/Find_XYZ.r")
 source("Tools/Core/Kinetochore_Position.r")
 source("Tools/Core/Sort_All_Points_to_Start_From_the_Kinetochore.r")
 source("Tools/Analysis/Length_Distiribution.R")
+source("Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
 
 #############
 # Read data #
@@ -48,25 +49,32 @@ source("Packages/Get_Single_KMTs_From_Labels.r")
 ## Sort point in each KMT. Always the first point will be a point on a kinetochore
 source("Packages/Sort_KMTs_by_Kinetochore_Position.r")
 
-###########
-#Analysis #
-###########
+############
+# Analysis #
+############
 
 res <- dlg_message("Do you want to run full analysis?",
             "yesno")$res
 if(res == "yes"){
-  analysis <- "all"
+  analysis <- 0
 } else {
-  analysis <- dlg_input("What analysis to run?\n Pick one from list:\n - LD")$res
+  analysis <- dlg_input("What analysis to run?
+  Pick one from list: 
+                        1 - No of KTMs at the Pole")$res
 }
 rm(res)
 
-if(analysis == "all"){
-  source("Packages/Analyse_Length_Distiribution.R")
+source("Packages/Analyse_Length_Distiribution.R")
+
+if(analysis == 0){
+  source("Packages/Analyse_No_of_KMTs_Reaching_the_Pole.R")
   source("Packages/....R")
   
-} else if (analysis == "LD"){
-  source("Packages/Analyse_Length_Distribution.R")
+} else if (analysis == "1"){
+  source("Packages/Analyse_No_of_KMTs_Reaching_the_Pole.R")
+  
+} else if (analysis == "2"){
+  source("Packages/....R")
   
 } else if (analysis == ""){
   source("Packages/....R")

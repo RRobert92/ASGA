@@ -1,3 +1,13 @@
+#############################################################
+# Set of functions to extract the single KMTs from raw data #
+#############################################################
+## The output of this function is two set of data
+## First one is named PoleX_YY
+## Second is named PoleX_YY_ZZ
+## X <- Pole number
+## YY <- Number of a fiber. Numbering is 00, 01,... etc.
+## ZZ <- Number of a KMT in a fiber. Numbering is 1, 2,..., 10, 11,... etc.
+
 ################
 # Progress bar #
 ################
@@ -8,15 +18,9 @@ pb <- tkProgressBar(title = "Finding KMTs for each fiber...",
                     max =  total,
                     width = 300)
 
-#############################################################
-# Set of functions to extract the single KMTs from raw data #
-#############################################################
-  ## The output of this function is two set of data
-  ## First one is named PoleX_YY
-  ## Second is named PoleX_YY_ZZ
-    ## X <- Pole number
-    ## YY <- Number of a fiber. Numbering is 00, 01,... etc.
-    ## ZZ <- Number of a KMT in a fiber. Numbering is 1, 2,..., 10, 11,... etc.
+#####################################
+# Loop iterating through each label #
+#####################################
 
 for (i in which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))])) {
   assign(colnames(Segments)[i],

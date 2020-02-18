@@ -1,3 +1,9 @@
+##################################################
+# The Package to sort point in the individual KM #
+##################################################
+## The output of this function are sorted points in each KMT
+## After points are sorted. In each PoleX_YY_ZZ the fist Point ID correspond to the (+) end and last point to the (-) end. 
+
 ###########################
 # Progress bar for Pole_1 #
 ###########################
@@ -7,12 +13,6 @@ pb <- tkProgressBar(title = "Sorting points based on (+) and (-) ends for the Po
                     min = 2,
                     max =  total,
                     width = 400)
-
-#####################################
-# Sort points in the individual KMT #
-#####################################
-  ## The output of this function are sorted points in each KMT
-  ## After points are sorted. In each PoleX_YY_ZZ the fist Point ID correspond to the (+) end and last point to the (-) end. 
 
 ## Pole_1
 
