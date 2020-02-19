@@ -11,7 +11,8 @@ KMTs_to_the_Pole_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segment
 names(KMTs_to_the_Pole_and_length)[1] <- "No. of KMTs"
 names(KMTs_to_the_Pole_and_length)[2] <- "KMTs length"
 names(KMTs_to_the_Pole_and_length)[3] <- "Minus end dist."
-names(KMTs_to_the_Pole_and_length)[4] <- "Plus end dist."
+names(KMTs_to_the_Pole_and_length)[4] <- "Plus end dist. to k-core"
+names(KMTs_to_the_Pole_and_length)[5] <- "Plus end dist. to pole"
 
 total <- as.numeric(ncol(Segments %>% select(starts_with("Pole"))))
 pb <- tkProgressBar(title = "Calculating no. of KMTs reaching the pole...",
@@ -36,7 +37,8 @@ for (i in which(colnames(Segments) == "Pole1_01") : which(colnames(Segments) == 
     names(DF2)[1] <- "No. of KMTs"
     names(DF2)[2] <- "KMTs length"
     names(DF2)[3] <- "Minus end dist."
-    names(DF2)[4] <- "Plus end dist."
+    names(DF2)[4] <- "Plus end dist. to k-core"
+    names(DF2)[5] <- "Plus end dist. to pole"
     
     KMTs_to_the_Pole_and_length <- rbind(KMTs_to_the_Pole_and_length, 
                                          DF2)
