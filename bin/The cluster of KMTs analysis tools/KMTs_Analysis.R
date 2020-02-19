@@ -60,11 +60,24 @@ if(res == "yes"){
 } else {
   analysis <- dlg_input("What analysis to run?
   Pick one from list: 
-                        1 - No of KTMs at the Pole")$res
+                        1 - No of KTMs at the pole
+                        2 - Inter-kinetochore distance
+                        3 - No. of KMTs per kinetochore
+                        4 - Curvature of KMTs
+                        5 - k-fiber area (polygon)
+                        6 - Length of a k-fiber
+                        7 - Curvature of k-fiber")$res
 }
 rm(res)
 
+## Core function to formated PoleX_YY DF: [1] Segment ID, [2] length, [3] minus_dist_to_pole, [4] plus_dist_to_pole
 source("Packages/Analysis/Analyse_Length_Distiribution.R")
+
+## DF output of the functions:
+## 0 - All below
+## 1 - KMTs_at_the_Pole: [1] No. of KMTs
+##   - KTMs_at_the_Pole_and_length: [1] No. of KMTs, [2] KMTs length, [3] Minus end dist., [4] Plus end dist.
+## 2 - Inter_kinetochore_distance: [1]Inter_distance, [2] KMTs no., [3] Delta
 
 if(analysis == 0){
   source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
@@ -76,7 +89,19 @@ if(analysis == 0){
 } else if (analysis == "2"){
   source("Packages/Analysis/....R")
   
-} else if (analysis == ""){
+} else if (analysis == "3"){
+  source("Packages/Analysis/....R")
+  
+} else if (analysis == "4"){
+  source("Packages/Analysis/....R")
+  
+} else if (analysis == "5"){
+  source("Packages/Analysis/....R")
+  
+} else if (analysis == "6"){
+  source("Packages/Analysis/....R")
+  
+} else if (analysis == "7"){
   source("Packages/Analysis/....R")
   
 }
