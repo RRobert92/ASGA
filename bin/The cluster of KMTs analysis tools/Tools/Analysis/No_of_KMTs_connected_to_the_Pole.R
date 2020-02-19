@@ -26,7 +26,8 @@ KMTs_to_the_Pole_vs_length <- function(x){
     No_of_KMTs <- data.frame(c(nrow(DF)),
                              c(DF[2]),
                              c(DF[3]),
-                             c(DF[4]))
+                             c(DF[4]),
+                             c(DF[5]))
   }
   No_of_KMTs
 }
