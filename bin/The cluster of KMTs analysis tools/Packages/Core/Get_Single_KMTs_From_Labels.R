@@ -13,10 +13,9 @@
 ################
 
 total <- as.numeric(ncol(Segments %>% select(starts_with("Pole"))))
-pb <- tkProgressBar(title = "Finding KMTs for each fiber...",
-                    min = 2,
-                    max =  total,
-                    width = 300)
+pb <- winProgressBar(min = 2,
+                     max =  total,
+                     width = 300)
 
 #####################################
 # Loop iterating through each label #
@@ -49,11 +48,12 @@ for (i in which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == 
   }
   
   Sys.sleep(0.1)
-  setTkProgressBar(pb, 
-                   i,
-                   label = paste(round(i / total * 100, 
-                                       0), 
-                                 "% Done"))
+  setWinProgressBar(pb, 
+                    i,
+                    title = paste("Finding KMTs for each fiber...",
+                                  round(i / total * 100, 
+                                        0), 
+                                  "% Done"))
 }
 close(pb)
 
