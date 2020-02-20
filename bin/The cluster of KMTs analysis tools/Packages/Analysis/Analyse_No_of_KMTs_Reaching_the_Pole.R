@@ -15,10 +15,9 @@ names(KMTs_to_the_Pole_and_length)[4] <- "Plus end dist. to k-core"
 names(KMTs_to_the_Pole_and_length)[5] <- "Plus end dist. to pole"
 
 total <- as.numeric(ncol(Segments %>% select(starts_with("Pole"))))
-pb <- tkProgressBar(title = "Calculating no. of KMTs reaching the pole...",
-                    min = 2,
-                    max =  total,
-                    width = 400)
+pb <- winProgressBar(min = 2,
+                     max =  total,
+                     width = 400)
 
 DF1 <- data.frame()
 DF2 <- data.frame()
@@ -45,10 +44,11 @@ for (i in which(colnames(Segments) == "Pole1_01") : which(colnames(Segments) == 
   },
   error = function(e){})
   Sys.sleep(0.1)
-  setTkProgressBar(pb, i, 
-                   label = paste(round((i - 1) / total * 100, 
-                                       0), 
-                                 "% Done"))
+  setWinProgressBar(pb, i, 
+                    title = paste("Calculating no. of KMTs reaching the pole...", 
+                                  round((i - 1) / total * 100,
+                                        0),
+                                  "% Done"))
 }
 
 close(pb)
@@ -56,4 +56,4 @@ close(pb)
 KMTs_at_the_Pole <- data.frame(KMTs_at_the_Pole[,1])
 names(KMTs_at_the_Pole)[1] <- "No. of KMTs"
 
-rm(DF, DF2)
+rm(DF2)
