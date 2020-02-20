@@ -38,6 +38,7 @@ source("Tools/Core/Kinetochore_Position.r")
 source("Tools/Core/Sort_All_Points_to_Start_From_the_Kinetochore.r")
 source("Tools/Analysis/Length_Distiribution.R")
 source("Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
+source("TOols/Analysis/No_of_KMTs.R")
 
 #############
 # Read data #
@@ -60,7 +61,7 @@ if(res == "yes"){
 } else {
   analysis <- dlg_input("What analysis to run?
   Pick one from list: 
-                        1 - No of KTMs at the pole
+                        1 - LD and base KMTs numbers
                         2 - Inter-kinetochore distance
                         3 - No. of KMTs per kinetochore
                         4 - Curvature of KMTs
@@ -85,6 +86,7 @@ if(analysis == 0){
   
 } else if (analysis == "1"){
   source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
+  source("Packages/Analysis/No_of_KMTs_at_a_kinetochore.R")
            
 } else if (analysis == "2"){
   source("Packages/Analysis/....R")
