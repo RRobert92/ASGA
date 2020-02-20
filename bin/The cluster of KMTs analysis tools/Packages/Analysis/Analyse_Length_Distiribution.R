@@ -9,10 +9,9 @@
 ###########################
 
 total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
-pb <- tkProgressBar(title = "Calcualting legnth and ends positions for Pole_1",
-                    min = 2,
-                    max =  total,
-                    width = 400)
+pb <- winProgressBar(min = 2,
+                     max =  total,
+                     width = 400)
 
 ##################################################
 # Loop iterating through each KMT for the Pole_1 #
@@ -26,11 +25,12 @@ for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Seg
   },
   error = function(e){})
   Sys.sleep(0.1)
-  setTkProgressBar(pb, i, 
-                   label = paste(round((i - 1) / total * 100, 
-                                       0), 
-                                 "% Done"))
-}
+  setWinProgressBar(pb, i, 
+                    title = paste("Calcualting legnth and ends positions for Pole_1", 
+                                  round((i - 1) / total * 100,
+                                        0),
+                                  "% Done"))
+} 
 close(pb)
 
 ##################################################
@@ -38,10 +38,9 @@ close(pb)
 ##################################################
 
 total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
-pb <- tkProgressBar(title = "Calcualting legnth and ends positions for Pole_2",
-                    min = 0,
-                    max =  total,
-                    width = 400)
+pb <- winProgressBar(min = 0,
+                     max =  total,
+                     width = 400)
 ## Pole_2
 
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)){
@@ -53,8 +52,10 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(S
   },
   error = function(e){})
   Sys.sleep(0.1)
-  setTkProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
-                   label = paste(round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0), "% Done"))
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
+                    title = paste("Calcualting legnth and ends positions for Pole_2",
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
+                                        0), 
+                                  "% Done"))
 }
 close(pb)
-
