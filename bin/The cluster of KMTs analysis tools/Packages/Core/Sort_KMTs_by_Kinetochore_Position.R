@@ -9,13 +9,12 @@
 ###########################
 
 total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
-pb <- tkProgressBar(title = "Sorting points based on (+) and (-) ends for the Pole_1",
+pb <- winProgressBar(title = "Sorting points based on (+) and (-) ends for the Pole_1",
                     min = 2,
                     max =  total,
-                    width = 400)
+                    width = 420)
 
 ## Pole_1
-
 for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     j = 1
@@ -29,12 +28,15 @@ for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Seg
       j = j + 1
     }
     },
-  error = function(e){})
+  error = function(e){}
+  )
+  
   Sys.sleep(0.1)
-  setTkProgressBar(pb, i, 
-                   label = paste(round((i - 1) / total * 100, 
-                                       0), 
-                                 "% Done"))
+  setWinProgressBar(pb, i, 
+                    title = paste("Sorting points based on (+) and (-) ends for the Pole_1...",
+                                  round((i - 1) / total * 100, 
+                                        0), 
+                                  "% Done"))
 }
 close(pb)
 
@@ -43,12 +45,11 @@ close(pb)
 ###########################
 
 total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
-pb <- tkProgressBar(title = "Sorting points based on (+) and (-) ends for the Pole_2",
-                    min = 0,
-                    max =  total,
-                    width = 400)
-## Pole_2
+pb <- winProgressBar(min = 0,
+                     max =  total,
+                     width = 420)
 
+## Pole_2
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)){
   j = 1
   tryCatch({
@@ -63,9 +64,14 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(S
       
     }
  },
-  error = function(e){})
+  error = function(e){}
+ )
+  
   Sys.sleep(0.1)
-  setTkProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
-                   label = paste(round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0), "% Done"))
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
+                    title = paste("Sorting points based on (+) and (-) ends for the Pole_2...",
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 
+                                        0), 
+                                  "% Done"))
 }
 close(pb)
