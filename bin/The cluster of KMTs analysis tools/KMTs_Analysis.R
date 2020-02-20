@@ -84,7 +84,7 @@ source("Packages/Analysis/Analyse_Length_Distiribution.R")
 if(analysis == 0){
   source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
   source("Packages/Analysis/No_of_KMTs_at_a_kinetochore.R")
-  source("Packages/Analysis/P_Inter_Kinetochore_Dist.R.R")
+  source("Packages/Analysis/P_Inter_Kinetochore_Dist.R")
   
 } else if (analysis == "1"){
   source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
