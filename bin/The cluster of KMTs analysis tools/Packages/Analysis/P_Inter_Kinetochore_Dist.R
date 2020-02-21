@@ -22,6 +22,8 @@ res <- dlg_message("*Impotent* !! You want to analyze Inter-Kinetochore distance
 
 if(res == "yes"){
   Inter_Kinetochore_Distance <- Inter_Kinetochore_Dist()
+  Inter_Kinetochore_Distance_KMTs_no <- Compare_KMTs_no_for_sister()
+  Inter_Kinetochore_Distance_KMTs_delta <- Compare_KMTs_delta_for_sister()
   
 } else if(res == "no"){
   if(all == "yes"){
@@ -31,4 +33,4 @@ if(res == "yes"){
     dlg_message("I am sorry to hear that :( Please fixed that and try again")
   }
 }
-rm(res)
+rm(res, pb, DF1)
