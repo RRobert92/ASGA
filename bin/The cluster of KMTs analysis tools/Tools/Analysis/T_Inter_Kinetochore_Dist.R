@@ -93,7 +93,7 @@ Compare_KMTs_no_for_sister <- function(){
       KMTs_at_Pole2[i,1] <- KMT_end_2
       Sys.sleep(0.1)
       setWinProgressBar(pb, i, 
-                        title = paste("Combine Inter-Kinetochore distance and no. of KMTs",
+                        title = paste("Combine Inter-Kinetochore distance and no. of KMTs...",
                                       round((i - 1) / total * 100, 
                                             0), 
                                       "% Done"))
@@ -145,7 +145,7 @@ Compare_KMTs_delta_for_sister <- function(){
       KMTs_at_Pole2[i,1] <- KMT_end_2
       Sys.sleep(0.1)
       setWinProgressBar(pb, i, 
-                        title = paste("Combine Inter-Kinetochore distance and no. of KMTs",
+                        title = paste("Combine Inter-Kinetochore distance and KMTs delta...",
                                       round((i - 1) / total * 100, 
                                             0), 
                                       "% Done"))
