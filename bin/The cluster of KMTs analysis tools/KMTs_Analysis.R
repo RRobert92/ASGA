@@ -79,7 +79,10 @@ source("Packages/Analysis/Analyse_Length_Distiribution.R")
 ## 0 - All below
 ## 1 - KMTs_at_the_Pole: [1] No. of KMTs
 ##   - KTMs_at_the_Pole_and_length: [1] No. of KMTs, [2] KMTs length, [3] Minus end dist., [4] Plus end dist.
-## 2 - Inter_kinetochore_distance: [1]Inter_distance, [2] KMTs no., [3] Delta
+## 2 - Inter_Kinetochore_Distance: [1] Inter-kinetochore distance
+##   - Inter_Kinetochore_Distance_KMTs_no: [1] Inter-kinetochore distance, [2] KMTs no.
+##   - Inter_Kinetochore_Distance_KTMs_delta: [1] Inter-kinetochore distance, [2] Delta of KMTs
+## 3 - No_of_KMTs:
 
 if(analysis == 0){
   source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
@@ -110,6 +113,7 @@ if(analysis == 0){
   
 }
 rm(all)
+
 ##############
 # Plots Data #
 ##############
