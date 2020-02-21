@@ -55,9 +55,9 @@ source("Packages/Core/Sort_KMTs_by_Kinetochore_Position.r")
 # Analysis #
 ############
 
-res <- dlg_message("Do you want to run full analysis?",
+all <- dlg_message("Do you want to run full analysis?",
             "yesno")$res
-if(res == "yes"){
+if(all == "yes"){
   analysis <- 0
 } else {
   analysis <- dlg_input("What analysis to run?
@@ -68,9 +68,9 @@ if(res == "yes"){
                         4 - Curvature of KMTs
                         5 - k-fiber area (polygon)
                         6 - Length of a k-fiber
-                        7 - Curvature of k-fiber")$res
+                        7 - Curvature of k-fiber")$all
 }
-rm(res)
+
 
 ## Core function to formated PoleX_YY DF: [1] Segment ID, [2] length, [3] minus_dist_to_pole, [4] plus_dist_to_pole
 source("Packages/Analysis/Analyse_Length_Distiribution.R")
@@ -91,7 +91,7 @@ if(analysis == 0){
   source("Packages/Analysis/No_of_KMTs_at_a_kinetochore.R")
            
 } else if (analysis == "2"){
-  source("Packages/Analysis/....R")
+  source("Packages/Analysis/P_Inter_Kinetochore_Dist.R")
   
 } else if (analysis == "3"){
   source("Packages/Analysis/....R")
@@ -109,7 +109,7 @@ if(analysis == 0){
   source("Packages/Analysis/....R")
   
 }
-
+rm(all)
 ##############
 # Plots Data #
 ##############
