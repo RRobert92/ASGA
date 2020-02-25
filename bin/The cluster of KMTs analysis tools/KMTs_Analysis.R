@@ -38,8 +38,8 @@ source("Tools/Core/Kinetochore_Position.r")
 source("Tools/Core/Sort_All_Points_to_Start_From_the_Kinetochore.r")
 source("Tools/Analysis/Length_Distiribution.R")
 source("Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
-source("TOols/Analysis/No_of_KMTs.R")
-source("TOols/Analysis/T_Inter_Kinetochore_Dist.R")
+source("Tools/Analysis/No_of_KMTs.R")
+source("Tools/Analysis/T_Inter_Kinetochore_Dist.R")
 
 #############
 # Read data #
