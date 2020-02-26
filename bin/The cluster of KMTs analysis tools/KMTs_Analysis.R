@@ -40,6 +40,7 @@ source("Tools/Analysis/Length_Distiribution.R")
 source("Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
 source("Tools/Analysis/No_of_KMTs.R")
 source("Tools/Analysis/T_Inter_Kinetochore_Dist.R")
+source("Tools/Analysis/T_KMT_Curvature.R")
 
 #############
 # Read data #
@@ -64,11 +65,10 @@ if(all == "yes"){
   Pick one from list: 
                         1 - LD and base KMTs numbers
                         2 - Inter-kinetochore distance
-                        3 - No. of KMTs per kinetochore
-                        4 - Curvature of KMTs
-                        5 - k-fiber area (polygon)
-                        6 - Length of a k-fiber
-                        7 - Curvature of k-fiber")$all
+                        3 - Curvature of KMTs
+                        4 - k-fiber area (polygon)
+                        5 - Length of a k-fiber
+                        6 - Curvature of k-fiber")$all
 }
 
 
@@ -82,7 +82,8 @@ source("Packages/Analysis/Analyse_Length_Distiribution.R")
 ## 2 - Inter_Kinetochore_Distance: [1] Inter-kinetochore distance
 ##   - Inter_Kinetochore_Distance_KMTs_no: [1] Inter-kinetochore distance, [2] KMTs no.
 ##   - Inter_Kinetochore_Distance_KTMs_delta: [1] Inter-kinetochore distance, [2] Delta of KMTs
-## 3 - No_of_KMTs:
+## 3 - KMTs_total_Curvature: [1] Curvature, [2] k0fiber no.
+## 4 - 
 
 if(analysis == 0){
   source("Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
@@ -97,7 +98,7 @@ if(analysis == 0){
   source("Packages/Analysis/P_Inter_Kinetochore_Dist.R")
   
 } else if (analysis == "3"){
-  source("Packages/Analysis/....R")
+  source("Packages/Analysis/P_KMT_Curvature.R.R")
   
 } else if (analysis == "4"){
   source("Packages/Analysis/....R")
