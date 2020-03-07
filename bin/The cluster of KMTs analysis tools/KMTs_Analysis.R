@@ -31,11 +31,12 @@ source("Utility/Load_Data.r")
 # Functions #
 #############
 
-source("Tools/Core/Sort_by_Fiber.r")
-source("Tools/Core/Select_Points.r")
-source("Tools/Core/Find_XYZ.r")
-source("Tools/Core/Kinetochore_Position.r")
-source("Tools/Core/Sort_All_Points_to_Start_From_the_Kinetochore.r")
+source("Tools/Core/Sort_by_Fiber.R")
+source("Tools/Core/Select_Points.R")
+source("Tools/Core/Find_XYZ.R")
+source("Tools/Core/Kinetochore_Position.R")
+source("Tools/Core/Sort_All_Points_to_Start_From_the_Kinetochore.R")
+##source("Tools/Core/Relative_position.r")
 source("Tools/Analysis/Length_Distiribution.R")
 source("Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
 source("Tools/Analysis/No_of_KMTs.R")
@@ -47,10 +48,10 @@ source("Tools/Analysis/T_KMT_Curvature.R")
 #############
 
 ## Extract individual KMTs
-source("Packages/Core/Get_Single_KMTs_From_Labels.r")
+source("Packages/Core/Get_Single_KMTs_From_Labels.R")
 
 ## Sort point in each KMT. Always the first point will be a point on a kinetochore
-source("Packages/Core/Sort_KMTs_by_Kinetochore_Position.r")
+source("Packages/Core/Sort_KMTs_by_Kinetochore_Position.R")
 
 ############
 # Analysis #
@@ -73,6 +74,7 @@ if(all == "yes"){
 
 
 ## Core function to formated PoleX_YY DF: [1] Segment ID, [2] length, [3] minus_dist_to_pole, [4] plus_dist_to_pole
+## Length distribution LD: [1] length
 source("Packages/Analysis/Analyse_Length_Distiribution.R")
 
 ## DF output of the functions:
