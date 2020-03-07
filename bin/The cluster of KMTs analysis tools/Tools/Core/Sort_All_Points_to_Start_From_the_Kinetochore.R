@@ -18,7 +18,7 @@ Sort_by_distance_to_pole1 <- function(y){
   if(position[1,7] < position[2,7]){
     y %>% arrange(desc(Point_ID))
   } else {
-    y %>% arrange(Point_ID)
+    y
   }
 }
 
@@ -37,6 +37,6 @@ Sort_by_distance_to_pole2 <- function(y){
   if(position[1,7] < position[2,7]){
     y %>% arrange(desc(Point_ID))
   } else {
-    y %>% arrange(Point_ID)
+    y
   }
 }
