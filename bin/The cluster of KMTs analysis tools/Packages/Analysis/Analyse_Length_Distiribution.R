@@ -59,3 +59,12 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(S
                                   "% Done"))
 }
 close(pb)
+
+LD <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"]
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(ncol(Segments) - 4)) {
+  DF <- get(paste(colnames(Segments)[i]))["length"]
+  LD <- rbind(LD, 
+              DF)
+}
+names(LD)[1] <- "KMTs length"
+rm(DF)
