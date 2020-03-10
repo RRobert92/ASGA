@@ -133,5 +133,5 @@ KMTs1 <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(
 write.xlsx(LD[1:nrow(Segments_1),], paste("Output/", Data_label, "_LD.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(Inter_Kinetochore_Distance, paste("Output/", Data_label, "_Inter_Kinetochore_Distance.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(No_of_KMTs_at_kinetochore[1:KMTs1,], paste("Output/", Data_label, "_KMTs_no.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(Minus_end_position[1:nrow(Segments_1),], paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_to_the_Pole1_and_length, paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_total_Curvature[1:nrow(Segments_1),], paste("Output/", Data_label, "_KMTs_total_Curvature.xlsx", sep = ""), row.names = FALSE)
