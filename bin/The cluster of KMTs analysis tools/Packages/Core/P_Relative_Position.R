@@ -105,7 +105,7 @@ for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4
          cbind(get(paste(colnames(Segments)[i])),
                Point_plus,
                Point_minus))
-  Sys.sleep(0.1)
+  
   Sys.sleep(0.1)
   setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Calcualting relative position for Pole_2",
