@@ -9,18 +9,22 @@ total_curvature <- function(x){
   for (i in 1:nrow(get(paste(colnames(Segments)[x])))){
     KMT <- get(paste(colnames(Segments)[x], i, sep = "_"))
     curv <- sqrt((KMT[1,2] - KMT[nrow(KMT),2])^2 + (KMT[1,3] - KMT[nrow(KMT),3])^2 + (KMT[1,4] - KMT[nrow(KMT),4])^2)
-    total_length <- Pole1_00[i,2]
+    total_length <- get(paste(colnames(Segments)[x]))[i,2]
     curvarture[i,1] <- total_length / curv
     curvarture[i,2] <- x
+    curvarture[i,3] <- get(paste(colnames(Segments)[x]))[i,2]
+    curvarture[i,4] <- get(paste(colnames(Segments)[x]))[i,4]
     names(curvarture)[1] <- "Curvature"
     names(curvarture)[2] <- "k-fiber no."
+    names(curvarture)[3] <- "KMTs length"
+    names(curvarture)[4] <- "(+) end position"
   }
   curvarture
 }
 
 ## Count a distance between first point and first point + 5 (1+5) for data with 20nm step, curvature is count every 100 nm
 ## Count the curvature ratio for each step
-local_curvature <- function(2){
+local_curvature <- function(x){
  
   for (i in 1:nrow(get(paste(colnames(Segments)[2])))){
     KMT <- get(paste(colnames(Segments)[2], i, sep = "_"))
