@@ -7,7 +7,6 @@ Segments_1 <- Segments_1 %>% select("Segment ID",
                                     "Node ID #1",
                                     "Node ID #2",
                                     "Point IDs")
-nrow_1 <- seq(from = 1, to = nrow(Segments_1),by = 1)
 
 Segments_2 <- Segments %>% filter_at(vars(starts_with(Pole2)),
                                      any_vars(.>= 1))
@@ -16,7 +15,6 @@ Segments_2 <- Segments_2 %>% select("Segment ID",
                                     "Node ID #1",
                                     "Node ID #2",
                                     "Point IDs")
-nrow_2 <- seq(from = 1, to = nrow(Segments_2),by = 1)
 
 Pole1 <- Nodes %>% filter_at(vars(Pole1),
                              any_vars(.>=1))

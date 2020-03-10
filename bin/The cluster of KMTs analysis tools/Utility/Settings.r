@@ -20,6 +20,10 @@ if (Poles == "yes") {
                      "Pole2")$res
 }
 
+Data_label <- dlg_input("What is a label for the data?
+                        This label will be used to save your data.", 
+                        "WT")$res
+
 Output <- "Output/"
 
 Minus_Threshold <- 1
