@@ -9,7 +9,7 @@
 ## (max - min) part_2  where max is XYZ position of the Kinetochore, where min is XYZ position of the Pole1
 
 ##X - longest KMTs in fiber 
-##Y - is POleX_YY_ZZ
+##Y - is PoleX_YY_ZZ
 relativ_pos_1 <- function(x, y){
   
   relativ_pos_part1 <- lapply(y[3], 
