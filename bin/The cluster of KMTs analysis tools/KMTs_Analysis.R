@@ -65,21 +65,6 @@ close(pb)
 # Analysis #
 ############
 
-all <- dlg_message("Do you want to run full analysis?",
-            "yesno")$res
-if(all == "yes"){
-  analysis <- 0
-} else {
-  analysis <- dlg_input("What analysis to run?
-  Pick one from list: 
-                        1 - LD and base KMTs numbers
-                        2 - Inter-kinetochore distance
-                        3 - Curvature of KMTs
-                        4 - k-fiber area (polygon)
-                        5 - Length of a k-fiber
-                        6 - Curvature of k-fiber")$all
-}
-
 ## DF output of the functions:
 ## 0 - All below
 ## 1 - KMTs_at_the_Pole: [1] No. of KMTs
@@ -119,11 +104,12 @@ if(analysis == 0){
   source("Packages/Analysis/....R")
   
 }
-rm(all)
+rm(all, analysis, Data, i, j, ncol, Point_KMT, total, Poles)
 
 ##############
 # Plots Data #
 ##############
+source("Tools/Plots/PL_Local_Curvature.R")
 
 #############
 # Save Data #
