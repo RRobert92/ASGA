@@ -22,50 +22,59 @@ total_curvature <- function(x){
   curvarture
 }
 
-## Count a distance between first point and first point + 5 (1+5) for data with 20nm step, curvature is count every 100 nm
+## Count a distance between first point and first point + 15 (1+14) for data with 20nm step, curvature is count every 300 nm
 ## Count the curvature ratio for each step
 local_curvature <- function(x){
- 
-  for (i in 1:nrow(get(paste(colnames(Segments)[2])))){
-    KMT <- get(paste(colnames(Segments)[2], i, sep = "_"))
-    j = 1
+  full_data <- data.frame()
+  for (i in 1:nrow(get(paste(colnames(Segments)[x])))){
+    KMT <- get(paste(colnames(Segments)[x], i, sep = "_"))
+    
+    ## Get curve length
     output_curve <- data.frame(Curve = as.numeric())
+    j = 1
     
     while (j < nrow(KMT)) {
-      output_curve[j,1] <- sqrt((KMT[j,2] - KMT[j+5,2])^2 + (KMT[j,3] - KMT[j+5,3])^2 + (KMT[j,4] - KMT[j+5,4])^2) 
-      j = j + 5
+      output_curve[j,1] <- sqrt((KMT[j,2] - KMT[j+14,2])^2 + (KMT[j,3] - KMT[j+14,3])^2 + (KMT[j,4] - KMT[j+14,4])^2) 
+      j = j + 14
     }
     output_curve <- na.omit(output_curve)
     
+    ## Get full length
     output_full <- data.frame(Full_L = as.numeric())
     j = 1
     
     while (j < nrow(KMT)){
-    full1 <- sqrt((KMT[j,2] - KMT[j+1,2])^2 + (KMT[j,3] - KMT[j+1,3])^2 + (KMT[j,4] - KMT[j+1,4])^2)
-    full2 <- sqrt((KMT[j+1,2] - KMT[j+2,2])^2 + (KMT[j+1,3] - KMT[j+2,3])^2 + (KMT[j+1,4] - KMT[j+2,4])^2)
-    full3 <- sqrt((KMT[j+2,2] - KMT[j+3,2])^2 + (KMT[j+2,3] - KMT[j+3,3])^2 + (KMT[j+2,4] - KMT[j+3,4])^2)
-    full4 <- sqrt((KMT[j+3,2] - KMT[j+4,2])^2 + (KMT[j+3,3] - KMT[j+4,3])^2 + (KMT[j+3,4] - KMT[j+4,4])^2)
-    full5 <- sqrt((KMT[j+4,2] - KMT[j+5,2])^2 + (KMT[j+4,3] - KMT[j+5,3])^2 + (KMT[j+4,4] - KMT[j+5,4])^2)
-    output_full[j,] <- sum(full1,full2, full3, full4, full5)
-    j = j + 5
+      local_c <- data.frame()
+      for(k in j:as.numeric(j+14)){
+        local_c[k,1] <- sqrt((KMT[k,2] - KMT[k+1,2])^2 + (KMT[k,3] - KMT[k+1,3])^2 + (KMT[k,4] - KMT[k+1,4])^2)
+      }
+      local_c <- local_c[j:nrow(local_c),1]
+      
+      output_full[j,] <- sum(local_c[1:14])
+      j = j + 14
     }
     output_full <- na.omit(output_full)
     
-    
-    ## get mean for the x and y, and calculate relative position for the pole which is recognise by the name of the label
+    ## get mean relative position
     output_mean <- data.frame(Mean_Position = as.numeric())
     j = 1  
     
     while(j < nrow(KMT)){
-      output_mean[j,] <- (KMT[j,2] + KMT[j+5,2])/2
-      j = j + 5
+      output_mean[j,] <- (KMT[j,5] + KMT[j+14,5])/2
+      j = j + 14
     }
     output_mean <- na.omit(output_mean)
     
+    if(nrow(output_curve) == 0){
+      
+    } else {
+          DF <- cbind.data.frame(Curvature = output_full$Full_L/output_curve$Curve,
+                           Relative_Position = output_mean$Mean_Position,
+                           K_fiber_no = x,
+                           KMT_no = i)
+    full_data <- rbind(full_data, 
+                       DF)
+    }
   }
-
-  
-  full_data <- cbind.data.frame(Curvature = output_full$Full_L/output_curve$Curve,
-                                Relative_Position = output_mean$Mean_Position)
-  full_data[complete.cases(full_data),]
+  full_data
 }
