@@ -24,7 +24,7 @@ pb <- winProgressBar(min = 2,
     for(j in 1:nrow(get(colnames(Segments)[i]))){
       Point_KMT[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,3]
     } 
-    Point_KMT <- which(Point_KMT[1] == max(Point_KMT))
+    Point_KMT <- which(Point_KMT[1] == min(Point_KMT))
     longest <- get(paste(colnames(Segments)[i], Point_KMT, sep = "_"))
 
     for(j in 1:nrow(get(paste(colnames(Segments)[i])))){
@@ -75,8 +75,8 @@ pb <- winProgressBar(min = 0,
 ##################################################
 
 for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
-  
-  ## find KMTs closest to the kinetochore for y
+  tryCatch({
+      ## find KMTs closest to the kinetochore for y
   Point_KMT <- data.frame()
   for(j in 1:nrow(get(colnames(Segments)[i]))){
     Point_KMT[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,3]
@@ -105,8 +105,10 @@ for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4
          cbind(get(paste(colnames(Segments)[i])),
                Point_plus,
                Point_minus))
-  
-  Sys.sleep(0.1)
+
+  },
+  error = function(e){})
+Sys.sleep(0.1)
   setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Calcualting relative position for Pole_2",
                                   round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
