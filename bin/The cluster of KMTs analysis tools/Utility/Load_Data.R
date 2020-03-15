@@ -48,9 +48,9 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
                             starts_with("EndType"))
 } else {
   Nodes <- Nodes %>% select("Node ID", 
-                          "X Coord",
-                          "Y Coord",
-                          "Z Coord")
+                            "X Coord",
+                            "Y Coord",
+                            "Z Coord")
 }
 
 Nodes[2:4] <- Nodes[2:4]/10000
@@ -63,5 +63,6 @@ Points <- Points %>% select("Point ID",
                             "X Coord",
                             "Y Coord",
                             "Z Coord")
+
 Points[2:4] <- Points[2:4]/10000
 names(Points)[1] <- "Point_ID"
