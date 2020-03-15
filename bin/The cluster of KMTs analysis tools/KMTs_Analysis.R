@@ -24,7 +24,6 @@ source("Utility/Check_Data.R")
 # Load Data #
 #############
 
-## Load data from the file and split for Segments, Points, and Nodes
 source("Utility/Load_Data.r")
 
 #############

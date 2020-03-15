@@ -48,6 +48,12 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) == 1){
                             starts_with("EndType"))
   
 } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 2){
+  Nodes <- Nodes %>% select("Node ID", 
+                            "X Coord",
+                            "Y Coord",
+                            "Z Coord",
+                            starts_with("EndType"))
+  
   compare <- data.frame()
   for(i in 1:nrow(Nodes %>% select(starts_with("EndType")))){
     compare[i,1] <- Nodes[i,5] == Nodes[i,6]
@@ -55,6 +61,7 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) == 1){
 Nodes <- cbind(Nodes,
                compare)
 names(Nodes)[7] <- "Entype_Different"
+rm(compare)
 
 } else {
 Nodes <- Nodes %>% select("Node ID", 
