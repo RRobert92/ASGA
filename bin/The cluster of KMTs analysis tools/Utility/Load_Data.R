@@ -40,17 +40,27 @@ Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
 #########################################################
 ## If exist also load information about end morphology.
 
-if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
+if(ncol(Nodes %>% select(starts_with("EndType"))) == 1){
   Nodes <- Nodes %>% select("Node ID", 
                             "X Coord",
                             "Y Coord",
                             "Z Coord",
                             starts_with("EndType"))
+  
+} else if (ncol(Nodes %>% select(starts_with("EndType"))) == 2){
+  compare <- data.frame()
+  for(i in 1:nrow(Nodes %>% select(starts_with("EndType")))){
+    compare[i,1] <- Nodes[i,5] == Nodes[i,6]
+  }
+Nodes <- cbind(Nodes,
+               compare)
+names(Nodes)[7] <- "Entype_Different"
+
 } else {
-  Nodes <- Nodes %>% select("Node ID", 
-                            "X Coord",
-                            "Y Coord",
-                            "Z Coord")
+Nodes <- Nodes %>% select("Node ID", 
+                          "X Coord",
+                          "Y Coord",
+                          "Z Coord")
 }
 
 Nodes[2:4] <- Nodes[2:4]/10000
