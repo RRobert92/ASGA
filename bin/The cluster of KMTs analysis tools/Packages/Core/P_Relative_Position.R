@@ -51,7 +51,6 @@ pb <- winProgressBar(min = 2,
     },
     error = function(e){})
      
-    
   Sys.sleep(0.1)
   setWinProgressBar(pb, i, 
                     title = paste("Calcualting relative position for Pole_1", 
