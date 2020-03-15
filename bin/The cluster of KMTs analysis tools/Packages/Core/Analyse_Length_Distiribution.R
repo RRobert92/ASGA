@@ -79,4 +79,5 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(nco
 names(LD)[1] <- "KMTs length"
 rm(DF,
    DF_LD,
-   DF_Plus_end)
+   DF_Plus_end,
+   Plus_end)

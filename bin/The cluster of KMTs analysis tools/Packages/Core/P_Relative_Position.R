@@ -136,4 +136,7 @@ names(LD)[1] <- "KMTs length"
 rm(DF,
    DF_Minus_end_position,
    DF_Relative_position,
-   longest)
+   longest,
+   Relative_position,
+   Point_minus,
+   Point_plus)
