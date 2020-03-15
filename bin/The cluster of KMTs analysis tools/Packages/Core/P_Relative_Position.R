@@ -136,4 +136,5 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(nco
 names(LD)[1] <- "KMTs length"
 rm(DF,
    DF_Minus_end_position,
-   DF_Relative_position)
+   DF_Relative_position,
+   longest)
