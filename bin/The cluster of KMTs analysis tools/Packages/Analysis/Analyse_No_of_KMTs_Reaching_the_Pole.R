@@ -5,7 +5,7 @@
 ## Count how many KMTs with a minus end distance of "Minus_Threshold" is in the fiber
 
 ######################
-# Setting for Pole_2 #
+# Setting for Pole_1 #
 ######################
 
 KMTs_at_the_Pole1 <- KMTs_to_the_Pole(which(colnames(Segments) == "Pole1_00"))
