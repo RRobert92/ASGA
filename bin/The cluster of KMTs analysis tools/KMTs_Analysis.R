@@ -68,7 +68,7 @@ close(pb)
 ## DF output of the functions:
 ## 0 - All below
 ## 1 - KMTs_at_the_Pole: [1] No. of KMTs
-##   - KTMs_at_the_Pole_and_length: [1] No. of KMTs, [2] KMTs length, [3] Minus end dist., [4] Plus end dist.
+##   - KTMs_at_the_Pole_and_length: [1] No. of KMTs, [2] KMTs length, [3] Minus end dist., [4] Plus end dist., [5] Minus end relative position
 ## 2 - Inter_Kinetochore_Distance: [1] Inter-kinetochore distance
 ##   - Inter_Kinetochore_Distance_KMTs_no: [1] Inter-kinetochore distance, [2] KMTs no.
 ##   - Inter_Kinetochore_Distance_KTMs_delta: [1] Inter-kinetochore distance, [2] Delta of KMTs
@@ -121,8 +121,9 @@ write.xlsx(LD[1:nrow(Segments_1),], paste("Output/", Data_label, "_LD.xlsx", sep
 write.xlsx(Inter_Kinetochore_Distance, paste("Output/", Data_label, "_Inter_Kinetochore_Distance.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(No_of_KMTs_at_kinetochore[1:KMTs1,], paste("Output/", Data_label, "_KMTs_no.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_to_the_Pole1_and_length, paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
+#write.xlsx(KMTs_to_the_Pole2_and_length, paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_total_Curvature[1:nrow(Segments_1),], paste("Output/", Data_label, "_KMTs_total_Curvature.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(Plus_end_morphology_Pole1, paste("Output/", Data_label, "_(+)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(Plus_end_morphology_Pole2, paste("Output/", Data_label, "_(+)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
+#write.xlsx(Plus_end_morphology_Pole2, paste("Output/", Data_label, "_(+)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(Minus_end_morphology_Pole1, paste("Output/", Data_label, "_(-)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(Minus_end_morphology_Pole2, paste("Output/", Data_label, "_(-)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
+#write.xlsx(Minus_end_morphology_Pole2, paste("Output/", Data_label, "_(-)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
