@@ -123,6 +123,7 @@ write.xlsx(No_of_KMTs_at_kinetochore[1:KMTs1,], paste("Output/", Data_label, "_K
 write.xlsx(KMTs_to_the_Pole1_and_length, paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
 #write.xlsx(KMTs_to_the_Pole2_and_length, paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_total_Curvature[1:nrow(Segments_1),], paste("Output/", Data_label, "_KMTs_total_Curvature.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(End_type_error, paste("Output/", Data_label, "_End_type_error.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(Plus_end_morphology_Pole1, paste("Output/", Data_label, "_(+)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
 #write.xlsx(Plus_end_morphology_Pole2, paste("Output/", Data_label, "_(+)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(Minus_end_morphology_Pole1, paste("Output/", Data_label, "_(-)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
