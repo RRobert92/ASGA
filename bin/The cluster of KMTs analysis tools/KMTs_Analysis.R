@@ -105,15 +105,17 @@ if(analysis == 0){
   source("Packages/Analysis/....R")
   
 }
-rm(all, analysis, Data, i, j, ncol, Point_KMT, total, Poles)
+rm(all, analysis, Data, i, j, ncol, Point_KMT, total, Poles)2
 
 ##############
 # Plots Data #
 ##############
-source("Tools/Plots/PL_Local_Curvature.R")
 source("Tools/Plots/PL_Length_Distirbution.R")
+source("Tools/Plots/PL_Inter-Kinetochore_Distance.R")
 source("Tools/Plots/PL_KMTs_at_the_Pole.R")
 source("Tools/Plots/PL_(-)_End_Distribution.R")
+source("Tools/Plots/PL_Total_Curvature.R")
+source("Tools/Plots/PL_Local_Curvature.R")
 
 #############
 # Save Data #
