@@ -5,32 +5,32 @@
 ## 'KMTs_total_Curvature' with total curvature ratio
 ## 'KMTs_local_Curvature' with local curvature, relative position, (+) end distance to the spindle pole axis
 
-####################################
-# Progress bar for total curvature #
-####################################
+#######################################
+# Progress bar for total curvature_P1 #
+#######################################
 
-total <- as.numeric(ncol(Segments %>% select(starts_with("Pole"))))
+total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 pb <- winProgressBar(min = 2,
                      max =  total,
                      width = 400)
 
-############################################################
-# Loop iterating through each k-fiiber for total curvature #
-############################################################
+###############################################################
+# Loop iterating through each k-fiiber for total curvature_P1 #
+###############################################################
 
-KMTs_total_Curvature <- total_curvature(2)
+KMTs_total_Curvature_P1 <- total_curvature(which(colnames(Segments) == "Pole1_00"))
 
-for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(ncol(Segments) - 4)){
+for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     assign("DF",
            total_curvature(i))
-    KMTs_total_Curvature <- rbind(KMTs_total_Curvature,
+    KMTs_total_Curvature_P1 <- rbind(KMTs_total_Curvature_P1,
                                        DF)
   },
   error = function(e){})
   Sys.sleep(0.1)
   setWinProgressBar(pb, i, 
-                    title = paste("Calculating total curvature of KMTs...", 
+                    title = paste("Calculating total curvature of KMTs for Pole1...", 
                                   round((i - 1) / total * 100,
                                         0),
                                   "% Done"))
@@ -40,37 +40,80 @@ for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(ncol(Segments) - 4
 # Save Data #
 #############
 
-write.xlsx(KMTs_total_Curvature, paste("Output/", Data_label, "_KMTs_total_Curvature.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_total_Curvature_P1, paste("Output/", Data_label, "_KMTs_total_Curvature_P1.xlsx", sep = ""), row.names = FALSE)
 
 close(pb)
 rm(DF)
 
-####################################
-# Progress bar for local curvature #
-####################################
 
-total <- as.numeric(ncol(Segments %>% select(starts_with("Pole"))))
+#######################################
+# Progress bar for total curvature_P2 #
+#######################################
+
+total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
+pb <- winProgressBar(min = 0,
+                     max =  total,
+                     width = 400)
+
+###############################################################
+# Loop iterating through each k-fiiber for total curvature_P2 #
+###############################################################
+
+KMTs_total_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
+
+for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
+  tryCatch({
+    assign("DF",
+           total_curvature(i))
+    KMTs_total_Curvature_P2 <- rbind(KMTs_total_Curvature_P2,
+                                     DF)
+  },
+  error = function(e){})
+  
+  Sys.sleep(0.1)
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
+                    title = paste("Calculating total curvature of KMTs for Pole2...", 
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
+                                        0),
+                                  "% Done"))
+}
+
+#############
+# Save Data #
+#############
+
+write.xlsx(KMTs_total_Curvature_P2, paste("Output/", Data_label, "_KMTs_total_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
+
+close(pb)
+rm(DF)
+
+#######################################
+# Progress bar for local curvature P1 #
+#######################################
+
+total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 pb <- winProgressBar(min = 2,
                      max =  total,
                      width = 400)
 
-############################################################
-# Loop iterating through each k-fiiber for local curvature #
-############################################################
+###############################################################
+# Loop iterating through each k-fiiber for local curvature P1 #
+###############################################################
 
-KMTs_local_Curvature <- local_curvature(2)
+KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_01"))
 
-for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(ncol(Segments) - 4)){
+for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     assign("DF",
            local_curvature(i))
-    KMTs_local_Curvature <- rbind(KMTs_local_Curvature,
-                                  DF)
+    KMTs_local_Curvature_P1 <- rbind(KMTs_local_Curvature_P1,
+                                     DF)
   },
   error = function(e){})
+  
   Sys.sleep(0.1)
   setWinProgressBar(pb, i, 
-                    title = paste("Calculating local curvature of KMTs...",
+                    title = paste("Calculating local curvature of KMTs for the Pole1...",
                                   round((i - 1) / total * 100,
                                         0),
                                   "% Done"))
@@ -80,7 +123,48 @@ for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(ncol(Segments) - 4
 # Save Data #
 #############
 
-write.xlsx(KMTs_local_Curvature, paste("Output/", Data_label, "_KMTs_local_Curvature.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_local_Curvature_P1, paste("Output/", Data_label, "_KMTs_local_Curvature_P1.xlsx", sep = ""), row.names = FALSE)
+
+close(pb)
+rm(DF)
+
+#######################################
+# Progress bar for total curvature_P2 #
+#######################################
+
+total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
+pb <- winProgressBar(min = 0,
+                     max =  total,
+                     width = 400)
+
+###############################################################
+# Loop iterating through each k-fiiber for total curvature_P2 #
+###############################################################
+
+KMTs_local_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
+
+for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
+  tryCatch({
+    assign("DF",
+           total_curvature(i))
+    KMTs_local_Curvature_P2 <- rbind(KMTs_local_Curvature_P2,
+                                     DF)
+  },
+  error = function(e){})
+  
+  Sys.sleep(0.1)
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
+                    title = paste("Calculating local curvature of KMTs for Pole2...", 
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
+                                        0),
+                                  "% Done"))
+}
+
+#############
+# Save Data #
+#############
+
+write.xlsx(KMTs_local_Curvature_P2, paste("Output/", Data_label, "_KMTs_loacl_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
 
 close(pb)
 rm(DF)
