@@ -11,4 +11,4 @@ if(IKD == "yes"){
 } else if(IKD == "no"){
  
 }
-rm(IKD, pb, DF1)
+rm(pb, DF1)
