@@ -19,8 +19,14 @@ for (i in 1:No_of_Data) {
 ## Load no of a KMTs at the kinetochore
 for (i in 1:No_of_Data) {
   tryCatch({
-    assign(paste(Data_label, "_", i, "_KMTs_at_K", sep = ""),
-           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_no.xlsx", sep = "")))
+    assign(paste(Data_label, "_", i, "_KMTs_at_K1", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_no_P1.xlsx", sep = "")))
+  },
+  error = function(e){})
+  
+  tryCatch({
+    assign(paste(Data_label, "_", i, "_KMTs_at_K2", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_no_P2.xlsx", sep = "")))
   },
   error = function(e){})
 }
@@ -56,13 +62,23 @@ for (i in 1:No_of_Data) {
 ## Load total and local curvature
 for (i in 1:No_of_Data) {
   tryCatch({
-    assign(paste(Data_label, "_", i, "_total_curvature", sep = ""),
-           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_total_Curvature.xlsx", sep = "")))
+    assign(paste(Data_label, "_", i, "_total_curvature_P1", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_total_Curvature_P1.xlsx", sep = "")))
   },
   error = function(e){})
   tryCatch({
-    assign(paste(Data_label, "_", i, "_local_curvature", sep = ""),
-           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_local_Curvature.xlsx", sep = "")))
+    assign(paste(Data_label, "_", i, "_total_curvature_P2", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_total_Curvature_P2.xlsx", sep = "")))
+  },
+  error = function(e){})
+  tryCatch({
+    assign(paste(Data_label, "_", i, "_local_curvature_P1", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_local_Curvature_P1.xlsx", sep = "")))
+  },
+  error = function(e){})
+  tryCatch({
+    assign(paste(Data_label, "_", i, "_local_curvature_P2", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_KMTs_local_Curvature_P2.xlsx", sep = "")))
   },
   error = function(e){})
 }
