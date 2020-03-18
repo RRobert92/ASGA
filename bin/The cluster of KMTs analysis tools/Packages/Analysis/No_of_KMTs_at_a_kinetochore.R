@@ -16,10 +16,10 @@ pb <- winProgressBar(min = 2,
 # Loop iterating through each KMT for the Pole_1 #
 ##################################################
 
-No_of_KMTs_at_kinetochore_P1 <- No_of_KMTs(2)
+No_of_KMTs_at_kinetochore_P1 <- No_of_KMTs(which(colnames(Segments) == "Pole1_00"))
 DF <- data.frame()
 
-for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     assign("DF",
            No_of_KMTs(i))
@@ -56,10 +56,11 @@ pb <- winProgressBar(min = 0,
 # Loop iterating through each KMT for the Pole_2 #
 ###################################################
 
-No_of_KMTs_at_kinetochore_P2 <- No_of_KMTs(2)
+if(nrow(Pole2_00) > 0) {
+No_of_KMTs_at_kinetochore_P2 <- No_of_KMTs(which(colnames(Segments) == "Pole2_00"))
 DF <- data.frame()
 
-for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
+for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
     assign("DF",
            No_of_KMTs(i))
@@ -82,4 +83,5 @@ names(No_of_KMTs_at_kinetochore_P2)[1] <- "No. of KMTs"
 write.xlsx(No_of_KMTs_at_kinetochore_P2, paste("Output/", Data_label, "_KMTs_no_P2.xlsx", sep = ""), row.names = FALSE)
 
 rm(DF)
+}
 close(pb)

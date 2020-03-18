@@ -21,7 +21,6 @@ rm(list=setdiff(ls(), list("Data_label", "No_of_Data")))
 ##########################
 # Load all analysed Data #
 ##########################
-Data_label <- "SiCTRL_1"
 Data_label <- as.data.frame(str_split(Data_label, "_"))
 Data_label <- as.character(Data_label[1,1])
 

@@ -102,27 +102,31 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   # Loop iterating through each KMT for the (+) & (-) Pole_2 #
   ############################################################
   
-  assign("Plus_end_morphology_Pole2", 
+  tryCatch({
+    assign("Plus_end_morphology_Pole2", 
          End_distribution_Plus(which(colnames(Segments) == "Pole2_00"),
-                               1))
+                               2))
   
   assign("Minus_end_morphology_Pole2", 
          End_distribution_Minus(which(colnames(Segments) == "Pole2_00"),
-                                1))
+                                2))
+  },
+  error = function(e){})
   
-  for(i in which(colnames(Segments) == "Pole2_01") : as.numeric(ncol(Segments) - 4)){
+  
+  for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
     tryCatch({
       DF <- data.frame()
       
       assign("DF",
              End_distribution_Plus(i,
-                                   1))
+                                   2))
       Plus_end_morphology_Pole2 <- rbind(Plus_end_morphology_Pole2,
                                          DF)
       
       assign("DF",
              End_distribution_Minus(i,
-                                    1))
+                                    2))
       Minus_end_morphology_Pole2 <- rbind(Minus_end_morphology_Pole2,
                                           DF)
     },

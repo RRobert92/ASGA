@@ -20,9 +20,9 @@ if (Poles == "yes") {
                      "Pole2")$res
 }
 
-Data_label <- dlg_input("What is a label for the data?
+Data_label <- dlg_input("What is a label for the data? Please use following theme.
                         This label will be used to save your data.", 
-                        "WT")$res
+                        "WT_1")$res
 
 Output <- "Output/"
 
@@ -65,7 +65,7 @@ if(IKD == "yes"){
   
 } else if(IKD == "no"){
   if(all == "yes"){
-    dlg_message("I am sorry to hear that :( Please fixed that! We will move now to analyse rest of your awsame data!")
+    dlg_message("I am sorry to hear that :( Please fixed that if you can! We will move now to analyse rest of your awsame data!")
     
   } else if( all == "no"){
     dlg_message("I am sorry to hear that :( Please fixed that and try again")

@@ -1,8 +1,14 @@
 ## Load Length Distribution
 for (i in 1:No_of_Data) {
   tryCatch({
-    assign(paste(Data_label, "_", i, "_LD", sep = ""),
-           read_excel(paste("Output/", Data_label, "_", i, "_LD.xlsx", sep = "")))
+    assign(paste(Data_label, "_", i, "_LD_P1", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_LD_P1.xlsx", sep = "")))
+  },
+  error = function(e){})
+  
+  tryCatch({
+    assign(paste(Data_label, "_", i, "_LD_P2", sep = ""),
+           read_excel(paste("Output/", Data_label, "_", i, "_LD_P2.xlsx", sep = "")))
   },
   error = function(e){})
 }
