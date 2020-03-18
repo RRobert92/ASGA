@@ -69,9 +69,9 @@ pb <- winProgressBar(min = 0,
                      max =  total,
                      width = 400)
 
-##################################################
+###################################################
 # Loop iterating through each KMT for the Pole_12 #
-##################################################
+###################################################
 
 for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
   tryCatch({
