@@ -37,6 +37,8 @@ for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(ncol(Segments) - 4
 
 No_of_KMTs_at_kinetochore <- data.frame(No_of_KMTs_at_kinetochore[,1])
 names(No_of_KMTs_at_kinetochore)[1] <- "No. of KMTs"
+write.xlsx(No_of_KMTs_at_kinetochore, paste("Output/", Data_label, "_KMTs_no.xlsx", sep = ""), row.names = FALSE)
+
 rm(DF)
 
 close(pb)

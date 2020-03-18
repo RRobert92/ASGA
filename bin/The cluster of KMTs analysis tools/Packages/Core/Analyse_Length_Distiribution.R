@@ -83,7 +83,14 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(nco
   error = function(e){})
   
 }
+
+#############
+# Save data #
+#############
+
 names(LD)[1] <- "KMTs length"
+write.xlsx(LD, paste("Output/", Data_label, "_LD.xlsx", sep = ""), row.names = FALSE)
+
 rm(DF,
    DF_LD,
    DF_Plus_end,

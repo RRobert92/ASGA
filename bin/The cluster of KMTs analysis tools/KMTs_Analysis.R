@@ -106,6 +106,7 @@ if(analysis == 0){
 KMTs1 <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 
 write.xlsx(LD, paste("Output/", Data_label, "_LD.xlsx", sep = ""), row.names = FALSE)
+
 if(IKD == "yes"){
 write.xlsx(Inter_Kinetochore_Distance, paste("Output/", Data_label, "_Inter_Kinetochore_Distance.xlsx", sep = ""), row.names = FALSE)
   }

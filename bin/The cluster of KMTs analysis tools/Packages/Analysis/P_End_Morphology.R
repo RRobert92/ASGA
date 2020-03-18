@@ -5,6 +5,7 @@
 ## Calculate % of similara cases for 2 mesurments 
 if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
   End_type_error <- End_Type_Error()
+  write.xlsx(End_type_error, paste("Output/", Data_label, "_End_type_error.xlsx", sep = ""), row.names = FALSE)
 }
 
 if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
@@ -81,9 +82,12 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
                                                                         "Relative_minus_position")
   }
   
+  write.xlsx(Plus_end_morphology_Pole1, paste("Output/", Data_label, "_(+)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
+  write.xlsx(Minus_end_morphology_Pole1, paste("Output/", Data_label, "_(-)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
+  
   close(pb)
   rm(DF)
-  
+
   
   #####################################
   # Progress bar for (+) & (-) Pole_2 #
@@ -136,7 +140,7 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   # Bin data for (+) & (-) Pole_2 #
   #################################
   tryCatch({
-      if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
+      if(ncol(Nodes %>% select(starts_with("EndType"))) >= 2){
     Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
                                                                       starts_with("EndType"),
                                                                       "Entype_Different",
@@ -147,7 +151,7 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
                                                                         "Entype_Different",
                                                                         "Relative_minus_position")
     
-  } else {
+  } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 1){
     Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
                                                                       starts_with("EndType"),
                                                                       "Relative_plus_position")
@@ -156,6 +160,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
                                                                         starts_with("EndType"),
                                                                         "Relative_minus_position")
   }
+    write.xlsx(Plus_end_morphology_Pole2, paste("Output/", Data_label, "_(+)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
+    write.xlsx(Minus_end_morphology_Pole2, paste("Output/", Data_label, "_(-)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
   },
   error = function(e){})
 

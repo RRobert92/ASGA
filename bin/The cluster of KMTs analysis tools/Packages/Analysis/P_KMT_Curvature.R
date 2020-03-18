@@ -35,6 +35,13 @@ for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(ncol(Segments) - 4
                                         0),
                                   "% Done"))
 }
+
+#############
+# Save Data #
+#############
+
+write.xlsx(KMTs_total_Curvature, paste("Output/", Data_label, "_KMTs_total_Curvature.xlsx", sep = ""), row.names = FALSE)
+
 close(pb)
 rm(DF)
 
@@ -68,5 +75,12 @@ for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(ncol(Segments) - 4
                                         0),
                                   "% Done"))
 }
+
+#############
+# Save Data #
+#############
+
+write.xlsx(KMTs_local_Curvature, paste("Output/", Data_label, "_KMTs_local_Curvature.xlsx", sep = ""), row.names = FALSE)
+
 close(pb)
 rm(DF)
