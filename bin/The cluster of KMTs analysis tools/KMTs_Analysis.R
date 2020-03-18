@@ -1,12 +1,6 @@
 #####################################
 # The cluster of KMTs analysis tools #
 #####################################
-rm(list = ls())
-#######################################
-# Library (load & install if missing) #
-#######################################
-
-source("Utility/Library.R")
 
 ############
 # Settings #
@@ -105,17 +99,6 @@ if(analysis == 0){
   source("Packages/Analysis/....R")
   
 }
-rm(all, analysis, Data, i, j, ncol, Point_KMT, total, Poles)2
-
-##############
-# Plots Data #
-##############
-source("Tools/Plots/PL_Length_Distirbution.R")
-source("Tools/Plots/PL_Inter-Kinetochore_Distance.R")
-source("Tools/Plots/PL_KMTs_at_the_Pole.R")
-source("Tools/Plots/PL_(-)_End_Distribution.R")
-source("Tools/Plots/PL_Total_Curvature.R")
-source("Tools/Plots/PL_Local_Curvature.R")
 
 #############
 # Save Data #
@@ -123,12 +106,14 @@ source("Tools/Plots/PL_Local_Curvature.R")
 KMTs1 <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 
 write.xlsx(LD, paste("Output/", Data_label, "_LD.xlsx", sep = ""), row.names = FALSE)
+if(IKD == "yes"){
 write.xlsx(Inter_Kinetochore_Distance, paste("Output/", Data_label, "_Inter_Kinetochore_Distance.xlsx", sep = ""), row.names = FALSE)
+  }
 write.xlsx(No_of_KMTs_at_kinetochore, paste("Output/", Data_label, "_KMTs_no.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_at_the_Pole1, paste("Output/", Data_label, "_KMTs_at_the_Pole1.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_at_the_Pole2, paste("Output/", Data_label, "_KMTs_at_the_Pole2.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_to_the_Pole1_and_length, paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_to_the_Pole2_and_length, paste("Output/", Data_label, "_Minus_end_position.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_to_the_Pole1_and_length, paste("Output/", Data_label, "_Minus_end_position_P1.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_to_the_Pole2_and_length, paste("Output/", Data_label, "_Minus_end_position_P2.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_total_Curvature, paste("Output/", Data_label, "_KMTs_total_Curvature.xlsx", sep = ""), row.names = FALSE)
 write.xlsx(KMTs_local_Curvature, paste("Output/", Data_label, "_KMTs_local_Curvature.xlsx", sep = ""), row.names = FALSE)
 if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
@@ -138,3 +123,5 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
   write.xlsx(Minus_end_morphology_Pole1, paste("Output/", Data_label, "_(-)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
   write.xlsx(Minus_end_morphology_Pole2, paste("Output/", Data_label, "_(-)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
 }
+
+rm(all, analysis, Data, i, j, ncol, Point_KMT, total, Poles)
