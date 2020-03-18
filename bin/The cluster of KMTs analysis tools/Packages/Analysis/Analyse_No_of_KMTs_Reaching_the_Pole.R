@@ -66,8 +66,12 @@ for (i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Se
 
 close(pb)
 
-KMTs_at_the_Pole1 <- data.frame(KMTs_at_the_Pole1[,1])
-names(KMTs_at_the_Pole1)[1] <- "No. of KMTs"
+tryCatch({
+  KMTs_at_the_Pole1 <- data.frame(KMTs_at_the_Pole1[,1])
+  names(KMTs_at_the_Pole1)[1] <- "No. of KMTs"
+},
+
+error = function(e){})
 
 rm(DF2)
 
@@ -134,7 +138,11 @@ for (i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 
 
 close(pb)
 
+tryCatch({
 KMTs_at_the_Pole2 <- data.frame(KMTs_at_the_Pole2[,1])
 names(KMTs_at_the_Pole2)[1] <- "No. of KMTs"
+},
+
+error = function(e){})
 
 rm(DF2)
