@@ -61,6 +61,3 @@ Local_Full <- rbind(local_full_1.0,
 
 rm(local_full_1.0,local_full_0.9,local_full_0.8,local_full_0.7, local_full_0.6,local_full_0.5,
    local_full_0.4,local_full_0.3,local_full_0.2, local_full_0.1,local_full_0.0,local_full_m0.1)
-
-ggplot(KMTs_local_Curvature, aes(Relative_Position, Curvature)) + geom_point() + ylim(1, 1.025)
-ggplot(Local_Full, aes(To_1.0_p, To_1.0_c)) + geom_point() + ylim(1, 1.01)
