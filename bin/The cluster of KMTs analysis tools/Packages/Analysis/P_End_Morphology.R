@@ -135,8 +135,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   #################################
   # Bin data for (+) & (-) Pole_2 #
   #################################
-  
-  if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
+  tryCatch({
+      if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
     Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
                                                                       starts_with("EndType"),
                                                                       "Entype_Different",
@@ -156,6 +156,9 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
                                                                         starts_with("EndType"),
                                                                         "Relative_minus_position")
   }
+  },
+  error = function(e){})
+
   close(pb)
   rm(DF)
   
