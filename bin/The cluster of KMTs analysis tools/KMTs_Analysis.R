@@ -100,29 +100,4 @@ if(analysis == 0){
   
 }
 
-#############
-# Save Data #
-#############
-KMTs1 <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
-
-write.xlsx(LD, paste("Output/", Data_label, "_LD.xlsx", sep = ""), row.names = FALSE)
-
-if(IKD == "yes"){
-write.xlsx(Inter_Kinetochore_Distance, paste("Output/", Data_label, "_Inter_Kinetochore_Distance.xlsx", sep = ""), row.names = FALSE)
-  }
-write.xlsx(No_of_KMTs_at_kinetochore, paste("Output/", Data_label, "_KMTs_no.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_at_the_Pole1, paste("Output/", Data_label, "_KMTs_at_the_Pole1.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_at_the_Pole2, paste("Output/", Data_label, "_KMTs_at_the_Pole2.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_to_the_Pole1_and_length, paste("Output/", Data_label, "_Minus_end_position_P1.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_to_the_Pole2_and_length, paste("Output/", Data_label, "_Minus_end_position_P2.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_total_Curvature, paste("Output/", Data_label, "_KMTs_total_Curvature.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_local_Curvature, paste("Output/", Data_label, "_KMTs_local_Curvature.xlsx", sep = ""), row.names = FALSE)
-if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
-  write.xlsx(End_type_error, paste("Output/", Data_label, "_End_type_error.xlsx", sep = ""), row.names = FALSE)
-  write.xlsx(Plus_end_morphology_Pole1, paste("Output/", Data_label, "_(+)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
-  write.xlsx(Plus_end_morphology_Pole2, paste("Output/", Data_label, "_(+)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
-  write.xlsx(Minus_end_morphology_Pole1, paste("Output/", Data_label, "_(-)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
-  write.xlsx(Minus_end_morphology_Pole2, paste("Output/", Data_label, "_(-)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
-}
-
 rm(all, analysis, Data, i, j, ncol, Point_KMT, total, Poles)
