@@ -4,7 +4,7 @@
 ## The output of this function are sorted points in each KMT
 ## After points are sorted. In each PoleX_YY_ZZ the fist Point ID correspond to the (+) end and last point to the (-) end. 
 
-##########################
+###########################
 # Progress bar for Pole_1 #
 ###########################
 
@@ -33,15 +33,18 @@ for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Seg
 } 
 close(pb)
 
-##################################################
-# Loop iterating through each KMT for the Pole_2 #
-##################################################
+###########################
+# Progress bar for Pole_2 #
+###########################
 
 total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 pb <- winProgressBar(min = 0,
                      max =  total,
                      width = 400)
-## Pole_2
+
+##################################################
+# Loop iterating through each KMT for the Pole_2 #
+##################################################
 
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)){
   j = 1
@@ -59,6 +62,10 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(S
                                   "% Done"))
 }
 close(pb)
+
+#################
+# Generate data #
+#################
 
 LD <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"]
 Plus_end <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["plus_dist_to_kinetochore_core"]
