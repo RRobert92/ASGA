@@ -41,6 +41,7 @@ names(No_of_KMTs_at_kinetochore_P1)[1] <- "No. of KMTs"
 write.xlsx(No_of_KMTs_at_kinetochore_P1, paste("Output/", Data_label, "_KMTs_no_P1.xlsx", sep = ""), row.names = FALSE)
 
 rm(DF)
+close(pb)
 
 ###########################
 # Progress bar for Pole_2 #
@@ -52,7 +53,7 @@ pb <- winProgressBar(min = 0,
                      width = 400)
 
 ###################################################
-# Loop iterating through each KMT for the Pole_12 #
+# Loop iterating through each KMT for the Pole_2 #
 ###################################################
 
 No_of_KMTs_at_kinetochore_P2 <- No_of_KMTs(2)
@@ -81,5 +82,4 @@ names(No_of_KMTs_at_kinetochore_P2)[1] <- "No. of KMTs"
 write.xlsx(No_of_KMTs_at_kinetochore_P2, paste("Output/", Data_label, "_KMTs_no_P2.xlsx", sep = ""), row.names = FALSE)
 
 rm(DF)
-
 close(pb)
