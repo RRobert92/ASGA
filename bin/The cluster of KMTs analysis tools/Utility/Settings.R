@@ -71,3 +71,4 @@ if(IKD == "yes"){
     dlg_message("I am sorry to hear that :( Please fixed that and try again")
   }
 }
+rm(Data)
