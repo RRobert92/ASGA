@@ -1,24 +1,24 @@
-#####################################
+######################################
 # The cluster of KMTs analysis tools #
-#####################################
+######################################
 
 ############
 # Settings #
 ############
 
-source("Utility/Settings.R")
+source("Utility/Core/Settings.R")
 
 ###########################
 # !Check files structure! #
 ###########################
 
-source("Utility/Check_Data.R")
+source("Utility/Core/Check_Data.R")
 
 #############
 # Load Data #
 #############
 
-source("Utility/Load_Data.r")
+source("Utility/Core/Load_Data.R")
 
 #############
 # Functions #

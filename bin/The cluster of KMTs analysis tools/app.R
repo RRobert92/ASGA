@@ -2,7 +2,7 @@
 # Library (load & install if missing) #
 #######################################
 
-source("Utility/Library.R")
+source("Utility/Core/Library.R")
 
 ################################
 # Defin no. of data to analyse #
@@ -14,7 +14,7 @@ No_of_Data <- as.numeric(No_of_Data)
 for(n in 1:No_of_Data){
   rm(list = setdiff(ls(), list("Data_label", "No_of_Data")))
   
-  source("KMTs_Analysis.R")
+  source("Utility/Analysis/KMTs_Analysis.R")
 }
 rm(list=setdiff(ls(), list("Data_label", "No_of_Data")))
 
@@ -24,7 +24,11 @@ rm(list=setdiff(ls(), list("Data_label", "No_of_Data")))
 Data_label <- as.data.frame(str_split(Data_label, "_"))
 Data_label <- as.character(Data_label[1,1])
 
-source("Utility/Load_Analysis.R")
+## Load data from the soucre location Output/...
+source("Utility/Analysis/Load_Analysis.R")
+
+## Prepare data depending from specied need: bin all for P1 & P2 or analysed P1 & P2 separetly 
+source("Utility/Analysis/..R")
 
 ##############
 # Plots Data #
