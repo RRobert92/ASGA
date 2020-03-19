@@ -6,30 +6,30 @@
 # Settings #
 ############
 
-source("Utility/Core/Settings.R")
+source("Utility/Settings.R")
 
 ###########################
 # !Check files structure! #
 ###########################
 
-source("Utility/Core/Check_Data.R")
+source("Utility/Check_Data.R")
 
 #############
 # Load Data #
 #############
 
-source("Utility/Core/Load_Data.R")
+source("Utility/Load_Data.R")
 
 #############
 # Functions #
 #############
 
-source("Tools/Core/Sort_by_Fiber.R")
-source("Tools/Core/Select_Points.R")
-source("Tools/Core/Find_XYZ.R")
-source("Tools/Core/Kinetochore_Position.R")
-source("Tools/Core/Sort_All_Points_to_Start_From_the_Kinetochore.R")
-source("Tools/Core/T_Relative_position.R")
+source("Tools/Pre_Analysis/Sort_by_Fiber.R")
+source("Tools/Pre_Analysis/Select_Points.R")
+source("Tools/Pre_Analysis/Find_XYZ.R")
+source("Tools/Pre_Analysis/Kinetochore_Position.R")
+source("Tools/Pre_Analysis/Sort_All_Points_to_Start_From_the_Kinetochore.R")
+source("Tools/Pre_Analysis/T_Relative_position.R")
 source("Tools/Analysis/Length_Distiribution.R")
 source("Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
 source("Tools/Analysis/No_of_KMTs.R")
@@ -42,17 +42,17 @@ source("Tools/Analysis/T_End_Morphology.R")
 #############
 
 ## Extract individual KMTs
-source("Packages/Core/Get_Single_KMTs_From_Labels.R")
+source("Packages/Pre_Analysis/Get_Single_KMTs_From_Labels.R")
 
 ## Sort point in each KMT. Always the first point will be a point on a kinetochore
-source("Packages/Core/Sort_KMTs_by_Kinetochore_Position.R")
+source("Packages/Pre_Analysis/Sort_KMTs_by_Kinetochore_Position.R")
 
 ## Core function to formated PoleX_YY DF: [1] Segment ID, [2] length, [3] minus_dist_to_pole, [4] plus_dist_to_pole
 ## Length distribution LD: [1] length
-source("Packages/Core/Analyse_Length_Distiribution.R")
+source("Packages/Pre_Analysis/Analyse_Length_Distiribution.R")
 
 ## Calculate relative position of each point on the kinetochore - centriol (Pole1/Pole2) axis
-source("Packages/Core/P_Relative_position.R")
+source("Packages/Pre_Analysis/P_Relative_position.R")
 close(pb)
 
 ############
