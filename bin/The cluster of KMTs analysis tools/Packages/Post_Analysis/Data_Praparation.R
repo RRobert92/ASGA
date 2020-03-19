@@ -32,6 +32,55 @@ How would you like to analyze your data?
   
 }
 
+DP <- as.numeric(DP)
 ###############################################
 # Standardized imported data to post-analysis #
 ###############################################
+
+if(DP == 1){
+  LD <- rbind(get(paste(Data_label, "_", 1, "_LD_P1", sep = "")),
+              get(paste(Data_label, "_", 1, "_LD_P2", sep = "")))
+  rm(list = setdiff(ls(), 
+                    setdiff(ls(), 
+                            list(paste(Data_label, "_", 1, "_LD_P1", sep = ""), 
+                                 paste(Data_label, "_", 1, "_LD_P2", sep = "")))))
+  
+  for (i in 2:No_of_Data) {
+    tryCatch({
+      LD <- rbind(LD,
+                  get(paste(Data_label, "_", i, "_LD_P1", sep = "")),
+                  get(paste(Data_label, "_", i, "_LD_P2", sep = "")))
+      rm(list = setdiff(ls(), 
+                        setdiff(ls(), 
+                                list(paste(Data_label, "_", i, "_LD_P1", sep = ""), 
+                                     paste(Data_label, "_", i, "_LD_P2", sep = "")))))
+    }, error = function(e){})
+  }
+  
+} else if (DP == 2){
+  
+  
+} else if (DP == 3){
+
+  tryCatch({
+  LD <- get(paste(Data_label, "_", 1, "_LD_P1", sep = ""))
+  rm(list = setdiff(ls(), 
+                    setdiff(ls(), 
+                            list(paste(Data_label, "_", 1, "_LD_P1", sep = ""), 
+                                 paste(Data_label, "_", 1, "_LD_P2", sep = "")))))
+  }, error = function(e){})
+
+  for (i in 2:No_of_Data) {
+    tryCatch({
+       LD <- rbind(LD,
+              get(paste(Data_label, "_", i, "_LD_P1", sep = "")))
+       rm(list = setdiff(ls(), 
+                         setdiff(ls(), 
+                                 list(paste(Data_label, "_", i, "_LD_P1", sep = ""), 
+                                      paste(Data_label, "_", i, "_LD_P2", sep = "")))))
+    }, error = function(e){})
+  }
+  
+  
+  
+}
