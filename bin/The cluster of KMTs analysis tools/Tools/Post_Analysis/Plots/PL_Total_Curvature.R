@@ -20,3 +20,8 @@ print(ggplot(Total_Curvature, aes(x = `KMTs length`, Curvature)) + geom_smooth(c
         ggtitle(paste(Data_label, "Total Curvature overall")) + geom_jitter(alpha = 0.1) +
         xlab("KMTs length (um)") + 
         ylab("Total KMT curvature"))
+
+write.xlsx(Total_Curvature, paste("Output/", Data_label, "_Total_Curvature.xlsx", sep = ""))
+write.xlsx(TC_0_1.5, paste("Output/", Data_label, "_TC_0_1.5.xlsx", sep = ""))
+write.xlsx(TC_1.5_3, paste("Output/", Data_label, "_TC_1.5_3.xlsx", sep = ""))
+write.xlsx(TC_3_4.5, paste("Output/", Data_label, "_TC_3_4.5.xlsx", sep = ""))

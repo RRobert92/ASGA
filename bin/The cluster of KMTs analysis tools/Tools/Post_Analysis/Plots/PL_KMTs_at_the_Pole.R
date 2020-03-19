@@ -4,3 +4,5 @@ print(ggplot(KMTs_at_P, aes(Data_label, `No. of KMTs`)) +
         theme_classic() +
         ggtitle("No of KMTs at the pole") +
         xlab(""))
+
+write.xlsx(KMTs_at_P, paste("Output/", Data_label, "_KMTs_at_P.xlsx", sep = ""))

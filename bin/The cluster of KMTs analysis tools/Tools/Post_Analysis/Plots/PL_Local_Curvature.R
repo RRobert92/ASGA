@@ -55,3 +55,6 @@ PL <- ggplot(Local_Curvature, aes(Relative_Position, Curvature)) +
   theme_classic()
 PL <- PL + geom_point(data = local_full, aes(To_1.0_p, To_1.0_c))
 print(PL)
+
+write.xlsx(Local_Curvature, paste("Output/", Data_label, "_Local_Curvature.xlsx", sep = ""))
+write.xlsx(local_full, paste("Output/", Data_label, "_Local_C_bin.xlsx", sep = ""))

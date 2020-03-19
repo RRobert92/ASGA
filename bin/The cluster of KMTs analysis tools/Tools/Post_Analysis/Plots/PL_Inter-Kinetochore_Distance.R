@@ -5,3 +5,5 @@ print(
     xlab("") +
     ggtitle("AVG. Inter - Kinetochore distance")
 )
+
+write.xlsx(IKD, paste("Output/", Data_label, "_IKD.xlsx", sep = ""))

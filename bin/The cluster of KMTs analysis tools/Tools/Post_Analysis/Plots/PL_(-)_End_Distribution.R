@@ -6,3 +6,4 @@ print(ggplot(Minus_end_pos, aes(Relative_minus_position, `Minus end dist.`)) +
         xlab("(-) end relative position") + 
         ylab("(-) end distance to the pole"))
 
+write.xlsx(Minus_end_pos, paste("Output/", Data_label, "_Minus_end_pos.xlsx", sep = ""))

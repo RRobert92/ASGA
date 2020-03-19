@@ -22,3 +22,8 @@ print(ggplot(LD, aes(`KMTs length`)) +
         ggtitle(paste(Data_label, "Length Distribution")) +
         xlab("KMTs length (um)") + 
         ylab("Normalized no. of KMTs"))
+
+write.xlsx(LD, paste("Output/", Data_label, "_LD.xlsx", sep = ""))
+write.xlsx(LD_0_1.5, paste("Output/", Data_label, "_LD_0_1.5.xlsx", sep = ""))
+write.xlsx(LD_1.5_3, paste("Output/", Data_label, "_LD_1.5_3.xlsx", sep = ""))
+write.xlsx(LD_3_4.5, paste("Output/", Data_label, "_LD_3_4.5.xlsx", sep = ""))
