@@ -50,8 +50,8 @@ local_full[11,1:3] <- data.frame(To_1.0_c = median(unlist(Local_Curvature[with(L
 print(ggplot(local_full, aes(To_1.0_p, To_1.0_c)) + geom_point() + ylim(1, 1.01) + xlim(-0.3, 1))
 
 PL <- ggplot(Local_Curvature, aes(Relative_Position, Curvature)) + 
-  geom_smooth(size = 1, method = "loess") +
-  xlim(-0.3, 1) + ylim(1, 1.05) +
+  geom_smooth(size = 1, method = "gam") +
+  xlim(-0.3, 1) + ylim(1, 1.03) +
   theme_classic()
 PL <- PL + geom_point(data = local_full, aes(To_1.0_p, To_1.0_c))
 print(PL)
