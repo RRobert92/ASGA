@@ -100,7 +100,7 @@ pb <- winProgressBar(min = 2,
 # Loop iterating through each k-fiiber for local curvature P1 #
 ###############################################################
 
-KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_01"))
+KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_00"))
 
 for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
