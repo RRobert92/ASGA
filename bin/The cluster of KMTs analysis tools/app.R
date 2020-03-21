@@ -41,6 +41,6 @@ source("Tools/Post_Analysis/Plots/PL_Total_Curvature.R")
 source("Tools/Post_Analysis/Plots/PL_Local_Curvature.R")
 
 
-plots.dir.path <- list.files(tempdir(), pattern="rs-graphics", full.names = TRUE); 
-plots.png.paths <- list.files(plots.dir.path, pattern=".png", full.names = TRUE)
-file.copy(from=plots.png.paths, to="Output/")
+#plots.dir.path <- list.files(tempdir(), pattern="rs-graphics", full.names = TRUE); 
+#plots.png.paths <- list.files(plots.dir.path, pattern=".png", full.names = TRUE)
+#file.copy(from=plots.png.paths, to="Output/")

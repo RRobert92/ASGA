@@ -56,9 +56,11 @@ pb <- winProgressBar(min = 0,
 # Loop iterating through each KMT for the Pole_2 #
 ###################################################
 
-if(nrow(Pole2_00) > 0) {
-No_of_KMTs_at_kinetochore_P2 <- No_of_KMTs(which(colnames(Segments) == "Pole2_00"))
-DF <- data.frame()
+tryCatch({
+ No_of_KMTs_at_kinetochore_P2 <- No_of_KMTs(which(colnames(Segments) == "Pole2_00"))
+DF <- data.frame() 
+}, error = function(e){})
+
 
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
@@ -78,10 +80,13 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol
                                   "% Done"))
 }
 
+tryCatch({
 No_of_KMTs_at_kinetochore_P2 <- data.frame(No_of_KMTs_at_kinetochore_P2[,1])
 names(No_of_KMTs_at_kinetochore_P2)[1] <- "No. of KMTs"
 write.xlsx(No_of_KMTs_at_kinetochore_P2, paste("Output/", Data_label, "_KMTs_no_P2.xlsx", sep = ""), row.names = FALSE)
+}, error = function(e){})
+
 
 rm(DF)
-}
+
 close(pb)

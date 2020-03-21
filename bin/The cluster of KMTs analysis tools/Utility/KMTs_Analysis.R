@@ -53,7 +53,6 @@ source("Packages/Pre_Analysis/Analyse_Length_Distiribution.R")
 
 ## Calculate relative position of each point on the kinetochore - centriol (Pole1/Pole2) axis
 source("Packages/Pre_Analysis/P_Relative_position.R")
-close(pb)
 
 ############
 # Analysis #
@@ -99,5 +98,3 @@ if(analysis == 0){
   source("Packages/Analysis/....R")
   
 }
-
-rm(all, analysis, Data, i, j, ncol, Point_KMT, total, Poles)

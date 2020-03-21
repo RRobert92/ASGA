@@ -96,12 +96,14 @@ write.xlsx(LD_P1, paste("Output/", Data_label, "_LD_P1.xlsx", sep = ""), row.nam
 ####################
 # Generate data_P2 #
 ####################
-if(nrow(Pole2_00) > 0) {
-  
-LD_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["length"]
+
+  tryCatch({
+    LD_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["length"]
 Plus_end <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_kinetochore_core"]
 LD_P2 <- cbind(LD_P2, 
                Plus_end)
+  }, error = function(e){})
+
 
 for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
@@ -113,7 +115,6 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(nco
                    DF)
   },
   error = function(e){})
-  
 }
 
 #############
@@ -122,7 +123,7 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(nco
 
 names(LD_P2)[1] <- "KMTs length"
 write.xlsx(LD_P2, paste("Output/", Data_label, "_LD_P2.xlsx", sep = ""), row.names = FALSE)
-}
+
 
 rm(DF,
    DF_LD,

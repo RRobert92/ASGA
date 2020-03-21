@@ -58,8 +58,13 @@ pb <- winProgressBar(min = 0,
 ###############################################################
 # Loop iterating through each k-fiiber for total curvature_P2 #
 ###############################################################
-if(nrow(Pole2_00) > 0) {
-KMTs_total_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
+
+if(nrow(Pole2_00) == 0){
+  KMTs_total_Curvature_P2 <- data.frame()
+} else {
+  KMTs_total_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
+}
+
 
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
@@ -84,7 +89,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol
  
 write.xlsx(KMTs_total_Curvature_P2, paste("Output/", Data_label, "_KMTs_total_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
 
-}
+
 close(pb)
 
 #######################################
@@ -100,7 +105,9 @@ pb <- winProgressBar(min = 2,
 # Loop iterating through each k-fiiber for local curvature P1 #
 ###############################################################
 
-KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_00"))
+tryCatch({
+  KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_00"))
+}, error = function(e){})
 
 for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
@@ -129,7 +136,7 @@ close(pb)
 rm(DF)
 
 #######################################
-# Progress bar for total curvature_P2 #
+# Progress bar for local curvature_P2 #
 #######################################
 
 total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
@@ -138,10 +145,14 @@ pb <- winProgressBar(min = 0,
                      width = 400)
 
 ###############################################################
-# Loop iterating through each k-fiiber for total curvature_P2 #
+# Loop iterating through each k-fiiber for local curvature_P2 #
 ###############################################################
-if(nrow(Pole2_00) > 0){
-KMTs_local_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
+
+if(nrow(Pole2_00) == 0){
+  KMTs_local_Curvature_P2 <- data.frame()
+}else{
+  KMTs_local_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
+}
 
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
@@ -166,6 +177,6 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol
 
 write.xlsx(KMTs_local_Curvature_P2, paste("Output/", Data_label, "_KMTs_local_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
 rm(DF)
-}
+
 
 close(pb)
