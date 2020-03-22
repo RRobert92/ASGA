@@ -157,7 +157,7 @@ if(nrow(Pole2_00) == 0){
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
     assign("DF",
-           total_curvature(i))
+           local_curvature(i))
     KMTs_local_Curvature_P2 <- rbind(KMTs_local_Curvature_P2,
                                      DF)
   },
