@@ -2,6 +2,7 @@ TC_0_1.5 <- data.frame(Total_Curvature[with(Total_Curvature, `(+) end position` 
                        Total_Curvature[with(Total_Curvature, `(+) end position` <= 1.5 & `(+) end position` > 0),][,3])
 
 P_TC <-  ggplot(TC_0_1.5, aes(x = KMTs.length, Curvature)) + geom_smooth(colour = "red", size = 1, method = "gam") + theme_classic() + 
+  ylim(1, 1.4) +
   ggtitle(paste(Data_label, "Total curvature based on fiber position")) +
   xlab("KMTs length (um)") + 
   ylab("Total KMT curvature")
@@ -18,6 +19,7 @@ print(P_TC)
 
 print(ggplot(Total_Curvature, aes(x = `KMTs length`, Curvature)) + geom_smooth(colour = "red", size = 1, method = "gam") + theme_classic() + 
         ggtitle(paste(Data_label, "Total Curvature overall")) + geom_jitter(alpha = 0.1) +
+        ylim(1, 1.4) +
         xlab("KMTs length (um)") + 
         ylab("Total KMT curvature"))
 
