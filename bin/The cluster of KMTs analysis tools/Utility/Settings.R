@@ -20,9 +20,19 @@ if (Poles == "yes") {
                      "Pole2")$res
 }
 
-Data_label <- dlg_input("What is a label for the data? Please use following theme.
-                        This label will be used to save your data.", 
+if(exists("Data_label") == TRUE){
+  Data_label <- as.data.frame(str_split(Data_label, "_"))
+  Data_label <- paste(as.character(Data_label[1,1]), "_", 
+                      as.numeric(as.character(Data_label[2,1])) + 1, 
+                      sep = "")
+  Data_label <- dlg_input("This label will be used to save your next data data.", 
+                          paste(Data_label))$res
+} else if(exists("Data_label") == FALSE){
+  Data_label <- dlg_input("What is a label for the data? Please use the following theme below.
+                 This label will be used to save your data.", 
                         "WT_1")$res
+}
+
 
 Output <- "Output/"
 
