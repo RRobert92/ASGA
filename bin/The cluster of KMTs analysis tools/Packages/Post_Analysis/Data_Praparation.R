@@ -68,22 +68,21 @@ if(DP == 1){
     }, error = function(e){})
   }
   
-  
 ## Inter-kinetochore distance
   tryCatch({
-    assign(paste(Data_label,"_", 1,"IKD", sep = ""),
+    assign(paste(Data_label, "_", 1, "_IKD", sep = ""),
            get(paste(Data_label, "_", 1, "_IKD", sep = "")))
     
     rm(list = setdiff(ls(), 
                       setdiff(ls(), 
                               list(paste(Data_label, "_", 1, "_IKD", sep = "")))))
     assign(paste(Data_label, "_IKD_ALL", sep = ""),
-           paste(Data_label,"_", 1,"IKD", sep = ""))
+           get(paste(Data_label, "_", 1,"_IKD", sep = "")))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      assign(paste(Data_label,"_", i,"IKD", sep = ""),
+      assign(paste(Data_label,"_", i,"_IKD", sep = ""),
              get(paste(Data_label, "_", i, "_IKD", sep = "")))
       
       rm(list = setdiff(ls(), 
@@ -91,7 +90,7 @@ if(DP == 1){
                                 list(paste(Data_label, "_", i, "_IKD", sep = "")))))
       assign(paste(Data_label, "_IKD_ALL", sep = ""),
              rbind(get(paste(Data_label, "_IKD_ALL", sep = "")),
-                   get(paste(Data_label,"_", i,"IKD", sep = ""))))
+                   get(paste(Data_label,"_", i,"_IKD", sep = ""))))
     }, error = function(e){})
   }
 
