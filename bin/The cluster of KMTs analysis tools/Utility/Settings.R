@@ -36,7 +36,7 @@ if(exists("Data_label") == TRUE){
 
 Output <- "Output/"
 
-Minus_Threshold <- 1
+Minus_Threshold <- 1.2
 
 all <- dlg_message("Do you want to run full analysis?",
                    "yesno")$res
