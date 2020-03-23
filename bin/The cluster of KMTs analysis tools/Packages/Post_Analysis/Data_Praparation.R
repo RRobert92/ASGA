@@ -40,149 +40,193 @@ DP <- as.numeric(DP)
 if(DP == 1){
 ## Length Distribution
   tryCatch({
-  LD <- rbind(get(paste(Data_label, "_", 1, "_LD_P1", sep = "")),
-              get(paste(Data_label, "_", 1, "_LD_P2", sep = "")))
+    assign(paste(Data_label,"_", 1,"LD", sep = ""),
+           rbind(get(paste(Data_label, "_", 1, "_LD_P1", sep = "")),
+                 get(paste(Data_label, "_", 1, "_LD_P2", sep = ""))))
+  
   rm(list = setdiff(ls(), 
                     setdiff(ls(), 
                             list(paste(Data_label, "_", 1, "_LD_P1", sep = ""), 
                                  paste(Data_label, "_", 1, "_LD_P2", sep = "")))))
+  assign(paste(Data_label, "_LD_ALL", sep = ""),
+         paste(Data_label,"_", 1,"LD", sep = ""))
   }, error = function(e){})
-  
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      LD <- rbind(LD,
-                  get(paste(Data_label, "_", i, "_LD_P1", sep = "")),
-                  get(paste(Data_label, "_", i, "_LD_P2", sep = "")))
+      assign(paste(Data_label,"_", i,"LD", sep = ""),
+             rbind(get(paste(Data_label, "_", i, "_LD_P1", sep = "")),
+                   get(paste(Data_label, "_", i, "_LD_P2", sep = ""))))
+      
       rm(list = setdiff(ls(), 
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_LD_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_LD_P2", sep = "")))))
+      assign(paste(Data_label, "_LD_ALL", sep = ""),
+         rbind(paste(Data_label, "_LD_ALL", sep = ""), 
+               paste(Data_label,"_", i,"LD", sep = "")))
     }, error = function(e){})
   }
   
+  
 ## Inter-kinetochore distance
   tryCatch({
-    IKD <- get(paste(Data_label, "_", 1, "_IKD", sep = ""))
+    assign(paste(Data_label,"_", 1,"IKD", sep = ""),
+           get(paste(Data_label, "_", 1, "_IKD", sep = "")))
+    
     rm(list = setdiff(ls(), 
                       setdiff(ls(), 
                               list(paste(Data_label, "_", 1, "_IKD", sep = "")))))
+    assign(paste(Data_label, "_IKD_ALL", sep = ""),
+           paste(Data_label,"_", 1,"IKD", sep = ""))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      IKD <- rbind(LD,
-                   get(paste(Data_label, "_", i, "_IKD", sep = "")))
+      assign(paste(Data_label,"_", i,"IKD", sep = ""),
+             get(paste(Data_label, "_", i, "_IKD", sep = "")))
+      
       rm(list = setdiff(ls(), 
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_IKD", sep = "")))))
+      assign(paste(Data_label, "_IKD_ALL", sep = ""),
+             paste(Data_label,"_", i,"IKD", sep = ""))
     }, error = function(e){})
   }
 
 ## No of a KMTs at the kinetochore
   tryCatch({
-    KMTs_at_K <- rbind(get(paste(Data_label, "_", 1, "_KMTs_at_K1", sep = "")),
-                       get(paste(Data_label, "_", 1, "_KMTs_at_K2", sep = "")))
+    assign(paste(Data_label, "_", 1, "_KMTs_at_K", sep = ""),
+           rbind(get(paste(Data_label, "_", 1, "_KMTs_at_K1", sep = "")),
+                 get(paste(Data_label, "_", 1, "_KMTs_at_K2", sep = ""))))
     rm(list = setdiff(ls(), 
                       setdiff(ls(), 
                               list(paste(Data_label, "_", 1, "_KMTs_at_K1", sep = ""), 
                                    paste(Data_label, "_", 1, "_KMTs_at_K2", sep = "")))))
+    assign(paste(Data_label, "_KMTs_at_K_ALL", sep = ""),
+           paste(Data_label, "_", 1, "_KMTs_at_K", sep = ""))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      KMTs_at_K <- rbind(KMTs_at_K,
-                         get(paste(Data_label, "_", i, "_KMTs_at_K1", sep = "")),
-                         get(paste(Data_label, "_", i, "_KMTs_at_K2", sep = "")))
+      assign(paste(Data_label, "_", i, "_KMTs_at_K", sep = ""),
+             rbind(get(paste(Data_label, "_", i, "_KMTs_at_K1", sep = "")),
+                   get(paste(Data_label, "_", i, "_KMTs_at_K2", sep = ""))))
       rm(list = setdiff(ls(), 
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_KMTs_at_K1", sep = ""), 
                                      paste(Data_label, "_", i, "_KMTs_at_K2", sep = "")))))
+      assign(paste(Data_label, "_KMTs_at_K_ALL", sep = ""),
+             paste(Data_label, "_", i, "_KMTs_at_K", sep = ""))
     }, error = function(e){})
   }
 
 ## No of a KMTs at the Pole1/2
   tryCatch({
-    KMTs_at_P <- rbind(get(paste(Data_label, "_", 1, "_KMTs_at_P1", sep = "")),
-                       get(paste(Data_label, "_", 1, "_KMTs_at_P2", sep = "")))
+    assign(paste(Data_label, "_", 1, "_KMTs_at_P", sep = ""),
+           rbind(get(paste(Data_label, "_", 1, "_KMTs_at_P1", sep = "")),
+                 get(paste(Data_label, "_", 1, "_KMTs_at_P2", sep = ""))))
+    
     rm(list = setdiff(ls(), 
                       setdiff(ls(), 
                               list(paste(Data_label, "_", 1, "_KMTs_at_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_KMTs_at_P2", sep = "")))))
+    assign(paste(Data_label, "_KMTs_at_P_ALL", sep = ""),
+           paste(Data_label, "_", 1, "_KMTs_at_P", sep = ""))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      KMTs_at_P <- rbind(get(paste(Data_label, "_", i, "_KMTs_at_P1", sep = "")),
-                         get(paste(Data_label, "_", i, "_KMTs_at_P2", sep = "")))
+      assign(paste(Data_label, "_", i, "_KMTs_at_P", sep = ""),
+             rbind(get(paste(Data_label, "_", i, "_KMTs_at_P1", sep = "")),
+                   get(paste(Data_label, "_", i, "_KMTs_at_P2", sep = ""))))
       rm(list = setdiff(ls(), 
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_KMTs_at_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_KMTs_at_P2", sep = "")))))
+      assign(paste(Data_label, "_KMTs_at_P_ALL", sep = ""),
+             paste(Data_label, "_", i, "_KMTs_at_P", sep = ""))
     }, error = function(e){})
   }
   
 ## Minus end position
   tryCatch({
-    Minus_end_pos <- rbind(get(paste(Data_label, "_", 1, "_Minus_end_P1", sep = "")),
-                           get(paste(Data_label, "_", 1, "_Minus_end_P2", sep = "")))
+    assign(paste(Data_label, "_", 1, "_Minus_end", sep = ""),
+           rbind(get(paste(Data_label, "_", 1, "_Minus_end_P1", sep = "")),
+                 get(paste(Data_label, "_", 1, "_Minus_end_P2", sep = ""))))
     rm(list = setdiff(ls(), 
                       setdiff(ls(), 
                               list(paste(Data_label, "_", 1, "_Minus_end_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_Minus_end_P2", sep = "")))))
+    assign(paste(Data_label, "_Minus_end_ALL", sep = ""),
+           paste(Data_label, "_", 1, "_Minus_end", sep = ""))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      Minus_end_pos <- rbind(Minus_end_pos,
-                             get(paste(Data_label, "_", i, "_Minus_end_P1", sep = "")),
-                             get(paste(Data_label, "_", i, "_Minus_end_P2", sep = "")))
+      assign(paste(Data_label, "_", i, "_Minus_end", sep = ""),
+             rbind(get(paste(Data_label, "_", i, "_Minus_end_P1", sep = "")),
+                   get(paste(Data_label, "_", i, "_Minus_end_P2", sep = ""))))
       rm(list = setdiff(ls(), 
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_Minus_end_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_Minus_end_P2", sep = "")))))
+      assign(paste(Data_label, "_Minus_end_ALL", sep = ""),
+             paste(Data_label, "_", i, "_Minus_end", sep = ""))
     }, error = function(e){})
   }
   
 ## Total curvature
   tryCatch({
-    Total_Curvature <- rbind(get(paste(Data_label, "_", 1, "_total_curvature_P1", sep = "")),
-                             get(paste(Data_label, "_", 1, "_total_curvature_P2", sep = "")))
+    assign(paste(Data_label, "_", 1, "_Total_Curvature", sep = ""),
+           rbind(get(paste(Data_label, "_", 1, "_total_curvature_P1", sep = "")),
+                 get(paste(Data_label, "_", 1, "_total_curvature_P2", sep = ""))))
     rm(list = setdiff(ls(), 
                       setdiff(ls(), 
                               list(paste(Data_label, "_", 1, "_total_curvature_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_total_curvature_P2", sep = "")))))
+    assign(paste(Data_label, "_Total_Curvature_ALL", sep = ""),
+           paste(Data_label, "_", 1, "_Total_Curvature", sep = ""))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      Total_Curvature <- rbind(Total_Curvature,
-                               get(paste(Data_label, "_", i, "_total_curvature_P1", sep = "")),
-                               get(paste(Data_label, "_", i, "_total_curvature_P2", sep = "")))
+      assign(paste(Data_label, "_", i, "_Total_Curvature", sep = ""),
+             rbind(get(paste(Data_label, "_", i, "_total_curvature_P1", sep = "")),
+                   get(paste(Data_label, "_", i, "_total_curvature_P2", sep = ""))))
       rm(list = setdiff(ls(), 
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_total_curvature_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_total_curvature_P2", sep = "")))))
+      assign(paste(Data_label, "_Total_Curvature_ALL", sep = ""),
+             paste(Data_label, "_", i, "_Total_Curvature", sep = ""))
     }, error = function(e){})
   }
   
 ## Local curvature
   tryCatch({
-    Local_Curvature <- get(paste(Data_label, "_", 1, "_local_curvature_P1", sep = ""))
+    assign(paste(Data_label, "_", 1, "_Local_Curvature", sep = ""),
+           rbind(get(paste(Data_label, "_", 1, "_local_curvature_P1", sep = "")),
+                 get(paste(Data_label, "_", 1, "_local_curvature_P2", sep = ""))))
     rm(list = setdiff(ls(), 
                       setdiff(ls(), 
                               list(paste(Data_label, "_", 1, "_local_curvature_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_local_curvature_P2", sep = "")))))
+    assign(paste(Data_label, "_Local_Curvature_ALL", sep = ""),
+           paste(Data_label, "_", 1, "_Local_Curvature", sep = ""))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      Local_Curvature <- rbind(Local_Curvature,
-                               get(paste(Data_label, "_", i, "_local_curvature_P1", sep = "")))
+      assign(paste(Data_label, "_", i, "_Local_Curvature", sep = ""),
+             rbind(get(paste(Data_label, "_", i, "_local_curvature_P1", sep = "")),
+                   get(paste(Data_label, "_", i, "_local_curvature_P2", sep = ""))))
       rm(list = setdiff(ls(), 
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_local_curvature_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_local_curvature_P2", sep = "")))))
+      assign(paste(Data_label, "_Local_Curvature_ALL", sep = ""),
+             paste(Data_label, "_", i, "_Local_Curvature", sep = ""))
     }, error = function(e){})
   }
 } else if (DP == 2){
