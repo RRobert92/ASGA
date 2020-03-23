@@ -151,7 +151,7 @@ pb <- winProgressBar(min = 0,
 if(nrow(Pole2_00) == 0){
   KMTs_local_Curvature_P2 <- data.frame()
 }else{
-  KMTs_local_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
+  KMTs_local_Curvature_P2 <- local_curvature(which(colnames(Segments) == "Pole2_00"))
 }
 
 for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){

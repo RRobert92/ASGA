@@ -40,7 +40,7 @@ DP <- as.numeric(DP)
 if(DP == 1){
 ## Length Distribution
   tryCatch({
-    assign(paste(Data_label,"_", 1,"LD", sep = ""),
+    assign(paste(Data_label,"_", 1,"_LD", sep = ""),
            rbind(get(paste(Data_label, "_", 1, "_LD_P1", sep = "")),
                  get(paste(Data_label, "_", 1, "_LD_P2", sep = ""))))
   
@@ -49,12 +49,12 @@ if(DP == 1){
                             list(paste(Data_label, "_", 1, "_LD_P1", sep = ""), 
                                  paste(Data_label, "_", 1, "_LD_P2", sep = "")))))
   assign(paste(Data_label, "_LD_ALL", sep = ""),
-         paste(Data_label,"_", 1,"LD", sep = ""))
+         get(paste(Data_label,"_", 1,"_LD", sep = "")))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
     tryCatch({
-      assign(paste(Data_label,"_", i,"LD", sep = ""),
+      assign(paste(Data_label,"_", i,"_LD", sep = ""),
              rbind(get(paste(Data_label, "_", i, "_LD_P1", sep = "")),
                    get(paste(Data_label, "_", i, "_LD_P2", sep = ""))))
       
@@ -63,8 +63,8 @@ if(DP == 1){
                                 list(paste(Data_label, "_", i, "_LD_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_LD_P2", sep = "")))))
       assign(paste(Data_label, "_LD_ALL", sep = ""),
-         rbind(paste(Data_label, "_LD_ALL", sep = ""), 
-               paste(Data_label,"_", i,"LD", sep = "")))
+         rbind(get(paste(Data_label, "_LD_ALL", sep = "")), 
+               get(paste(Data_label,"_", i,"_LD", sep = ""))))
     }, error = function(e){})
   }
   
@@ -90,7 +90,8 @@ if(DP == 1){
                         setdiff(ls(), 
                                 list(paste(Data_label, "_", i, "_IKD", sep = "")))))
       assign(paste(Data_label, "_IKD_ALL", sep = ""),
-             paste(Data_label,"_", i,"IKD", sep = ""))
+             rbind(get(paste(Data_label, "_IKD_ALL", sep = "")),
+                   get(paste(Data_label,"_", i,"IKD", sep = ""))))
     }, error = function(e){})
   }
 
@@ -104,7 +105,7 @@ if(DP == 1){
                               list(paste(Data_label, "_", 1, "_KMTs_at_K1", sep = ""), 
                                    paste(Data_label, "_", 1, "_KMTs_at_K2", sep = "")))))
     assign(paste(Data_label, "_KMTs_at_K_ALL", sep = ""),
-           paste(Data_label, "_", 1, "_KMTs_at_K", sep = ""))
+           get(paste(Data_label, "_", 1, "_KMTs_at_K", sep = "")))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
@@ -117,7 +118,8 @@ if(DP == 1){
                                 list(paste(Data_label, "_", i, "_KMTs_at_K1", sep = ""), 
                                      paste(Data_label, "_", i, "_KMTs_at_K2", sep = "")))))
       assign(paste(Data_label, "_KMTs_at_K_ALL", sep = ""),
-             paste(Data_label, "_", i, "_KMTs_at_K", sep = ""))
+             rbind(get(paste(Data_label, "_KMTs_at_K_ALL", sep = "")), 
+                   get(paste(Data_label, "_", i, "_KMTs_at_K", sep = ""))))
     }, error = function(e){})
   }
 
@@ -132,7 +134,7 @@ if(DP == 1){
                               list(paste(Data_label, "_", 1, "_KMTs_at_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_KMTs_at_P2", sep = "")))))
     assign(paste(Data_label, "_KMTs_at_P_ALL", sep = ""),
-           paste(Data_label, "_", 1, "_KMTs_at_P", sep = ""))
+           get(paste(Data_label, "_", 1, "_KMTs_at_P", sep = "")))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
@@ -145,7 +147,8 @@ if(DP == 1){
                                 list(paste(Data_label, "_", i, "_KMTs_at_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_KMTs_at_P2", sep = "")))))
       assign(paste(Data_label, "_KMTs_at_P_ALL", sep = ""),
-             paste(Data_label, "_", i, "_KMTs_at_P", sep = ""))
+             rbind(get(paste(Data_label, "_KMTs_at_P_ALL", sep = "")),
+                   get(paste(Data_label, "_", i, "_KMTs_at_P", sep = ""))))
     }, error = function(e){})
   }
   
@@ -159,7 +162,7 @@ if(DP == 1){
                               list(paste(Data_label, "_", 1, "_Minus_end_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_Minus_end_P2", sep = "")))))
     assign(paste(Data_label, "_Minus_end_ALL", sep = ""),
-           paste(Data_label, "_", 1, "_Minus_end", sep = ""))
+           get(paste(Data_label, "_", 1, "_Minus_end", sep = "")))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
@@ -172,7 +175,8 @@ if(DP == 1){
                                 list(paste(Data_label, "_", i, "_Minus_end_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_Minus_end_P2", sep = "")))))
       assign(paste(Data_label, "_Minus_end_ALL", sep = ""),
-             paste(Data_label, "_", i, "_Minus_end", sep = ""))
+             rbind(get(paste(Data_label, "_Minus_end_ALL", sep = "")),
+                   get(paste(Data_label, "_", i, "_Minus_end", sep = ""))))
     }, error = function(e){})
   }
   
@@ -186,7 +190,7 @@ if(DP == 1){
                               list(paste(Data_label, "_", 1, "_total_curvature_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_total_curvature_P2", sep = "")))))
     assign(paste(Data_label, "_Total_Curvature_ALL", sep = ""),
-           paste(Data_label, "_", 1, "_Total_Curvature", sep = ""))
+           get(paste(Data_label, "_", 1, "_Total_Curvature", sep = "")))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
@@ -199,7 +203,8 @@ if(DP == 1){
                                 list(paste(Data_label, "_", i, "_total_curvature_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_total_curvature_P2", sep = "")))))
       assign(paste(Data_label, "_Total_Curvature_ALL", sep = ""),
-             paste(Data_label, "_", i, "_Total_Curvature", sep = ""))
+             rbind(get(paste(Data_label, "_Total_Curvature_ALL", sep = "")),
+                   get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))))
     }, error = function(e){})
   }
   
@@ -213,7 +218,7 @@ if(DP == 1){
                               list(paste(Data_label, "_", 1, "_local_curvature_P1", sep = ""), 
                                    paste(Data_label, "_", 1, "_local_curvature_P2", sep = "")))))
     assign(paste(Data_label, "_Local_Curvature_ALL", sep = ""),
-           paste(Data_label, "_", 1, "_Local_Curvature", sep = ""))
+           get(paste(Data_label, "_", 1, "_Local_Curvature", sep = "")))
   }, error = function(e){})
   
   for (i in 2:No_of_Data) {
@@ -226,7 +231,8 @@ if(DP == 1){
                                 list(paste(Data_label, "_", i, "_local_curvature_P1", sep = ""), 
                                      paste(Data_label, "_", i, "_local_curvature_P2", sep = "")))))
       assign(paste(Data_label, "_Local_Curvature_ALL", sep = ""),
-             paste(Data_label, "_", i, "_Local_Curvature", sep = ""))
+             rbind(get(paste(Data_label, "_Local_Curvature_ALL", sep = "")),
+                   get(paste(Data_label, "_", i, "_Local_Curvature", sep = ""))))
     }, error = function(e){})
   }
 } else if (DP == 2){
