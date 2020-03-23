@@ -133,6 +133,8 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(nco
   
 }
 
+write.xlsx(Minus_end_position, paste("Output/", Data_label, "_minus_position_all.xlsx", sep = ""), row.names = FALSE)
+
 rm(DF,
    DF_Minus_end_position,
    DF_Relative_position,
