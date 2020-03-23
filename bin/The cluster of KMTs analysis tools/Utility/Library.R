@@ -4,7 +4,8 @@ Required_Packages = c("readxl",
                       "ggplot2",
                       "xlsx",
                       "tcltk",
-                      "svDialogs")
+                      "svDialogs",
+                      "egg")
 
 for (p in Required_Packages) {
   if (!require(p, 
