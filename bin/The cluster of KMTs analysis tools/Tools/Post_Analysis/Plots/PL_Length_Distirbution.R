@@ -11,6 +11,7 @@ for(i in 1:No_of_Data){
                                                                               plus_dist_to_kinetochore_core <= 10 & plus_dist_to_kinetochore_core > 3),][,1],
                          get(paste(Data_label, "_", i, "_LD", sep = ""))[with(get(paste(Data_label, "_", i, "_LD", sep = "")), 
                                                                               plus_dist_to_kinetochore_core <= 10 & plus_dist_to_kinetochore_core > 3),][,2])
+  write.xlsx(get(paste(Data_label, "_", i, "_LD", sep = "")), paste("Output/", Data_label, "_", i, "_LD_All.xlsx", sep = ""))
   write.xlsx(LD_0_1.5, paste("Output/", Data_label, "_", i, "_LD_0_1.5.xlsx", sep = ""))
   write.xlsx(LD_1.5_3, paste("Output/", Data_label, "_", i, "_LD_1.5_3.xlsx", sep = ""))
   write.xlsx(LD_3_4.5, paste("Output/", Data_label, "_", i, "_LD_3_4.5.xlsx", sep = ""))
