@@ -1,9 +1,3 @@
-
-write.xlsx(Total_Curvature, paste("Output/", Data_label, "_Total_Curvature.xlsx", sep = ""))
-write.xlsx(TC_0_1.5, paste("Output/", Data_label, "_TC_0_1.5.xlsx", sep = ""))
-write.xlsx(TC_1.5_3, paste("Output/", Data_label, "_TC_1.5_3.xlsx", sep = ""))
-write.xlsx(TC_3_4.5, paste("Output/", Data_label, "_TC_3_4.5.xlsx", sep = ""))
-
 for(i in 1:No_of_Data){
   assign(paste(Data_label, "_", i, "_TC_0_1.5", sep = ""),
          data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
@@ -33,15 +27,15 @@ P1 <- P1 + geom_smooth(data = get(paste(Data_label, "_", i, "_TC_3_4.5", sep = "
 print(P1)
 }
 
-assign(paste(Data_label, "_", "_TC_0_1.5_ALL", sep = ""),
+assign(paste(Data_label, "_", "TC_0_1.5_ALL", sep = ""),
        rbind(get(paste(Data_label, "_", 1, "_TC_0_1.5", sep = "")),
              get(paste(Data_label, "_", 2, "_TC_0_1.5", sep = "")),
              get(paste(Data_label, "_", 3, "_TC_0_1.5", sep = ""))))
-assign(paste(Data_label, "_", "_TC_1.5_3_ALL", sep = ""),
+assign(paste(Data_label, "_", "TC_1.5_3_ALL", sep = ""),
        rbind(get(paste(Data_label, "_", 1, "_TC_1.5_3", sep = "")),
              get(paste(Data_label, "_", 2, "_TC_1.5_3", sep = "")),
              get(paste(Data_label, "_", 3, "_TC_1.5_3", sep = ""))))
-assign(paste(Data_label, "_", "_TC_3_4.5_ALL", sep = ""),
+assign(paste(Data_label, "_", "TC_3_4.5_ALL", sep = ""),
        rbind(get(paste(Data_label, "_", 1, "_TC_3_4.5", sep = "")),
              get(paste(Data_label, "_", 2, "_TC_3_4.5", sep = "")),
              get(paste(Data_label, "_", 3, "_TC_3_4.5", sep = ""))))
@@ -64,3 +58,12 @@ P3 <- P3 + geom_smooth(data = get(paste(Data_label, "_", i, "_Total_Curvature", 
 
 P3 <- P3 + geom_smooth(data = TC_ALL, aes(`KMTs length`, Curvature), color = "black", method = "loess")
 print(P3)
+
+for(i in 1:No_of_Data){
+  write.xlsx(get(paste(Data_label, "_", i, "_TC_0_1.5", sep = "")), paste("Output/", Data_label, "_", i, "_TC_0_1.5.xlsx", sep = ""))
+  write.xlsx(get(paste(Data_label, "_", i, "_TC_1.5_3", sep = "")), paste("Output/", Data_label, "_", i, "_TC_1.5_3.xlsx", sep = ""))
+  write.xlsx(get(paste(Data_label, "_", i, "_TC_3_4.5", sep = "")), paste("Output/", Data_label, "_", i, "_TC_3_4.5.xlsx", sep = "")) 
+}
+write.xlsx(get(paste(Data_label, "_", "_TC_0_1.5_ALL", sep = "")), paste("Output/", Data_label, "_", i, "_TC_0_1.5_All.xlsx", sep = ""))
+write.xlsx(get(paste(Data_label, "_", "_TC_1.5_3_ALL", sep = "")), paste("Output/", Data_label, "_", i, "_TC_1.5_3_All.xlsx", sep = ""))
+write.xlsx(get(paste(Data_label, "_", "_TC_3_4.5_ALL", sep = "")), paste("Output/", Data_label, "_", i, "_TC_3_4.5_All.xlsx", sep = ""))
