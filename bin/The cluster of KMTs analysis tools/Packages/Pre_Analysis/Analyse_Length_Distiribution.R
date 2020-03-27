@@ -9,6 +9,7 @@
 ###########
 
 ## Get ID for the ellipse Rx and Rz for 100%, 50% and 25%
+Plus_end <- data.frame()
 Kinetochore_Avg <- data.frame()
 for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)){
   j = 1
