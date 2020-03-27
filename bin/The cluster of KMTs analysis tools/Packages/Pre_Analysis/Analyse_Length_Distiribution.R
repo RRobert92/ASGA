@@ -4,6 +4,52 @@
 ## The output of this function are sorted points in each KMT
 ## After points are sorted. In each PoleX_YY_ZZ the fist Point ID correspond to the (+) end and last point to the (-) end. 
 
+###########
+# Setting #
+###########
+
+## Get ID for the ellipse Rx and Rz for 100%, 50% and 25%
+Kinetochore_Avg <- data.frame()
+for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)){
+  j = 1
+  tryCatch({
+    while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
+      Plus_end[j,1:3] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,2:4]
+      j = j + 1
+    }
+    Plus_end <- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
+                           Y_Median = c(median(as.matrix(Plus_end[2]))),
+                           Z_Median = c(median(as.matrix(Plus_end[3]))))
+    Kinetochore_Avg[i,1:3] <- Plus_end
+  },
+  error = function(e){
+    Kinetochore_Avg[i,1:3] <- NA
+  })
+}
+Kinetochore_Avg <- na.omit(Kinetochore_Avg)
+Pole_avg <- rbind(Pole1, Pole2)
+Pole_avg <- data.frame(X_Mean = c(mean(as.matrix(Pole_avg[1]))),
+                       Y_Mean = c(mean(as.matrix(Pole_avg[2]))),
+                       Z_Mean = c(mean(as.matrix(Pole_avg[3]))))
+Rx100 <- data.frame()
+Rx100[1,1] <- max(Kinetochore_Avg$X_Median)
+Rx100[1,1] <- abs(Rx100[1,1] - Pole_avg$X_Mean)
+Rx100[1,2] <- min(Kinetochore_Avg$X_Median)
+Rx100[1,2] <- abs(Rx100[1,2] - Pole_avg$X_Mean)
+Rx100 <- max(Rx100)
+Rx50 <- Rx100*0.80
+Rx25 <- Rx100*0.45
+Rz100 <- data.frame()
+Rz100[1,1] <- max(Kinetochore_Avg$Z_Median)
+Rz100[1,1] <- abs(Rz100[1,1] - Pole_avg$Z_Mean)
+Rz100[1,2] <- min(Kinetochore_Avg$Z_Median)
+Rz100[1,2] <- abs(Rz100[1,2] - Pole_avg$Z_Mean)
+Rz100 <- max(Rz100)
+Rz50 <- Rz100*0.80
+Rz25 <- Rz100*0.45
+
+rm(Kinetochore_Avg, Pole_avg)
+
 ###########################
 # Progress bar for Pole_1 #
 ###########################
