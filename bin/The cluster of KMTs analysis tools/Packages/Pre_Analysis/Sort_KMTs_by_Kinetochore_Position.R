@@ -75,3 +75,6 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(S
                                   "% Done"))
 }
 close(pb)
+
+assign("Kinetochore_projected",
+       Kinetochore_position())

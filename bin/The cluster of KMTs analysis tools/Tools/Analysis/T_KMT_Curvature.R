@@ -71,7 +71,8 @@ local_curvature <- function(x){
           DF <- cbind.data.frame(Curvature = output_full$Full_L/output_curve$Curve,
                            Relative_Position = output_mean$Mean_Position,
                            K_fiber_no = x,
-                           KMT_no = i)
+                           KMT_no = i,
+                           End_Position = get(paste(colnames(Segments)[x]))[i,4])
     full_data <- rbind(full_data, 
                        DF)
     }

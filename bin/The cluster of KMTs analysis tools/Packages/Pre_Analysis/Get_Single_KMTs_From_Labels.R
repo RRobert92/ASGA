@@ -56,6 +56,3 @@ for (i in which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == 
                                   "% Done"))
 }
 close(pb)
-
-assign("Kinetochore_projected",
-       Kinetochore_position())
