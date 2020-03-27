@@ -14,10 +14,14 @@ total_curvature <- function(x){
     curvarture[i,2] <- x
     curvarture[i,3] <- get(paste(colnames(Segments)[x]))[i,2]
     curvarture[i,4] <- get(paste(colnames(Segments)[x]))[i,4]
+    curvarture[i,5] <- get(paste(colnames(Segments)[x]))[i,5]
+    curvarture[i,6] <- get(paste(colnames(Segments)[x]))[i,6]
     names(curvarture)[1] <- "Curvature"
     names(curvarture)[2] <- "k-fiber no."
     names(curvarture)[3] <- "KMTs length"
     names(curvarture)[4] <- "(+) end position"
+    names(curvarture)[5] <- "(+) Dist-to-Pole"
+    names(curvarture)[5] <- "Elipse Position"
   }
   curvarture
 }
@@ -72,7 +76,9 @@ local_curvature <- function(x){
                            Relative_Position = output_mean$Mean_Position,
                            K_fiber_no = x,
                            KMT_no = i,
-                           End_Position = get(paste(colnames(Segments)[x]))[i,4])
+                           End_Position = get(paste(colnames(Segments)[x]))[i,4],
+                           End_to_Pole = get(paste(colnames(Segments)[x]))[i,5],
+                           Elipse_Position = get(paste(colnames(Segments)[x]))[i,6])
     full_data <- rbind(full_data, 
                        DF)
     }

@@ -116,15 +116,23 @@ close(pb)
 
 LD_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"]
 Plus_end <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["plus_dist_to_kinetochore_core"]
+Dist_pole <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["plus_dist_to_pole"]
+Elips <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Elipse_Position"]
 LD_P1 <- cbind(LD_P1, 
-               Plus_end)
+               Plus_end,
+               Dist_pole,
+               Elips)
 
 for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
-    DF_LD <- get(paste(colnames(Segments)[i]))["length"]
+  DF_LD <- get(paste(colnames(Segments)[i]))["length"]
   DF_Plus_end <- get(paste(colnames(Segments)[i]))["plus_dist_to_kinetochore_core"]
+  DF_Dist_pole <- get(paste(colnames(Segments)[i]))["plus_dist_to_pole"]
+  DF_Elips <- get(paste(colnames(Segments)[i]))["Elipse_Position"]
   DF <- cbind(DF_LD,
-              DF_Plus_end)
+              DF_Plus_end,
+              DF_Dist_pole,
+              DF_Elips)
   
   LD_P1 <- rbind(LD_P1, 
                  DF)
@@ -146,9 +154,13 @@ write.xlsx(LD_P1, paste("Output/", Data_label, "_LD_P1.xlsx", sep = ""), row.nam
 
   tryCatch({
     LD_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["length"]
-Plus_end <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_kinetochore_core"]
-LD_P2 <- cbind(LD_P2, 
-               Plus_end)
+    Plus_end <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_kinetochore_core"]
+    Dist_pole <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_pole"]
+    Elips <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["Elipse_Position"]
+    LD_P2 <- cbind(LD_P2, 
+                   Plus_end,
+                   Dist_pole,
+                   Elips)
   }, error = function(e){})
 
 
@@ -156,8 +168,12 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(nco
   tryCatch({
     DF_LD <- get(paste(colnames(Segments)[i]))["length"]
     DF_Plus_end <- get(paste(colnames(Segments)[i]))["plus_dist_to_kinetochore_core"]
+    DF_Dist_pole <- get(paste(colnames(Segments)[i]))["plus_dist_to_pole"]
+    DF_Elips <- get(paste(colnames(Segments)[i]))["Elipse_Position"]
     DF <- cbind(DF_LD,
-                DF_Plus_end)
+                DF_Plus_end,
+                DF_Dist_pole,
+                DF_Elips)
     LD_P2 <- rbind(LD_P2, 
                    DF)
   },
