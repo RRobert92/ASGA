@@ -1,4 +1,10 @@
-# Web application for analysis of the MTs using "ZIB Amira" MT spatial graph
+# Openso-Source Spindle analsysis tool
+![GitHub top language](https://img.shields.io/github/languages/top/RRobert92/MT_Analysis)
+![GitHub](https://img.shields.io/github/license/RRobert92/MT_Analysis)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/RRobert92/MT_Analysis)
+![GitHub Release Date](https://img.shields.io/github/release-date/RRobert92/MT_Analysis)
+![GitHub contributors](https://img.shields.io/github/contributors/RRobert92/MT_Analysis)
+
 
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. You can also find up to date version of tools which past development phase on shinyapps.io server
