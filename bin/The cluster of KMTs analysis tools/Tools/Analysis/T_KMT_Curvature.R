@@ -21,7 +21,7 @@ total_curvature <- function(x){
     names(curvarture)[3] <- "KMTs length"
     names(curvarture)[4] <- "(+) end position"
     names(curvarture)[5] <- "(+) Dist-to-Pole"
-    names(curvarture)[5] <- "Elipse Position"
+    names(curvarture)[6] <- "Elipse Position"
   }
   curvarture
 }
