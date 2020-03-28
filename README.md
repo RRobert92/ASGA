@@ -11,7 +11,7 @@
 
 2. It is designed from the ground up to incrementally scale up this tool based on evolving use cases. 
 
-3. Allows working on projects reproducibly and compare data between them.
+3. Allows working on projects reproducibly and compare data.
 
 **Spindle analysis tool** aims to replace huge and complicated to work with a spreadsheet which is frequently used for SpatialGraph analysis, but also it allows to uniform and completely automatize analysis process
 
