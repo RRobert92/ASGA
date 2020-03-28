@@ -9,7 +9,7 @@
   
 1. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
 
-2. It is designed from the ground up to incrementally scale up this tool based on different use cases. 
+2. It is designed from the ground up to incrementally scale up this tool based on evolving use cases. 
 
 3. Allows working on projects reproducibly and compare data between them.
 
