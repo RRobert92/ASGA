@@ -5,30 +5,41 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/RRobert92/MT_Analysis)
 ![GitHub contributors](https://img.shields.io/github/contributors/RRobert92/MT_Analysis)
 
-** Spindle analysis tool ** is an open-sources cluster of tools with its ongoing development for a mejotic and mitotic spindle analysis. Key futures:
+**Spindle analysis tool** is an open-sources cluster of tools with its ongoing development for a mejotic and mitotic spindle analysis. Key futures:
   
-  1. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
+1. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
 
 2. It is designed from the ground up to incrementally scale up based on different use cases.
 
 3. Allows working on projects reproducibly and compare data between them.
 
-** Spindle analysis tool ** aims to replace huge and complicated to work with a spreadsheet which is frequently used for SpatialGraph analysis, but also it allows to uniform and completely automatize analysis process
+**Spindle analysis tool** aims to replace huge and complicated to work with a spreadsheet which is frequently used for SpatialGraph analysis, but also it allows to uniform and completely automatize analysis process
 
+**Contents**
+
+1. [How Spindle analysis works](#How_Spindle_analysis_works)
+2. [Quick start](#Quick_start)
+3. [Contributing](#Contributing)
+
+<a name="How_Spindle_analysis_works"></a>
+## How Spindle analysis works
+
+  
+<a name="Quick_start"></a>
+## Quick start
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. You can also find up to date version of tools which past development phase on shinyapps.io server
 [MT analysis tool](https://kiewisz.shinyapps.io/MT_length_distribtion/).
 
-# Contribiut 
-This set of tools is part of the MT analysis project. It is based on and evolves from ideas, contributions and constructive criticism of its users and collaborators. Help us with maintain, develop, finding bugs and building new functionality as well as a user-friendly UI. Visit our resource page or write us an e-mail if anything crosses your mind.
+<a name="Contributing"></a>
+# Contributing
+Contributions, collaborators and/or constructive criticism are welcome! Please see our `Contributing Guide "Soon avaiable" for more details.
 
-## Authors
+<a href="https://sourcerer.io/rrobert92"><img src="https://avatars0.githubusercontent.com/u/56911280?v=4" height="50px" width="50px" alt=""/></a>
 
-* **Robert Kiewisz** - *Initial work and idea*
   
-  ## License
-  
-  This project is licensed under the GPL-3.0 License - see the [LICENSE.md](LICENSE.md) file for details
+## Copyright
+  This project is distributed under the General Public License (GPL) version 3.0 - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
