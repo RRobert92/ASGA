@@ -1,9 +1,10 @@
 # Open-Source Spindle analysis tool
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/RRobert92/MT_Analysis)
 ![GitHub top language](https://img.shields.io/github/languages/top/RRobert92/MT_Analysis)
 ![GitHub](https://img.shields.io/github/license/RRobert92/MT_Analysis)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/RRobert92/MT_Analysis)
 ![GitHub Release Date](https://img.shields.io/github/release-date/RRobert92/MT_Analysis)
 ![GitHub contributors](https://img.shields.io/github/contributors/RRobert92/MT_Analysis)
+![DOI](https://img.shields.io/badge/DOI-Avaiable-green)
 
 **Spindle analysis tool** is an open-sources cluster of tools with its ongoing development for a mejotic and mitotic spindle analysis. Key futures:
   
@@ -40,3 +41,8 @@ Contributions, collaborators and/or constructive criticism are welcome! Please s
 <a name="Copyright"></a>
 ## Copyright
   This project is distributed under the General Public License (GPL) version 3.0 - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Citation
+[![DOI](https://zenodo.org/badge/216998366.svg)](https://zenodo.org/badge/latestdoi/216998366)
+
+Kiewisz R. *Spindle analysis tool V1.1* (2020) [DOI: 10.5281/zenodo.3732109](https://doi.org/10.5281/zenodo.3732109)
