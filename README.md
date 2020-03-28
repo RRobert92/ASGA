@@ -6,7 +6,7 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/RRobert92/MT_Analysis)
 ![DOI](https://img.shields.io/badge/DOI-Avaiable-green)
 
-**Spindle analysis tool** is an open-sources cluster of tools with its ongoing development for a mejotic and mitotic spindle analysis. Key futures:
+**Spindle analysis tool** is an open-source cluster of tools with its ongoing development for a meiotic and mitotic spindle analysis. Key futures:
   
 1. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
 
@@ -14,7 +14,7 @@
 
 3. Allows working on projects reproducibly and compare data.
 
-**Spindle analysis tool** aims to replace huge and complicated to work with a spreadsheet which is frequently used for SpatialGraph analysis, but also it allows to uniform and completely automatize analysis.
+**Spindle analysis tool** aims to replace huge and complicated to work with a spreadsheet that is frequently used for Spatial Graph analysis, but also it allows to uniform and completely automate analysis.
 
 **Contents**
 
@@ -34,13 +34,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 <a name="Contributing"></a>
 # Contributing
-Contributions, collaborators and/or constructive criticism are welcome! Please see our Contributing Guide "Soon avaiable" for more details.
+Contributions, collaborators and/or constructive criticism are welcome! Please see our Contributing Guide "Soon available" for more details.
 
 <a href="https://sourcerer.io/rrobert92"><img src="https://avatars0.githubusercontent.com/u/56911280?v=4" height="50px" width="50px" alt=""/></a>
 
 <a name="Copyright"></a>
 ## Copyright
-  This project is distributed under the General Public License (GPL) version 3.0 - see the [LICENSE.md](LICENSE.md) file for details.
+This project is distributed under the General Public License (GPL) version 3.0 - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Citation
 [![DOI](https://zenodo.org/badge/216998366.svg)](https://zenodo.org/badge/latestdoi/216998366)
