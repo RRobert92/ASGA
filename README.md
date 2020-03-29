@@ -16,21 +16,29 @@
 
 **Spindle analysis tool** aims to replace huge and complicated to work with a spreadsheet that is frequently used for Spatial Graph analysis, but also it allows to uniform and completely automate analysis.
 
-**Contents**
+# Table of Contents
 
-1. [How Spindle analysis works](#How_Spindle_analysis_works)
-2. [Quick start](#Quick_start)
-3. [Contributing](#Contributing)
-4. [Copyright](#Copyright)
+* [About](#About)
+* [Quick start](#Quick_start)
+  * [Data Preparation](#Quick_start_DP)
+  * [Installation and Dependencies](#Quick_start_IN)
+* [Contributing](#Contributing)
+* [Copyright](#Copyright)
 
-<a name="How_Spindle_analysis_works"></a>
-## How Spindle analysis works
+<a name="About"></a>
+# About
 
   
 <a name="Quick_start"></a>
-## Quick start
+# Quick start
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. You can also find up to date version of tools which past development phase on shinyapps.io server
 [MT analysis tool](https://kiewisz.shinyapps.io/MT_length_distribtion/).
+
+<a name="Quick_start_DP"></a>
+### Data preparation befor you start
+
+<a name="Quick_start_IN"></a>
+### Installation and Dependencies
 
 <a name="Contributing"></a>
 # Contributing
