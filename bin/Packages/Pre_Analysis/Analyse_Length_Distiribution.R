@@ -146,7 +146,7 @@ for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(whi
 #############
 
 names(LD_P1)[1] <- "KMTs length"
-write.xlsx(LD_P1, paste("Output/", Data_label, "_LD_P1.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(LD_P1, paste("bin/Output/", Data_label, "_LD_P1.xlsx", sep = ""), row.names = FALSE)
 
 ####################
 # Generate data_P2 #
@@ -185,7 +185,7 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(nco
 #############
 
 names(LD_P2)[1] <- "KMTs length"
-write.xlsx(LD_P2, paste("Output/", Data_label, "_LD_P2.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(LD_P2, paste("bin/Output/", Data_label, "_LD_P2.xlsx", sep = ""), row.names = FALSE)
 
 
 rm(DF,

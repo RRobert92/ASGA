@@ -40,7 +40,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(whic
 # Save Data #
 #############
 
-write.xlsx(KMTs_total_Curvature_P1, paste("Output/", Data_label, "_KMTs_total_Curvature_P1.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_total_Curvature_P1, paste("bin/Output/", Data_label, "_KMTs_total_Curvature_P1.xlsx", sep = ""), row.names = FALSE)
 
 close(pb)
 rm(DF)
@@ -87,7 +87,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol
 # Save Data #
 #############
  
-write.xlsx(KMTs_total_Curvature_P2, paste("Output/", Data_label, "_KMTs_total_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_total_Curvature_P2, paste("bin/Output/", Data_label, "_KMTs_total_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
 
 
 close(pb)
@@ -130,7 +130,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(whic
 # Save Data #
 #############
 
-write.xlsx(KMTs_local_Curvature_P1, paste("Output/", Data_label, "_KMTs_local_Curvature_P1.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_local_Curvature_P1, paste("bin/Output/", Data_label, "_KMTs_local_Curvature_P1.xlsx", sep = ""), row.names = FALSE)
 
 close(pb)
 rm(DF)
@@ -175,7 +175,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol
 # Save Data #
 #############
 
-write.xlsx(KMTs_local_Curvature_P2, paste("Output/", Data_label, "_KMTs_local_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_local_Curvature_P2, paste("bin/Output/", Data_label, "_KMTs_local_Curvature_P2.xlsx", sep = ""), row.names = FALSE)
 rm(DF)
 
 

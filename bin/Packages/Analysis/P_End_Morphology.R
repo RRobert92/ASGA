@@ -89,8 +89,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
     names(Minus_end_morphology_Pole1)[2] <- "EndType_1"
   }
   
-  write.xlsx(Plus_end_morphology_Pole1, paste("Output/", Data_label, "_(+)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
-  write.xlsx(Minus_end_morphology_Pole1, paste("Output/", Data_label, "_(-)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
+  write.xlsx(Plus_end_morphology_Pole1, paste("bin/Output/", Data_label, "_(+)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
+  write.xlsx(Minus_end_morphology_Pole1, paste("bin/Output/", Data_label, "_(-)_morphology_P1.xlsx", sep = ""), row.names = FALSE)
   
   close(pb)
   rm(DF)
@@ -178,8 +178,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
                                                                         "Relative_minus_position")
     names(Minus_end_morphology_Pole2)[2] <- "EndType_1"
   }
-    write.xlsx(Plus_end_morphology_Pole2, paste("Output/", Data_label, "_(+)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
-    write.xlsx(Minus_end_morphology_Pole2, paste("Output/", Data_label, "_(-)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
+    write.xlsx(Plus_end_morphology_Pole2, paste("bin/Output/", Data_label, "_(+)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
+    write.xlsx(Minus_end_morphology_Pole2, paste("bin/Output/", Data_label, "_(-)_morphology_P2.xlsx", sep = ""), row.names = FALSE)
   },
   error = function(e){})
 

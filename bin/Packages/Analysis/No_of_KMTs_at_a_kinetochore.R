@@ -38,7 +38,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(whic
 
 No_of_KMTs_at_kinetochore_P1 <- data.frame(No_of_KMTs_at_kinetochore_P1[,1])
 names(No_of_KMTs_at_kinetochore_P1)[1] <- "No. of KMTs"
-write.xlsx(No_of_KMTs_at_kinetochore_P1, paste("Output/", Data_label, "_KMTs_no_P1.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(No_of_KMTs_at_kinetochore_P1, paste("bin/Output/", Data_label, "_KMTs_no_P1.xlsx", sep = ""), row.names = FALSE)
 
 rm(DF)
 close(pb)
@@ -83,7 +83,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol
 tryCatch({
 No_of_KMTs_at_kinetochore_P2 <- data.frame(No_of_KMTs_at_kinetochore_P2[,1])
 names(No_of_KMTs_at_kinetochore_P2)[1] <- "No. of KMTs"
-write.xlsx(No_of_KMTs_at_kinetochore_P2, paste("Output/", Data_label, "_KMTs_no_P2.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(No_of_KMTs_at_kinetochore_P2, paste("bin/Output/", Data_label, "_KMTs_no_P2.xlsx", sep = ""), row.names = FALSE)
 }, error = function(e){})
 
 

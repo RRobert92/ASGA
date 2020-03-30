@@ -73,8 +73,8 @@ close(pb)
 tryCatch({
   KMTs_at_the_Pole1 <- data.frame(KMTs_at_the_Pole1[,1])
   names(KMTs_at_the_Pole1)[1] <- "No. of KMTs"
-  write.xlsx(KMTs_at_the_Pole1, paste("Output/", Data_label, "_KMTs_at_the_Pole1.xlsx", sep = ""), row.names = FALSE)
-  write.xlsx(KMTs_to_the_Pole1_and_length, paste("Output/", Data_label, "_Minus_end_position_P1.xlsx", sep = ""), row.names = FALSE)
+  write.xlsx(KMTs_at_the_Pole1, paste("bin/Output/", Data_label, "_KMTs_at_the_Pole1.xlsx", sep = ""), row.names = FALSE)
+  write.xlsx(KMTs_to_the_Pole1_and_length, paste("bin/Output/", Data_label, "_Minus_end_position_P1.xlsx", sep = ""), row.names = FALSE)
 },
 
 error = function(e){})
@@ -151,8 +151,8 @@ close(pb)
 tryCatch({
 KMTs_at_the_Pole2 <- data.frame(KMTs_at_the_Pole2[,1])
 names(KMTs_at_the_Pole2)[1] <- "No. of KMTs"
-write.xlsx(KMTs_at_the_Pole2, paste("Output/", Data_label, "_KMTs_at_the_Pole2.xlsx", sep = ""), row.names = FALSE)
-write.xlsx(KMTs_to_the_Pole2_and_length, paste("Output/", Data_label, "_Minus_end_position_P2.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_at_the_Pole2, paste("bin/Output/", Data_label, "_KMTs_at_the_Pole2.xlsx", sep = ""), row.names = FALSE)
+write.xlsx(KMTs_to_the_Pole2_and_length, paste("bin/Output/", Data_label, "_Minus_end_position_P2.xlsx", sep = ""), row.names = FALSE)
 },
 
 error = function(e){})
