@@ -20,7 +20,7 @@ for(i in 1:No_of_Data){
   
   local_full <- data.frame()
   n = 1
-  for(j in 1:11){
+  for(j in 1:13){
     local_full[j,1:3] <- data.frame(Curvature = median(LD_45[with(LD_45, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]),
                                     Relative_Position = median(LD_45[with(LD_45, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,2]),
                                     SD_error = sd(LD_45[with(LD_45, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]) / 
@@ -31,7 +31,7 @@ for(i in 1:No_of_Data){
   
   local_full <- data.frame()
   n = 1
-  for(j in 1:11){
+  for(j in 1:13){
     local_full[j,1:3] <- data.frame(Curvature = median(LD_80[with(LD_80, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]),
                                     Relative_Position = median(LD_80[with(LD_80, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,2]),
                                     SD_error = sd(LD_80[with(LD_80, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]) / 
@@ -42,7 +42,7 @@ for(i in 1:No_of_Data){
   
   local_full <- data.frame()
   n = 1
-  for(j in 1:11){
+  for(j in 1:13){
     local_full[j,1:3] <- data.frame(Curvature = median(LD_100[with(LD_100, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]),
                                     Relative_Position = median(LD_100[with(LD_100, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,2]),
                                     SD_error = sd(LD_100[with(LD_100, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]) / 
@@ -78,7 +78,7 @@ for(i in 1:No_of_Data){
   
   local_full <- data.frame()
   n = 1
-  for(j in 1:11){
+  for(j in 1:13){
     local_full[j,1:3] <- data.frame(Curvature = median(LD_45[with(LD_45, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]),
                                     Relative_Position = median(LD_45[with(LD_45, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,2]),
                                     SD_error = sd(LD_45[with(LD_45, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]) / 
@@ -89,7 +89,7 @@ for(i in 1:No_of_Data){
   
   local_full <- data.frame()
   n = 1
-  for(j in 1:11){
+  for(j in 1:13){
     local_full[j,1:3] <- data.frame(Curvature = median(LD_80[with(LD_80, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]),
                                     Relative_Position = median(LD_80[with(LD_80, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,2]),
                                     SD_error = sd(LD_80[with(LD_80, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]) / 
@@ -100,7 +100,7 @@ for(i in 1:No_of_Data){
   
   local_full <- data.frame()
   n = 1
-  for(j in 1:11){
+  for(j in 1:13){
     local_full[j,1:3] <- data.frame(Curvature = median(LD_100[with(LD_100, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]),
                                     Relative_Position = median(LD_100[with(LD_100, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,2]),
                                     SD_error = sd(LD_100[with(LD_100, Relative_Position < n & Relative_Position > as.numeric(n-0.101)),][,1]) / 
