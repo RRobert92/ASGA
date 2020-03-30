@@ -1,69 +1,91 @@
 for(i in 1:No_of_Data){
-  assign(paste(Data_label, "_", i, "_TC_0_1.5", sep = ""),
-         data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
-                                                                                      `(+) end position` <= 1.5 & `(+) end position` > 0),][,1],
-                    get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")),
-                                                                                      `(+) end position` <= 1.5 & `(+) end position` > 0),][,3]))
-  assign(paste(Data_label, "_", i, "_TC_1.5_3", sep = ""),
-         data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
-                                                                                      `(+) end position` <= 3 & `(+) end position` > 1.5),][,1],
-                    get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")),
-                                                                                      `(+) end position` <= 3 & `(+) end position` > 1.5),][,3]))
-  assign(paste(Data_label, "_", i, "_TC_3_4.5", sep = ""),
-         data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
-                                                                                      `(+) end position` <= 10 & `(+) end position` > 3),][,1],
-                    get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")),
-                                                                                      `(+) end position` <= 10 & `(+) end position` > 3),][,3]))
+  LD100max <- max(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[5])
+  LD100min <- min(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[5])
+  LD100 <- LD100max
+  LD80 <- ((80*(LD100max-LD100min))+(100*LD100min))/100
+  LD45 <- ((45*(LD100max-LD100min))+(100*LD100min))/100
+  
+  LD_45 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")),
+                                                                                        `(+) Dist-to-Pole` <= LD45 & `(+) Dist-to-Pole` > 0),][,1],
+                      get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                        `(+) Dist-to-Pole` <= LD45 & `(+) Dist-to-Pole` > 0),][,3])
+  LD_80 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                        `(+) Dist-to-Pole` <= LD80 & `(+) Dist-to-Pole` > LD45),][,1],
+                      get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")),
+                                                                                        `(+) Dist-to-Pole` <= LD80 & `(+) Dist-to-Pole` > LD45),][,3])
+  LD_100 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                         `(+) Dist-to-Pole` <= LD100 & `(+) Dist-to-Pole` > LD80),][,1],
+                       get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                         `(+) Dist-to-Pole` <= LD100 & `(+) Dist-to-Pole` > LD80),][,3])
+  P <- ggplot(LD_45, aes(KMTs.length, Curvature)) + geom_smooth(fill = "dodgerblue4", method = "gam") + 
+    geom_jitter( alpha = 0.2, color = "dodgerblue4") + theme_classic()
+  P <- P + geom_smooth(data = LD_80, aes(KMTs.length, Curvature), fill = "olivedrab4", method = "gam") +
+    geom_jitter(data = LD_80, aes(KMTs.length, Curvature), color = "olivedrab4", alpha = 0.2)
+  P <- P + geom_smooth(data = LD_100, aes(KMTs.length, Curvature), fill = "firebrick4", method = "gam") + 
+    geom_jitter(data = LD_100, aes(KMTs.length, Curvature), color = "firebrick4", alpha = 0.2)
+  print(P)
+  
+  write.xlsx(LD_45, paste("bin/Output/", Data_label, "_", i, "_TC_Pole_45.xlsx" ,sep = ""))
+  write.xlsx(LD_80, paste("bin/Output/", Data_label, "_", i, "_TC_Pole_80.xlsx" ,sep = ""))
+  write.xlsx(LD_100, paste("bin/Output/", Data_label, "_", i, "_TC_Pole_100.xlsx" ,sep = ""))
 }
 
 for(i in 1:No_of_Data){
-P1 <- ggplot(get(paste(Data_label, "_", i, "_TC_0_1.5", sep = "")), aes(`KMTs.length`, Curvature)) + 
-  geom_smooth(method = "loess", color = "blue") + geom_point(color = "blue", alpha = 0.2) +
-  ylim(1, 1.6) + xlim(0, 10) + theme_classic()
-P1 <- P1 + geom_smooth(data = get(paste(Data_label, "_", i, "_TC_1.5_3", sep = "")), aes(`KMTs.length`, Curvature), color = "green", method = "loess") +
-  geom_point(data = get(paste(Data_label, "_", i, "_TC_1.5_3", sep = "")), aes(`KMTs.length`, Curvature), color = "green", alpha = 0.2)
-P1 <- P1 + geom_smooth(data = get(paste(Data_label, "_", i, "_TC_3_4.5", sep = "")), aes(`KMTs.length`, Curvature), color = "red", method = "loess") +
-  geom_point(data = get(paste(Data_label, "_", i, "_TC_3_4.5", sep = "")), aes(`KMTs.length`, Curvature), color = "red", alpha = 0.2)
-print(P1)
+  LD100max <- max(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[4])
+  LD100min <- min(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[4])
+  LD100 <- LD100max
+  LD80 <- ((80*(LD100max-LD100min))+(100*LD100min))/100
+  LD45 <- ((45*(LD100max-LD100min))+(100*LD100min))/100
+  
+  LD_45 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                           `(+) end position` <= LD45 & `(+) end position` > 0),][,1],
+                      get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                           `(+) end position` <= LD45 & `(+) end position` > 0),][,3])
+  LD_80 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                           `(+) end position` <= LD80 & `(+) end position` > LD45),][,1],
+                      get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")),
+                                                                           `(+) end position` <= LD80 & `(+) end position` > LD45),][,3])
+  LD_100 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                            `(+) end position` <= LD100 & `(+) end position` > LD80),][,1],
+                       get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                            `(+) end position` <= LD100 & `(+) end position` > LD80),][,3])
+  
+  P <- ggplot(LD_45, aes(KMTs.length, Curvature)) + geom_smooth(fill = "dodgerblue4", method = "gam") + 
+    geom_jitter( alpha = 0.2, color = "dodgerblue4") + theme_classic()
+  P <- P + geom_smooth(data = LD_80, aes(KMTs.length, Curvature), fill = "olivedrab4", method = "gam") + 
+    geom_jitter(data = LD_80, aes(KMTs.length, Curvature), color = "olivedrab4", alpha = 0.2)
+  P <- P + geom_smooth(data = LD_100, aes(KMTs.length, Curvature), fill = "firebrick4", method = "gam") + 
+    geom_jitter(data = LD_100, aes(KMTs.length, Curvature), color = "firebrick4", alpha = 0.2)
+  print(P)
+  
+  write.xlsx(LD_45, paste("bin/Output/", Data_label, "_", i, "_TC_Kcore_45.xlsx" ,sep = ""))
+  write.xlsx(LD_80, paste("bin/Output/", Data_label, "_", i, "_TC_Kcore_80.xlsx" ,sep = ""))
+  write.xlsx(LD_100, paste("bin/Output/", Data_label, "_", i, "_TC_Kcore_100.xlsx" ,sep = ""))
 }
-
-assign(paste(Data_label, "_", "TC_0_1.5_ALL", sep = ""),
-       rbind(get(paste(Data_label, "_", 1, "_TC_0_1.5", sep = "")),
-             get(paste(Data_label, "_", 2, "_TC_0_1.5", sep = "")),
-             get(paste(Data_label, "_", 3, "_TC_0_1.5", sep = ""))))
-assign(paste(Data_label, "_", "TC_1.5_3_ALL", sep = ""),
-       rbind(get(paste(Data_label, "_", 1, "_TC_1.5_3", sep = "")),
-             get(paste(Data_label, "_", 2, "_TC_1.5_3", sep = "")),
-             get(paste(Data_label, "_", 3, "_TC_1.5_3", sep = ""))))
-assign(paste(Data_label, "_", "TC_3_4.5_ALL", sep = ""),
-       rbind(get(paste(Data_label, "_", 1, "_TC_3_4.5", sep = "")),
-             get(paste(Data_label, "_", 2, "_TC_3_4.5", sep = "")),
-             get(paste(Data_label, "_", 3, "_TC_3_4.5", sep = ""))))
-
-P2 <- ggplot(get(paste(Data_label, "_", "_TC_0_1.5_ALL", sep = "")), aes(`KMTs.length`, Curvature)) + geom_smooth(method = "loess", color = "blue") + ylim(1, 1.6) + xlim(0, 10) +
-  theme_classic()
-P2 <- P2 + geom_smooth(data = get(paste(Data_label, "_", "_TC_1.5_3_ALL", sep = "")), aes(`KMTs.length`, Curvature), color = "green", method = "loess")
-
-P2 <- P2 + geom_smooth(data = get(paste(Data_label, "_", "_TC_3_4.5_ALL", sep = "")), aes(`KMTs.length`, Curvature), color = "red", method = "loess")
-print(P2)
-
-TC_ALL <- rbind(WT_1_Total_Curvature,
-                WT_2_Total_Curvature,
-                WT_3_Total_Curvature)
-P3 <- ggplot(get(paste(Data_label, "_", 1, "_Total_Curvature", sep = "")), aes(`KMTs length`, Curvature)) + geom_smooth(method = "loess", color = "grey25") + ylim(1, 1.6) + xlim(0, 10) +
-  theme_classic()
-P3 <- P3 + geom_smooth(data = get(paste(Data_label, "_", 2, "_Total_Curvature", sep = "")), aes(`KMTs length`, Curvature), color = "grey45", method = "loess")
-
-P3 <- P3 + geom_smooth(data = get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), aes(`KMTs length`, Curvature), color = "grey65", method = "loess")
-
-P3 <- P3 + geom_smooth(data = TC_ALL, aes(`KMTs length`, Curvature), color = "black", method = "loess")
-print(P3)
 
 for(i in 1:No_of_Data){
-  write.xlsx(get(paste(Data_label, "_", i, "_TC_0_1.5", sep = "")), paste("Output/", Data_label, "_", i, "_TC_0_1.5.xlsx", sep = ""))
-  write.xlsx(get(paste(Data_label, "_", i, "_TC_1.5_3", sep = "")), paste("Output/", Data_label, "_", i, "_TC_1.5_3.xlsx", sep = ""))
-  write.xlsx(get(paste(Data_label, "_", i, "_TC_3_4.5", sep = "")), paste("Output/", Data_label, "_", i, "_TC_3_4.5.xlsx", sep = "")) 
+  LD_45 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                        `Elipse Position` == "25%" ),][,1],
+                      get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                        `Elipse Position` == "25%"),][,3])
+  LD_80 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                        `Elipse Position` == "50%"),][,1],
+                      get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")),
+                                                                                        `Elipse Position` == "50%"),][,3])
+  LD_100 <- data.frame(get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                         `Elipse Position` == "100%"),][,1],
+                       get(paste(Data_label, "_", i, "_Total_Curvature", sep = ""))[with(get(paste(Data_label, "_", i, "_Total_Curvature", sep = "")), 
+                                                                                         `Elipse Position` == "100%"),][,3])
+  
+  P <- ggplot(LD_45, aes(KMTs.length, Curvature)) + geom_smooth(fill = "dodgerblue4", method = "gam") + 
+    geom_jitter( alpha = 0.2, color = "dodgerblue4") + theme_classic()
+  P <- P + geom_smooth(data = LD_80, aes(KMTs.length, Curvature), fill = "olivedrab4", method = "gam") + 
+    geom_jitter(data = LD_80, aes(KMTs.length, Curvature), color = "olivedrab4", alpha = 0.2)
+  P <- P + geom_smooth(data = LD_100, aes(KMTs.length, Curvature), fill = "firebrick4", method = "gam") + 
+    geom_jitter(data = LD_100, aes(KMTs.length, Curvature), color = "firebrick4", alpha = 0.2)
+  print(P)
+  
+  write.xlsx(LD_45, paste("bin/Output/", Data_label, "_", i, "_TC_E_45.xlsx" ,sep = ""))
+  write.xlsx(LD_80, paste("bin/Output/", Data_label, "_", i, "_TC_E_80.xlsx" ,sep = ""))
+  write.xlsx(LD_100, paste("bin/Output/", Data_label, "_", i, "_TC_E_100.xlsx" ,sep = ""))
 }
-write.xlsx(get(paste(Data_label, "_", "_TC_0_1.5_ALL", sep = "")), paste("Output/", Data_label, "_", i, "_TC_0_1.5_All.xlsx", sep = ""))
-write.xlsx(get(paste(Data_label, "_", "_TC_1.5_3_ALL", sep = "")), paste("Output/", Data_label, "_", i, "_TC_1.5_3_All.xlsx", sep = ""))
-write.xlsx(get(paste(Data_label, "_", "_TC_3_4.5_ALL", sep = "")), paste("Output/", Data_label, "_", i, "_TC_3_4.5_All.xlsx", sep = ""))
