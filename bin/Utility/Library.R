@@ -5,7 +5,9 @@ Required_Packages = c("readxl",
                       "xlsx",
                       "tcltk",
                       "svDialogs",
-                      "egg")
+                      "egg",
+                      "base",
+                      "alphashape3d")
 
 for (p in Required_Packages) {
   if (!require(p, 
