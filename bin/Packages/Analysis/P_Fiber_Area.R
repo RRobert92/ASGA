@@ -34,7 +34,6 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
          polygon_area(i))
    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          relativ_pos_1(i))
-   names(get(paste(colnames(Segments)[i], "fiber", sep = "_")))[1] <- "Relative_Position"
   },
   error = function(e){})
   Sys.sleep(0.1)
@@ -77,7 +76,6 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
          polygon_area(i))
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          relativ_pos_2(i))
-  names(get(paste(colnames(Segments)[i], "fiber", sep = "_")))[1] <- "Relative_Position" 
   },
   error = function(e){})
   Sys.sleep(0.1)
