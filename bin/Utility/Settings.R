@@ -45,12 +45,11 @@ if(all == "yes"){
 } else {
   analysis <- dlg_input("What analysis to run?
   Pick one from list: 
-                        1 - LD and base KMTs numbers
+                        1 - (-) end distribution on KMTs base analysis
                         2 - Inter-kinetochore distance
                         3 - Curvature of KMTs
-                        4 - k-fiber area (polygon)
-                        5 - Length of a k-fiber
-                        6 - Curvature of k-fiber")$res
+                        4 - End morphology
+                        5 - k-fiber area (polygon)")$res
 }
 
 if(analysis == 0 || analysis == 2){
