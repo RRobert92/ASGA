@@ -33,7 +33,7 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          polygon_area(i))
    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
-         relativ_pos_1(i))
+          relativ_pos_1_fiber(i))
   },
   error = function(e){})
   Sys.sleep(0.1)
@@ -75,7 +75,7 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          polygon_area(i))
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
-         relativ_pos_2(i))
+         relativ_pos_2_fiber(i))
   },
   error = function(e){})
   Sys.sleep(0.1)

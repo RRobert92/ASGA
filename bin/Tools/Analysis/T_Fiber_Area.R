@@ -187,7 +187,7 @@ polygon_area <- function(x){
 }
 
 ## Relative postion of points between kinetochore and the pole1
-relativ_pos_1 <- function(x){
+relativ_pos_1_fiber <- function(x){
   relativ_pos_part1 <- lapply(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[3], 
                               function(y){get(paste(colnames(Segments)[x], "fiber", sep = "_"))[3] - Pole1[1,2]})
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
@@ -199,7 +199,7 @@ relativ_pos_1 <- function(x){
 }
 
 ## Relative postion of points between kinetochore and the pole2
-relativ_pos_2 <- function(x){
+relativ_pos_2_fiber <- function(x){
   relativ_pos_part1 <- lapply(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[3], 
                               function(y){get(paste(colnames(Segments)[x], "fiber", sep = "_"))[3] - Pole2[1,2]})
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
