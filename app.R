@@ -4,16 +4,16 @@
 
 source("bin/Utility/Library.R")
 
-#######################################################
-# Defin no. of data for the pre-analysis and analysis #
-#######################################################
+########################################################
+# Define no. of data for the pre-analysis and analysis #
+########################################################
 
 No_of_Data <- dlg_input("How much data you want to analyzed and compared.",
                           1)$res
 No_of_Data <- as.numeric(No_of_Data)
 for(n in 1:No_of_Data){
   rm(list = setdiff(ls(), list("Data_label", "No_of_Data")))
-  
+  Sys.sleep(5)
   source("bin/Utility/KMTs_Analysis.R")
 }
 rm(list=setdiff(ls(), list("Data_label", "No_of_Data")))
