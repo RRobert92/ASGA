@@ -19,7 +19,7 @@ for(n in 1:No_of_Data){
 rm(list=setdiff(ls(), list("Data_label", "No_of_Data")))
 
 ###############################
-# Back load all analysed Data #
+# Back load all analyzed Data #
 ###############################
 Data_label <- as.data.frame(str_split(Data_label, "_"))
 Data_label <- as.character(Data_label[1,1])
