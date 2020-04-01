@@ -35,7 +35,8 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
           relativ_pos_1_fiber(i))
   },
-  error = function(e){})
+  error = function(e){},
+  warning = function(w) {})
   Sys.sleep(0.1)
   setWinProgressBar(pb, i, 
                     title = paste("Calculating fiber area for Pole1...", 
@@ -43,7 +44,7 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
                                         0),
                                   "% Done"))
 }
-
+close(pb)
 ##################################
 # Progress bar for fiber_area_P2 #
 ##################################
@@ -77,7 +78,8 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          relativ_pos_2_fiber(i))
   },
-  error = function(e){})
+  error = function(e){},
+  warning = function(w) {})
   Sys.sleep(0.1)
   setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Calculating fiber area for Pole2...", 
@@ -85,3 +87,4 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
                                         0),
                                   "% Done"))
 }
+close(pb)
