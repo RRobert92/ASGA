@@ -19,8 +19,9 @@
 # Table of Contents
 
 * [Quick start](#Quick_start)
+  * [Dependency](#Dependency)
   * [Data Preparation](#Quick_start_DP)
-  * [Installation and Dependencies](#Quick_start_IN)
+  * [Installation](#Quick_start_IN)
 * [Contributing](#Contributing)
 * [Copyright](#Copyright)
   
@@ -28,7 +29,8 @@
 # Quick start
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-#### Dependency
+<a name="Dependency"></a>
+### Dependency
 ```
 R 3.5.3 or newer
 Rstudio 1.3.929 or newer
