@@ -18,27 +18,36 @@
 
 # Table of Contents
 
-* [About](#About)
 * [Quick start](#Quick_start)
+  * [Dependency](#Dependency)
   * [Data Preparation](#Quick_start_DP)
-  * [Installation and Dependencies](#Quick_start_IN)
+  * [Installation](#Quick_start_IN)
 * [Contributing](#Contributing)
 * [Copyright](#Copyright)
-
-<a name="About"></a>
-# About
-
   
 <a name="Quick_start"></a>
 # Quick start
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. You can also find up to date version of tools which past development phase on shinyapps.io server
-[MT analysis tool](https://kiewisz.shinyapps.io/MT_length_distribtion/).
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+<a name="Dependency"></a>
+### Dependency
+```
+R 3.5.3 or newer
+Rstudio 1.3.929 or newer
+Java SE 11 (LTS) or newer
+```
 <a name="Quick_start_DP"></a>
 ### Data preparation befor you start
-
+```
+* Clean spatial graph and manual check all microtubules for its correct segmentation
+* Create a point for a center of centrioles and label them Pole1 and Pole2
+* Reorient spatial graph in a way that Pole1 correspond to the bottom of a spindle and Pole 2 to the top
+* Rotate spatial graph to align labels Pole1 and Pole2 their position in X and Y
+* Label selected classes of MT. For example: Pole1_00, Pole1_01, etc.
+* Using Amira calculate MT length
+```
 <a name="Quick_start_IN"></a>
-### Installation and Dependencies
+### Installation
 
 <a name="Contributing"></a>
 # Contributing
