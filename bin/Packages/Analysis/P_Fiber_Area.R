@@ -32,8 +32,13 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
          median_point(i))
    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          polygon_area(i))
+   assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+          Neighorhood_densit(i))
    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
           relativ_pos_1_fiber(i))
+   assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+         cbind(get(paste(colnames(Segments)[i], "NDensity", sep = "_")),
+               get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]))
   },
   error = function(e){},
   warning = function(w) {})
@@ -75,8 +80,13 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
          median_point(i))
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          polygon_area(i))
+  assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+         Neighorhood_densit(i))
   assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
          relativ_pos_2_fiber(i))
+  assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+         cbind(get(paste(colnames(Segments)[i], "NDensity", sep = "_")),
+               get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]))
   },
   error = function(e){},
   warning = function(w) {})
