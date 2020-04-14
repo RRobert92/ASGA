@@ -208,10 +208,14 @@ for(i in 1:nrow(DF)){
   DF_full[i,1] <- round(mean(dist$distance),3)
   DF_full[i,2] <- round(sd(dist$distance),3)
   DF_full[i,3] <- round((length(which(dist$distance <= 0.2)) * 100) / nrow(dist),0)
+  DF_full[i,4] <- get(paste(colnames(Segments)[x]))[1,5]
+  DF_full[i,5] <- get(paste(colnames(Segments)[x]))[1,6]
 }
 names(DF_full)[1] <- "Mean"
 names(DF_full)[2] <- "SD"
 names(DF_full)[3] <- "Focused KMTs %"
+names(DF_full)[4] <- "plus_dist_to_pole"
+names(DF_full)[5] <- "Elipse_Position"
 DF_full
 }
 

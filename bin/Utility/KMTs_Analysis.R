@@ -48,7 +48,7 @@ source("bin/Packages/Pre_Analysis/Get_Single_KMTs_From_Labels.R")
 ## Sort point in each KMT. Always the first point will be a point on a kinetochore
 source("bin/Packages/Pre_Analysis/Sort_KMTs_by_Kinetochore_Position.R")
 
-## Core function to formated PoleX_YY DF: [1] Segment ID, [2] length, [3] minus_dist_to_pole, [4] plus_dist_to_pole
+## Core function to formats PoleX_YY DF: [1] Segment ID, [2] length, [3] minus_dist_to_pole, [4] plus_dist_to_pole
 ## Length distribution LD: [1] length
 source("bin/Packages/Pre_Analysis/Analyse_Length_Distiribution.R")
 

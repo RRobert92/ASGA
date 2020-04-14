@@ -41,7 +41,15 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
                get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]))
   },
   error = function(e){},
-  warning = function(w) {})
+  warning = function(w) {
+    assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+           Neighorhood_densit(i))
+    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
+           relativ_pos_1_fiber(i))
+    assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+           cbind(get(paste(colnames(Segments)[i], "NDensity", sep = "_")),
+                 get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]))
+  })
   Sys.sleep(0.1)
   setWinProgressBar(pb, i, 
                     title = paste("Calculating fiber area for Pole1...", 
@@ -50,6 +58,29 @@ for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segm
                                   "% Done"))
 }
 close(pb)
+
+###############################
+# Save data for fiber_area_P2 #
+###############################
+
+Fiber_area_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], "fiber", sep = "_"))
+for (i in which(colnames(Segments) == "Pole1_01"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+  tryCatch({
+    Fiber_area_P1 <- rbind(Fiber_area_P1,
+                           get(paste(colnames(Segments)[i], "fiber", sep = "_")))
+  },
+  error = function(e){})
+}
+
+N_density_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], "NDensity", sep = "_"))
+for (i in which(colnames(Segments) == "Pole1_01"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+  tryCatch({
+    N_density_P1 <- rbind(N_density_P1,
+                          get(paste(colnames(Segments)[i], "NDensity", sep = "_")))
+  },
+  error = function(e){})
+}
+
 ##################################
 # Progress bar for fiber_area_P2 #
 ##################################
@@ -89,7 +120,15 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
                get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]))
   },
   error = function(e){},
-  warning = function(w) {})
+  warning = function(w) {
+    assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+           Neighorhood_densit(i))
+    assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
+           relativ_pos_2_fiber(i))
+    assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
+           cbind(get(paste(colnames(Segments)[i], "NDensity", sep = "_")),
+                 get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]))
+  })
   Sys.sleep(0.1)
   setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Calculating fiber area for Pole2...", 
@@ -98,3 +137,25 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
                                   "% Done"))
 }
 close(pb)
+
+###############################
+# Save data for fiber_area_P2 #
+###############################
+
+Fiber_area_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_01")], "fiber", sep = "_"))
+for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4))  {
+  tryCatch({
+    Fiber_area_P2 <- rbind(Fiber_area_P2,
+                           get(paste(colnames(Segments)[i], "fiber", sep = "_")))
+  },
+  error = function(e){})
+}
+
+N_density_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], "NDensity", sep = "_"))
+for (i in as.numeric(which(colnames(Segments) == "Pole2_01")):as.numeric(ncol(Segments) - 4))  {
+  tryCatch({
+    N_density_P2 <- rbind(N_density_P2,
+                          get(paste(colnames(Segments)[i], "NDensity", sep = "_")))
+  },
+  error = function(e){})
+}
