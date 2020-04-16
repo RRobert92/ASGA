@@ -4,8 +4,8 @@
 
 ## Count the error rate between sample
 End_Type_Error <- function(){
-  if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) == 2){
-    Correct <- count(Nodes_KMT[,7])
+  if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
+    Correct <- count(Nodes[,7])
     End_type_error <- data.frame(Correct = c(round((Correct[2,2]/sum(Correct[2]))*100,
                                                    2)),
                                  Wrong = c(round((Correct[1,2]/sum(Correct[2]))*100,
@@ -35,13 +35,12 @@ End_distribution_Plus <- function(x, y){
   ##for x find Node ID that belong to Segment ID
   for(i in 1:nrow(get(colnames(Segments_KMT)[x]))){
     S_ID <- get(colnames(Segments_KMT)[x])[i,1]
-    N_ID_1 <- as.numeric(Segments_KMT[S_ID+1, 
-                                  "Node ID #1"])
-    Node_1 <- Nodes_KMT[N_ID_1 + 1,]
     
-    N_ID_2 <- as.numeric(Segments_KMT[S_ID+1, 
-                                  "Node ID #2"])
-    Node_2 <- Nodes_KMT[N_ID_2 + 1,]
+    N_ID_1 <- as.numeric(Segments_KMT[S_ID+1, "Node ID #1"])
+    Node_1 <- Nodes[N_ID_1 + 1,]
+    
+    N_ID_2 <- as.numeric(Segments_KMT[S_ID+1, "Node ID #2"])
+    Node_2 <- Nodes[N_ID_2 + 1,]
     
     if(abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])){
       Plus[i,1:8] <- cbind(Node_1,
@@ -87,11 +86,11 @@ End_distribution_Minus <- function(x, y){
                                            1]
     N_ID_1 <- as.numeric(Segments_KMT[S_ID+1, 
                                       "Node ID #1"])
-    Node_1 <- Nodes_KMT[N_ID_1 + 1,]
+    Node_1 <- Nodes[N_ID_1 + 1,]
     
     N_ID_2 <- as.numeric(Segments_KMT[S_ID+1, 
                                       "Node ID #2"])
-    Node_2 <- Nodes_KMT[N_ID_2 + 1,]
+    Node_2 <- Nodes[N_ID_2 + 1,]
     
     if(abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])){
       Minus[i,1:8] <- cbind(Node_2,

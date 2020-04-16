@@ -22,25 +22,37 @@ pb <- winProgressBar(min = 2,
        ## find KMTs closest to the kinetochore for y
     Point_KMT <- data.frame()
     for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
-      Point_KMT[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,3]
+      Point_KMT[j,1] <- get(paste(colnames(Segments_KMT)[i], 
+                                  j, 
+                                  sep = "_"))[1,3]
     } 
     Point_KMT <- which(Point_KMT[1] == min(Point_KMT))
-    longest <- get(paste(colnames(Segments_KMT)[i], Point_KMT, sep = "_"))
+    longest <- get(paste(colnames(Segments_KMT)[i], 
+                         Point_KMT, 
+                         sep = "_"))
 
     for(j in 1:nrow(get(paste(colnames(Segments_KMT)[i])))){
-          assign(paste(colnames(Segments_KMT)[i], j, sep = "_"),
+          assign(paste(colnames(Segments_KMT)[i], 
+                       j, 
+                       sep = "_"),
            relativ_pos_1(longest,
-                         get(paste(colnames(Segments_KMT)[i], j, sep = "_"))))
+                         get(paste(colnames(Segments_KMT)[i], 
+                                   j, 
+                                   sep = "_"))))
     }
     Point_minus <- data.frame()
     for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
-      Point_minus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments_KMT)[i], j, sep = "_"))),5]
+      Point_minus[j,1] <- get(paste(colnames(Segments_KMT)[i], 
+                                    j, 
+                                    sep = "_"))[nrow(get(paste(colnames(Segments_KMT)[i], j, sep = "_"))),5]
     }
     names(Point_minus)[1] <- "Relative_minus_position"
     
     Point_plus <- data.frame()
     for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
-      Point_plus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,5]
+      Point_plus[j,1] <- get(paste(colnames(Segments_KMT)[i], 
+                                   j, 
+                                   sep = "_"))[1,5]
     }
     names(Point_plus)[1] <- "Relative_plus_position"
     
@@ -79,25 +91,37 @@ for(i in which(colnames(Segments_KMT) == "Pole2_00") : as.numeric(ncol(Segments_
       ## find KMTs closest to the kinetochore for y
   Point_KMT <- data.frame()
   for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
-    Point_KMT[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,3]
+    Point_KMT[j,1] <- get(paste(colnames(Segments_KMT)[i], 
+                                j, 
+                                sep = "_"))[1,3]
   } 
   Point_KMT <- which(Point_KMT[1] == max(Point_KMT))
-  longest <- get(paste(colnames(Segments_KMT)[i], Point_KMT, sep = "_"))
+  longest <- get(paste(colnames(Segments_KMT)[i],
+                       Point_KMT, 
+                       sep = "_"))
   
   for(j in 1:nrow(get(paste(colnames(Segments_KMT)[i])))){
-    assign(paste(colnames(Segments_KMT)[i], j, sep = "_"),
+    assign(paste(colnames(Segments_KMT)[i], 
+                 j, 
+                 sep = "_"),
            relativ_pos_2(longest,
-                         get(paste(colnames(Segments_KMT)[i], j, sep = "_"))))
+                         get(paste(colnames(Segments_KMT)[i], 
+                                   j, 
+                                   sep = "_"))))
   }
   Point_minus <- data.frame()
   for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
-    Point_minus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments_KMT)[i], j, sep = "_"))),5]
+    Point_minus[j,1] <- get(paste(colnames(Segments_KMT)[i], 
+                                  j, 
+                                  sep = "_"))[nrow(get(paste(colnames(Segments_KMT)[i], j, sep = "_"))),5]
   }
   names(Point_minus)[1] <- "Relative_minus_position"
   
   Point_plus <- data.frame()
   for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
-    Point_plus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,5]
+    Point_plus[j,1] <- get(paste(colnames(Segments_KMT)[i], 
+                                 j, 
+                                 sep = "_"))[1,5]
   }
   names(Point_plus)[1] <- "Relative_plus_position"
   

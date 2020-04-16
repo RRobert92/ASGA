@@ -19,8 +19,13 @@ Inter_Kinetochore_Dist <- function(){
     
     tryCatch({
        DF_Pole1 <- colnames(Segments_KMT)[i]
-       DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
-       DF_Pole2 <- paste("Pole2", DF[6,1], sep = "_")
+       DF <- data.frame(str_split(gsub("[^[:digit:]]", 
+                                       "Pole_1", 
+                                       DF_Pole1), 
+                                  pattern = "Pole_1"))
+       DF_Pole2 <- paste("Pole2", 
+                         DF[6,1], 
+                         sep = "_")
        
        Plus_end_1 <- data.frame()
      for (j in 1:nrow(get(DF_Pole1))) {
@@ -83,8 +88,13 @@ Compare_KMTs_no_for_sister <- function(){
       which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole1")))[length(colnames(Segments_KMT %>% select(starts_with("Pole1"))))])){
     tryCatch({
       DF_Pole1 <- colnames(Segments_KMT)[i]
-      DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
-      DF_Pole2 <- paste("Pole2", DF[6,1], sep = "_")
+      DF <- data.frame(str_split(gsub("[^[:digit:]]", 
+                                      "Pole_1", 
+                                      DF_Pole1), 
+                                 pattern = "Pole_1"))
+      DF_Pole2 <- paste("Pole2", 
+                        DF[6,1], 
+                        sep = "_")
       
       KMT_end_1 <- nrow(get(DF_Pole1))
       KMT_end_2 <- nrow(get(DF_Pole2))
@@ -112,9 +122,12 @@ Compare_KMTs_no_for_sister <- function(){
   KMTs_at_Pole2 <- na.omit(KMTs_at_Pole2)
   
   ## Inter-Kinetochore distance vs. no. of KMTs
-  Dist <- rbind(Inter_Kinetochore_Distance, Inter_Kinetochore_Distance)
-  KMT <- rbind(KMTs_at_Pole1, KMTs_at_Pole2)
-  DF <- cbind(Dist, KMT)
+  Dist <- rbind(Inter_Kinetochore_Distance, 
+                Inter_Kinetochore_Distance)
+  KMT <- rbind(KMTs_at_Pole1, 
+               KMTs_at_Pole2)
+  DF <- cbind(Dist, 
+              KMT)
   names(DF)[1] <- "Inter-kinetochore distance"
   names(DF)[2] <- "KMTs no."
 

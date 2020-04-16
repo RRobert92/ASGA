@@ -7,8 +7,12 @@
 total_curvature <- function(x){
   curvarture <- data.frame()
   for (i in 1:nrow(get(paste(colnames(Segments_KMT)[x])))){
-    KMT <- get(paste(colnames(Segments_KMT)[x], i, sep = "_"))
+    KMT <- get(paste(colnames(Segments_KMT)[x], 
+                     i, 
+                     sep = "_"))
+    
     curv <- sqrt((KMT[1,2] - KMT[nrow(KMT),2])^2 + (KMT[1,3] - KMT[nrow(KMT),3])^2 + (KMT[1,4] - KMT[nrow(KMT),4])^2)
+    
     total_length <- get(paste(colnames(Segments_KMT)[x]))[i,2]
     
     curvarture[i,1] <- total_length / curv
@@ -33,7 +37,9 @@ total_curvature <- function(x){
 local_curvature <- function(x){
   full_data <- data.frame()
   for (i in 1:nrow(get(paste(colnames(Segments_KMT)[x])))){
-    KMT <- get(paste(colnames(Segments_KMT)[x], i, sep = "_"))
+    KMT <- get(paste(colnames(Segments_KMT)[x], 
+                     i, 
+                     sep = "_"))
     
     ## Get curve length
     output_curve <- data.frame(Curve = as.numeric())

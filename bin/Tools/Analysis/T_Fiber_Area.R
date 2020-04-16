@@ -52,9 +52,9 @@ find_polygon <- function(x) {
   Distance <- data.frame(V1 = as.numeric())
   
   while (i <= as.numeric(nrow(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))))) {
-    lead_points_id <- data.frame(X_lead = Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_")) [i, ] + 1), 2],
-                                 Y_lead = Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_")) [i, ] + 1), 3],
-                                 Z_lead = Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_")) [i, ] + 1), 4])
+    lead_points_id <- data.frame(X_lead = Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_")) [i, ] + 1), 2],
+                                 Y_lead = Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_")) [i, ] + 1), 3],
+                                 Z_lead = Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_")) [i, ] + 1), 4])
     
     j = 1
     lead_points_id_full <- data.frame(t = as.numeric())
@@ -132,9 +132,9 @@ median_point <- function(x){
                      Z_Coord = as.numeric())
     
     for (j in 1:as.numeric(ncol(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))))) {
-      DF[j,1] <- Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),2]
-      DF[j,2] <- Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),3]
-      DF[j,3] <- Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),4]
+      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),2]
+      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),3]
+      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),4]
     }
     
     Median_id[i,1] <- median(na.omit(DF$X_Coord))
@@ -219,9 +219,9 @@ polygon_area <- function(x){
                      Z_Coord = as.numeric())
     j=4
     for (j in 4:as.numeric(ncol(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))))) {
-      DF[j,1] <- Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),2]
-      DF[j,2] <- Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),3]
-      DF[j,3] <- Points_KMT[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),4]
+      DF[j,1] <- Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),2]
+      DF[j,2] <- Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),3]
+      DF[j,3] <- Points[as.numeric(get(paste(colnames(Segments_KMT)[x], "fiber", sep = "_"))[i,j]+1),4]
     }
     
     DF1 <- as.matrix(na.omit(DF))
@@ -263,9 +263,9 @@ for(i in 1:nrow(DF)){
   dist <- data.frame()
   
   for(j in 1:ncol(DF)){
-    dist[j,1] <- Points_KMT[as.numeric(DF[i,j] + 1), "X Coord"]
-    dist[j,2] <- Points_KMT[as.numeric(DF[i,j] + 1), "Y Coord"]
-    dist[j,3] <- Points_KMT[as.numeric(DF[i,j] + 1), "Z Coord"]
+    dist[j,1] <- Points[as.numeric(DF[i,j] + 1), "X Coord"]
+    dist[j,2] <- Points[as.numeric(DF[i,j] + 1), "Y Coord"]
+    dist[j,3] <- Points[as.numeric(DF[i,j] + 1), "Z Coord"]
     
   }
   dist <- na.omit(dist)
