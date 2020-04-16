@@ -5,11 +5,11 @@
 Kinetochore_position <- function(){
   Plus_end <- data.frame()
   Kinetochore_Avg <- data.frame()
-  for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)){
+  for (i in which(colnames(Segments_KMT) == "Pole1_00"):as.numeric(ncol(Segments_KMT) - 4)){
     j = 1
     tryCatch({
-      while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
-        Plus_end[j,1:3] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,2:4]
+      while (j <= as.numeric(nrow(get(paste(colnames(Segments_KMT)[i]))))) {
+        Plus_end[j,1:3] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,2:4]
         j = j + 1
       }
       Plus_end <- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),

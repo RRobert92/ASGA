@@ -52,7 +52,7 @@ source("bin/Packages/Pre_Analysis/Sort_KMTs_by_Kinetochore_Position.R")
 ## Length distribution LD: [1] length
 source("bin/Packages/Pre_Analysis/Analyse_Length_Distiribution.R")
 
-## Calculate relative position of each point on the kinetochore - centriol (Pole1/Pole2) axis
+## Calculate relative position of each point on the kinetochore - centriole (Pole1/Pole2) axis
 source("bin/Packages/Pre_Analysis/P_Relative_position.R")
 
 ############
@@ -62,10 +62,10 @@ source("bin/Packages/Pre_Analysis/P_Relative_position.R")
 ## DF output of the functions:
 ## 0 - All below
 ## 1 - KMTs_at_the_Pole: [1] No. of KMTs
-##   - KTMs_at_the_Pole_and_length: [1] No. of KMTs, [2] KMTs length, [3] Minus end dist., [4] Plus end dist., [5] Minus end relative position
+##   - KMTs_at_the_Pole_and_length: [1] No. of KMTs, [2] KMTs length, [3] Minus end dist., [4] Plus end dist., [5] Minus end relative position
 ## 2 - Inter_Kinetochore_Distance: [1] Inter-kinetochore distance
 ##   - Inter_Kinetochore_Distance_KMTs_no: [1] Inter-kinetochore distance, [2] KMTs no.
-##   - Inter_Kinetochore_Distance_KTMs_delta: [1] Inter-kinetochore distance, [2] Delta of KMTs
+##   - Inter_Kinetochore_Distance_KMTs_delta: [1] Inter-kinetochore distance, [2] Delta of KMTs
 ## 3 - KMTs_total_Curvature: [1] Curvature, [2] k0fiber no.
 ## 4 - Plus/minus_end_morphology_Pole1/2: [1] Fiber, [2 - 3] EndType, [4] EndType Different (if exist), [5] Relative position
 

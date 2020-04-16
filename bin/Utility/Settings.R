@@ -1,12 +1,12 @@
 Data <- dlg_open(title = "Select data file", 
                  filters = dlg_filters[c("xlsx", "All")])$res
 
-Segments <- read_excel(Data,
-                       sheet = "Segments")
-Nodes <- read_excel(Data,
-                    sheet = "Nodes")
-Points <- read_excel(Data,
-                     sheet = "Points")
+Segments_KMT <- read_excel(Data,
+                           sheet = "Segments")
+Nodes_KMT <- read_excel(Data,
+                        sheet = "Nodes")
+Points_KMT <- read_excel(Data,
+                         sheet = "Points")
 
 Poles <- dlg_message("Are the Poles labeled in the Node sheet as 'Pole1' and 'Pole2'?", 
                      "yesno")$res

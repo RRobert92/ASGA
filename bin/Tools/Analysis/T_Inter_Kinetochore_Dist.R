@@ -5,7 +5,8 @@
 ## Count the inter-kinetochore distance
 Inter_Kinetochore_Dist <- function(){
   
-  total <- length(which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole1")))[length(colnames(Segments %>% select(starts_with("Pole1"))))]))
+  total <- length(which(colnames(Segments_KMT) == "Pole1_00") : 
+                    which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole1")))[length(colnames(Segments_KMT %>% select(starts_with("Pole1"))))]))
   pb <- winProgressBar(min = 2,
                        max =  total,
                        width = 420)
@@ -13,9 +14,11 @@ Inter_Kinetochore_Dist <- function(){
   Inter_Kinetochore_Distance <- data.frame()
   
   ## Get distance to each kinetochore on the oposit pole
-  for(i in which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole1")))[length(colnames(Segments %>% select(starts_with("Pole1"))))])){
+  for(i in which(colnames(Segments_KMT) == "Pole1_00") : 
+      which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole1")))[length(colnames(Segments_KMT %>% select(starts_with("Pole1"))))])){
+    
     tryCatch({
-       DF_Pole1 <- colnames(Segments)[i]
+       DF_Pole1 <- colnames(Segments_KMT)[i]
        DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
        DF_Pole2 <- paste("Pole2", DF[6,1], sep = "_")
        
@@ -66,7 +69,9 @@ Inter_Kinetochore_Dist <- function(){
 
 ## Count no of KMTs between sister kinetochores
 Compare_KMTs_no_for_sister <- function(){
-  total <- length(which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole1")))[length(colnames(Segments %>% select(starts_with("Pole1"))))]))
+  total <- length(which(colnames(Segments_KMT) == "Pole1_00") : 
+                    which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole1")))[length(colnames(Segments_KMT %>% select(starts_with("Pole1"))))]))
+  
   pb <- winProgressBar(min = 2,
                        max =  total,
                        width = 420)
@@ -74,9 +79,10 @@ Compare_KMTs_no_for_sister <- function(){
   KMTs_at_Pole1 <- data.frame()
   KMTs_at_Pole2 <- data.frame()
   
-  for(i in which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole1")))[length(colnames(Segments %>% select(starts_with("Pole1"))))])){
+  for(i in which(colnames(Segments_KMT) == "Pole1_00") : 
+      which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole1")))[length(colnames(Segments_KMT %>% select(starts_with("Pole1"))))])){
     tryCatch({
-      DF_Pole1 <- colnames(Segments)[i]
+      DF_Pole1 <- colnames(Segments_KMT)[i]
       DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
       DF_Pole2 <- paste("Pole2", DF[6,1], sep = "_")
       
@@ -105,7 +111,7 @@ Compare_KMTs_no_for_sister <- function(){
   KMTs_at_Pole1 <- na.omit(KMTs_at_Pole1)
   KMTs_at_Pole2 <- na.omit(KMTs_at_Pole2)
   
-  ## Inter-Kinetochore distance vs. no. of KTMs
+  ## Inter-Kinetochore distance vs. no. of KMTs
   Dist <- rbind(Inter_Kinetochore_Distance, Inter_Kinetochore_Distance)
   KMT <- rbind(KMTs_at_Pole1, KMTs_at_Pole2)
   DF <- cbind(Dist, KMT)
@@ -118,7 +124,9 @@ Compare_KMTs_no_for_sister <- function(){
 
 ## Count delta of KMTs between sister kinetochores
 Compare_KMTs_delta_for_sister <- function(){
-  total <- length(which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole1")))[length(colnames(Segments %>% select(starts_with("Pole1"))))]))
+  total <- length(which(colnames(Segments_KMT) == "Pole1_00") : 
+                    which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole1")))[length(colnames(Segments_KMT %>% select(starts_with("Pole1"))))]))
+  
   pb <- winProgressBar(min = 2,
                        max =  total,
                        width = 420)
@@ -126,9 +134,11 @@ Compare_KMTs_delta_for_sister <- function(){
   KMTs_at_Pole1 <- data.frame()
   KMTs_at_Pole2 <- data.frame()
   
-  for(i in which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole1")))[length(colnames(Segments %>% select(starts_with("Pole1"))))])){
+  for(i in which(colnames(Segments_KMT) == "Pole1_00") : 
+      which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole1")))[length(colnames(Segments_KMT %>% select(starts_with("Pole1"))))])){
+    
     tryCatch({
-      DF_Pole1 <- colnames(Segments)[i]
+      DF_Pole1 <- colnames(Segments_KMT)[i]
       DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
       DF_Pole2 <- paste("Pole2", DF[6,1], sep = "_")
       
@@ -157,7 +167,7 @@ Compare_KMTs_delta_for_sister <- function(){
   KMTs_at_Pole1 <- na.omit(KMTs_at_Pole1)
   KMTs_at_Pole2 <- na.omit(KMTs_at_Pole2)
   
-## Inter-Kinetochore distance vs. delta KTMs
+## Inter-Kinetochore distance vs. delta KMTs
   Delta <- abs(KMTs_at_Pole1 - KMTs_at_Pole2)
   DF <- cbind(Inter_Kinetochore_Distance, Delta)
   names(DF)[1] <- "Inter-kinetochore distance"

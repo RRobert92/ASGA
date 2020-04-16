@@ -1,21 +1,23 @@
 ####################################################################
-# The analysis tool to calcualte total and local curvature of KMTs #
+# The analysis tool to calculate total and local curvature of KMTs #
 ####################################################################
 
 ## Count total curvature ration for each KMT. 
 ## Ration is determined by dividing total KMT length and length of KMT between (+) and (-) end
 total_curvature <- function(x){
   curvarture <- data.frame()
-  for (i in 1:nrow(get(paste(colnames(Segments)[x])))){
-    KMT <- get(paste(colnames(Segments)[x], i, sep = "_"))
+  for (i in 1:nrow(get(paste(colnames(Segments_KMT)[x])))){
+    KMT <- get(paste(colnames(Segments_KMT)[x], i, sep = "_"))
     curv <- sqrt((KMT[1,2] - KMT[nrow(KMT),2])^2 + (KMT[1,3] - KMT[nrow(KMT),3])^2 + (KMT[1,4] - KMT[nrow(KMT),4])^2)
-    total_length <- get(paste(colnames(Segments)[x]))[i,2]
+    total_length <- get(paste(colnames(Segments_KMT)[x]))[i,2]
+    
     curvarture[i,1] <- total_length / curv
     curvarture[i,2] <- x
-    curvarture[i,3] <- get(paste(colnames(Segments)[x]))[i,2]
-    curvarture[i,4] <- get(paste(colnames(Segments)[x]))[i,4]
-    curvarture[i,5] <- get(paste(colnames(Segments)[x]))[i,5]
-    curvarture[i,6] <- get(paste(colnames(Segments)[x]))[i,6]
+    curvarture[i,3] <- get(paste(colnames(Segments_KMT)[x]))[i,2]
+    curvarture[i,4] <- get(paste(colnames(Segments_KMT)[x]))[i,4]
+    curvarture[i,5] <- get(paste(colnames(Segments_KMT)[x]))[i,5]
+    curvarture[i,6] <- get(paste(colnames(Segments_KMT)[x]))[i,6]
+    
     names(curvarture)[1] <- "Curvature"
     names(curvarture)[2] <- "k-fiber no."
     names(curvarture)[3] <- "KMTs length"
@@ -30,8 +32,8 @@ total_curvature <- function(x){
 ## Count the curvature ratio for each step
 local_curvature <- function(x){
   full_data <- data.frame()
-  for (i in 1:nrow(get(paste(colnames(Segments)[x])))){
-    KMT <- get(paste(colnames(Segments)[x], i, sep = "_"))
+  for (i in 1:nrow(get(paste(colnames(Segments_KMT)[x])))){
+    KMT <- get(paste(colnames(Segments_KMT)[x], i, sep = "_"))
     
     ## Get curve length
     output_curve <- data.frame(Curve = as.numeric())
@@ -76,9 +78,9 @@ local_curvature <- function(x){
                            Relative_Position = output_mean$Mean_Position,
                            K_fiber_no = x,
                            KMT_no = i,
-                           End_Position = get(paste(colnames(Segments)[x]))[i,4],
-                           End_to_Pole = get(paste(colnames(Segments)[x]))[i,5],
-                           Elipse_Position = get(paste(colnames(Segments)[x]))[i,6])
+                           End_Position = get(paste(colnames(Segments_KMT)[x]))[i,4],
+                           End_to_Pole = get(paste(colnames(Segments_KMT)[x]))[i,5],
+                           Elipse_Position = get(paste(colnames(Segments_KMT)[x]))[i,6])
     full_data <- rbind(full_data, 
                        DF)
     }

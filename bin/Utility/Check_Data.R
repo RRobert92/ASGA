@@ -1,11 +1,13 @@
-Test_Segments <- colnames(Segments)[1] == "Segment ID" && colnames(Segments)[ncol(Segments)] == "Point IDs" && colnames(Segments)[ncol(Segments) - 3] == "length"
+Test_Segments <- colnames(Segments_KMT)[1] == "Segment ID" && 
+  colnames(Segments_KMT)[ncol(Segments_KMT)] == "Point IDs" && 
+  colnames(Segments_KMT)[ncol(Segments_KMT) - 3] == "length"
 
-Test_Pole1 <- colnames(Nodes %>% select(Pole1)) == "Pole1"
+Test_Pole1 <- colnames(Nodes_KMT %>% select(Pole1)) == "Pole1"
 if (!exists("Test_Pole1")){
   Test_Pole1 <- FALSE
 } else {}
 
-Test_Pole2 <- colnames(Nodes %>% select(Pole2)) == "Pole2"
+Test_Pole2 <- colnames(Nodes_KMT %>% select(Pole2)) == "Pole2"
 if (!exists("Test_Pole2")){
   Test_Pole2 <- FALSE
 } else {}
@@ -15,7 +17,7 @@ if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
            The data structure looks great! 
            Press Ok to analyze your awesome data!")
   
-} else if (Test_Segments == TRUE && which(colnames(Segments) == "Pole1_00") > which(colnames(Segments) == "Pole2_00")){
+} else if (Test_Segments == TRUE && which(colnames(Segments_KMT) == "Pole1_00") > which(colnames(Segments_KMT) == "Pole2_00")){
   quit(msg_box("Looks like you didn't read the instrution :(
                 The labeling in the Segmeent excel sheet shoult start with Pole1_00 not Pole2_00.
                 Please check it with the guidelines and try again."))

@@ -8,7 +8,7 @@
 # Progress bar for Pole_1 #
 ###########################
 
-total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
+total <- as.numeric(length(which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00"))) - 1)
 pb <- winProgressBar(min = 2,
                      max =  total,
                      width = 400)
@@ -17,35 +17,35 @@ pb <- winProgressBar(min = 2,
 # Loop iterating through each KMT for the Pole_1 #
 ##################################################
 
-  for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+  for(i in which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)){
     tryCatch({
        ## find KMTs closest to the kinetochore for y
     Point_KMT <- data.frame()
-    for(j in 1:nrow(get(colnames(Segments)[i]))){
-      Point_KMT[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,3]
+    for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
+      Point_KMT[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,3]
     } 
     Point_KMT <- which(Point_KMT[1] == min(Point_KMT))
-    longest <- get(paste(colnames(Segments)[i], Point_KMT, sep = "_"))
+    longest <- get(paste(colnames(Segments_KMT)[i], Point_KMT, sep = "_"))
 
-    for(j in 1:nrow(get(paste(colnames(Segments)[i])))){
-          assign(paste(colnames(Segments)[i], j, sep = "_"),
+    for(j in 1:nrow(get(paste(colnames(Segments_KMT)[i])))){
+          assign(paste(colnames(Segments_KMT)[i], j, sep = "_"),
            relativ_pos_1(longest,
-                         get(paste(colnames(Segments)[i], j, sep = "_"))))
+                         get(paste(colnames(Segments_KMT)[i], j, sep = "_"))))
     }
     Point_minus <- data.frame()
-    for(j in 1:nrow(get(colnames(Segments)[i]))){
-      Point_minus[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))),5]
+    for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
+      Point_minus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments_KMT)[i], j, sep = "_"))),5]
     }
     names(Point_minus)[1] <- "Relative_minus_position"
     
     Point_plus <- data.frame()
-    for(j in 1:nrow(get(colnames(Segments)[i]))){
-      Point_plus[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,5]
+    for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
+      Point_plus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,5]
     }
     names(Point_plus)[1] <- "Relative_plus_position"
     
-    assign(paste(colnames(Segments)[i]),
-           cbind(get(paste(colnames(Segments)[i])),
+    assign(paste(colnames(Segments_KMT)[i]),
+           cbind(get(paste(colnames(Segments_KMT)[i])),
                  Point_plus,
                  Point_minus))
     },
@@ -64,7 +64,8 @@ close(pb)
 # Progress bar for Pole_2 #
 ###########################
 
-total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
+total <- which(colnames(Segments) == colnames(Segments_KMT %>% select(starts_with("Pole")))[ncol(Segments_KMT %>% select(starts_with("Pole")))]) - 
+  as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)
 pb <- winProgressBar(min = 0,
                      max =  total,
                      width = 400)
@@ -73,57 +74,57 @@ pb <- winProgressBar(min = 0,
 # Loop iterating through each KMT for the Pole_2 #
 ###################################################
 
-for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
+for(i in which(colnames(Segments_KMT) == "Pole2_00") : as.numeric(ncol(Segments_KMT) - 4)){
   tryCatch({
       ## find KMTs closest to the kinetochore for y
   Point_KMT <- data.frame()
-  for(j in 1:nrow(get(colnames(Segments)[i]))){
-    Point_KMT[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,3]
+  for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
+    Point_KMT[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,3]
   } 
   Point_KMT <- which(Point_KMT[1] == max(Point_KMT))
-  longest <- get(paste(colnames(Segments)[i], Point_KMT, sep = "_"))
+  longest <- get(paste(colnames(Segments_KMT)[i], Point_KMT, sep = "_"))
   
-  for(j in 1:nrow(get(paste(colnames(Segments)[i])))){
-    assign(paste(colnames(Segments)[i], j, sep = "_"),
+  for(j in 1:nrow(get(paste(colnames(Segments_KMT)[i])))){
+    assign(paste(colnames(Segments_KMT)[i], j, sep = "_"),
            relativ_pos_2(longest,
-                         get(paste(colnames(Segments)[i], j, sep = "_"))))
+                         get(paste(colnames(Segments_KMT)[i], j, sep = "_"))))
   }
   Point_minus <- data.frame()
-  for(j in 1:nrow(get(colnames(Segments)[i]))){
-    Point_minus[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))),5]
+  for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
+    Point_minus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments_KMT)[i], j, sep = "_"))),5]
   }
   names(Point_minus)[1] <- "Relative_minus_position"
   
   Point_plus <- data.frame()
-  for(j in 1:nrow(get(colnames(Segments)[i]))){
-    Point_plus[j,1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,5]
+  for(j in 1:nrow(get(colnames(Segments_KMT)[i]))){
+    Point_plus[j,1] <- get(paste(colnames(Segments_KMT)[i], j, sep = "_"))[1,5]
   }
   names(Point_plus)[1] <- "Relative_plus_position"
   
-  assign(paste(colnames(Segments)[i]),
-         cbind(get(paste(colnames(Segments)[i])),
+  assign(paste(colnames(Segments_KMT)[i]),
+         cbind(get(paste(colnames(Segments_KMT)[i])),
                Point_plus,
                Point_minus))
 
   },
   error = function(e){})
 Sys.sleep(0.1)
-  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00")), 
                     title = paste("Calcualting relative position for Pole_2",
-                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
+                                  round((i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)) / total * 100,
                                         0), 
                                   "% Done"))
 } 
 close(pb)
 
-Minus_end_position <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["minus_dist_to_pole"]
-Relative_position <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Relative_minus_position"]
+Minus_end_position <- get(paste(colnames(Segments_KMT)[which(colnames(Segments_KMT) == "Pole1_00")]))["minus_dist_to_pole"]
+Relative_position <- get(paste(colnames(Segments_KMT)[which(colnames(Segments_KMT) == "Pole1_00")]))["Relative_minus_position"]
 Minus_end_position <- cbind(Minus_end_position, Relative_position)
 
-for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(ncol(Segments) - 4)) {
+for (i in as.numeric(which(colnames(Segments_KMT) == "Pole1_00")+1) : as.numeric(ncol(Segments_KMT) - 4)) {
   tryCatch({
-  DF_Minus_end_position <- get(paste(colnames(Segments)[i]))["minus_dist_to_pole"]
-  DF_Relative_position <- get(paste(colnames(Segments)[i]))["Relative_minus_position"]
+  DF_Minus_end_position <- get(paste(colnames(Segments_KMT)[i]))["minus_dist_to_pole"]
+  DF_Relative_position <- get(paste(colnames(Segments_KMT)[i]))["Relative_minus_position"]
   DF <- cbind(DF_Minus_end_position,
               DF_Relative_position)
   Minus_end_position <- rbind(Minus_end_position,

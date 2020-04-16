@@ -4,8 +4,8 @@
 
 ## Count the error rate between sample
 End_Type_Error <- function(){
-  if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
-    Correct <- count(Nodes[,7])
+  if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) == 2){
+    Correct <- count(Nodes_KMT[,7])
     End_type_error <- data.frame(Correct = c(round((Correct[2,2]/sum(Correct[2]))*100,
                                                    2)),
                                  Wrong = c(round((Correct[1,2]/sum(Correct[2]))*100,
@@ -33,26 +33,26 @@ End_distribution_Plus <- function(x, y){
   Plus <- data.frame()
   
   ##for x find Node ID that belong to Segment ID
-  for(i in 1:nrow(get(colnames(Segments)[x]))){
-    S_ID <- get(colnames(Segments)[x])[i,1]
-    N_ID_1 <- as.numeric(Segments[S_ID+1, 
+  for(i in 1:nrow(get(colnames(Segments_KMT)[x]))){
+    S_ID <- get(colnames(Segments_KMT)[x])[i,1]
+    N_ID_1 <- as.numeric(Segments_KMT[S_ID+1, 
                                   "Node ID #1"])
-    Node_1 <- Nodes[N_ID_1 + 1,]
+    Node_1 <- Nodes_KMT[N_ID_1 + 1,]
     
-    N_ID_2 <- as.numeric(Segments[S_ID+1, 
+    N_ID_2 <- as.numeric(Segments_KMT[S_ID+1, 
                                   "Node ID #2"])
-    Node_2 <- Nodes[N_ID_2 + 1,]
+    Node_2 <- Nodes_KMT[N_ID_2 + 1,]
     
     if(abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])){
       Plus[i,1:8] <- cbind(Node_1,
-                           get(colnames(Segments)[x])[i,
+                           get(colnames(Segments_KMT)[x])[i,
                                                       "Relative_plus_position"])
 
       Plus[i,1] <- x
       
     } else {
       Plus[i,1:8] <- cbind(Node_2,
-                           get(colnames(Segments)[x])[i,
+                           get(colnames(Segments_KMT)[x])[i,
                                                       "Relative_plus_position"])
       
       Plus[i,1] <- x
@@ -67,7 +67,7 @@ End_distribution_Plus <- function(x, y){
   Plus
 } 
 
-## Analyse the end distribution according to the relative position of the KMT end
+## Analyze the end distribution according to the relative position of the KMT end
 ## X is here no. of column in the "Segment"
 ## Y is a no. of a Pole 1 or 2
 End_distribution_Minus <- function(x, y){
@@ -82,28 +82,28 @@ End_distribution_Minus <- function(x, y){
   Minus <- data.frame()
   
   ##for x find Node ID that belong to Segment ID
-  for(i in 1:nrow(get(colnames(Segments)[x]))){
-    S_ID <- get(colnames(Segments)[x])[i,
-                                       1]
-    N_ID_1 <- as.numeric(Segments[S_ID+1, 
-                                  "Node ID #1"])
-    Node_1 <- Nodes[N_ID_1 + 1,]
+  for(i in 1:nrow(get(colnames(Segments_KMT)[x]))){
+    S_ID <- get(colnames(Segments_KMT)[x])[i,
+                                           1]
+    N_ID_1 <- as.numeric(Segments_KMT[S_ID+1, 
+                                      "Node ID #1"])
+    Node_1 <- Nodes_KMT[N_ID_1 + 1,]
     
-    N_ID_2 <- as.numeric(Segments[S_ID+1, 
-                                  "Node ID #2"])
-    Node_2 <- Nodes[N_ID_2 + 1,]
+    N_ID_2 <- as.numeric(Segments_KMT[S_ID+1, 
+                                      "Node ID #2"])
+    Node_2 <- Nodes_KMT[N_ID_2 + 1,]
     
     if(abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])){
       Minus[i,1:8] <- cbind(Node_2,
-                            get(colnames(Segments)[x])[i,
-                                                       "Relative_minus_position"])
+                            get(colnames(Segments_KMT)[x])[i,
+                                                           "Relative_minus_position"])
       
       Minus[i,1] <- x
       
     } else {
       Minus[i,1:8] <- cbind(Node_1,
-                            get(colnames(Segments)[x])[i,
-                                                       "Relative_minus_position"])
+                            get(colnames(Segments_KMT)[x])[i,
+                                                           "Relative_minus_position"])
       
       Minus[i,1] <- x
     }
