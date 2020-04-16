@@ -40,16 +40,7 @@ for (i in which(colnames(Segments_KMT) == "Pole1_00"):as.numeric(which(colnames(
          cbind(get(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_")),
                get(paste(colnames(Segments_KMT)[i], "fiber", sep = "_"))[1]))
   },
-  error = function(e){},
-  warning = function(w) {
-    assign(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_"),
-           Neighorhood_densit(i))
-    assign(paste(colnames(Segments_KMT)[i], "fiber", sep = "_"), 
-           relativ_pos_1_fiber(i))
-    assign(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_"),
-           cbind(get(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_")),
-                 get(paste(colnames(Segments_KMT)[i], "fiber", sep = "_"))[1]))
-  })
+  error = function(e){})
   Sys.sleep(0.1)
   setWinProgressBar(pb, i, 
                     title = paste("Calculating fiber area for Pole1...", 
@@ -130,16 +121,7 @@ for (i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")) : as.numeric(n
          cbind(get(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_")),
                get(paste(colnames(Segments_KMT)[i], "fiber", sep = "_"))[1]))
   },
-  error = function(e){},
-  warning = function(w) {
-    assign(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_"),
-           Neighorhood_densit(i))
-    assign(paste(colnames(Segments_KMT)[i], "fiber", sep = "_"), 
-           relativ_pos_2_fiber(i))
-    assign(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_"),
-           cbind(get(paste(colnames(Segments_KMT)[i], "NDensity", sep = "_")),
-                 get(paste(colnames(Segments_KMT)[i], "fiber", sep = "_"))[1]))
-  })
+  error = function(e){})
   Sys.sleep(0.1)
   setWinProgressBar(pb, i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00")), 
                     title = paste("Calculating fiber area for Pole2...", 
