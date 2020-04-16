@@ -2,23 +2,34 @@
 # Load information about KMT/ "Segments" #
 ##########################################
 
-ncol<- ncol(Segments_KMT)
+ncol<- ncol(Segments)
 
-Segments_1_KMT <- Segments_KMT %>% filter_at(vars(starts_with(Pole1)),
-                                             any_vars(.>= 1))
+Segments_1_KMT <- Segments %>% filter_at(vars(starts_with(Pole1)),
+                                         any_vars(.>= 1))
 Segments_1_KMT <- Segments_1_KMT %>% select("Segment ID",
                                             "length",
                                             "Node ID #1",
                                             "Node ID #2",
                                             "Point IDs")
 
-Segments_2_KMT <- Segments_KMT %>% filter_at(vars(starts_with(Pole2)),
-                                             any_vars(.>= 1))
+Segments_2_KMT <- Segments %>% filter_at(vars(starts_with(Pole2)),
+                                         any_vars(.>= 1))
 Segments_2_KMT <- Segments_2_KMT %>% select("Segment ID",
                                             "length",
                                             "Node ID #1",
                                             "Node ID #2",
                                             "Point IDs")
+
+Segments_KMT <- Segments %>% filter_at(vars(starts_with("Pole")),
+                                       any_vars(.>=1))
+
+Segments_SMT <- Segments %>% filter_at(vars(starts_with("Pole")),
+                                       all_vars(.< 1))
+Segments_SMT <- Segments_SMT %>% select("Segment ID",
+                                        "length",
+                                        "Node ID #1",
+                                        "Node ID #2",
+                                        "Point IDs")
 
 ############################################
 # Load information about Poles coordiantes #
@@ -40,46 +51,47 @@ Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
 #########################################################
 ## If exist also load information about end morphology.
 
-if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) == 1){
-  Nodes_KMT <- Nodes_KMT %>% select("Node ID", 
-                                    "X Coord",
-                                    "Y Coord",
-                                    "Z Coord",
-                                    starts_with("EndType"))
+if(ncol(Nodes %>% select(starts_with("EndType"))) == 1){
+  Nodes <- Nodes %>% select("Node ID", 
+                            "X Coord",
+                            "Y Coord",
+                            "Z Coord",
+                            starts_with("EndType"))
   
-} else if (ncol(Nodes_KMT %>% select(starts_with("EndType"))) == 2){
-  Nodes_KMT <- Nodes_KMT %>% select("Node ID", 
-                                    "X Coord",
-                                    "Y Coord",
-                                    "Z Coord",
-                                    starts_with("EndType"))
+} else if (ncol(Nodes %>% select(starts_with("EndType"))) == 2){
+  Nodes <- Nodes %>% select("Node ID", 
+                            "X Coord",
+                            "Y Coord",
+                            "Z Coord",
+                            starts_with("EndType"))
   
   compare <- data.frame()
-  for(i in 1:nrow(Nodes_KMT %>% select(starts_with("EndType")))){
-    compare[i,1] <- Nodes_KMT[i,5] == Nodes_KMT[i,6]
+  
+  for(i in 1:nrow(Nodes %>% select(starts_with("EndType")))){
+    compare[i,1] <- Nodes[i,5] == Nodes[i,6]
   }
-  Nodes_KMT <- cbind(Nodes_KMT,
-                     compare)
-  names(Nodes_KMT)[7] <- "Entype_Different"
+  Nodes <- cbind(Nodes,
+                 compare)
+  names(Nodes)[7] <- "Entype_Different"
   rm(compare)
   
 } else {
-  Nodes_KMT <- Nodes_KMT %>% select("Node ID", 
-                                    "X Coord",
-                                    "Y Coord",
-                                    "Z Coord")
+  Nodes <- Nodes %>% select("Node ID", 
+                            "X Coord",
+                            "Y Coord",
+                            "Z Coord")
 }
 
-Nodes_KMT[2:4] <- Nodes_KMT[2:4]/10000
+Nodes[2:4] <- Nodes[2:4]/10000
 
 #########################################################
 # Load information about points which create "Segments" #
 #########################################################
 
-Points_KMT <- Points_KMT %>% select("Point ID", 
-                                    "X Coord",
-                                    "Y Coord",
-                                    "Z Coord")
+Points <- Points %>% select("Point ID", 
+                            "X Coord",
+                            "Y Coord",
+                            "Z Coord")
 
-Points_KMT[2:4] <- Points_KMT[2:4]/10000
-names(Points_KMT)[1] <- "Point_ID"
+Points[2:4] <- Points[2:4]/10000
+names(Points)[1] <- "Point_ID"
