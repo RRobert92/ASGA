@@ -64,7 +64,7 @@ close(pb)
 ###############################
 
 Fiber_area_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], "fiber", sep = "_"))
-for (i in which(colnames(Segments) == "Pole1_01"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   tryCatch({
     Fiber_area_P1 <- rbind(Fiber_area_P1,
                            get(paste(colnames(Segments)[i], "fiber", sep = "_")))
@@ -73,7 +73,7 @@ for (i in which(colnames(Segments) == "Pole1_01"):as.numeric(which(colnames(Segm
 }
 
 N_density_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], "NDensity", sep = "_"))
-for (i in which(colnames(Segments) == "Pole1_01"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   tryCatch({
     N_density_P1 <- rbind(N_density_P1,
                           get(paste(colnames(Segments)[i], "NDensity", sep = "_")))
@@ -142,8 +142,8 @@ close(pb)
 # Save data for fiber_area_P2 #
 ###############################
 
-Fiber_area_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_01")], "fiber", sep = "_"))
-for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4))  {
+Fiber_area_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], "fiber", sep = "_"))
+for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1):as.numeric(ncol(Segments) - 4))  {
   tryCatch({
     Fiber_area_P2 <- rbind(Fiber_area_P2,
                            get(paste(colnames(Segments)[i], "fiber", sep = "_")))
@@ -152,7 +152,7 @@ for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Se
 }
 
 N_density_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], "NDensity", sep = "_"))
-for (i in as.numeric(which(colnames(Segments) == "Pole2_01")):as.numeric(ncol(Segments) - 4))  {
+for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1):as.numeric(ncol(Segments) - 4))  {
   tryCatch({
     N_density_P2 <- rbind(N_density_P2,
                           get(paste(colnames(Segments)[i], "NDensity", sep = "_")))

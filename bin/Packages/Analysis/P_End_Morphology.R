@@ -2,7 +2,7 @@
 # The Package to deffine KMT end morphology #
 #############################################
 
-## Calculate % of similara cases for 2 mesurments 
+## Calculate % of similara cases for 2 measurements 
 if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
   End_type_error <- End_Type_Error()
   write.xlsx(End_type_error, paste("Output/", Data_label, "_End_type_error.xlsx", sep = ""), row.names = FALSE)
@@ -31,7 +31,7 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
          End_distribution_Minus(which(colnames(Segments) == "Pole1_00"),
                                 1))
   
-  for(i in which(colnames(Segments) == "Pole1_01") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+  for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     tryCatch({
       DF <- data.frame()
       
