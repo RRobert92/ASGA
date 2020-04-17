@@ -37,7 +37,7 @@ source("bin/Tools/Analysis/T_Inter_Kinetochore_Dist.R")
 source("bin/Tools/Analysis/T_KMT_Curvature.R")
 source("bin/Tools/Analysis/T_End_Morphology.R")
 source("bin/Tools/Analysis/T_Fiber_Area.R")
-source("bin/Tools/Analysis/T_KMT_Minus_End_Sseeds.R")
+source("bin/Tools/Analysis/T_KMT_Minus_End_Seeds.R")
 
 #############
 # Read data #
