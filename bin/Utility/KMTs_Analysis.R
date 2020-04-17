@@ -37,6 +37,7 @@ source("bin/Tools/Analysis/T_Inter_Kinetochore_Dist.R")
 source("bin/Tools/Analysis/T_KMT_Curvature.R")
 source("bin/Tools/Analysis/T_End_Morphology.R")
 source("bin/Tools/Analysis/T_Fiber_Area.R")
+source("bin/Tools/Analysis/T_KMT_Minus_End_Sseeds.R")
 
 #############
 # Read data #
@@ -76,6 +77,7 @@ if(analysis == 0){
   source("bin/Packages/Analysis/P_KMT_Curvature.R")
   source("bin/Packages/Analysis/P_End_Morphology.R")
   source("bin/Packages/Analysis/P_Fiber_Area.R")
+  source("bin/Packages/Analysis/P_KMT_Minus_End_Seeds.R")
   
 } else if (analysis == "1"){
   source("bin/Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
