@@ -38,6 +38,8 @@ Output <- "Output/"
 
 Minus_Threshold <- 1.2
 
+minus_distance <- 0.055
+
 all <- dlg_message("Do you want to run full analysis?",
                    "yesno")$res
 if(all == "yes"){
