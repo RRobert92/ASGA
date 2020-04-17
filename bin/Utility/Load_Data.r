@@ -35,12 +35,12 @@ Segments_SMT <- Segments_SMT %>% select("Segment ID",
 # Load information about Poles coordiantes #
 ############################################
 
-Pole1 <- Nodes_KMT %>% filter_at(vars(Pole1),
+Pole1 <- Nodes %>% filter_at(vars(Pole1),
                                  any_vars(.>=1))
 Pole1 <- data.frame(X = c(Pole1 %>% select("X Coord")/10000),
                     Y = c(Pole1 %>% select("Y Coord")/10000),
                     Z = c(Pole1 %>% select("Z Coord")/10000))
-Pole2 <- Nodes_KMT %>% filter_at(vars(Pole2),
+Pole2 <- Nodes %>% filter_at(vars(Pole2),
                                  any_vars(.>=1))
 Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
                     Y = c(Pole2 %>% select("Y Coord")/10000),

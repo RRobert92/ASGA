@@ -3,12 +3,12 @@
 #############################################
 
 ## Calculate % of similara cases for 2 measurements 
-if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) == 2){
+if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
   End_type_error <- End_Type_Error()
   write.xlsx(End_type_error, paste("Output/", Data_label, "_End_type_error.xlsx", sep = ""), row.names = FALSE)
 }
 
-if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) >= 1){
+if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   
   #####################################
   # Progress bar for (+) & (-) Pole_1 #
@@ -62,12 +62,12 @@ if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) >= 1){
   # Bin data for (+) & (-) Pole_1 #
   #################################
   
-  if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) == 2){
+  if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
     Plus_end_morphology_Pole1 <- Plus_end_morphology_Pole1 %>% select("Fiber",
                                                                       starts_with("EndType"),
                                                                       "Entype_Different",
                                                                       "Relative_plus_position")
-    for (i in 2:as.numeric(ncol(Nodes_KMT %>% select(starts_with("EndType")))+1)){
+    for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
       names(Plus_end_morphology_Pole1)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
     }
     
@@ -75,7 +75,7 @@ if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) >= 1){
                                                                         starts_with("EndType"),
                                                                         "Entype_Different",
                                                                         "Relative_minus_position")
-    for (i in 2:as.numeric(ncol(Nodes_KMT %>% select(starts_with("EndType")))+1)){
+    for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
       names(Minus_end_morphology_Pole1)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
     }
     
@@ -155,12 +155,12 @@ if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) >= 1){
   # Bin data for (+) & (-) Pole_2 #
   #################################
   tryCatch({
-      if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) >= 2){
+      if(ncol(Nodes %>% select(starts_with("EndType"))) >= 2){
     Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
                                                                       starts_with("EndType"),
                                                                       "Entype_Different",
                                                                       "Relative_plus_position")
-    for (i in 2:as.numeric(ncol(Nodes_KMT %>% select(starts_with("EndType")))+1)){
+    for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
       names(Plus_end_morphology_Pole2)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
     }
     
@@ -168,11 +168,11 @@ if(ncol(Nodes_KMT %>% select(starts_with("EndType"))) >= 1){
                                                                         starts_with("EndType"),
                                                                         "Entype_Different",
                                                                         "Relative_minus_position")
-    for (i in 2:as.numeric(ncol(Nodes_KMT %>% select(starts_with("EndType")))+1)){
+    for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
       names(Minus_end_morphology_Pole2)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
     }
     
-  } else if (ncol(Nodes_KMT %>% select(starts_with("EndType"))) == 1){
+  } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 1){
     Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
                                                                       starts_with("EndType"),
                                                                       "Relative_plus_position")
