@@ -9,7 +9,7 @@
 # Progress bar for total curvature_P1 #
 #######################################
 
-total <- as.numeric(length(which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00"))) - 1)
+total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 
 pb <- winProgressBar(min = 2,
                      max =  total,
@@ -19,9 +19,9 @@ pb <- winProgressBar(min = 2,
 # Loop iterating through each k-fiiber for total curvature_P1 #
 ###############################################################
 
-KMTs_total_Curvature_P1 <- total_curvature(which(colnames(Segments_KMT) == "Pole1_00"))
+KMTs_total_Curvature_P1 <- total_curvature(which(colnames(Segments) == "Pole1_00"))
 
-for(i in as.numeric(which(colnames(Segments_KMT) == "Pole1_00")+1) : as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)){
+for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     assign("DF",
            total_curvature(i))
@@ -53,8 +53,8 @@ rm(DF)
 # Progress bar for total curvature_P2 #
 #######################################
 
-total <- which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole")))[ncol(Segments_KMT %>% select(starts_with("Pole")))]) - 
-  as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)
+total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
+  as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
 pb <- winProgressBar(min = 0,
                      max =  total,
@@ -68,12 +68,12 @@ if(nrow(Pole2_00) == 0){
   KMTs_total_Curvature_P2 <- data.frame()
   
 } else {
-  KMTs_total_Curvature_P2 <- total_curvature(which(colnames(Segments_KMT) == "Pole2_00"))
+  KMTs_total_Curvature_P2 <- total_curvature(which(colnames(Segments) == "Pole2_00"))
   
 }
 
 
-for(i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")+1) : as.numeric(ncol(Segments_KMT) - 4)){
+for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
     assign("DF",
            total_curvature(i))
@@ -84,9 +84,9 @@ for(i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")+1) : as.numeric(
   )
   
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00")), 
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Calculating total curvature of KMTs for Pole2...", 
-                                  round((i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)) / total * 100,
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                                         0),
                                   "% Done"))
 }
@@ -104,7 +104,7 @@ close(pb)
 # Progress bar for local curvature P1 #
 #######################################
 
-total <- as.numeric(length(which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00"))) - 1)
+total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 pb <- winProgressBar(min = 2,
                      max =  total,
                      width = 400)
@@ -114,10 +114,10 @@ pb <- winProgressBar(min = 2,
 ###############################################################
 
 tryCatch({
-  KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments_KMT) == "Pole1_00"))
+  KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_00"))
 }, error = function(e){})
 
-for(i in as.numeric(which(colnames(Segments_KMT) == "Pole1_00")+1) : as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)){
+for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     assign("DF",
            local_curvature(i))
@@ -148,8 +148,8 @@ rm(DF)
 # Progress bar for local curvature_P2 #
 #######################################
 
-total <- which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole")))[ncol(Segments_KMT %>% select(starts_with("Pole")))]) - 
-  as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)
+total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
+  as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
 pb <- winProgressBar(min = 0,
                      max =  total,
@@ -162,10 +162,10 @@ pb <- winProgressBar(min = 0,
 if(nrow(Pole2_00) == 0){
   KMTs_local_Curvature_P2 <- data.frame()
 }else{
-  KMTs_local_Curvature_P2 <- local_curvature(which(colnames(Segments_KMT) == "Pole2_00"))
+  KMTs_local_Curvature_P2 <- local_curvature(which(colnames(Segments) == "Pole2_00"))
 }
 
-for(i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")+1) : as.numeric(ncol(Segments_KMT) - 4)){
+for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
     assign("DF",
            local_curvature(i))
@@ -176,9 +176,9 @@ for(i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")+1) : as.numeric(
   )
   
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00")), 
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Calculating local curvature of KMTs for Pole2...", 
-                                  round((i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)) / total * 100,
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                                         0),
                                   "% Done"))
 }

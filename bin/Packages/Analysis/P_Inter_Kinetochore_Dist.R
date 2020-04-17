@@ -1,5 +1,5 @@
 ###################################################
-# The Package to count Inter-kinetochore idstance #
+# The Package to count Inter-kinetochore distance #
 ###################################################
 ## The output of this function is data,framed named 'Inter_Kinetochore_Distance' with a distance in [um] for each pair.
 

@@ -31,8 +31,9 @@ Segments_SMT <- Segments_SMT %>% select("Segment ID",
                                         "Node ID #2",
                                         "Point IDs")
 
+
 ############################################
-# Load information about Poles coordiantes #
+# Load information about Poles coordinates #
 ############################################
 
 Pole1 <- Nodes %>% filter_at(vars(Pole1),

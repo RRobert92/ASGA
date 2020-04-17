@@ -1,7 +1,7 @@
 ##################################################################
 # The core tool to sort MT points based on their (+) and (-) end #
 ##################################################################
-## y variablein in the function is a DF name with points assinged to the MT (e.g. Pole1_01_1)
+## y variables in the function is a DF name with points assigned to the MT (e.g. Pole1_01_1)
 
 ## Function to work with Pole_1
 

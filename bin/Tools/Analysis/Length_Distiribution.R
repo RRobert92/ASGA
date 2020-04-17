@@ -7,8 +7,8 @@
 Analyse_LD <- function(x, y){
   ## Get position of all (+) ends in the fiber and calculate median position and take it as a kinetochore position
   Plus_end <- data.frame()
-  for (i in 1:nrow(get(colnames(Segments_KMT)[x]))){
-    Plus_end[i,1:3] <- get(paste(colnames(Segments_KMT)[x], 
+  for (i in 1:nrow(get(colnames(Segments)[x]))){
+    Plus_end[i,1:3] <- get(paste(colnames(Segments)[x], 
                                  i, 
                                  sep = "_"))[1,2:4]
   }
@@ -43,16 +43,16 @@ Analyse_LD <- function(x, y){
     
   }
   ## Get position of the kinetochore on the metaphase plate
-  for (i in 1:nrow(get(colnames(Segments_KMT)[x]))){
-    Minus_end <- paste(colnames(Segments_KMT)[x], 
+  for (i in 1:nrow(get(colnames(Segments)[x]))){
+    Minus_end <- paste(colnames(Segments)[x], 
                        i, 
                        sep = "_")
     Minus_Distst_to_the_pole <- sqrt((y[1,1] - (get(Minus_end)[nrow(get(Minus_end)),2]))^2 + 
                                      (y[1,2] - (get(Minus_end)[nrow(get(Minus_end)),3]))^2 + 
                                      (y[1,3] - (get(Minus_end)[nrow(get(Minus_end)),4]))^2)
     
-    Bind_Data [i,1] <- get(colnames(Segments_KMT)[x])[i,1]
-    Bind_Data [i,2] <- get(colnames(Segments_KMT)[x])[i,3]/10000
+    Bind_Data [i,1] <- get(colnames(Segments)[x])[i,1]
+    Bind_Data [i,2] <- get(colnames(Segments)[x])[i,3]/10000
     Bind_Data [i,3] <- Minus_Distst_to_the_pole
     Bind_Data [i,4] <- Plus_Distst_to_kinetochore_core
     Bind_Data [i,5] <- Plus_Distst_to_pole

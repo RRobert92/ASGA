@@ -12,7 +12,7 @@
 # Progress bar #
 ################
 
-total <- as.numeric(ncol(Segments_KMT %>% select(starts_with("Pole"))))
+total <- as.numeric(ncol(Segments %>% select(starts_with("Pole"))))
 pb <- winProgressBar(min = 2,
                      max =  total,
                      width = 300)
@@ -21,27 +21,27 @@ pb <- winProgressBar(min = 2,
 # Loop iterating through each label #
 #####################################
 
-for (i in which(colnames(Segments_KMT) == "Pole1_00") : which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole")))[ncol(Segments_KMT %>% select(starts_with("Pole")))])) {
-  assign(colnames(Segments_KMT)[i],
-         Sort_by_fiber(colnames(Segments_KMT)[i]))
+for (i in which(colnames(Segments) == "Pole1_00") : which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))])) {
+  assign(colnames(Segments)[i],
+         Sort_by_fiber(colnames(Segments)[i]))
   
   j = 1
-  while (j <= as.numeric(nrow(get(colnames(Segments_KMT)[i])))) {
-    assign(paste(colnames(Segments_KMT)[i], 
+  while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
+    assign(paste(colnames(Segments)[i], 
                  j, 
                  sep = "_"),
            Select_Points(j, 
-                         get(colnames(Segments_KMT)[i])))
+                         get(colnames(Segments)[i])))
     j = j + 1
   }
   
   j = 1
-  while (j <= as.numeric(nrow(get(colnames(Segments_KMT)[i])))) {
-    assign(paste(colnames(Segments_KMT)[i], 
+  while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
+    assign(paste(colnames(Segments)[i], 
                  j, 
                  sep = "_"),
            Find_XYZ(get(paste(
-             colnames(Segments_KMT)[i], 
+             colnames(Segments)[i], 
              j, 
              sep = "_"))))
     j = j + 1

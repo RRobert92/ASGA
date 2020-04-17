@@ -8,10 +8,10 @@
 # Setting for Pole_1 #
 ######################
 
-KMTs_at_the_Pole1 <- KMTs_to_the_Pole(which(colnames(Segments_KMT) == "Pole1_00"))
+KMTs_at_the_Pole1 <- KMTs_to_the_Pole(which(colnames(Segments) == "Pole1_00"))
 names(KMTs_at_the_Pole1)[1] <- "No. of KMTs"
 
-KMTs_to_the_Pole1_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments_KMT) == "Pole1_00"))
+KMTs_to_the_Pole1_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments) == "Pole1_00"))
 names(KMTs_to_the_Pole1_and_length)[1] <- "No. of KMTs"
 names(KMTs_to_the_Pole1_and_length)[2] <- "KMTs length"
 names(KMTs_to_the_Pole1_and_length)[3] <- "Minus end dist."
@@ -22,7 +22,7 @@ names(KMTs_to_the_Pole1_and_length)[5] <- "Plus end dist. to pole"
 # Progress bar for Pole_1 #
 ###########################
 
-total <- as.numeric(length(which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00"))) - 1)
+total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 pb <- winProgressBar(min = 2,
                      max =  total,
                      width = 400)
@@ -34,7 +34,7 @@ DF2 <- data.frame()
 # Loop iterating through each KMT for the Pole_1 #
 ##################################################
 
-for (i in which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)) {
+for (i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
   tryCatch({
     assign("DF1",
            KMTs_to_the_Pole(i))
@@ -85,10 +85,10 @@ rm(DF2)
 # Setting for Pole_2 #
 ######################
 
-KMTs_at_the_Pole2 <- KMTs_to_the_Pole(which(colnames(Segments_KMT) == "Pole1_00"))
+KMTs_at_the_Pole2 <- KMTs_to_the_Pole(which(colnames(Segments) == "Pole1_00"))
 names(KMTs_at_the_Pole2)[1] <- "No. of KMTs"
 
-KMTs_to_the_Pole2_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments_KMT) == "Pole1_00"))
+KMTs_to_the_Pole2_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments) == "Pole1_00"))
 names(KMTs_to_the_Pole2_and_length)[1] <- "No. of KMTs"
 names(KMTs_to_the_Pole2_and_length)[2] <- "KMTs length"
 names(KMTs_to_the_Pole2_and_length)[3] <- "Minus end dist."
@@ -99,8 +99,8 @@ names(KMTs_to_the_Pole2_and_length)[5] <- "Plus end dist. to pole"
 # Progress bar for Pole_2 #
 ###########################
 
-total <- which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole")))[ncol(Segments_KMT %>% select(starts_with("Pole")))]) - 
-  as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)
+total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
+  as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
 pb <- winProgressBar(min = 0,
                      max =  total,
@@ -113,7 +113,7 @@ DF2 <- data.frame()
 # Loop iterating through each KMT for the Pole_2 #
 ##################################################
 
-for (i in which(colnames(Segments_KMT) == "Pole2_00") : as.numeric(ncol(Segments_KMT) - 4)) {
+for (i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)) {
   tryCatch({
     assign("DF1",
            KMTs_to_the_Pole(i))
@@ -137,9 +137,9 @@ for (i in which(colnames(Segments_KMT) == "Pole2_00") : as.numeric(ncol(Segments
   error = function(e){})
   
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00")), 
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Calculating no. of KMTs reaching the pole2...",
-                                  round((i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)) / total * 100,
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                                         0), 
                                   "% Done"))
 }

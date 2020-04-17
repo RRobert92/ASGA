@@ -5,5 +5,5 @@
 ## Count how many KMTs exist for each label
 
 No_of_KMTs <- function(x){
-  nrow(get(colnames(Segments_KMT)[x])) 
+  nrow(get(colnames(Segments)[x])) 
 }

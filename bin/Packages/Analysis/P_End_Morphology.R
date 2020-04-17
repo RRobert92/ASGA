@@ -14,7 +14,7 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   # Progress bar for (+) & (-) Pole_1 #
   #####################################
   
-  total <- as.numeric(length(which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00"))) - 1)
+  total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
   
   pb <- winProgressBar(min = 2,
                        max =  total,
@@ -25,14 +25,14 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   ############################################################
   
   assign("Plus_end_morphology_Pole1", 
-         End_distribution_Plus(which(colnames(Segments_KMT) == "Pole1_00"),
+         End_distribution_Plus(which(colnames(Segments) == "Pole1_00"),
                                1))
   
   assign("Minus_end_morphology_Pole1", 
-         End_distribution_Minus(which(colnames(Segments_KMT) == "Pole1_00"),
+         End_distribution_Minus(which(colnames(Segments) == "Pole1_00"),
                                 1))
   
-  for(i in as.numeric(which(colnames(Segments_KMT) == "Pole1_00")+1) : as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)){
+  for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     tryCatch({
       DF <- data.frame()
       
@@ -101,8 +101,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   # Progress bar for (+) & (-) Pole_2 #
   #####################################
   
-  total <- which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole")))[ncol(Segments_KMT %>% select(starts_with("Pole")))]) - 
-    as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)
+  total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
+    as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
   
   pb <- winProgressBar(min = 0,
                        max =  total,
@@ -114,17 +114,17 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   
   tryCatch({
     assign("Plus_end_morphology_Pole2", 
-         End_distribution_Plus(which(colnames(Segments_KMT) == "Pole2_00"),
+         End_distribution_Plus(which(colnames(Segments) == "Pole2_00"),
                                2))
   
   assign("Minus_end_morphology_Pole2", 
-         End_distribution_Minus(which(colnames(Segments_KMT) == "Pole2_00"),
+         End_distribution_Minus(which(colnames(Segments) == "Pole2_00"),
                                 2))
   },
   error = function(e){}
   )
   
-  for(i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")+1) : as.numeric(ncol(Segments_KMT) - 4)){
+  for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
     tryCatch({
       DF <- data.frame()
       
@@ -144,9 +144,9 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
     )
     
     Sys.sleep(0.1)
-    setWinProgressBar(pb, i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00")), 
+    setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                       title = paste("Calcualting (+) & (-) end morphology for Pole_2",
-                                    round((i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)) / total * 100,
+                                    round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                                           0), 
                                     "% Done"))
   } 

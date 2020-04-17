@@ -8,21 +8,21 @@
 # Progress bar for Pole_1 #
 ###########################
 
-total <- as.numeric(length(which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00"))) - 1)
+total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 pb <- winProgressBar(title = "Sorting points based on (+) and (-) ends for the Pole_1",
                     min = 2,
                     max =  total,
                     width = 420)
 
 ## Pole_1
-for(i in which(colnames(Segments_KMT) == "Pole1_00") : as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)){
+for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     j = 1
-    while (j <= as.numeric(nrow(get(colnames(Segments_KMT)[i])))) {
-      assign(paste(colnames(Segments_KMT)[i], 
+    while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
+      assign(paste(colnames(Segments)[i], 
                    j, 
                    sep = "_"),
-             Sort_by_distance_to_pole1(get(paste(colnames(Segments_KMT)[i], 
+             Sort_by_distance_to_pole1(get(paste(colnames(Segments)[i], 
                                                  j, 
                                                  sep = "_"))))
       j = j + 1
@@ -44,22 +44,22 @@ close(pb)
 # Progress bar for Pole_2 #
 ###########################
 
-total <- which(colnames(Segments_KMT) == colnames(Segments_KMT %>% select(starts_with("Pole")))[ncol(Segments_KMT %>% select(starts_with("Pole")))]) - 
-  as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)
+total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
+  as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
 pb <- winProgressBar(min = 0,
                      max =  total,
                      width = 420)
 
 ## Pole_2
-for(i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")) : as.numeric(ncol(Segments_KMT) - 4)){
+for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)){
   j = 1
   tryCatch({
-    while (j <= as.numeric(nrow(get(colnames(Segments_KMT)[i])))) {
-      assign(paste(colnames(Segments_KMT)[i], 
+    while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
+      assign(paste(colnames(Segments)[i], 
                    j, 
                    sep = "_"),
-             Sort_by_distance_to_pole2(get(paste(colnames(Segments_KMT)[i], 
+             Sort_by_distance_to_pole2(get(paste(colnames(Segments)[i], 
                                                  j, 
                                                  sep = "_"))))
       j = j + 1
@@ -70,9 +70,9 @@ for(i in as.numeric(which(colnames(Segments_KMT) == "Pole2_00")) : as.numeric(nc
  )
   
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00")), 
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
                     title = paste("Sorting points based on (+) and (-) ends for the Pole_2...",
-                                  round((i - as.numeric(which(colnames(Segments_KMT) == "Pole2_00") - 1)) / total * 100, 
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 
                                         0), 
                                   "% Done"))
 }
