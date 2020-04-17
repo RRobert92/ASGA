@@ -13,4 +13,29 @@
 # Relative position,
 # Plus end distance to the pole,
 # Ellipse position
-
+Minus_end_seed <- function(x){
+  for(i in 1:nrow(get(paste(colnames(Segments)[x])))){
+    DF <- data.frame()
+    for(j in 1:nrow(get(paste(colnames(Segments)[x], j, sep = "_")))){
+      p_to_P <- Nodes
+      p_to_P[5:7] <- get(paste(colnames(Segments)[x],j, sep = "_"))[j,2:4] 
+      
+      p_to_P$dist <- apply(p_to_P[2:7], 
+                       1, 
+                       function(y) dist(matrix(y, 
+                                               nrow = 2, 
+                                               byrow = TRUE)))
+      DF <- data.frame(p_to_P[with(p_to_P, dist <= 0.1 & dist >= 0),"Node ID"],
+                       p_to_P[with(p_to_P, dist <= 0.1 & dist >= 0), "dist"])
+      for (i in 1:nrow(DF)){
+        all_end <- Segments %>% filter_at(vars(starts_with("Node")),
+                                          any_vars(. == DF[i,1]))
+        defin_end[i,1:3] <- all_end %>% select(`Segment ID`,
+                                               `Node ID #1`,
+                                               `Node ID #2`)
+      }
+      
+    }
+  }
+  
+}
