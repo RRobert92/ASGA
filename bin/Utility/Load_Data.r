@@ -22,6 +22,11 @@ Segments_2_KMT <- Segments_2_KMT %>% select("Segment ID",
 
 Segments_KMT <- Segments %>% filter_at(vars(starts_with("Pole")),
                                        any_vars(.>=1))
+Segments_KMT <- Segments_KMT %>% select("Segment ID",
+                                        "length",
+                                        "Node ID #1",
+                                        "Node ID #2",
+                                        "Point IDs")
 
 Segments_SMT <- Segments %>% filter_at(vars(starts_with("Pole")),
                                        all_vars(.< 1))
