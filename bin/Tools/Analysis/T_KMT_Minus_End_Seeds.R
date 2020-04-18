@@ -18,12 +18,13 @@ Minus_end_seed <- function(x){
   for(i in 1:nrow(get(paste(colnames(Segments)[x])))){
     DF <- data.frame()
     Minus_seed <- data.frame()
+    
     for(j in 1:nrow(get(paste(colnames(Segments)[x], i, sep = "_")))){
       p_to_P <- Nodes
       p_to_P[5:7] <- get(paste(colnames(Segments)[x],i, sep = "_"))[j,2:4] 
       
       p_to_P$dist <- apply(p_to_P[2:7], 
-                           1, 
+                           1,
                            function(y) dist(matrix(y, 
                                                    nrow = 2, 
                                                    byrow = TRUE)))
@@ -140,4 +141,5 @@ Minus_end_seed <- function(x){
     Minus_seed <- rbind(Minus_seed,
                         Minus_end)
   }
+  Minus_seed
 }

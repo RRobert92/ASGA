@@ -1,5 +1,5 @@
 ##################################################################################
-# Package for calculate distribution of a (-) end in close proximitly to the KMT #
+# Package for calculate distribution of a (-) end in close proximity to the KMT #
 ##################################################################################
 
 ##################################
@@ -18,18 +18,18 @@ pb <- winProgressBar(min = 2,
 
 KMTs_minus_seed_P1 <- Minus_end_seed(which(colnames(Segments) == "Pole1_00"))
 
-for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+for(m in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
   tryCatch({
     assign("DF",
-           Minus_end_seed(i))
+           Minus_end_seed(m))
     KMTs_minus_seed_P1 <- rbind(KMTs_minus_seed_P1,
                                 DF)
   },
   error = function(e){})
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i, 
-                    title = paste("Calculating fiber area for Pole1...", 
-                                  round((i - 1) / total * 100,
+  setWinProgressBar(pb, m, 
+                    title = paste("Calculating (-) nucleated at the KMT for Pole1...", 
+                                  round((m - 1) / total * 100,
                                         0),
                                   "% Done"))
 }
@@ -75,7 +75,7 @@ for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(
   error = function(e){})
   Sys.sleep(0.1)
   setWinProgressBar(pb, i, 
-                    title = paste("Calculating fiber area for Pole1...", 
+                    title = paste("Calculating fiber area for Pole2...", 
                                   round((i - 1) / total * 100,
                                         0),
                                   "% Done"))
