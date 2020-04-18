@@ -61,11 +61,11 @@ if(nrow(Pole2_00) == 0){
   KMTs_minus_seed_P2 <- data.frame()
   
 } else {
-  KMTs_minus_seed_P2 <- Minus_end_seed(which(colnames(Segments) == "Pole1_00"))
+  KMTs_minus_seed_P2 <- Minus_end_seed(which(colnames(Segments) == "Pole2_00"))
   
 }
 
-for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
   tryCatch({
     assign("DF",
            Minus_end_seed(i))
@@ -74,9 +74,9 @@ for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(
   },
   error = function(e){})
   Sys.sleep(0.1)
-  setWinProgressBar(pb, i, 
-                    title = paste("Calculating fiber area for Pole2...", 
-                                  round((i - 1) / total * 100,
+  setWinProgressBar(pb, i - as.numeric(which(colnames(Segments) == "Pole2_00")), 
+                    title = paste("Calculating (-) nucleated at the KMT for Pole2...",
+                                  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                                         0),
                                   "% Done"))
 }
