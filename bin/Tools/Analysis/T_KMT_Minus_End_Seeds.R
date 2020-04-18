@@ -20,16 +20,23 @@ Minus_end_seed <- function(x){
     Minus_seed <- data.frame()
     
     for(j in 1:nrow(get(paste(colnames(Segments)[x], i, sep = "_")))){
-      p_to_P <- Nodes
-      p_to_P[5:7] <- get(paste(colnames(Segments)[x],i, sep = "_"))[j,2:4] 
+
+        p_to_P <- Nodes[with(Nodes, `X Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2]+1) & 
+                                    `X Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2]-1)),]
+        p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3]+1) & 
+                                      `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3]-1)),]
+        p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4]+1) & 
+                                      `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4]-1)),]
+        p_to_P[5:7] <- get(paste(colnames(Segments)[x],i, sep = "_"))[j,2:4] 
+        
+        p_to_P$dist <- apply(p_to_P[2:7], 
+                             1,
+                             function(y) dist(matrix(y, 
+                                                     nrow = 2, 
+                                                     byrow = TRUE)))
+        DF <- data.frame(p_to_P[with(p_to_P, dist <= minus_distance & dist >= 0),"Node ID"],
+                         p_to_P[with(p_to_P, dist <= minus_distance & dist >= 0), "dist"])
       
-      p_to_P$dist <- apply(p_to_P[2:7], 
-                           1,
-                           function(y) dist(matrix(y, 
-                                                   nrow = 2, 
-                                                   byrow = TRUE)))
-      DF <- data.frame(p_to_P[with(p_to_P, dist <= minus_distance & dist >= 0),"Node ID"],
-                       p_to_P[with(p_to_P, dist <= minus_distance & dist >= 0), "dist"])
       if(nrow(DF) > 0){
         all_end <- data.frame()
         defin_end <- data.frame()
@@ -138,8 +145,6 @@ Minus_end_seed <- function(x){
       Temp[k,1:7] <- DF[which.min(DF$p_to_P_dist), 1:7]
     }
     Minus_end <- na.omit(Temp)
-    Minus_seed <- rbind(Minus_seed,
-                        Minus_end)
   }
-  Minus_seed
+  Minus_end
 }
