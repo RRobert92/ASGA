@@ -21,12 +21,12 @@ Minus_end_seed <- function(x){
     
     for(j in 1:nrow(get(paste(colnames(Segments)[x], i, sep = "_")))){
 
-        p_to_P <- Nodes[with(Nodes, `X Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2]+1) & 
-                                    `X Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2]-1)),]
-        p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3]+1) & 
-                                      `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3]-1)),]
-        p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4]+1) & 
-                                      `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4]-1)),]
+        p_to_P <- Nodes[with(Nodes, `X Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2] + 0.5) & 
+                                    `X Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2] - 0.5)),]
+        p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3] + 0.5) & 
+                                      `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3] - 0.5)),]
+        p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4] + 0.5) & 
+                                      `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4] - 0.5)),]
         p_to_P[5:7] <- get(paste(colnames(Segments)[x],i, sep = "_"))[j,2:4] 
         
         p_to_P$dist <- apply(p_to_P[2:7], 
@@ -65,36 +65,78 @@ Minus_end_seed <- function(x){
         if(nrow(DF) > 0){
           end_type <- data.frame()
           for(k in 1:nrow(defin_end)){
-            N1_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
-                                (Pole1[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
-                                (Pole1[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
-            N1_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
-                                (Pole2[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
-                                (Pole2[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
-            N2_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
-                                (Pole1[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
-                                (Pole1[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
-            N2_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
-                                (Pole2[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
-                                (Pole2[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
-            Node_to_Pole <- rbind(N1_to_pole1,
-                                  N1_to_pole2,
-                                  N2_to_pole1,
-                                  N2_to_pole2)
-            if(which.min(as.matrix(Node_to_Pole)) == 1 && which.max(as.matrix(Node_to_Pole)) == 2){
-              end_type[k,1] <- "Plus"
-              end_type[k,2] <- "Minus"
-            } else if(which.min(as.matrix(Node_to_Pole)) == 2 && which.max(as.matrix(Node_to_Pole)) == 1){
-              end_type[k,1] <- "Minus"
-              end_type[k,2] <- "Plus"
-            } else if(which.min(as.matrix(Node_to_Pole)) == 3 && which.max(as.matrix(Node_to_Pole)) == 4){
-              end_type[k,1] <- "Plus"
-              end_type[k,2] <- "Minus"
-            } else if(which.min(as.matrix(Node_to_Pole)) == 4 && which.max(as.matrix(Node_to_Pole)) == 3){
-              end_type[k,1] <- "Minus"
-              end_type[k,2] <- "Plus"
-            } else {
-              end_type[k,1:2] <- NA
+            if(defin_end[k,4] == "SMT"){
+              N1_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
+                                    (Pole1[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
+                                    (Pole1[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
+              N1_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
+                                    (Pole2[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
+                                    (Pole2[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
+              N2_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
+                                    (Pole1[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
+                                    (Pole1[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
+              N2_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
+                                    (Pole2[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
+                                    (Pole2[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
+              Node_to_Pole <- rbind(N1_to_pole1,
+                                    N1_to_pole2,
+                                    N2_to_pole1,
+                                    N2_to_pole2)
+              if(which.min(as.matrix(Node_to_Pole)) == 1 && which.max(as.matrix(Node_to_Pole)) == 2){
+                end_type[k,1] <- "Plus"
+                end_type[k,2] <- "Minus"
+              } else if(which.min(as.matrix(Node_to_Pole)) == 2 && which.max(as.matrix(Node_to_Pole)) == 1){
+                end_type[k,1] <- "Minus"
+                end_type[k,2] <- "Plus"
+              } else if(which.min(as.matrix(Node_to_Pole)) == 3 && which.max(as.matrix(Node_to_Pole)) == 4){
+                end_type[k,1] <- "Plus"
+                end_type[k,2] <- "Minus"
+              } else if(which.min(as.matrix(Node_to_Pole)) == 4 && which.max(as.matrix(Node_to_Pole)) == 3){
+                end_type[k,1] <- "Minus"
+                end_type[k,2] <- "Plus"
+              } else {
+                end_type[k,1:2] <- NA
+              }
+            } else if(defin_end[k,4] == "KMT"){
+              if(nrow(Segments[2,] %>% filter_at(vars(starts_with("Pole1")), any_vars(. == 1))) == 1){
+                ## calculate (-) end for Pole 1
+                N1_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
+                                      (Pole1[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
+                                      (Pole1[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
+                N2_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
+                                      (Pole1[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
+                                      (Pole1[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
+                
+                Node_to_Pole <- rbind(N1_to_pole1,
+                                      N2_to_pole1)
+                
+                if(which.min(as.matrix(Node_to_Pole)) == 1 && which.max(as.matrix(Node_to_Pole)) == 2){
+                  end_type[k,1] <- "Minus"
+                  end_type[k,2] <- "Plus"
+                } else if(which.min(as.matrix(Node_to_Pole)) == 2 && which.max(as.matrix(Node_to_Pole)) == 1){
+                  end_type[k,1] <- "Plus"
+                  end_type[k,2] <- "Minus"
+                }
+              } else if (nrow(Segments[2,] %>% filter_at(vars(starts_with("Pole1")), any_vars(. == 1))) == 0){
+                ## calculate (-) end for Pole 2
+                N1_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
+                                      (Pole2[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
+                                      (Pole2[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
+                N2_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
+                                      (Pole2[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
+                                      (Pole2[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
+                
+                Node_to_Pole <- rbind(N1_to_pole2,
+                                      N2_to_pole2)
+                
+                if(which.min(as.matrix(Node_to_Pole)) == 1 && which.max(as.matrix(Node_to_Pole)) == 2){
+                  end_type[k,1] <- "Minus"
+                  end_type[k,2] <- "Plus"
+                } else if(which.min(as.matrix(Node_to_Pole)) == 2 && which.max(as.matrix(Node_to_Pole)) == 1){
+                  end_type[k,1] <- "Plus"
+                  end_type[k,2] <- "Minus"
+                }
+              }
             }
           }
           defin_end <- cbind(defin_end,

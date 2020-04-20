@@ -1,5 +1,5 @@
 ##########################
-# Load all Analysed data #
+# Load all Analyzed data #
 ##########################
 
 ## Load Length Distribution
@@ -118,6 +118,20 @@ for (i in 1:No_of_Data) {
   tryCatch({
     assign(paste(Data_label, "_", i, "_(-)_end_morphology_P2", sep = ""),
            read_excel(paste("bin/Output/", Data_label, "_", i, "_(-)_morphology_P2.xlsx", sep = "")))
+  },
+  error = function(e){})
+}
+
+## Load (-) seed
+for (i in 1:No_of_Data) {
+  tryCatch({
+    assign(paste(Data_label, "_", i, "_KMTs_minus_seed_P1", sep = ""),
+           read_excel(paste("bin/Output/", Data_label, "_", i, "_KMTs_minus_seed_P1.xlsx", sep = "")))
+  },
+  error = function(e){})
+  tryCatch({
+    assign(paste(Data_label, "_", i, "_KMTs_minus_seed_P2", sep = ""),
+           read_excel(paste("bin/Output/", Data_label, "_", i, "_KMTs_minus_seed_P2.xlsx", sep = "")))
   },
   error = function(e){})
 }

@@ -234,6 +234,40 @@ if(DP == 1){
                    get(paste(Data_label, "_", i, "_Local_Curvature", sep = ""))))
     }, error = function(e){})
   }
+  
+## (-) end seed
+  tryCatch({
+    assign(paste(Data_label, "_", 1, "_KMTs_minus_seed", sep = ""),
+           rbind(get(paste(Data_label, "_", 1, "_KMTs_minus_seed_P1", sep = "")),
+                 get(paste(Data_label, "_", 1, "_KMTs_minus_seed_P2", sep = ""))))
+    
+    rm(list = setdiff(ls(), 
+                      setdiff(ls(), 
+                              list(paste(Data_label, "_", 1, "_KMTs_minus_seed_P1", sep = ""), 
+                                   paste(Data_label, "_", 1, "_KMTs_minus_seed_P2", sep = "")))))
+    
+    assign(paste(Data_label, "_KMT_(-)_seed_ALL", sep = ""),
+           get(paste(Data_label, "_", 1, "_KMTs_minus_seed", sep = "")))
+  }, error = function(e){})
+  
+  for (i in 2:No_of_Data) {
+    tryCatch({
+      assign(paste(Data_label, "_", i, "_KMTs_minus_seed", sep = ""),
+             rbind(get(paste(Data_label, "_", i, "_KMTs_minus_seed_P1", sep = "")),
+                   get(paste(Data_label, "_", i, "_KMTs_minus_seed_P2", sep = ""))))
+      
+      rm(list = setdiff(ls(), 
+                        setdiff(ls(), 
+                                list(paste(Data_label, "_", i, "_KMTs_minus_seed_P1", sep = ""), 
+                                     paste(Data_label, "_", i, "_KMTs_minus_seed_P2", sep = "")))))
+      
+      assign(paste(Data_label, "_KMT_(-)_seed_ALL", sep = ""),
+             rbind(get(paste(Data_label, "_KMT_(-)_seed_ALL", sep = "")), 
+                   get(paste(Data_label, "_", i, "_KMTs_minus_seed", sep = ""))))
+    }, error = function(e){})
+  }
+  
+  
 } else if (DP == 2){
   
   
