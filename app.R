@@ -27,7 +27,7 @@ Data_label <- as.character(Data_label[1,1])
 ## Load data from the soucre location Output/...
 source("bin/Utility/Load_Analysis.R")
 
-## Prepare data depending from specied need: bin all for P1 & P2 or analysed P1 & P2 separetly 
+## Prepare data depending from needs: bin all for P1 & P2 or analyzed P1 & P2 separately 
 source("bin/Packages/Post_Analysis/Data_Praparation.R")
 
 ###################
