@@ -69,6 +69,8 @@ source("bin/Packages/Pre_Analysis/P_Relative_position.R")
 ##   - Inter_Kinetochore_Distance_KMTs_delta: [1] Inter-kinetochore distance, [2] Delta of KMTs
 ## 3 - KMTs_total_Curvature: [1] Curvature, [2] k0fiber no.
 ## 4 - Plus/minus_end_morphology_Pole1/2: [1] Fiber, [2 - 3] EndType, [4] EndType Different (if exist), [5] Relative position
+## 5 - Analyze fiber area and neighborhood density of the fiber
+## 6 - Analyze KMT (-) end seed of other MT 
 
 if(analysis == 0){
   source("bin/Packages/Analysis/Analyse_No_of_KMTs_Reaching_the_Pole.R")
@@ -96,7 +98,7 @@ if(analysis == 0){
   source("bin/Packages/Analysis/P_Fiber_Area.R")
   
 } else if (analysis == "6"){
-  source("bin/Packages/Analysis/....R")
+  source("bin/Packages/Analysis/P_KMT_Minus_End_Seeds.R")
   
 } else if (analysis == "7"){
   source("bin/Packages/Analysis/....R")
