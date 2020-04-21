@@ -51,7 +51,7 @@ Minus_end_seed <- function(x){
                                                  `Node ID #1`,
                                                  `Node ID #2`)
           
-          if(defin_end[1,1] %in% Segments_SMT$`Segment ID`){
+          if(defin_end[k,1] %in% Segments_SMT$`Segment ID`){
             defin_end[k,4] <-"SMT"
           } else {
             defin_end[k,4] <-"KMT"
@@ -71,7 +71,7 @@ Minus_end_seed <- function(x){
             N1 <- Nodes %>% filter_at(vars(starts_with("Node")), any_vars(. == (defin_end[k,2])))
             N2 <- Nodes %>% filter_at(vars(starts_with("Node")), any_vars(. == (defin_end[k,3])))
             
-            if(defin_end[k,4] == "SMT"){ 
+            if(defin_end[k,4] == "SMT"){
               N1_to_pole1 <- sqrt((Pole1[1,1] - N1[1,2])^2 +
                                   (Pole1[1,2] - N1[1,3])^2 + 
                                   (Pole1[1,3] - N1[1,4])^2)
@@ -104,7 +104,7 @@ Minus_end_seed <- function(x){
                 end_type[k,1:2] <- NA
               }
             } else if(defin_end[k,4] == "KMT"){
-              if(nrow(Segments[2,] %>% filter_at(vars(starts_with("Pole1")), any_vars(. == 1))) == 1){
+              if(nrow(Segments[as.numeric(defin_end[k,1]+1),] %>% filter_at(vars(starts_with("Pole1")), any_vars(. == 1))) == 1){
                 ## calculate (-) end for Pole 1
                 N1_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
                                       (Pole1[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
@@ -123,14 +123,14 @@ Minus_end_seed <- function(x){
                   end_type[k,1] <- "Plus"
                   end_type[k,2] <- "Minus"
                 }
-              } else if (nrow(Segments[2,] %>% filter_at(vars(starts_with("Pole1")), any_vars(. == 1))) == 0){
+              } else if (nrow(Segments[as.numeric(defin_end[k,1]+1),] %>% filter_at(vars(starts_with("Pole2")), any_vars(. == 1))) == 1){
                 ## calculate (-) end for Pole 2
                 N1_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
-                                      (Pole2[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
-                                      (Pole2[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
+                                    (Pole2[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
+                                    (Pole2[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
                 N2_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
-                                      (Pole2[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
-                                      (Pole2[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
+                                    (Pole2[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
+                                    (Pole2[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
                 
                 Node_to_Pole <- rbind(N1_to_pole2,
                                       N2_to_pole2)
