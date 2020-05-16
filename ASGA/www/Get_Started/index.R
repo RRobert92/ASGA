@@ -1,3 +1,13 @@
+################################################################################
+# Shiny UI-Home
+#
+# Author: Robert Kiewisz
+# Created: 2020-05-16 
+################################################################################
+
+
+# Shiny UI-Home  ---------------------------------------------------------------
+
 GetStarted_UI <- function(id){
   ns <- NS(id)
   navbarPage(
@@ -7,7 +17,13 @@ GetStarted_UI <- function(id){
     position = "fixed-top",
     id = "innavbar-GS",
     selected = "UploadData",
+
+# UI-Home-Home  ---------------------------------------------------------------
+
     tabPanel("Home", "Home"),
+
+# UI-Home-UploadData  ---------------------------------------------------------
+
     tabPanel("Upload Data", value = "UploadData",
              tags$div(class = "splash-container-GS",
                       tags$div(class = "splash-GS",
@@ -23,6 +39,9 @@ GetStarted_UI <- function(id){
                       )
              )
     ),
+
+# UI-Home-Settings  ----------------------------------------------------------
+
     tabPanel("Settings", value = "Settings",
              tags$div(class = "splash-container-GS",
                       tags$div(class = "splash-GS",
