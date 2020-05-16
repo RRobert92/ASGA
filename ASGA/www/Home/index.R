@@ -1,3 +1,13 @@
+################################################################################
+# Shiny UI-Home
+#
+# Author: Robert Kiewisz
+# Created: 2020-05-16 
+################################################################################
+
+
+# Shiny UI-Home  ---------------------------------------------------------------
+
 homeUI <- function(id){
   ns <- NS(id)
   
@@ -11,6 +21,9 @@ homeUI <- function(id){
            actionButton('Wiki', 'Wiki', class = "pure-button pure-button-primary"))
          )
 }
+
+# UI-Footnote  ---------------------------------------------------------------
+
 
 footnoteUI <- function(id){
   ns <- NS(id)
