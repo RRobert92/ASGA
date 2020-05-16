@@ -1,12 +1,12 @@
 ################################################################################
-# Shiny UI-Home
+# Shiny UI-GetStarted
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-16 
 ################################################################################
 
 
-# Shiny UI-Home  ---------------------------------------------------------------
+# UI-GetStarted  ---------------------------------------------------------------
 
 GetStarted_UI <- function(id){
   ns <- NS(id)
@@ -18,11 +18,11 @@ GetStarted_UI <- function(id){
     id = "innavbar-GS",
     selected = "UploadData",
 
-# UI-Home-Home  ---------------------------------------------------------------
+# UI-GetStarted-Home  ----------------------------------------------------------
 
     tabPanel("Home", "Home"),
 
-# UI-Home-UploadData  ---------------------------------------------------------
+# UI-GetStarted-UploadData  ----------------------------------------------------
 
     tabPanel("Upload Data", value = "UploadData",
              tags$div(class = "splash-container-GS",
@@ -40,7 +40,7 @@ GetStarted_UI <- function(id){
              )
     ),
 
-# UI-Home-Settings  ----------------------------------------------------------
+# UI-GetStarted-Settings  -----------------------------------------------------
 
     tabPanel("Settings", value = "Settings",
              tags$div(class = "splash-container-GS",
