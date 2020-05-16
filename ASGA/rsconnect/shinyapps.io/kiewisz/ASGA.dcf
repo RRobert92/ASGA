@@ -1,0 +1,13 @@
+name: ASGA
+title: ASGA
+username:
+account: kiewisz
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2285799
+bundleId: 3136903
+url: https://kiewisz.shinyapps.io/ASGA/
+when: 1589290657.90577
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData
