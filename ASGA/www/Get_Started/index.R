@@ -2,7 +2,7 @@
 # Shiny UI-GetStarted
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-17
 ################################################################################
 
 
@@ -31,10 +31,11 @@ GetStarted_UI <- function(id){
                                        "Upload your files"),
                                tags$p(class = "splash-subhead-GS",
                                       "Upload multiple .xlsx files. For mor information see Wiki."),
-                               tags$div(fileInput(ns("file"), label = "",
+                               tags$div(class ="splash-input-GS",
+                                 fileInput(ns("file"), label = "",
                                                   multiple = TRUE,
                                                   accept = c(".xlsx", 
-                                                             "All"))   
+                                                             "All"))
                                )
                       )
              )
