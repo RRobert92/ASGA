@@ -3,6 +3,9 @@
 #
 # The analysis tool to extract distance between sister kinetochore and number KMTs on  kinetochores
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-04-17
 ######################################################################################################

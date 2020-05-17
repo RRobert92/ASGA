@@ -6,6 +6,9 @@
 # x variables in the function is a DF name with points assigned to the MT
 #(e.g. Pole1_01_1)
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-05-16 
 ################################################################################

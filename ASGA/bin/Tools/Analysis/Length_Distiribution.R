@@ -6,6 +6,9 @@
 # x variable in the function is a number of a KMTs in the fiber (e.g. 1, 2, 3... etc.)
 # y variable in the function is the name of the pole to which KMTs is associated
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-03-17
 #####################################################################################

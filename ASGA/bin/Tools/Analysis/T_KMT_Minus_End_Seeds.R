@@ -7,6 +7,9 @@
 # Then we associate point_id to segment_id of P_S or P_K which are closer to the p then 100nm 
 # Multiple same segment_ID are marred to single entrance with their closes distance to the p
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-04-17
 ########################################################################################################

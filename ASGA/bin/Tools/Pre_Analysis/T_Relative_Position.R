@@ -7,6 +7,9 @@
 # Function to work with Pole_1
 # Relative position of point between kinetochore and pole ( 1 - 0 ) for Pole_1
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-05-16 
 #########################################################################################################

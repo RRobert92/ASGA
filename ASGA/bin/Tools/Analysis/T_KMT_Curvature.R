@@ -7,6 +7,9 @@
 # Ration is determined by dividing total KMT length and length 
 # of KMT between (+) and (-) end
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-04-17
 #####################################################################################

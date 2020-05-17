@@ -7,6 +7,9 @@
 # x is an number of the column with the label name
 # Y is name of the pole Pole1 or Pole2
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-04-17
 ################################################################################################

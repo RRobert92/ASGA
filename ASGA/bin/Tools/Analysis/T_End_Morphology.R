@@ -5,6 +5,9 @@
 #
 # Count the error rate between sample
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-04-17
 #####################################################################################

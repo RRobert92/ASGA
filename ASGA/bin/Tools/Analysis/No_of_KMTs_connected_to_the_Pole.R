@@ -6,6 +6,9 @@
 # x variables in the function is a number of a column contain KMTs information
 # Count how many KMTs with a minus end distance of "Minus_Threshold" is in the fiber
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-04-17
 #####################################################################################

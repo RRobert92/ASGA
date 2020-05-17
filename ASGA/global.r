@@ -1,6 +1,9 @@
 ################################################################################
 # Shiny Global
 #
+# (c) 2019 Kiewisz
+# This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
+#
 # Author: Robert Kiewisz
 # Created: 2020-05-16
 ################################################################################
@@ -32,3 +35,12 @@ source("bin/Tools/Pre_Analysis/Find_XYZ.R")
 source("bin/Tools/Pre_Analysis/Kinetochore_Position.R")
 source("bin/Tools/Pre_Analysis/Sort_All_Points_to_Start_From_the_Kinetochore.R")
 source("bin/Tools/Pre_Analysis/T_Relative_Position.R")
+
+source("bin/Tools/Analysis/Length_Distiribution.R")
+source("bin/Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
+source("bin/Tools/Analysis/No_of_KMTs.R")
+source("bin/Tools/Analysis/T_Inter_Kinetochore_Dist.R")
+source("bin/Tools/Analysis/T_KMT_Curvature.R")
+source("bin/Tools/Analysis/T_End_Morphology.R")
+source("bin/Tools/Analysis/T_Fiber_Area.R")
+source("bin/Tools/Analysis/T_KMT_Minus_End_Seeds.R")
