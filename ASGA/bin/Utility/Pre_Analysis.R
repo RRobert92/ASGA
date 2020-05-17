@@ -52,59 +52,59 @@ PreAnalysis <- function (input, output, session){
                                           "Point IDs")
   
   # Load Poles -----------------------------------------------------------------
-  Pole1 <- Nodes %>% filter_at(vars(Pole1),
+  Pole1 <<- Nodes %>% filter_at(vars(Pole1),
                                any_vars(.>=1))
-  Pole1 <- data.frame(X = c(Pole1 %>% select("X Coord")/10000),
+  Pole1 <<- data.frame(X = c(Pole1 %>% select("X Coord")/10000),
                       Y = c(Pole1 %>% select("Y Coord")/10000),
                       Z = c(Pole1 %>% select("Z Coord")/10000))
-  Pole2 <- Nodes %>% filter_at(vars(Pole2),
+  Pole2 <<- Nodes %>% filter_at(vars(Pole2),
                                any_vars(.>=1))
-  Pole2 <- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
+  Pole2 <<- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
                       Y = c(Pole2 %>% select("Y Coord")/10000),
                       Z = c(Pole2 %>% select("Z Coord")/10000))
   
   # Load Nodes -----------------------------------------------------------------
   if(ncol(Nodes %>% select(starts_with("EndType"))) == 1){
-    Nodes <- Nodes %>% select("Node ID", 
+    Nodes <<- Nodes %>% select("Node ID", 
                               "X Coord",
                               "Y Coord",
                               "Z Coord",
                               starts_with("EndType"))
     
   } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 2){
-    Nodes <- Nodes %>% select("Node ID", 
+    Nodes <<- Nodes %>% select("Node ID", 
                               "X Coord",
                               "Y Coord",
                               "Z Coord",
                               starts_with("EndType"))
     
-    compare <- data.frame()
+    compare <<- data.frame()
     
     for(i in 1:nrow(Nodes %>% select(starts_with("EndType")))){
       compare[i,1] <- Nodes[i,5] == Nodes[i,6]
     }
-    Nodes <- cbind(Nodes,
+    Nodes <<- cbind(Nodes,
                    compare)
     names(Nodes)[7] <- "Entype_Different"
     rm(compare)
     
   } else {
-    Nodes <- Nodes %>% select("Node ID", 
+    Nodes <<- Nodes %>% select("Node ID", 
                               "X Coord",
                               "Y Coord",
                               "Z Coord")
   }
   
-  Nodes[2:4] <- Nodes[2:4]/10000
+  Nodes[2:4] <<- Nodes[2:4]/10000
   
   # Load Points ----------------------------------------------------------------
-  Points <- Points %>% select("Point ID", 
+  Points <<- Points %>% select("Point ID", 
                               "X Coord",
                               "Y Coord",
                               "Z Coord")
   
-  Points[2:4] <- Points[2:4]/10000
-  names(Points)[1] <- "Point_ID"
+  Points[2:4] <<- Points[2:4]/10000
+  names(Points)[1] <<- "Point_ID"
   
 # Sort single KMT --------------------------------------------------------------
   progressSweetAlert(
@@ -228,20 +228,25 @@ PreAnalysis <- function (input, output, session){
 # Get ID for the ellipse Rx and Rz for 100%, 50% and 25% -----------------------
   Plus_end <<- data.frame()
   Kinetochore_Avg <<- data.frame()
+
+  assign("Kinetochore_projected",
+         Kinetochore_position(),
+         envir = .GlobalEnv)
+  
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)){
     j = 1
     tryCatch({
       while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
-        Plus_end[j,1:3] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1,2:4]
+        Plus_end[j,1:3] <<- get(paste(colnames(Segments)[i], j, sep = "_"))[1,2:4]
         j = j + 1
       }
-      Plus_end <- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
+      Plus_end <<- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
                              Y_Median = c(median(as.matrix(Plus_end[2]))),
                              Z_Median = c(median(as.matrix(Plus_end[3]))))
-      Kinetochore_Avg[i,1:3] <- Plus_end
+      Kinetochore_Avg[i,1:3] <<- Plus_end
     },
     error = function(e){
-      Kinetochore_Avg[i,1:3] <- NA
+      Kinetochore_Avg[i,1:3] <<- NA
     })
   }
   
@@ -282,7 +287,8 @@ PreAnalysis <- function (input, output, session){
     tryCatch({
       assign(paste(colnames(Segments)[i]),
              Analyse_LD(i, 
-                        Pole1))
+                        Pole1),
+             envir=.GlobalEnv)
     },
     error = function(e){})
     
@@ -310,7 +316,8 @@ PreAnalysis <- function (input, output, session){
     tryCatch({
       assign(paste(colnames(Segments)[i]),
              Analyse_LD(i, 
-                        Pole2))
+                        Pole2),
+             envir=.GlobalEnv)
     },
     error = function(e){})
     
