@@ -1,13 +1,15 @@
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
 /*
- * -- BASE STYLES --
- * Most of these are inherited from Base, but I want to change a few.
- */
+################################################################################
+# Shiny CSS
+#
+# Author: Robert Kiewisz
+# Created: 2020-05-17
+################################################################################
+*/
+
+/* 
+# Shiny Server  ----------------------------------------------------------------
+*/
 body {
     line-height: 1.7em;
     color: #7f8c8d;
@@ -24,15 +26,10 @@ label {
     color: #34495e;
 }
 
-.pure-img-responsive {
-    max-width: 100%;
-    height: auto;
-}
-
 /*
- * -- LAYOUT STYLES --
- * These are some useful classes which I will need
- */
+# CSS layout styles  ------------------------------------------------------------
+*/
+
 .l-box {
     padding: 0.5em;
 }
@@ -46,54 +43,27 @@ label {
     text-align: center;
 }
 
-
-
 /*
- * -- PURE FORM STYLES --
- * Style the form inputs and labels
- */
-.pure-form label {
-    margin: 1em 0 0;
-    font-weight: bold;
-    font-size: 100%;
-}
+# CSS button  -------------------------------------------------------------------
+*/
 
-.pure-form input[type] {
-    border: 2px solid #ddd;
-    box-shadow: none;
-    font-size: 100%;
-    width: 100%;
-    margin-bottom: 1em;
-}
-
-/*
- * -- PURE BUTTON STYLES --
- * I want my pure-button elements to look a little different
- */
-.pure-button {
+.asga-button {
     background-color: #1f8dd6;
     color: white;
     padding: 0.5em 2em;
     border-radius: 5px;
 }
 
-.pure-button-primary {
+.asga-button-primary {
     background: white;
     color: #1f8dd6;
     border-radius: 5px;
     font-size: 120%;
 }
 
-
-/*
- * -- MENU STYLES --
- * I want to customize how my .pure-menu looks at the top of the page
- */
- .form-input{
-   left: 50%;
-   position: fixed;
-   transform: translate(-50%);
- }
+ /*
+# CSS Main Page  -----------------------------------------------------------------
+*/
 
 .container-fluid{
   width: 100%;
@@ -110,50 +80,10 @@ label {
     padding-left: 15px
 }
 
-.home-menu {
-    padding: 0.5em;
-    text-align: center;
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-}
-.home-menu {
-    background: #2d3e50;
-}
-.pure-menu.pure-menu-fixed {
-    /* Fixed menus normally have a border at the bottom. */
-    border-bottom: none;
-    /* I need a higher z-index here because of the scroll-over effect. */
-    z-index: 4;
-}
+ /*
+# CSS Splash  -------------------------------------------------------------------
+*/
 
-.home-menu .pure-menu-heading {
-    color: white;
-    font-weight: 400;
-    font-size: 120%;
-}
-
-.home-menu .pure-menu-selected a {
-    color: white;
-}
-
-.home-menu a {
-    color: #ffffff;
-}
-.home-menu li a:hover,
-.home-menu li a:focus {
-    background: none;
-    border: none;
-    color: #ffffff;
-}
-
-
-/*
- * -- SPLASH STYLES --
- * This is the blue top section that appears on the page.
- */
-.form-group{
-  margin-right: auto;
-  margin-left: auto
-}
 .splash-container-GS {
     background: #fdfdfd;
     z-index: 1;
@@ -188,8 +118,9 @@ label {
     text-align: center;
     text-transform: uppercase;
 }
+
 .splash-GS{
-   width: 40%;
+    width: 50%;
     height: 40%;
     margin: auto;
     position: absolute;
@@ -197,6 +128,7 @@ label {
     text-align: center;
     text-transform: uppercase;
 }
+
 .table-GS{
    width: 45%;
     height: 35%;
@@ -206,10 +138,21 @@ label {
     text-align: left;
     text-transform: none;
 }
+
 .table-GS-Center{
   text-align: center;
 }
-/* This is the main heading that appears on the blue section */
+
+.form-group {
+  margin: auto;
+}
+
+.splash-input-GS{
+  width: 400px;
+  max-width: 100%;
+  margin: auto;
+}
+
 .splash-head {
     font-size: 20px;
     font-weight: bold;
@@ -220,22 +163,24 @@ label {
     border-radius: 5px;
     line-height: 1em;
 }
+
 .splash-head-GS{
     font-size: 30px;
     font-weight: bold;
     color: black;
     border: 3px solid black;
-    padding: 1.5em 1.6em;
+    padding: 1em 1em;
     font-weight: 100;
     border-radius: 5px;
-    line-height: 1em;
+    line-height: 1.2em;
 }
-/* This is the subheading that appears on the blue section */
+
 .splash-subhead {
     color: white;
     letter-spacing: 0.05em;
     opacity: 0.8;
 }
+
 .splash-subhead-GS{
   color: black;
    letter-spacing: 0.05em;
@@ -243,11 +188,10 @@ label {
 }
 
 /*
- * -- CONTENT STYLES --
- * This represents the content area (everything below the blue section)
- */
+# CSS Wrappers  -------------------------------------------------------------------
+*/
+
 .content-wrapper {
-    /* These styles are required for the "scroll-over" effect */
     position: absolute;
     top: 87%;
     width: 100%;
@@ -295,13 +239,13 @@ label {
     position: absolute;
     bottom: 0;
     width: 100%;
+    left: 0;
 }
 
-/*
- * -- TABLET (AND UP) MEDIA QUERIES --
- * On tablets and other medium-sized devices, we want to customize some
- * of the mobile styles.
- */
+ /*
+# CSS MEDIA QUERIES  -------------------------------------------------------------------
+*/
+
 @media (min-width: 48em) {
 
     /* We increase the body font size */
@@ -340,16 +284,4 @@ label {
         border: none;
     }
 
-}
-
-/*
- * -- DESKTOP (AND UP) MEDIA QUERIES --
- * On desktops and other large devices, we want to over-ride some
- * of the mobile and tablet styles.
- */
-@media (min-width: 78em) {
-    /* We increase the header font size even more */
-    .splash-head {
-        font-size: 300%;
-    }
 }
