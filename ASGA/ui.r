@@ -2,15 +2,12 @@
 # Shiny UI-Home
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-17
 ################################################################################
 
 
 # Shiny UI-Home  ---------------------------------------------------------------
 fluidPage(
-  includeCSS("www/css/pure-mini.css"),
-  includeCSS("www/css/grids-responsive-min.css"),
-  includeCSS("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"),
   includeCSS("www/css/style.css"),
   
   useShinyalert(),
