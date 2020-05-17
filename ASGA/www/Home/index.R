@@ -2,7 +2,7 @@
 # Shiny UI-Home
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-17
 ################################################################################
 
 
@@ -17,8 +17,8 @@ homeUI <- function(id){
              "Automatic Spatial Graph Analysis"),
            tags$p(class = "splash-subhead",
              "ASGA is an open-source cluster of tools with its ongoing development for a meiotic and mitotic spindle analysis."),
-           actionButton('GetStarted', 'Get Started', class = "pure-button pure-button-primary"),
-           actionButton('Wiki', 'Wiki', class = "pure-button pure-button-primary"))
+           actionButton('GetStarted', 'Get Started', class = "asga-button asga-button-primary"),
+           actionButton('Wiki', 'Wiki', class = "asga-button asga-button-primary"))
          )
 }
 
