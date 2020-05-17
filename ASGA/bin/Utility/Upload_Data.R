@@ -2,7 +2,7 @@
 # Module Upload_Data
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-17
 ################################################################################
 
 
@@ -69,7 +69,8 @@ Getfiles_Server <- function (input, output, session){
       sendSweetAlert(
         session = session,
         title = "The data structure looks great!",
-        text = paste("A", numfiles, text, "were successfuly upload!", "Press Ok to analyze your awesome data!",
+        text = paste("A", numfiles, text, "were successfuly upload!", "
+                     Press Ok to analyze your awesome data!",
                      sep = " "),
         type = "success",
         btn_labels = "OK",
@@ -137,6 +138,16 @@ Getfiles_Server <- function (input, output, session){
         title ="Looks like you there is a proble with your data",
         text ="The data structure is not compatible at all. Did you try to load a wrong file?
         Please check it with the guidelines and try again.",
+        type = "error",
+        btn_colors = "#C95050",
+        btn_labels = "OK",
+        closeOnClickOutside = TRUE
+      )
+    } else if (DataTest == 0){
+      sendSweetAlert(
+        session = session,
+        title ="Looks like you try to upload a wrong file",
+        text ="Please check it with the guidelines and try again.",
         type = "error",
         btn_colors = "#C95050",
         btn_labels = "OK",

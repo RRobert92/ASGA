@@ -2,7 +2,7 @@
 # Module Check_Data
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-17
 ################################################################################
 
 
@@ -64,5 +64,7 @@ if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
 } else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE){
   
   DataTest <<- 7
+}else if (!exists(get(paste("Data", "Segments", i, sep = "_")))){
+  DataTest <<- 0
 }
 }

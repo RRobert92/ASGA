@@ -2,7 +2,7 @@
 # Module Pre_Analysis
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-17 
 ################################################################################
 
 
@@ -18,7 +18,7 @@ PreAnalysis <- function (input, output, session){
   minus_distance <<- 0.055
   
   # Load Segments --------------------------------------------------------------
-  ncol <<- ncol(Segments)
+  ncolumn <<- ncol(Segments)
   Segments_1_KMT <<- Segments %>% filter_at(vars(starts_with(Pole1)),
                                            any_vars(.>= 1))
   Segments_1_KMT <<- Segments_1_KMT %>% select("Segment ID",
