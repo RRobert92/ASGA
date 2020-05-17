@@ -13,12 +13,12 @@
 
 # Pick single KMT  -------------------------------------------------------------
 Find_XYZ <- function(x) {
-  points_MT <- x[1]
-  names(points_MT)[1] <- "Point ID"
+  points_MT <- as.data.frame(as.numeric(as.character(x$Point_ID)))
+  names(points_MT)[1] <- "Point_ID"
   
   joined_data <- join_all(list(points_MT, 
                                Points),
-                          by = "Point ID")
+                          by = "Point_ID")
   mutate_all(joined_data, 
              function(y) as.numeric(as.character(y)))
 }
