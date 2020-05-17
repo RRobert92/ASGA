@@ -2,7 +2,7 @@
 # Shiny Server
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-17
 ################################################################################
 
 
@@ -43,7 +43,6 @@ function(input, output, session) {
   # Page relativity after loading data  ----------------------------------------
   observeEvent(input$`Home-file`,{
     showTab(inputId = "innavbar-GS", target = "Settings")
-    updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
   })
   
   # Relativity for the Home and GS button  -------------------------------------
