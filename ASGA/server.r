@@ -45,6 +45,8 @@ function(input, output, session) {
     showTab(inputId = "innavbar-GS", target = "Settings")
     if(DataTest == 1){
       updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
+    }else {
+      updateTabsetPanel(session, "innavbar", selected = "Home")
     }
   })
   

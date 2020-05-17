@@ -269,7 +269,6 @@ PreAnalysis <- function (input, output, session){
   Rz100 <<- max(Rz100)
   Rz50 <<- Rz100*0.80
   Rz25 <<- Rz100*0.45
-  rm(Kinetochore_Avg, Pole_avg)
  
 # Analyze Length Distribution for Pole1 --------------------------------------------------
   progressSweetAlert(
