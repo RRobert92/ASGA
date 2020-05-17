@@ -2,14 +2,11 @@
 # Shiny Global
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-16
 ################################################################################
 
 
 # Global CSS  ------------------------------------------------------------------
-includeCSS("www/css/pure-mini.css")
-includeCSS("www/css/grids-responsive-min.css")
-includeCSS("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css")
 includeCSS("www/css/style.css")
 
 # Global HTML  ------------------------------------------------------------------
