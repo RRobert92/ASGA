@@ -72,37 +72,37 @@ function(input, output, session) {
   observeEvent(input$`Submit`,{
     callModule(PreAnalysis, "Home")
     
-    if(input$`All_Anaysis` == TRUE){
+    if(input$`Home-All_Anaysis` == TRUE){
       callModule(A_KMT_number, "Home")
-      callModule(A_IKD, "Home")
-      callModule(A_Curvature, "Home")
-      callModule(A_End_Morphology, "Home")
-      callModule(A_Fiber_Area, "Home")
-      callModule(A_KMT_Minus_End_Seeds, "Home")
+      #  callModule(A_IKD, "Home")
+      #  callModule(A_Curvature, "Home")
+      #  callModule(A_End_Morphology, "Home")
+      #  callModule(A_Fiber_Area, "Home")
+      #  callModule(A_KMT_Minus_End_Seeds, "Home")
     }
     
-    if(input$`KMT_number` == TRUE){
+    if(input$`Home-KMT_number` == TRUE){
       callModule(A_KMT_number, "Home")
     }
     
-    if(input$`IKD` == TRUE){
-      callModule(A_IKD, "Home")
-    }
+    #  if(input$`Home-IKD` == TRUE){
+    #    callModule(A_IKD, "Home")
+    #  }
     
-    if(input$`Curvature` == TRUE){
-      callModule(A_Curvature, "Home")
-    }
+    #  if(input$`Home-Curvature` == TRUE){
+    #    callModule(A_Curvature, "Home")
+    #  }
     
-    if(input$`End_Morphology` == TRUE){
-      callModule(A_End_Morphology, "Home")
-    }
+    #  if(input$`Home-End_Morphology` == TRUE){
+    #    callModule(A_End_Morphology, "Home")
+    #  }
     
-    if(input$`Fiber_Area` == TRUE){
-      callModule(A_Fiber_Area, "Home")
-    } 
+    #  if(input$`Home-Fiber_Area` == TRUE){
+    #    callModule(A_Fiber_Area, "Home")
+    #  } 
     
-    if(input$`KMT_Minus_End_Seeds` == TRUE){
-      callModule(A_KMT_Minus_End_Seeds, "Home")
-    }
+    #  if(input$`Home-KMT_Minus_End_Seeds` == TRUE){
+    #    callModule(A_KMT_Minus_End_Seeds, "Home")
+    #  }
   })
 }
