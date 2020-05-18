@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-17 
+# Created: 2020-05-18
 ################################################################################
 
 
@@ -387,7 +387,7 @@ PreAnalysis <- function (input, output, session){
       Minus_dist <<- get(paste(colnames(Segments)[i]))["minus_dist_to_pole"]
       DF_Plus_end <<- get(paste(colnames(Segments)[i]))["plus_dist_to_kinetochore_core"]
       DF_Dist_pole <<- get(paste(colnames(Segments)[i]))["plus_dist_to_pole"]
-      DF_Elips <- get(paste(colnames(Segments)[i]))["Elipse_Position"]
+      DF_Elips <<- get(paste(colnames(Segments)[i]))["Elipse_Position"]
       DF <<- cbind(DF_LD,
                   DF_Plus_end,
                   DF_Dist_pole,
@@ -398,5 +398,155 @@ PreAnalysis <- function (input, output, session){
                      DF)
     },
     error = function(e){})
+  }
+  
+# Analyze Relative Position for Pole1 --------------------------------------------------------
+  progressSweetAlert(
+    session = session, id = "RelativePos1",
+    title = "Calcualting relative position for Pole_1...",
+    display_pct = TRUE, value = 0)
+  
+  total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
+  
+  for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+    
+    tryCatch({
+      Point_KMT <- data.frame()
+      for(j in 1:nrow(get(colnames(Segments)[i]))){
+        Point_KMT[j,1] <- get(paste(colnames(Segments)[i], 
+                                    j, 
+                                    sep = "_"))[1,3]
+      } 
+      Point_KMT <- which(Point_KMT[1] == min(Point_KMT))
+      longest <- get(paste(colnames(Segments)[i], 
+                           Point_KMT, 
+                           sep = "_"))
+      
+      for(j in 1:nrow(get(paste(colnames(Segments)[i])))){
+        assign(paste(colnames(Segments)[i], 
+                     j, 
+                     sep = "_"),
+               relativ_pos_1(longest,
+                             get(paste(colnames(Segments)[i], 
+                                       j, 
+                                       sep = "_"))),
+               envir=.GlobalEnv)
+      }
+      Point_minus <- data.frame()
+      for(j in 1:nrow(get(colnames(Segments)[i]))){
+        Point_minus[j,1] <- get(paste(colnames(Segments)[i], 
+                                      j, 
+                                      sep = "_"))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))),5]
+      }
+      names(Point_minus)[1] <- "Relative_minus_position"
+      
+      Point_plus <- data.frame()
+      for(j in 1:nrow(get(colnames(Segments)[i]))){
+        Point_plus[j,1] <- get(paste(colnames(Segments)[i], 
+                                     j, 
+                                     sep = "_"))[1,5]
+      }
+      names(Point_plus)[1] <- "Relative_plus_position"
+      
+      assign(paste(colnames(Segments)[i]),
+             cbind(get(paste(colnames(Segments)[i])),
+                   Point_plus,
+                   Point_minus),
+             envir=.GlobalEnv)
+    },
+    error = function(e){})
+    
+    updateProgressBar(
+      session = session,
+      id = "RelativePos1",
+      value = round((i - 1) / total * 100,
+                    0)
+    )
+    Sys.sleep(0.1)
+  }
+  closeSweetAlert(session = session)
+  
+#  Analyze Relative Position for Pole2 --------------------------------------------------------
+    progressSweetAlert(
+      session = session, id = "RelativePos2",
+      title = "Calcualting relative position for Pole_2...",
+      display_pct = TRUE, value = 0)
+  
+  total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
+    as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
+  
+  for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
+    tryCatch({
+      Point_KMT <- data.frame()
+      for(j in 1:nrow(get(colnames(Segments)[i]))){
+        Point_KMT[j,1] <- get(paste(colnames(Segments)[i], 
+                                    j, 
+                                    sep = "_"))[1,3]
+      } 
+      Point_KMT <- which(Point_KMT[1] == max(Point_KMT))
+      longest <- get(paste(colnames(Segments)[i],
+                           Point_KMT, 
+                           sep = "_"))
+      
+      for(j in 1:nrow(get(paste(colnames(Segments)[i])))){
+        assign(paste(colnames(Segments)[i], 
+                     j, 
+                     sep = "_"),
+               relativ_pos_2(longest,
+                             get(paste(colnames(Segments)[i], 
+                                       j, 
+                                       sep = "_"))),
+               envir=.GlobalEnv)
+      }
+      Point_minus <- data.frame()
+      for(j in 1:nrow(get(colnames(Segments)[i]))){
+        Point_minus[j,1] <- get(paste(colnames(Segments)[i], 
+                                      j, 
+                                      sep = "_"))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))),5]
+      }
+      names(Point_minus)[1] <- "Relative_minus_position"
+      
+      Point_plus <- data.frame()
+      for(j in 1:nrow(get(colnames(Segments)[i]))){
+        Point_plus[j,1] <- get(paste(colnames(Segments)[i], 
+                                     j, 
+                                     sep = "_"))[1,5]
+      }
+      names(Point_plus)[1] <- "Relative_plus_position"
+      
+      assign(paste(colnames(Segments)[i]),
+             cbind(get(paste(colnames(Segments)[i])),
+                   Point_plus,
+                   Point_minus),
+             envir=.GlobalEnv)
+      
+    },
+    error = function(e){})
+    
+    updateProgressBar(
+      session = session,
+      id = "RelativePos2",
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
+                    0)
+    )
+    Sys.sleep(0.1)
+  }
+  closeSweetAlert(session = session)
+  
+  Minus_end_position <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["minus_dist_to_pole"]
+  Relative_position <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Relative_minus_position"]
+  Minus_end_position <<- cbind(Minus_end_position, Relative_position)
+  
+  for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(ncol(Segments) - 4)) {
+    tryCatch({
+      DF_Minus_end_position <<- get(paste(colnames(Segments)[i]))["minus_dist_to_pole"]
+      DF_Relative_position <<- get(paste(colnames(Segments)[i]))["Relative_minus_position"]
+      DF <<- cbind(DF_Minus_end_position,
+                   DF_Relative_position)
+      Minus_end_position <<- rbind(Minus_end_position,
+                                   DF)
+    },
+    error = function(e){})
+    
   }
 }
