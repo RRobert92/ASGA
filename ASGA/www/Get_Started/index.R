@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-17
+# Created: 2020-05-18
 ################################################################################
 
 
@@ -54,7 +54,7 @@ GetStarted_UI <- function(id){
                       tags$div(class = "table-GS",
                                fluidRow(Setting_Buttons_UI("Home"),
                                         column(7, 
-                                               uiOutput(ns("ToolInfo")))),
+                                               uiOutput(ns("Tool_Info")))),
                                tags$div(class = "table-GS-Center",
                                         fluidRow(
                                  actionBttn(
