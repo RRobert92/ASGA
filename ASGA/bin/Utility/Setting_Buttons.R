@@ -75,6 +75,11 @@ Setting_Buttons_Server <- function (input, output, session){
         For more information see 'Wiki' page"
       }
     })
+    
+    if(input$`KMT_Minus_End_Seeds` == TRUE){
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
+    }
+    All_Closed()
   })
   
   observeEvent(input$`Fiber_Area`,{
@@ -85,6 +90,11 @@ Setting_Buttons_Server <- function (input, output, session){
         For more information see 'Wiki' page"
       }
     })
+    
+    if(input$`Fiber_Area` == TRUE){
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
+    }
+    All_Closed()
   })
   
   observeEvent(input$`End_Morphology`,{
@@ -94,6 +104,11 @@ Setting_Buttons_Server <- function (input, output, session){
         For more information see 'Wiki' page"
       }
     })
+    
+    if(input$`End_Morphology` == TRUE){
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
+    }
+    All_Closed()
   })
   
   observeEvent(input$`Curvature`,{
@@ -103,6 +118,11 @@ Setting_Buttons_Server <- function (input, output, session){
         For more information see 'Wiki' page"
       }
     })
+    
+    if(input$`Curvature` == TRUE){
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
+    }
+    All_Closed()
   })
   
   observeEvent(input$`IKD`,{
@@ -112,6 +132,11 @@ Setting_Buttons_Server <- function (input, output, session){
         For more information see 'Wiki' page"
       }
     })
+    
+    if(input$`IKD` == TRUE){
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
+    }
+    All_Closed()
   })
   
   
@@ -126,15 +151,8 @@ Setting_Buttons_Server <- function (input, output, session){
     
     if(input$`KMT_number` == TRUE){
       updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }else if (input$`All_Anaysis` == FALSE &&
-              input$`KMT_number` == FALSE &&
-              input$`IKD` == FALSE &&
-              input$`Curvature` == FALSE &&
-              input$`End_Morphology` == FALSE &&
-              input$`Fiber_Area` == FALSE &&
-              input$`KMT_Minus_End_Seeds` == FALSE){
-      updateMaterialSwitch(session, "All_Anaysis", TRUE)
     }
+    All_Closed()
   })
   
   observeEvent(input$`All_Anaysis`,{
@@ -146,6 +164,10 @@ Setting_Buttons_Server <- function (input, output, session){
       }
     })
     
+    All_Button()
+  })
+  
+  All_Button <- function(){
     if(input$`All_Anaysis` == TRUE){
       updateMaterialSwitch(session, "KMT_number", FALSE)
       updateMaterialSwitch(session, "IKD", FALSE)
@@ -162,5 +184,17 @@ Setting_Buttons_Server <- function (input, output, session){
       updateMaterialSwitch(session, "Fiber_Area", TRUE)
       updateMaterialSwitch(session, "KMT_Minus_End_Seeds", TRUE)
     }
-  })
+  }
+  
+  All_Closed <- function(){
+    if (input$`All_Anaysis` == FALSE &&
+             input$`KMT_number` == FALSE &&
+             input$`IKD` == FALSE &&
+             input$`Curvature` == FALSE &&
+             input$`End_Morphology` == FALSE &&
+             input$`Fiber_Area` == FALSE &&
+             input$`KMT_Minus_End_Seeds` == FALSE){
+      updateMaterialSwitch(session, "All_Anaysis", TRUE)
+    }
+  }
 }
