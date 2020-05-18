@@ -32,7 +32,7 @@ A_KMT_number <- function (input, output, session){
   
   
   progressSweetAlert(
-    session = session, id = "P_KMT_number1.1",
+    session = session, id = "P_KMT_number1_1",
     title = "Calculating no. of KMTs reaching the pole1...",
     display_pct = TRUE, value = 0
   )
@@ -64,7 +64,7 @@ A_KMT_number <- function (input, output, session){
     
     updateProgressBar(
       session = session,
-      id = "P_KMT_number1.1",
+      id = "P_KMT_number1_1",
       value = round((i - 1) / total * 100,
                     0)
     )
@@ -98,7 +98,7 @@ A_KMT_number <- function (input, output, session){
   DF2 <- data.frame()
   
   progressSweetAlert(
-    session = session, id = "P_KMT_number2.1",
+    session = session, id = "P_KMT_number2_1",
     title = "Calculating no. of KMTs reaching the pole2...",
     display_pct = TRUE, value = 0
   )
@@ -130,7 +130,7 @@ A_KMT_number <- function (input, output, session){
     
     updateProgressBar(
       session = session,
-      id = "P_KMT_number2.1",
+      id = "P_KMT_number2_1",
       value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                     0)
     )
@@ -151,7 +151,7 @@ A_KMT_number <- function (input, output, session){
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
   
   progressSweetAlert(
-    session = session, id = "P_KMT_number1.2",
+    session = session, id = "P_KMT_number1_2",
     title = "Counting no. of KMTs at each kinetochore from the Pole1...",
     display_pct = TRUE, value = 0
   )
@@ -169,7 +169,7 @@ A_KMT_number <- function (input, output, session){
     
     updateProgressBar(
       session = session,
-      id = "P_KMT_number1.2",
+      id = "P_KMT_number1_2",
       value =  round((i - 1) / total * 100,
                      0)
     )
@@ -191,7 +191,7 @@ A_KMT_number <- function (input, output, session){
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
   
   progressSweetAlert(
-    session = session, id = "P_KMT_number2.2",
+    session = session, id = "P_KMT_number2_2",
     title = "Counting no. of KMTs at each kinetochore from the Pole1...",
     display_pct = TRUE, value = 0
   )
@@ -210,7 +210,7 @@ A_KMT_number <- function (input, output, session){
     )
     updateProgressBar(
       session = session,
-      id = "P_KMT_number2.2",
+      id = "P_KMT_number2_2",
       value =  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                      0)
     )
