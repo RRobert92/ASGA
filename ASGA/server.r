@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-17
+# Created: 2020-05-18
 ################################################################################
 
 
@@ -71,6 +71,38 @@ function(input, output, session) {
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`,{
     callModule(PreAnalysis, "Home")
+    
+    if(input$`All_Anaysis` == TRUE){
+      callModule(A_KMT_number, "Home")
+      callModule(A_IKD, "Home")
+      callModule(A_Curvature, "Home")
+      callModule(A_End_Morphology, "Home")
+      callModule(A_Fiber_Area, "Home")
+      callModule(A_KMT_Minus_End_Seeds, "Home")
+    }
+    
+    if(input$`KMT_number` == TRUE){
+      callModule(A_KMT_number, "Home")
+    }
+    
+    if(input$`IKD` == TRUE){
+      callModule(A_IKD, "Home")
+    }
+    
+    if(input$`Curvature` == TRUE){
+      callModule(A_Curvature, "Home")
+    }
+    
+    if(input$`End_Morphology` == TRUE){
+      callModule(A_End_Morphology, "Home")
+    }
+    
+    if(input$`Fiber_Area` == TRUE){
+      callModule(A_Fiber_Area, "Home")
+    } 
+    
+    if(input$`KMT_Minus_End_Seeds` == TRUE){
+      callModule(A_KMT_Minus_End_Seeds, "Home")
+    }
   })
-  
 }
