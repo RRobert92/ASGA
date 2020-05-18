@@ -54,7 +54,10 @@ GetStarted_UI <- function(id){
                       tags$div(class = "table-GS",
                                fluidRow(Setting_Buttons_UI("Home"),
                                         column(7, 
-                                               uiOutput(ns("Tool_Info")))),
+                                               uiOutput(ns("Tool_Info")
+                                                        )
+                                               )
+                                        ),
                                tags$div(class = "table-GS-Center",
                                         fluidRow(
                                  actionBttn(
