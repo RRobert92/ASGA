@@ -71,6 +71,7 @@ A_Fiber_Area <- function (input, output, session){
     )
     Sys.sleep(0.1)
   }
+  closeSweetAlert(session = session)
   
   Fiber_area_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], 
                              "fiber", 
@@ -90,10 +91,13 @@ A_Fiber_Area <- function (input, output, session){
     },
     error = function(e){})
     
+    tryCatch({
     N_density_P1 <- rbind(N_density_P1,
                           get(paste(colnames(Segments)[i], 
                                     "NDensity", 
                                     sep = "_")))
+  },
+  error = function(e){})
   }
   
   Fiber_area_P1 <<- Fiber_area_P1
@@ -159,6 +163,8 @@ A_Fiber_Area <- function (input, output, session){
     Sys.sleep(0.1)
   }
   
+  closeSweetAlert(session = session)
+  
   Fiber_area_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], 
                             "fiber", 
                             sep = "_"))
@@ -175,6 +181,7 @@ A_Fiber_Area <- function (input, output, session){
                                        sep = "_")))
     },
     error = function(e){})
+    
     tryCatch({
       N_density_P2 <- rbind(N_density_P2,
                             get(paste(colnames(Segments)[i], 
