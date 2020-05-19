@@ -14,7 +14,7 @@
 GetStarted_UI <- function(id){
   ns <- NS(id)
   navbarPage(
-    title = "ASGA V0.3-beta",
+    title = apptitle,
     collapsible = TRUE,
     inverse = TRUE,
     position = "fixed-top",
