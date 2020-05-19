@@ -60,6 +60,6 @@ Contributions, collaborators and/or constructive criticism are welcome! Please s
 This project is distributed under the General Public License (GPL) version 3.0 - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Citation
-[![DOI](https://zenodo.org/badge/216998366.svg)](https://zenodo.org/badge/latestdoi/216998366)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3732108.svg)](https://doi.org/10.5281/zenodo.3732108)
 
-Kiewisz R. *Spindle analysis tool v0.3* (2020) [DOI: 10.5281/zenodo.3834102](https://doi.org/10.5281/zenodo.3834102)
+Kiewisz R. *Spindle analysis tool* (2020) [DOI: 10.5281/zenodo.3732108](https://doi.org/10.5281/zenodo.3732108)
