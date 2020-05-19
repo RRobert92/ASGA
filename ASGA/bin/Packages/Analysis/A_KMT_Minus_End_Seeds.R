@@ -23,10 +23,10 @@ A_KMT_Minus_End_Seeds <- function (input, output, session){
   
   KMTs_minus_seed_P1 <- Minus_end_seed(which(colnames(Segments) == "Pole1_00"))
   
-  for(m in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
+  for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     tryCatch({
       assign("DF",
-             Minus_end_seed(m))
+             Minus_end_seed(i))
       KMTs_minus_seed_P1 <- rbind(KMTs_minus_seed_P1,
                                   DF)
     },
