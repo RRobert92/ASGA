@@ -71,38 +71,38 @@ function(input, output, session) {
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`,{
     callModule(PreAnalysis, "Home")
-  
-  if(input$`Home-All_Anaysis` == TRUE){
-    callModule(A_KMT_number, "Home")
-    callModule(A_IKD, "Home")
-    callModule(A_Curvature, "Home")
-    callModule(A_End_Morphology, "Home")
-    callModule(A_Fiber_Area, "Home")
-    #  callModule(A_KMT_Minus_End_Seeds, "Home")
-  }
-  
-  if(input$`Home-KMT_number` == TRUE){
-    callModule(A_KMT_number, "Home")
-  }
-  
-  if(input$`Home-IKD` == TRUE){
-    callModule(A_IKD, "Home")
-  }
-  
-  if(input$`Home-Curvature` == TRUE){
-    callModule(A_Curvature, "Home")
-  }
-  
-  if(input$`Home-End_Morphology` == TRUE){
-    callModule(A_End_Morphology, "Home")
-  }
-  
-  if(input$`Home-Fiber_Area` == TRUE){
-    callModule(A_Fiber_Area, "Home")
-  }
-  
-  #  if(input$`Home-KMT_Minus_End_Seeds` == TRUE){
-  #    callModule(A_KMT_Minus_End_Seeds, "Home")
-  #  }
-})
-  }
+    
+    if(input$`Home-All_Anaysis` == TRUE){
+      callModule(A_KMT_number, "Home")
+      callModule(A_IKD, "Home")
+      callModule(A_Curvature, "Home")
+      callModule(A_End_Morphology, "Home")
+      callModule(A_Fiber_Area, "Home")
+      callModule(A_KMT_Minus_End_Seeds, "Home")
+    }
+    
+    if(input$`Home-KMT_number` == TRUE){
+      callModule(A_KMT_number, "Home")
+    }
+    
+    if(input$`Home-IKD` == TRUE){
+      callModule(A_IKD, "Home")
+    }
+    
+    if(input$`Home-Curvature` == TRUE){
+      callModule(A_Curvature, "Home")
+    }
+    
+    if(input$`Home-End_Morphology` == TRUE){
+      callModule(A_End_Morphology, "Home")
+    }
+    
+    if(input$`Home-Fiber_Area` == TRUE){
+      callModule(A_Fiber_Area, "Home")
+    }
+    
+    if(input$`Home-KMT_Minus_End_Seeds` == TRUE){
+      callModule(A_KMT_Minus_End_Seeds, "Home")
+    }
+  })
+}
