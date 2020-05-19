@@ -25,40 +25,41 @@ A_Fiber_Area <- function (input, output, session){
     tryCatch({
       assign(paste(colnames(Segments)[i]), 
              leading_KMTsv2(i, Pole1),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              Leadig_Points(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              find_polygon(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              duplicated_points(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              median_point(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
-             find_polygon_for_all(i))
+             find_polygon_for_all(i),
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              duplicated_points(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              median_point(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              polygon_area(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
              Neighorhood_densit(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              relativ_pos_1_fiber(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
              cbind(get(paste(colnames(Segments)[i], "NDensity", sep = "_")),
                    get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
     },
     error = function(e){})
     
@@ -94,6 +95,7 @@ A_Fiber_Area <- function (input, output, session){
                                     "NDensity", 
                                     sep = "_")))
   }
+  
   Fiber_area_P1 <<- Fiber_area_P1
   N_density_P1 <<- N_density_P1
   
@@ -111,41 +113,41 @@ A_Fiber_Area <- function (input, output, session){
     tryCatch({
       assign(paste(colnames(Segments)[i]), 
              leading_KMTsv2(i, Pole1),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              Leadig_Points(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              find_polygon(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              duplicated_points(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              median_point(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              find_polygon_for_all(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              duplicated_points(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              median_point(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              polygon_area(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
              Neighorhood_densit(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              relativ_pos_2_fiber(i),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "NDensity", sep = "_"),
              cbind(get(paste(colnames(Segments)[i], "NDensity", sep = "_")),
                    get(paste(colnames(Segments)[i], "fiber", sep = "_"))[1]),
-             envir = .GlobalEn)
+             envir=.GlobalEnv)
     },
     error = function(e){})
     updateProgressBar(
