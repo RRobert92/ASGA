@@ -68,7 +68,6 @@ Getfiles_Server <- function (input, output, session){
     
 # Pop-UP windows with Completion/Errors  ----------------------------------------
     if(DataTest == 1){
-      showTab(inputId = "innavbar-GS", target = "Settings")
       sendSweetAlert(
         session = session,
         title = "The data structure looks great!",
@@ -157,6 +156,7 @@ Getfiles_Server <- function (input, output, session){
         closeOnClickOutside = TRUE
       )
     }
+    
+    showTab(inputId = "innavbar-GS", target = "Settings")
   })
-  
 }

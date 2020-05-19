@@ -134,6 +134,19 @@ Setting_Buttons_Server <- function (input, output, session){
     })
     
     if(input$`IKD` == TRUE){
+      confirmSweetAlert(
+        session,
+        inputId = "IKD_confirmation",
+        title = "Want to confirm ?",
+        text = "The Inter-Kinetochore distance will be calculated. This analysis relies on corresponding k-fiber labels.
+      e.g. sister-kinetochore for Pole1_00 is Pole2_00.",
+        type = "question",
+        btn_labels = c("Cancel", "Confirm"),
+        btn_colors = NULL
+      )
+    }
+    
+    if(input$`IKD` == TRUE){
       updateMaterialSwitch(session, "All_Anaysis", FALSE)
     }
     All_Closed()

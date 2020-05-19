@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-18
+# Created: 2020-05-19
 ################################################################################
 
 
@@ -14,7 +14,7 @@
 GetStarted_UI <- function(id){
   ns <- NS(id)
   navbarPage(
-    title = "ASGA",
+    title = "ASGA V0.3-beta",
     collapsible = TRUE,
     inverse = TRUE,
     position = "fixed-top",

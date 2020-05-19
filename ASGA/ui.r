@@ -15,7 +15,7 @@ fluidPage(
   
   useShinyalert(),
   
-  navbarPage(title = "ASGA - Automati Spatial Graph Analysis",
+  navbarPage(title = "ASGA V0.3-beta",
              collapsible = TRUE,
              inverse = TRUE,
              position = "fixed-top",
