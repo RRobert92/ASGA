@@ -158,12 +158,11 @@ PreAnalysis <- function (input, output, session){
 
 # Sort Points in KMT at a Pole1 ------------------------------------------------
   progressSweetAlert(
-    session = session, id = "SinglePoints1",
+    session = session, id = "Pre_Analysis",
     title = "Sorting points based on (+) and (-) ends for the Pole_1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, value = 1
   )
-  total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
-
+  total <- 6
   for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     tryCatch({
       j = 1
@@ -180,25 +179,20 @@ PreAnalysis <- function (input, output, session){
       }
     },
     error = function(e){})
-    
-    updateProgressBar(
-      session = session,
-      id = "SinglePoints1",
-      value = round((i - 1) / total * 100, 
-                    0)
-    )
-    Sys.sleep(0.1)
+  
   }
-  closeSweetAlert(session = session)
 
 # Sort Points in KMT at a Pole2 ------------------------------------------------
-  progressSweetAlert(
-    session = session, id = "SinglePoints2",
+  z=2
+  updateProgressBar(
+    session = session,
+    id = "Pre_Analysis",
     title = "Sorting points based on (+) and (-) ends for the Pole_2...",
-    display_pct = TRUE, value = 0)
+    value = round((z - 1) / total * 100, 
+                  0)
+  )
+  Sys.sleep(0.1)
   
-  total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
-    as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
   
   for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)){
     j = 1
@@ -218,15 +212,7 @@ PreAnalysis <- function (input, output, session){
     },
     error = function(e){})
     
-    updateProgressBar(
-      session = session,
-      id = "SinglePoints2",
-      value =  round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 
-                     0)
-    )
-    Sys.sleep(0.1)
   }
-  closeSweetAlert(session = session)
 
 # Get ID for the ellipse Rx and Rz for 100%, 50% and 25% -----------------------
   Plus_end <<- data.frame()
@@ -279,12 +265,15 @@ PreAnalysis <- function (input, output, session){
   Rz25 <<- Rz100*0.45
  
 # Analyze Length Distribution for Pole1 --------------------------------------------------
-  progressSweetAlert(
-    session = session, id = "AnalyseLD1",
-    title = "Calcualting legnth and ends positions for Pole_1",
-    display_pct = TRUE, value = 0)
-  
-  total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
+  z=3
+  updateProgressBar(
+    session = session,
+    id = "Pre_Analysis",
+    title = "Calcualting legnth and ends positions for Pole_1...",
+    value = round((z - 1) / total * 100, 
+                  0)
+  )
+  Sys.sleep(0.1)
   
   for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     tryCatch({
@@ -294,25 +283,19 @@ PreAnalysis <- function (input, output, session){
              envir=.GlobalEnv)
     },
     error = function(e){})
-    
-    updateProgressBar(
-      session = session,
-      id = "AnalyseLD1",
-      value = round((i - 1) / total * 100,
-                    0)
-    )
-    Sys.sleep(0.1)
+  
   }
-  closeSweetAlert(session = session)
   
 # Analyze Length Distribution for Pole2 --------------------------------------------------
-  progressSweetAlert(
-    session = session, id = "AnalyseLD2",
-    title = "Calcualting legnth and ends positions for Pole_2",
-    display_pct = TRUE, value = 0)
-  
-  total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
-    as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
+  z=4
+  updateProgressBar(
+    session = session,
+    id = "Pre_Analysis",
+    title = "Calcualting legnth and ends positions for Pole_2...",
+    value = round((z - 1) / total * 100, 
+                  0)
+  )
+  Sys.sleep(0.1)
   
   for(i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)){
     j = 1
@@ -332,7 +315,7 @@ PreAnalysis <- function (input, output, session){
     )
     Sys.sleep(0.1)
   }
-  closeSweetAlert(session = session)
+
   
 # Collect Length Distribution Data for Pole1 --------------------------------------------------
   LD_P1 <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"]
@@ -401,12 +384,15 @@ PreAnalysis <- function (input, output, session){
   }
   
 # Analyze Relative Position for Pole1 --------------------------------------------------------
-  progressSweetAlert(
-    session = session, id = "RelativePos1",
+  z=5
+  updateProgressBar(
+    session = session,
+    id = "Pre_Analysis",
     title = "Calcualting relative position for Pole_1...",
-    display_pct = TRUE, value = 0)
-  
-  total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
+    value = round((z - 1) / total * 100, 
+                  0)
+  )
+  Sys.sleep(0.1)
   
   for(i in which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     
@@ -464,17 +450,19 @@ PreAnalysis <- function (input, output, session){
     )
     Sys.sleep(0.1)
   }
-  closeSweetAlert(session = session)
+
   
 #  Analyze Relative Position for Pole2 --------------------------------------------------------
-    progressSweetAlert(
-      session = session, id = "RelativePos2",
-      title = "Calcualting relative position for Pole_2...",
-      display_pct = TRUE, value = 0)
-  
-  total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
-    as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
-  
+
+  z=6
+  updateProgressBar(
+    session = session,
+    id = "Pre_Analysis",
+    title = "Calcualting relative position for Pole_2...",
+    value = round((z - 1) / total * 100, 
+                  0)
+  )
+  Sys.sleep(0.1)
   for(i in which(colnames(Segments) == "Pole2_00") : as.numeric(ncol(Segments) - 4)){
     tryCatch({
       Point_KMT <- data.frame()
