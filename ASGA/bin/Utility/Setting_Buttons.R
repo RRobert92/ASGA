@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-18
+# Created: 2020-05-19
 ################################################################################
 
 # Setting_BUttons_UI  ----------------------------------------------------------
@@ -172,8 +172,6 @@ Setting_Buttons_Server <- function (input, output, session){
     output$`Tool_Info` <- renderUI({
       if(input$`All_Anaysis` == TRUE){
         "All analysis will be run. For more information see 'Wiki' page"
-      } else {
-        "Please select any option!"
       }
     })
     
