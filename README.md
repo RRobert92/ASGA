@@ -32,8 +32,8 @@ These instructions will get you a copy of the project up and running on your loc
 <a name="Dependency"></a>
 ### Dependency
 ```
-R 3.5.3 or newer
-Rstudio 1.3.929 or newer
+R v3.5.3 or newer
+Rstudio v1.2 or newer
 Java SE 11 (LTS) or newer
 ```
 <a name="Quick_start_DP"></a>
