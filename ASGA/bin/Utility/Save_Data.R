@@ -159,17 +159,17 @@ Save_Data <- function (input, output, session){
              paste("Data/", "Data_",current_data, "_N_Density.xlsx", sep = ""))
   
 # Save Data for nucleation ----------------------------------------------------
-  assign(paste("Data", current_data, "KMTs_minus_seed_P1" , sep = " "),
+  assign(paste("Data", current_data, "KMTs_minus_seed_P1", sep = "_"),
          KMTs_minus_seed_P1,
          envir = .GlobalEnv)
-  assign(paste("Data", current_data, "KMTs_minus_seed_P2" , sep = " "),
+  assign(paste("Data", current_data, "KMTs_minus_seed_P2", sep = "_"),
          KMTs_minus_seed_P2,
          envir = .GlobalEnv)  
   assign(paste("Data",current_data, "KMTs_minus_seed", sep = "_"),
          rbind(KMTs_minus_seed_P1, KMTs_minus_seed_P2),
          envir = .GlobalEnv) 
   write.xlsx(get(paste("Data",current_data, "KMTs_minus_seed_P1", sep = "_")), 
-             paste("Data/", "Data_",current_data, "_KMTs_minus_seed_P1.xlsx", sep = ""))  
+             paste("Data/", "Data_",current_data, "_KMTs_minus_seed_P1.xlsx", sep = ""))
   write.xlsx(get(paste("Data",current_data, "KMTs_minus_seed_P2", sep = "_")), 
              paste("Data/", "Data_",current_data, "_KMTs_minus_seed_P2.xlsx", sep = ""))
   write.xlsx(get(paste("Data",current_data, "KMTs_minus_seed", sep = "_")), 
