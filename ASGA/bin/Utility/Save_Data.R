@@ -43,7 +43,7 @@ Save_Data <- function (input, output, session){
          envir = .GlobalEnv)
   names(KMTs_at_the_Pole1)[1] <- "KMTs_at_the_Pole"
   names(KMTs_at_the_Pole2)[1] <- "KMTs_at_the_Pole"
-  assign(paste("Data",current_data, "KMT_No", sep = "_"),
+  assign(paste("Data",current_data, "KMT_Pole", sep = "_"),
          rbind(KMTs_at_the_Pole1, KMTs_at_the_Pole2),
          envir = .GlobalEnv)
 
@@ -70,7 +70,7 @@ Save_Data <- function (input, output, session){
   assign(paste("Data",current_data, "KMT_Total_Curv_P2", sep = "_"),
          KMTs_total_Curvature_P2,
          envir = .GlobalEnv)
-  assign(paste("Data",current_data, "KMT_No", sep = "_"),
+  assign(paste("Data",current_data, "KMT_Total_Curv", sep = "_"),
          rbind(KMTs_total_Curvature_P1, KMTs_total_Curvature_P2),
          envir = .GlobalEnv)
 
@@ -81,7 +81,7 @@ Save_Data <- function (input, output, session){
   assign(paste("Data",current_data, "KMT_Local_Curv_P2", sep = "_"),
          KMTs_local_Curvature_P2,
          envir = .GlobalEnv)
-  assign(paste("Data",current_data, "KMT_No", sep = "_"),
+  assign(paste("Data",current_data, "KMT_Local_Curv", sep = "_"),
          rbind(KMTs_local_Curvature_P1, KMTs_local_Curvature_P2),
          envir = .GlobalEnv)
 
