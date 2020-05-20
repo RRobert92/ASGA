@@ -11,17 +11,19 @@
 V0.31
 # Mejor changes  ---------------------------------------------------------------
 
-- Moved loading of a data from Upload to separet function
+- Moved loading of a data from Upload to separate function
 - Upload and analysis of multiple data is now supported
 *- Added module for saving data
 
 # Minor changes ----------------------------------------------------------------
 
 - Title of an app is now a variable
+- Added small progress bar if more then one dataset was upload to indicate which 
+  dataset is currently analyzed
 
 # Bug Fix ----------------------------------------------------------------------
 
 
 # Other ------------------------------------------------------------------------
 
-- Started documentation of a changes (a.k.a. Change Log)
+- Started documentation of changes (a.k.a. Change Log)
