@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-19
+# Created: 2020-05-20
 ################################################################################
 
 # Title of the app -------------------------------------------------------------
@@ -26,6 +26,7 @@ source("bin/Utility/Setting_Buttons.R")
 source("bin/Utility/Pre_Analysis.R")
 source("bin/Utility/Load_Data.R")
 source("bin/Utility/Save_Data.R")
+source("bin/Utility/Export_Data.R")
 
 # Global Settings  -------------------------------------------------------------
 options(shiny.maxRequestSize = 1024*1024^2)

@@ -70,12 +70,11 @@ function(input, output, session) {
   
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`,{
-    if(numfiles > 1){
       withProgress(message = "Analyzing:", value = 1, {
         
         for (y in 1:numfiles) {
           current_data <<- y
-          incProgress(1/numfiles, detail = paste("Data-set no.", y, sep = " "))
+          incProgress(1/numfiles, detail = paste("Data set no.", y, sep = " "))
           Sys.sleep(0.1)
           
           callModule(Load_Data, "Home")
@@ -115,7 +114,7 @@ function(input, output, session) {
           }
           callModule(Save_Data ,"Home")
         }
+        callModule(Export_Data, "Home")
       })
-    }
   })
 }
