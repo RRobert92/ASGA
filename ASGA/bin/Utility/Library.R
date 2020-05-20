@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-20
 ################################################################################
 
 
@@ -18,8 +18,8 @@ library("shinyalert")
 
 # Function LIbrary  ------------------------------------------------------------
 library("readxl")
-library("tidyverse")
 library("plyr")
+library("tidyverse")
 library("ggplot2")
 library("egg")
 library("base")
