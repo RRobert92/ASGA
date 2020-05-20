@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-19
+# Created: 2020-05-20
 ################################################################################
 
 V0.31
@@ -13,7 +13,8 @@ V0.31
 
 - Moved loading of a data from Upload to separate function
 - Upload and analysis of multiple data is now supported
-*- Added module for saving data
+- Added module for saving data
+- Added module for exporting data
 
 # Minor changes ----------------------------------------------------------------
 
