@@ -9,7 +9,7 @@
 ################################################################################
 
 
-PreAnalysis <- function (input, output, session){
+Pre_Analysis <- function (input, output, session){
 # Sort single KMT --------------------------------------------------------------
   progressSweetAlert(
     session = session, id = "SingleKMT",

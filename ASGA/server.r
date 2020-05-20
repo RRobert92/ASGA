@@ -72,8 +72,8 @@ function(input, output, session) {
   observeEvent(input$`Submit`,{
     for (y in 1:numfiles) {
       current_data <<- y
-      callModule(LoadData, "Home")
-      callModule(PreAnalysis, "Home")
+      callModule(Load_Data, "Home")
+      callModule(Pre_Analysis, "Home")
       
       if(input$`Home-All_Anaysis` == TRUE){
         callModule(A_KMT_number, "Home")
@@ -107,6 +107,7 @@ function(input, output, session) {
       if(input$`Home-KMT_Minus_End_Seeds` == TRUE){
         callModule(A_KMT_Minus_End_Seeds, "Home")
       }
+      callModule(Save_Data ,"Home")
     }
   })
 }

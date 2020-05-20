@@ -9,7 +9,7 @@
 ################################################################################
 
 
-LoadData <- function (input, output, session){
+Load_Data <- function (input, output, session){
 # Set-up ----------------------------------------------------------------------
   Segments <<- get(paste("Data", "Segments", current_data, sep = "_"))
   Points <<- get(paste("Data", "Points", current_data, sep = "_"))
