@@ -107,6 +107,17 @@ Save_Data <- function (input, output, session){
          rbind(N_density_P1, N_density_P2),
          envir = .GlobalEnv)
   
+# Save Data for nucleation ----------------------------------------------------
+  assign(paste("Data", current_data, "KMTs_minus_seed_P1" , sep = " "),
+         KMTs_minus_seed_P1,
+         envir = .GlobalEnv)
+  assign(paste("Data", current_data, "KMTs_minus_seed_P2" , sep = " "),
+         KMTs_minus_seed_P2,
+         envir = .GlobalEnv)  
+  assign(paste("Data",current_data, "KMTs_minus_seed", sep = "_"),
+         rbind(KMTs_minus_seed_P1, KMTs_minus_seed_P2),
+         envir = .GlobalEnv) 
+  
 # Clean Environment -----------------------------------------------------------
   rm(list = ls(pattern = "Pole"))
   rm(list = ls(pattern = "DF"))
