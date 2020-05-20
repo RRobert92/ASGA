@@ -34,7 +34,7 @@ These instructions will get you a copy of the project up and running on your loc
 ```
 R v3.5.3 or newer
 Rstudio v1.2 or newer
-Java SE 11 (LTS) or newer
+Java SE 11 (LTS)
 ```
 <a name="Quick_start_DP"></a>
 ### Data preparation befor you start
