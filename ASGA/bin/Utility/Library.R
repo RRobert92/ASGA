@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-20
+# Created: 2020-05-21
 ################################################################################
 
 
@@ -25,3 +25,4 @@ library("egg")
 library("base")
 library("alphashape3d")
 library("xlsx")
+library("zip")

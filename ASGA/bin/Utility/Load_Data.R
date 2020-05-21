@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-19
+# Created: 2020-05-21
 ################################################################################
 
 
@@ -87,7 +87,7 @@ Load_Data <- function (input, output, session){
     }
     Nodes <<- cbind(Nodes,
                     compare)
-    names(Nodes)[7] <- "Entype_Different"
+    names(Nodes)[7] <<- "Entype_Different"
     rm(compare)
     
   } else {
