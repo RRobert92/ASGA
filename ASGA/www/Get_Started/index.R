@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-19
+# Created: 2020-05-21
 ################################################################################
 
 
@@ -65,7 +65,8 @@ GetStarted_UI <- function(id){
                                    label = "Start Analysis", 
                                    style = "material-flat",
                                    color = "primary"
-                                 )
+                                 ),
+                                 uiOutput(ns("Download_Button"))
                                )
                                )
                       )

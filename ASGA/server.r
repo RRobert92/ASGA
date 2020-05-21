@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-20
+# Created: 2020-05-21
 ################################################################################
 
 
@@ -43,6 +43,16 @@ function(input, output, session) {
     UploadData_UI("GetStarted")
   })
   
+  # Download zip files ---------------------------------------------------------
+  output$downloadData  <- downloadHandler(
+    filename = function() {"ASGA_Data.zip"},
+    content = function(fname){
+      setwd("Data/")
+      Zip_Files <- list.files(path = getwd(), pattern = ".xlsx$")
+      zip(zipfile = fname, files = Zip_Files)
+      file.remove(Zip_Files)
+    })
+
   # Page relativity after loading data  ----------------------------------------
   observeEvent(input$`Home-file`,{
     showTab(inputId = "innavbar-GS", target = "Settings")
@@ -114,7 +124,10 @@ function(input, output, session) {
           }
           callModule(Save_Data ,"Home")
         }
-        callModule(Export_Data, "Home")
+       #callModule(Export_Data, "Home")
       })
+    output$`Home-Download_Button` <- renderUI({
+      downloadButton("downloadData", "Download")
+    })
   })
 }
