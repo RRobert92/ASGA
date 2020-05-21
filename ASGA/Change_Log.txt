@@ -14,7 +14,7 @@ V0.31
 - Moved loading of a data from Upload to separate function
 - Upload and analysis of multiple data is now supported
 - Added module for saving data
-- Added module for exporting data
+- Added module for exporting and downloading data
 
 # Minor changes ----------------------------------------------------------------
 
@@ -24,7 +24,16 @@ V0.31
 
 # Bug Fix ----------------------------------------------------------------------
 
+- Fixed analysis of the end morphology 
 
 # Other ------------------------------------------------------------------------
 
 - Started documentation of changes (a.k.a. Change Log)
+
+################################################################################
+V0.30 - Published 18/05/2020
+# Mejor changes  ---------------------------------------------------------------
+
+- Added all tools from the local module
+- Cleaned CSS
+- Added fully functional button to the set-up settings
