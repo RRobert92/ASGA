@@ -66,7 +66,8 @@ GetStarted_UI <- function(id){
                                    style = "material-flat",
                                    color = "primary"
                                  ),
-                                 uiOutput(ns("Download_Button"))
+                                 tags$div(class = "asga-button asga-button-primary",
+                                           uiOutput(ns("Download_Button")))
                                )
                                )
                       )
