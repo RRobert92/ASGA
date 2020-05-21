@@ -9,23 +9,19 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-04-17
+# Created: 2020-04-21
 #####################################################################################
 
 
 # Tool End Morphology ---------------------------------------------------------------
 End_Type_Error <- function(){
   if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
-    Correct <- count(Nodes[,7])
-    End_type_error <- data.frame(Correct = c(round((Correct[2,2]/sum(Correct[2]))*100,
-                                                   2)),
-                                 Wrong = c(round((Correct[1,2]/sum(Correct[2]))*100,
-                                                 2)))
+    End_type_error <- data.frame(Correct = c(round(table(Nodes[,7])["TRUE"]*100/nrow(Nodes), 2)),
+                                 Wrong = c(round(table(Nodes[,7])["TRUE"]*100/nrow(Nodes),
+                                                             2)))
   } else {
     break
   }
-  rm(Correct)
-  
   End_type_error
 }
 
