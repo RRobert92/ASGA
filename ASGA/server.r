@@ -48,8 +48,9 @@ function(input, output, session) {
     filename = function() {"ASGA_Data.zip"},
     content = function(fname){
       setwd("Data/")
+      on.exit(setwd("../"))
       Zip_Files <- list.files(path = getwd(), pattern = ".xlsx$")
-      zip(zipfile = fname, files = Zip_Files)
+      zipr(zipfile = fname, files = Zip_Files)
       file.remove(Zip_Files)
     })
 
@@ -124,7 +125,6 @@ function(input, output, session) {
           }
           callModule(Save_Data ,"Home")
         }
-       #callModule(Export_Data, "Home")
       })
     output$`Home-Download_Button` <- renderUI({
       downloadButton("downloadData", "Download")

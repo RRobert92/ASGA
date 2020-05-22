@@ -26,7 +26,6 @@ source("bin/Utility/Setting_Buttons.R")
 source("bin/Utility/Pre_Analysis.R")
 source("bin/Utility/Load_Data.R")
 source("bin/Utility/Save_Data.R")
-source("bin/Utility/Export_Data.R")
 
 # Global Settings  -------------------------------------------------------------
 options(shiny.maxRequestSize = 1024*1024^2)
