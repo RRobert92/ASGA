@@ -8,19 +8,21 @@
 
 **Spindle analysis tool** is an open-source cluster of tools with its ongoing development for a meiotic and mitotic spindle analysis. Key futures:
   
-1. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
+1. Online access
 
-2. It is designed from the ground up to incrementally scale up this tool based on evolving use cases. 
+2. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
 
-3. Allows working on projects reproducibly and compare data.
+3. It is designed from the ground up to incrementally scale up this tool based on evolving use cases. 
+
+4. Allows working on projects reproducibly and compare data.
 
 **Spindle analysis tool** aims to replace huge and complicated to work with a spreadsheet that is frequently used for Spatial Graph analysis, but also it allows to uniform and completely automate analysis.
 
 # Table of Contents
 
 * [Quick start](#Quick_start)
-  * [Dependency](#Dependency)
   * [Data Preparation](#Quick_start_DP)
+  * [Dependency](#Dependency)
   * [Installation](#Quick_start_IN)
 * [Contributing](#Contributing)
 * [Copyright](#Copyright)
@@ -28,14 +30,8 @@
 <a name="Quick_start"></a>
 # Quick start
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+You can run the software in an online-version under the [Shinyapp.io](https://kiewisz.shinyapps.io/ASGA/) or localy.
 
-<a name="Dependency"></a>
-### Dependency
-```
-R v3.5.3 or newer
-Rstudio v1.2 or newer
-Java SE 11 (LTS)
-```
 <a name="Quick_start_DP"></a>
 ### Data preparation befor you start
 ```
@@ -46,9 +42,37 @@ Java SE 11 (LTS)
 * Label selected classes of MT. For example: Pole1_00, Pole1_01, etc.
 * Using Amira calculate MT length
 ```
+
+<a name="Dependency"></a>
+### Dependency for local use
+```
+R v3.5.3 or newer
+Rstudio v1.2 or newer
+Java SE 11 (LTS)
+
+R library
+- shiny
+- shinycssloaders
+- shinyWidgets
+- shinyBS
+- shinyalert
+- readxl
+- plyr
+- tidyverse
+- ggplot2
+- egg
+- base
+- alphashape3d
+- xlsx
+- zip
+```
+
 <a name="Quick_start_IN"></a>
 ### Installation
-
+```
+git clone https://github.com/RRobert92/ASGA/tree/master/ASGA
+shiny::runApp()
+```
 <a name="Contributing"></a>
 # Contributing
 Contributions, collaborators and/or constructive criticism are welcome! Please see our Contributing Guide "Soon available" for more details.
