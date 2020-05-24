@@ -180,7 +180,10 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
     }
   },
   error = function(e){})
-  Plus_end_morphology_Pole2 <<- Plus_end_morphology_Pole2
-  Minus_end_morphology_Pole2 <<- Minus_end_morphology_Pole2
+  tryCatch({
+    Plus_end_morphology_Pole2 <<- Plus_end_morphology_Pole2
+    Minus_end_morphology_Pole2 <<- Minus_end_morphology_Pole2
+  },
+  error = function(e){})
 }
 }
