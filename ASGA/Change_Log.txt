@@ -5,10 +5,10 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-20
+# Created: 2020-05-24
 ################################################################################
 
-V0.31
+V0.30.1
 # Mejor changes  ---------------------------------------------------------------
 
 - Moved loading of a data from Upload to separate function
