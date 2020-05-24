@@ -87,36 +87,37 @@ Save_Data <- function (input, output, session){
     assign(paste("Data",current_data, "Minus_end_morphology_Pole1", sep = "_"),
            Minus_end_morphology_Pole1,
            envir = .GlobalEnv)
-    assign(paste("Data",current_data, "Minus_end_morphology_Pole2", sep = "_"),
-           Minus_end_morphology_Pole2,
-           envir = .GlobalEnv)    
     write.xlsx(get(paste("Data",current_data, "Minus_end_morphology_Pole1", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Minus_end_morphology_Pole1.xlsx", sep = ""))
-    write.xlsx(get(paste("Data",current_data, "Minus_end_morphology_Pole2", sep = "_")), 
-               paste("Data/", "Data_",current_data, "_Minus_end_morphology_Pole2.xlsx", sep = ""))
-    
+
     assign(paste("Data",current_data, "Plus_end_morphology_Pole1", sep = "_"),
            Plus_end_morphology_Pole1,
            envir = .GlobalEnv)
+    write.xlsx(get(paste("Data",current_data, "Plus_end_morphology_Pole1", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Plus_end_morphology_Pole1.xlsx", sep = ""))
+
+    assign(paste("Data",current_data, "Minus_end_morphology_Pole2", sep = "_"),
+           Minus_end_morphology_Pole2,
+           envir = .GlobalEnv)
+    write.xlsx(get(paste("Data",current_data, "Minus_end_morphology_Pole2", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Minus_end_morphology_Pole2.xlsx", sep = ""))
+
     assign(paste("Data",current_data, "Plus_end_morphology_Pole2", sep = "_"),
            Plus_end_morphology_Pole2,
            envir = .GlobalEnv)    
-    write.xlsx(get(paste("Data",current_data, "Plus_end_morphology_Pole1", sep = "_")), 
-               paste("Data/", "Data_",current_data, "_Plus_end_morphology_Pole1.xlsx", sep = ""))
     write.xlsx(get(paste("Data",current_data, "Plus_end_morphology_Pole2", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Plus_end_morphology_Pole2.xlsx", sep = ""))
-    
+
     assign(paste("Data",current_data, "Plus_end_morphology", sep = "_"),
            rbind(Plus_end_morphology_Pole1, Plus_end_morphology_Pole2),
            envir = .GlobalEnv)
     assign(paste("Data",current_data, "Minus_end_morphology", sep = "_"),
            rbind(Minus_end_morphology_Pole1, Minus_end_morphology_Pole2),
            envir = .GlobalEnv)
-    
     write.xlsx(get(paste("Data",current_data, "Plus_end_morphology", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Plus_end_morphology.xlsx", sep = ""))
     write.xlsx(get(paste("Data",current_data, "Minus_end_morphology", sep = "_")), 
-               paste("Data/", "Data_",current_data, "_Minus_end_morphology.xlsx", sep = ""))   
+               paste("Data/", "Data_",current_data, "_Minus_end_morphology.xlsx", sep = ""))  
   },error = function(e){})
   
 # Save Data for LKD -----------------------------------------------------------
