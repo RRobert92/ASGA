@@ -126,8 +126,14 @@ function(input, output, session) {
           callModule(Save_Data ,"Home")
         }
       })
+    
     output$`Home-Download_Button` <- renderUI({
-      downloadButton("downloadData", "Download")
+     downloadBttn(
+       "downloadData",
+       label = "Download",
+       style = "material-flat",
+       color = "success"
+     )
     })
   })
 }
