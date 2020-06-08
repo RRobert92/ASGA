@@ -35,7 +35,18 @@ print(P2)
 
 ggsave(file="LD.svg", plot = P2)
 
-# Total curvature  -------------------------------------------------------------------------------------------------------
+# Minus end distribution --------------------------------------------------------------------------------------------------
+
+All_KMT_Minus_Ends <- rbind(Data_1_KMT_Minus_Ends, Data_2_KMT_Minus_Ends, Data_3_KMT_Minus_Ends)
+
+P2.1 <- ggplot(Data_1_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole)) + geom_smooth(method = "loess", linetype = "dashed", color = "black", se = F) + 
+  theme_classic() + xlab("KMT Relative Position") + ylab("KMT minus-end distance from the pole") + xlim(-0.2, 1)
+P2.1 <- P2.1 + geom_smooth(data = Data_2_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole), linetype = "dotdash", color = "black", se = F)
+P2.1 <- P2.1 + geom_smooth( data = Data_3_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole), linetype = "dotdash", color = "black", se = F)
+P2.1 <- P2.1 + geom_smooth( data = All_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole), linetype = "solid", color = "darkred")
+print(P2.1)
+
+# Total curvature  --------------------------------------------------------------------------------------------------------
 
 P3 <- ggplot(Data_1_KMT_Total_Curv, aes(Curvature)) + geom_density(kernel = "gaussian", size = 1, color = "black", linetype = "dashed") + theme_classic() +
   xlab("KMT curvatrure") + ylab("KMT density [Gaussian Kernal density]") + xlim(1,1.3)
