@@ -15,6 +15,7 @@
 # Mejor changes  ---------------------------------------------------------------
 
 - Added upload for the analysed data for plotting
+- Added analysis report page and its responsivness 
 
 # Minor changes ----------------------------------------------------------------
 

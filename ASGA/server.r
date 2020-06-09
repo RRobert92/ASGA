@@ -15,6 +15,7 @@ function(input, output, session) {
   # Hide pages  ----------------------------------------------------------------
   hideTab(inputId = "innavbar", target = "GetStarted")
   hideTab(inputId = "innavbar-GS", target = "Settings")  
+  hideTab(inputId = "innavbar-GS", target = "Report")  
   
   # Get_Started button  --------------------------------------------------------
   observeEvent(input$GetStarted, {
@@ -54,7 +55,7 @@ function(input, output, session) {
       file.remove(Zip_Files)
     })
 
-  # Page relativity after loading data  ----------------------------------------
+  # Page responsiveness after loading data  ----------------------------------------
   observeEvent(input$`Home-file`,{
     showTab(inputId = "innavbar-GS", target = "Settings")
     if(DataTest == 1){
@@ -64,10 +65,10 @@ function(input, output, session) {
     }
   })
 
-  # Page relativity after loading data  ----------------------------------------
+  # Page responsiveness after loading data  ----------------------------------------
   observeEvent(input$`Home-file1`,{
-    showTab(inputId = "innavbar-GS", target = "Settings")
-      updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
+    showTab(inputId = "innavbar-GS", target = "Report")
+    updateTabsetPanel(session, "innavbar-GS", selected = "Report")
   })
   
   # Relativity for the Home and GS button  -------------------------------------
@@ -141,5 +142,7 @@ function(input, output, session) {
        color = "success"
      )
     })
+    showTab(inputId = "innavbar-GS", target = "Report")  
+    updateTabsetPanel(session, "innavbar", selected = "Report")
   })
 }

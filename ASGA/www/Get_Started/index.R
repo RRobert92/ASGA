@@ -40,14 +40,13 @@ tabPanel("Upload Data", value = "UploadData",
                                              fileInput(ns("file"), label = "",
                                                        multiple = TRUE,
                                                        accept = c(".xlsx", 
-                                                                  "All")),
-                                             
+                                                                  "All"))),
+                                    tags$div(class ="splash-input-GS",
                                              "Upload analyzed data:",
                                              fileInput(ns("file1"), label = "",
                                                        multiple = TRUE,
                                                        accept = c(".xlsx", 
-                                                                  "All"))
-                                    )
+                                                                  "All")))
                            )
                   )
          )
@@ -79,6 +78,17 @@ tabPanel("Settings", value = "Settings",
                                                uiOutput(ns("Download_Button")))
                                     )
                            )
+                  )
+         )
+),
+
+# UI-GetStarted-Settings  -----------------------------------------------------
+
+tabPanel("Report", value = "Report",
+         tags$div(class = "splash-container-GS",
+                  tags$div(class = "splash-GS",
+                           tags$h1(class = "splash-head-GS",
+                                   "Analysis Report")
                   )
          )
 )
