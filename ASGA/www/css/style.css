@@ -134,11 +134,11 @@ label {
 }
 
 .table-GS{
-   width: 45%;
+    width: 45%;
     height: 35%;
     margin: auto;
     position: absolute;
-    top: 150px; left: 0; bottom: 0; right: 0;
+    top: 350px; left: 0; bottom: 0; right: 0;
     text-align: left;
     text-transform: none;
 }

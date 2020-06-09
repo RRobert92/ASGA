@@ -159,4 +159,44 @@ Getfiles_Server <- function (input, output, session){
     
     showTab(inputId = "innavbar-GS", target = "Settings")
   })
+  
+  observeEvent(input$file1,{
+    
+    infile <- input$file1
+    if (is.null(infile)){
+      return(NULL)
+    }else {
+      numfiles <<- nrow(infile)
+    }
+    
+    progressSweetAlert(
+      session = session, id = "LoadData",
+      title = "Loading your data",
+      display_pct = TRUE, value = 0
+    )
+
+    
+    for(i in 1:numfiles){
+      tryCatch({
+        File_name <<- stringi::stri_extract_first(str = infile$name, regex = ".*(?=\\.)")
+        assign(File_name[i],
+               read_excel(input$file1$datapath[i]),
+               envir=.GlobalEnv)
+        
+        assign(File_name[i],
+               get(File_name[i])[2:ncol(get(File_name[i]))],
+               envir=.GlobalEnv)
+      }, error = function(e){})
+
+      updateProgressBar(
+        session = session,
+        id = "LoadData",
+        value = i*100/numfiles
+      )
+      
+      Sys.sleep(0.1)
+    }
+    closeSweetAlert(session = session)
+    showTab(inputId = "innavbar-GS", target = "Settings")    
+  })
 }

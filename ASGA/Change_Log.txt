@@ -14,6 +14,7 @@
 
 # Mejor changes  ---------------------------------------------------------------
 
+- Added upload for the analysed data for plotting
 
 # Minor changes ----------------------------------------------------------------
 

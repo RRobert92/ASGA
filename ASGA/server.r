@@ -63,6 +63,12 @@ function(input, output, session) {
       updateTabsetPanel(session, "innavbar", selected = "Home")
     }
   })
+
+  # Page relativity after loading data  ----------------------------------------
+  observeEvent(input$`Home-file1`,{
+    showTab(inputId = "innavbar-GS", target = "Settings")
+      updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
+  })
   
   # Relativity for the Home and GS button  -------------------------------------
   observe({
