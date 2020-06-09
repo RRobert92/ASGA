@@ -60,6 +60,15 @@ print(P3)
 
 ggsave(file="Total_curv.svg", plot = P3)
 
+P3 <- ggplot(Data_1_KMT_Total_Curv, aes(`KMTs length`, Curvature)) + geom_smooth(method = 'loess', size = 1, color = "black", linetype = "dashed", se = F) + theme_classic() +
+  xlab("KMT length") + ylab("KMT curvature ratio") 
+P3 <- P3 + geom_smooth(data = Data_2_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "black", linetype = "dotdash", se = F) 
+P3 <- P3 + geom_smooth(data = Data_3_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "black", linetype = "dotted", se = F) 
+All_T_Curv <- rbind(Data_1_KMT_Total_Curv, Data_2_KMT_Total_Curv, Data_3_KMT_Total_Curv)
+P3 <- P3 + geom_smooth(data = All_T_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "darkred", linetype = "solid")
+
+print(P3)
+
 # Local curvature  -------------------------------------------------------------------------------------------------------
 
 LC_bin_Data_1 <- data.frame()
