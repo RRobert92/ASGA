@@ -135,7 +135,7 @@ label {
 
 .table-GS{
     width: 45%;
-    height: 35%;
+    height: 50%;
     margin: auto;
     position: absolute;
     top: 350px; left: 0; bottom: 0; right: 0;
@@ -290,7 +290,7 @@ label {
     }
     .splash-GS {
         width: 55%;
-        height: 50%;
+        height: 75%;
     }
 
     .splash-head {
@@ -301,6 +301,9 @@ label {
     }
     .splash-input-GS{
       float: left;
+    }
+    .table-GS{
+      height: 50%;
     }
 
     /* We remove the border-separator assigned to .l-box-lrg */
