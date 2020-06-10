@@ -88,9 +88,12 @@ tabPanel("Report", value = "Report",
          tags$div(class = "splash-container-GS",
                   tags$div(class = "splash-GS",
                            tags$h1(class = "splash-head-GS",
-                                   "Analysis Report")
+                                   "Analysis Report")),
+                           tags$div(class = "splash-report",
+                                    uiOutput(ns("Report_Page")),
+                                    uiOutput(ns("Report_Page1"))),
+                  
                   )
          )
-)
   )
 }

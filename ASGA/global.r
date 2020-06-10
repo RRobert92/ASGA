@@ -49,6 +49,8 @@ source("bin/Tools/Analysis/T_End_Morphology.R")
 source("bin/Tools/Analysis/T_Fiber_Area.R")
 source("bin/Tools/Analysis/T_KMT_Minus_End_Seeds.R")
 
+source("bin/Utility/Report.R")
+
 # Global Packages  -------------------------------------------------------------
 source("bin/Packages/Analysis/A_KMT_number.R")
 source("bin/Packages/Analysis/A_IKD.R")

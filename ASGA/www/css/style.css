@@ -125,7 +125,7 @@ label {
 
 .splash-GS{
     width: 80%;
-    height: 50%;
+    height: 85%;
     margin: auto;
     position: absolute;
     top: 100px; left: 0; bottom: 0; right: 0;
@@ -152,7 +152,6 @@ label {
 }
 
 .splash-input-GS{
-  width: 400px;
   max-width: 100%;
   margin: auto;
   float: none;
@@ -199,6 +198,27 @@ label {
   color: black;
    letter-spacing: 0.05em;
     opacity: 0.8;
+}
+
+.splash-report{
+  width: 65%;
+  height: 80%;
+  padding: 10px;
+  margin: auto;
+  position: absolute;
+  top: 300px; bottom: 0; right: 0; left: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.splash-report-code {
+    background: lightgrey;
+    color: black;
+    border-radius: 10px;
+    font-size: 80%;
+    text-align: left;
+    padding: 10px;
+    margin: 20px;
 }
 
 /*
@@ -291,6 +311,9 @@ label {
     .splash-GS {
         width: 55%;
         height: 75%;
+    }
+    .splash-report{
+      height: 50%;
     }
 
     .splash-head {
