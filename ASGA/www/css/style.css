@@ -97,7 +97,6 @@ label {
     height: 94.3%;
     top: 0;
     left: 0;
-    position: fixed !important;
 }
 
 .splash-container {
@@ -110,6 +109,38 @@ label {
     top: 0;
     left: 0;
     position: fixed !important;
+}
+
+.splash-container-report{
+    background: #fdfdfd;
+    padding-top: 100px;
+    padding-bottom: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
+}
+
+.splash-content-report{
+    padding-top: 40px;
+    padding-bottom: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
+}
+
+.splash-content {
+  padding-left: 250px;
+  padding-right: 250px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 102px;
 }
 
 .splash {
@@ -212,13 +243,16 @@ label {
 }
 
 .splash-report-code {
-    background: lightgrey;
+    background: rgba(0,0,0,0.08);
     color: black;
     border-radius: 10px;
     font-size: 80%;
     text-align: left;
     padding: 10px;
-    margin: 20px;
+    width: 90%;
+    margin-left: 16px;
+    margin-bottom: 30px;
+    line-height: 1.5em;
 }
 
 /*
@@ -271,7 +305,14 @@ label {
 .footer {
     background: #111;
     position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 1;
     bottom: 0;
+}
+.footer-report{
+    background: #111;
+    position: absolute;
     width: 100%;
     left: 0;
     z-index: 1;
@@ -315,7 +356,25 @@ label {
     .splash-report{
       height: 50%;
     }
-
+    .splash-report-code{
+      margin-left: 45px;
+    }
+    .splash-container-report{
+    padding-top: 150px;
+    padding-bottom: 0px;
+    padding-left: 250px;
+    padding-right: 250px;
+    text-align: center;
+      
+    }
+    .splash-content-report{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 350px;
+    padding-right: 350px;
+    text-align: center;
+    }
+    
     .splash-head {
         font-size: 250%;
     }

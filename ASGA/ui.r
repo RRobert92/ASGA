@@ -21,7 +21,7 @@ fluidPage(
              position = "fixed-top",
              id = "innavbar",
              selected = "Home",
-             footer = footnoteUI("footnote"),
+             #footer = footnoteUI("footnote"),
              tabPanel("GetStarted",
                       GetStarted_UI("Home")
              ),

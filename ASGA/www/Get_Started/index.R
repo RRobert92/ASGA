@@ -48,6 +48,9 @@ tabPanel("Upload Data", value = "UploadData",
                                                        accept = c(".xlsx", 
                                                                   "All")))
                            )
+                  ),
+                  tags$div(class = "footer l-box is-center",
+                           tags$p("The app is under the GPL V3.0 @ 2019 license")
                   )
          )
 ),
@@ -78,6 +81,9 @@ tabPanel("Settings", value = "Settings",
                                                uiOutput(ns("Download_Button")))
                                     )
                            )
+                  ),
+                  tags$div(class = "footer l-box is-center",
+                           tags$p("The app is under the GPL V3.0 @ 2019 license")
                   )
          )
 ),
@@ -85,15 +91,14 @@ tabPanel("Settings", value = "Settings",
 # UI-GetStarted-Settings  -----------------------------------------------------
 
 tabPanel("Report", value = "Report",
-         tags$div(class = "splash-container-GS",
-                  tags$div(class = "splash-GS",
-                           tags$h1(class = "splash-head-GS",
+         tags$div(class = "splash-container-report",
+                  tags$h1(class = "splash-head-GS",
                                    "Analysis Report")),
-                           tags$div(class = "splash-report",
-                                    uiOutput(ns("Report_Page")),
-                                    uiOutput(ns("Report_Page1"))),
-                  
-                  )
+                           tags$div(class = "splash-content-report",
+                                    uiOutput(ns("Report_Page"))),
+         tags$div(class = "footer-report l-box is-center",
+                  tags$p("The app is under the GPL V3.0 @ 2019 license")
          )
+                  )
   )
 }

@@ -16,7 +16,7 @@ function(input, output, session) {
   hideTab(inputId = "innavbar", target = "GetStarted")
   hideTab(inputId = "innavbar-GS", target = "Settings")  
   hideTab(inputId = "innavbar-GS", target = "Report")  
-  
+
   # Get_Started button  --------------------------------------------------------
   observeEvent(input$GetStarted, {
     if(!exists("numfiles")){
@@ -28,22 +28,22 @@ function(input, output, session) {
       showTab(inputId = "innavbar", target = "GetStarted")
       updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
     }
-    
   })
+
   # Wiki button  ---------------------------------------------------------------
   observeEvent(input$Wiki, {
     updateTabsetPanel(session, "innavbar", selected = "Wiki")
     hideTab(inputId = "innavbar", target = "GetStarted")
   })
-  
+
   # Get file and Load data  ----------------------------------------------------
   callModule(Getfiles_Server, "Home")
-  
+
   # Upload data UI  ------------------------------------------------------------
   output$Upload <- renderUI({
     UploadData_UI("GetStarted")
   })
-  
+
   # Download zip files ---------------------------------------------------------
   output$downloadData  <- downloadHandler(
     filename = function() {"ASGA_Data.zip"},
@@ -81,9 +81,8 @@ function(input, output, session) {
     File_name <<- df
     rm(df, name)
     callModule(Report_Plot, "Home")
-    callModule(Report_Script, "Home")
   })
-  
+
   # Relativity for the Home and GS button  -------------------------------------
   observe({
     if (req(input$`innavbar-GS`) == "Home"){
@@ -95,10 +94,10 @@ function(input, output, session) {
       updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
     }  
   })
-  
+
   # Relativity for the Settings button  ----------------------------------------
   callModule(Setting_Buttons_Server, "Home")
-  
+
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`,{
       withProgress(message = "Analyzing:", value = 1, {
@@ -143,10 +142,25 @@ function(input, output, session) {
           if(input$`Home-KMT_Minus_End_Seeds` == TRUE){
             callModule(A_KMT_Minus_End_Seeds, "Home")
           }
+      
+          File_name <<- as.data.frame(ls(pattern = "Data_"))
+          numfiles <<- readr::parse_number(File_name[nrow(File_name),1])
+          df <- data.frame()
+
+          for(i in 1:nrow(File_name)){
+            name <- as.data.frame(str_split(File_name[i,1], "_"))
+            df[i,1] <- as.numeric(name[2,1])
+            name <- as.data.frame(str_split(File_name[i,1], paste("Data_", df[i,1],"_", sep = "")))
+            df[i,2] <- as.character(name[2,1])
+          }
+          File_name <<- df
+          rm(df, name)
           callModule(Save_Data ,"Home")
+          callModule(Report_Plot, "Home")
         }
       })
-    
+
+  # Download data-set ----------------------------------------------------------
     output$`Home-Download_Button` <- renderUI({
      downloadBttn(
        "downloadData",
@@ -158,14 +172,9 @@ function(input, output, session) {
     showTab(inputId = "innavbar-GS", target = "Report")  
     updateTabsetPanel(session, "innavbar", selected = "Report")
   })
-  
+
   # Report page output ---------------------------------------------------------
   output$`Home-Report_Page` <- renderUI({
-    if(length(File_name[File_name$V2 == "KMT_No",2]) >= 1){
-      callModule(Report_Script_KMT_No, "Home")
-    }
-  })
-  output$`Home-Report_Page1` <- renderUI({
     if(length(File_name[File_name$V2 == "KMT_No",2]) >= 1){
       callModule(Report_Plot_KMT_No, "Home")
     }

@@ -8,11 +8,6 @@
 # Created: 2020-05-21
 ################################################################################
 
-
-Report_Script_KMT_No <- function (input, output, session){
-  htmlOutput("Home-script_KMT_No")
-}
-
 Report_Plot_KMT_No <- function (input, output, session){
   plotOutput("Home-plot_KMT_No")
   
@@ -35,7 +30,8 @@ Report_Plot <- function(input, output, session){
       P1 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = "")), 
                    aes_string("Data", "KMTs_per_kinetochore")) + 
         geom_boxplot(fill = "grey20", color = "black") + theme_classic() +
-        xlab("Data-set names") + ylab("Number of ...")
+        xlab("Data-set names") + ylab("Number of KMTs per kinetochore")
+      
       tryCatch({
          for(i in 2:nrow(Plot_Data)){
         
@@ -63,13 +59,5 @@ Report_Plot <- function(input, output, session){
       print(P1)
     },
     error = function(e){})
-  })
-}
-
-Report_Script <- function(input, output, session){
-  output$`script_KMT_No` <- renderUI({
-    tags$div(class = "splash-report-code",
-             "test texte line 1",
-             "test text line 2")
   })
 }
