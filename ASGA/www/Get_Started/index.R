@@ -93,12 +93,15 @@ tabPanel("Settings", value = "Settings",
 tabPanel("Report", value = "Report",
          tags$div(class = "splash-container-report",
                   tags$h1(class = "splash-head-GS",
-                                   "Analysis Report")),
-                           tags$div(class = "splash-content-report",
-                                    uiOutput(ns("Report_Page"))),
+                          "Analysis Report")),
+         tags$div(class = "splash-content-report",
+                  tags$p(class = "splash-subhead-GS",
+                         "Settings for the plots"),
+                  uiOutput(ns("Plot_Settings")),
+                  uiOutput(ns("Report_Page"))),
          tags$div(class = "footer-report l-box is-center",
                   tags$p("The app is under the GPL V3.0 @ 2019 license")
          )
-                  )
+)
   )
 }

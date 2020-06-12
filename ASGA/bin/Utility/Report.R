@@ -8,9 +8,23 @@
 # Created: 2020-05-21
 ################################################################################
 
+Data_Plot_Settings <- function(input,output, session){
+
+ tags$div(class = "splash-report-code",
+          fluidRow(column(6,
+                          lapply(1:numfiles, function(i){
+                            textInput(inputId = paste("Data label", i, sep = "_"), label = paste("Data", i, sep = "_"), value = paste("label", i, sep = "_"))
+                          })),
+                   column(6,
+                          selectInput(inputId = 'xcol',
+                                      label = 'X Variable',
+                                      choices = names(iris)))
+          )
+ )
+}
+
 Report_Plot_KMT_No <- function (input, output, session){
   plotOutput("Home-plot_KMT_No")
-  
 }
 
 Report_Plot <- function(input, output, session){

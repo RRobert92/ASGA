@@ -174,6 +174,10 @@ function(input, output, session) {
   })
 
   # Report page output ---------------------------------------------------------
+  output$`Home-Plot_Settings` <- renderUI({
+    callModule(Data_Plot_Settings, "Home")
+  })
+  
   output$`Home-Report_Page` <- renderUI({
     if(length(File_name[File_name$V2 == "KMT_No",2]) >= 1){
       callModule(Report_Plot_KMT_No, "Home")
