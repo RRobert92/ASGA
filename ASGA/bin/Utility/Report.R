@@ -13,7 +13,7 @@ Data_Plot_Settings <- function(input,output, session){
  tags$div(class = "splash-report-code",
           fluidRow(column(6,
                           lapply(1:numfiles, function(i){
-                            textInput(inputId = paste("Data label", i, sep = "_"), label = paste("Data", i, sep = "_"), value = paste("label", i, sep = "_"))
+                            textInput(inputId = paste("Data_label", i, sep = "_"), label = paste("Data", i, sep = "_"), value = paste("label", i, sep = "_"))
                           })),
                    column(6,
                           selectInput(inputId = 'xcol',
@@ -36,7 +36,7 @@ Report_Plot <- function(input, output, session){
       
       for(i in 1:nrow(Plot_Data)){
         assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
-             data.frame(Data = paste("Metaphase #", i, sep = ""),
+             data.frame(Data = paste("Data_", i, sep = ""),
                         get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["KMTs_per_kinetochore"]),
              envir = .GlobalEnv)
       }

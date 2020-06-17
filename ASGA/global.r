@@ -31,6 +31,7 @@ source("bin/Utility/Save_Data.R")
 options(shiny.maxRequestSize = 1024*1024^2)
 
 DataTest <<- 0
+numfiles <<- 0
 
 # Global Functions  ------------------------------------------------------------
 source("bin/Tools/Pre_Analysis/Sort_by_Fiber.R")

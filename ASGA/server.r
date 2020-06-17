@@ -19,7 +19,7 @@ function(input, output, session) {
 
   # Get_Started button  --------------------------------------------------------
   observeEvent(input$GetStarted, {
-    if(!exists("numfiles")){
+    if(numfiles == 0){
       updateTabsetPanel(session, "innavbar", selected = "GetStarted")
       showTab(inputId = "innavbar", target = "GetStarted")
       updateTabsetPanel(session, "innavbar-GS", selected = "UploadData")      
@@ -80,6 +80,15 @@ function(input, output, session) {
     }
     File_name <<- df
     rm(df, name)
+    
+    lapply(1:numfiles, function(i){
+      observeEvent(input[[paste("Data_label", i, sep = "_")]],{
+        assign(paste("Data_label", i, sep = "_"),
+               input[[paste("Data_label", i, sep = "_")]],
+               envir = .GlobalEnv)
+      })
+    })
+    
     callModule(Report_Plot, "Home")
   })
 
@@ -154,6 +163,7 @@ function(input, output, session) {
             df[i,2] <- as.character(name[2,1])
           }
           File_name <<- df
+          File_name <<- na.omit(File_name)
           rm(df, name)
           callModule(Save_Data ,"Home")
           callModule(Report_Plot, "Home")
@@ -173,14 +183,15 @@ function(input, output, session) {
     updateTabsetPanel(session, "innavbar", selected = "Report")
   })
 
+  
   # Report page output ---------------------------------------------------------
   output$`Home-Plot_Settings` <- renderUI({
-    callModule(Data_Plot_Settings, "Home")
+    Data_Plot_Settings("Report")
   })
   
   output$`Home-Report_Page` <- renderUI({
     if(length(File_name[File_name$V2 == "KMT_No",2]) >= 1){
-      callModule(Report_Plot_KMT_No, "Home")
+      Report_Plot_KMT_No("Report")
     }
   })
 }

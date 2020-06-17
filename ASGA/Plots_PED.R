@@ -1,5 +1,5 @@
 ###########################################################################################################################
-# Plots for k-fiber based on ellipse
+# Plots for k-fiber based on kinetochore distance to the pole
 #
 # (c) 2019 Kiewisz
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
@@ -20,8 +20,8 @@ Data_3_KMT_No <- cbind(Data_3_KMT_No[2], Fiber_3[2])
 
 LD100max <- max(Data_1_KMT_No$`(+) Dist-to-Pole`)
 LD100min <- min(Data_1_KMT_No$`(+) Dist-to-Pole`)
-LD80 <- ((80*(LD100max-LD100min))+(100*LD100min))/100
-LD45 <- ((45*(LD100max-LD100min))+(100*LD100min))/100
+LD80 <- ((75*(LD100max-LD100min))+(100*LD100min))/100
+LD45 <- ((50*(LD100max-LD100min))+(100*LD100min))/100
 
 df<-data.frame()
 for (i in 1:nrow(Data_1_KMT_No)){
@@ -37,8 +37,8 @@ Data_1_KMT_No <- cbind(Data_1_KMT_No, df)
 
 LD100max <- max(Data_2_KMT_No$`(+) Dist-to-Pole`)
 LD100min <- min(Data_2_KMT_No$`(+) Dist-to-Pole`)
-LD80 <- ((80*(LD100max-LD100min))+(100*LD100min))/100
-LD45 <- ((45*(LD100max-LD100min))+(100*LD100min))/100
+LD80 <- ((75*(LD100max-LD100min))+(100*LD100min))/100
+LD45 <- ((50*(LD100max-LD100min))+(100*LD100min))/100
 
 df<-data.frame()
 for (i in 1:nrow(Data_2_KMT_No)){
@@ -52,10 +52,10 @@ for (i in 1:nrow(Data_2_KMT_No)){
 }
 Data_2_KMT_No <- cbind(Data_2_KMT_No, df)
 
-LD100max <- max((Data_3_KMT_No$`(+) Dist-to-Pole`)
+LD100max <- max(Data_3_KMT_No$`(+) Dist-to-Pole`)
 LD100min <- min(Data_3_KMT_No$`(+) Dist-to-Pole`)
-LD80 <- ((80*(LD100max-LD100min))+(100*LD100min))/100
-LD45 <- ((45*(LD100max-LD100min))+(100*LD100min))/100
+LD80 <- ((60*(LD100max-LD100min))+(100*LD100min))/100
+LD45 <- ((50*(LD100max-LD100min))+(100*LD100min))/100
 df<-data.frame()
 for (i in 1:nrow(Data_3_KMT_No)){
   if(Data_3_KMT_No[i,2] > LD80){
