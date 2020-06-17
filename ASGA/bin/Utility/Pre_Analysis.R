@@ -152,8 +152,8 @@ Pre_Analysis <- function (input, output, session){
   Rx100[1,2] <<- abs(Rx100[1,2] - Pole_avg$X_Mean)
   
   Rx100 <<- max(Rx100)
-  Rx50 <<- Rx100*0.80
-  Rx25 <<- Rx100*0.45
+  Rx50 <<- Rx100*0.75
+  Rx25 <<- Rx100*0.50
   
   Rz100 <<- data.frame()
   Rz100[1,1] <<- max(Kinetochore_Avg$Z_Median)
@@ -162,8 +162,8 @@ Pre_Analysis <- function (input, output, session){
   Rz100[1,2] <<- abs(Rz100[1,2] - Pole_avg$Z_Mean)
   
   Rz100 <<- max(Rz100)
-  Rz50 <<- Rz100*0.80
-  Rz25 <<- Rz100*0.45
+  Rz50 <<- Rz100*0.75
+  Rz25 <<- Rz100*0.50
  
 # Analyze Length Distribution for Pole1 --------------------------------------------------
   z=3

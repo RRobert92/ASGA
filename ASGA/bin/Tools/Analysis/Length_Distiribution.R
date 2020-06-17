@@ -72,6 +72,7 @@ Analyse_LD <- function(x, y){
     Bind_Data [i,4] <- Plus_Distst_to_kinetochore_core
     Bind_Data [i,5] <- Plus_Distst_to_pole
     Bind_Data [i,6] <- elipse
+    Bind_Data [i,7] <- colnames(Segments)[x]
   }
 
   names(Bind_Data)[1] <- "Segment ID"
@@ -80,6 +81,7 @@ Analyse_LD <- function(x, y){
   names(Bind_Data)[4] <- "plus_dist_to_kinetochore_core"
   names(Bind_Data)[5] <- "plus_dist_to_pole"
   names(Bind_Data)[6] <- "Elipse_Position"
+  names(Bind_Data)[7] <- "Fiber_Name"
   
   Bind_Data
 }
