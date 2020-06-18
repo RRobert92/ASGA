@@ -13,7 +13,7 @@ Data_Plot_Settings <- function(input,output, session){
  tags$div(class = "splash-report-code",
           fluidRow(column(6,
                           lapply(1:numfiles, function(i){
-                            textInput(inputId = paste("Data_label", i, sep = "_"), label = paste("Data", i, sep = "_"), value = paste("label", i, sep = "_"))
+                            textInput(inputId = paste("Data_label", i, sep = "_"), label = paste("Data", i, sep = "_"), value = paste("Data", i, sep = "_"))
                           })),
                    column(6,
                           selectInput(inputId = 'xcol',

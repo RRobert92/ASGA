@@ -151,23 +151,26 @@ function(input, output, session) {
           if(input$`Home-KMT_Minus_End_Seeds` == TRUE){
             callModule(A_KMT_Minus_End_Seeds, "Home")
           }
-      
-          File_name <<- as.data.frame(ls(pattern = "Data_"))
-          numfiles <<- readr::parse_number(File_name[nrow(File_name),1])
-          df <- data.frame()
 
-          for(i in 1:nrow(File_name)){
-            name <- as.data.frame(str_split(File_name[i,1], "_"))
-            df[i,1] <- as.numeric(name[2,1])
-            name <- as.data.frame(str_split(File_name[i,1], paste("Data_", df[i,1],"_", sep = "")))
-            df[i,2] <- as.character(name[2,1])
-          }
-          File_name <<- df
-          File_name <<- na.omit(File_name)
-          rm(df, name)
           callModule(Save_Data ,"Home")
-          callModule(Report_Plot, "Home")
+          
         }
+    
+        showTab(inputId = "innavbar-GS", target = "Report")  
+        updateTabsetPanel(session, "innavbar", selected = "Report") 
+        
+        File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
+        numfiles <<- readr::parse_number(File_name[nrow(File_name),1])
+        df <- data.frame()
+        for(i in 1:nrow(File_name)){
+          name <- as.data.frame(str_split(File_name[i,1], "_"))
+          df[i,1] <- as.numeric(name[2,1])
+          name <- as.data.frame(str_split(File_name[i,1], paste("Data_", df[i,1],"_", sep = "")))
+          df[i,2] <- as.character(name[2,1])
+        }
+        File_name <<- na.omit(df)
+        rm(df, name)
+        
       })
 
   # Download data-set ----------------------------------------------------------
@@ -179,8 +182,16 @@ function(input, output, session) {
        color = "success"
      )
     })
-    showTab(inputId = "innavbar-GS", target = "Report")  
-    updateTabsetPanel(session, "innavbar", selected = "Report")
+    
+    lapply(1:numfiles, function(i){
+      observeEvent(input[[paste("Data_label", i, sep = "_")]],{
+        assign(paste("Data_label", i, sep = "_"),
+               input[[paste("Data_label", i, sep = "_")]],
+               envir = .GlobalEnv)
+      })
+    })
+    
+    callModule(Report_Plot, "Home")
   })
 
   

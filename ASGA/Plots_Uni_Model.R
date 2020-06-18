@@ -626,3 +626,10 @@ P7 <-  ggplot(ND_bin_100, aes(`Density`)) + geom_density(kernel = "gaussian", co
 P7 <-  P7 + geom_density(data = ND_bin_80, aes(`Density`), kernel = "gaussian", color = "royalblue4", linetype = "solid", size = 1)
 P7 <-  P7 + geom_density(data = ND_bin_45, aes(`Density`), kernel = "gaussian", color = "springgreen4", linetype = "solid", size = 1)
 print(P7)
+
+Labels <- data.frame()
+DF <-  Data_1_LD %>% distinct(Fiber_Name, .keep_all = TRUE)
+for(i in 1:nrow(DF)){
+  Labels[i,1] <- DF[i,"Fiber_Name"]
+  Labels[i,2] <- DF[i,"Uni_Model"]
+  }
