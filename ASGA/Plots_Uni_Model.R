@@ -395,11 +395,13 @@ while (i >= -0.2){
   i = i - 0.1
 }
 
+LC_bin_100 <- LC_bin_100[1:10, 1:3]
+LC_bin_80 <- LC_bin_80[1:10, 1:3]
 LC_bin_45 <- LC_bin_45[1:10, 1:3]
 
 P4 <- ggplot(LC_bin_100, aes(V3, V1)) + 
   geom_smooth(color = "violetred4", se = F) + theme_classic() +
-  xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(-0.25, 1) + ylim(1, 1.02)
+  xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(0, 1) + ylim(1, 1.02)
 P4 <- P4 + geom_smooth(data = LC_bin_80, 
                        aes(V3, V1), color = "royalblue4", se = F)
 P4 <- P4 + geom_smooth(data = LC_bin_45, 
