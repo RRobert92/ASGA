@@ -9,18 +9,32 @@
 ################################################################################
 
 Data_Plot_Settings <- function(input,output, session){
-
- tags$div(class = "splash-report-code",
-          fluidRow(column(6,
-                          lapply(1:numfiles, function(i){
-                            textInput(inputId = paste("Data_label", i, sep = "_"), label = paste("Data", i, sep = "_"), value = paste("Data", i, sep = "_"))
-                          })),
-                   column(6,
-                          selectInput(inputId = 'xcol',
-                                      label = 'X Variable',
-                                      choices = names(iris)))
-          )
- )
+  
+  tags$div(class = "splash-report-code",
+           fluidRow(column(6,
+                           lapply(1:numfiles, function(i){
+                             textInput(inputId = paste("Data_label", i, sep = "_"), 
+                                       label = paste("Data", i, sep = "_"), 
+                                       value = paste("Data", i, sep = "_"))
+                           })),
+                    column(6,
+                           lapply(1:numfiles, function(i){
+                             colourInput(inputId = paste("Data_color", i, sep = "_"), 
+                                         label = paste("Select Colour for Data_", i, sep = ""),
+                                         value = paste("gray"))
+                           }))
+           ),
+           fluidRow(column(12,
+                           
+                           tags$div(class = "table-GS-Center",
+                                    actionBttn(
+                                      inputId = "Refresh",
+                                      label = "Refresh", 
+                                      style = "material-flat",
+                                      color = "primary",
+                                      size = "lg"
+                                    ))))
+  )
 }
 
 Report_Plot_KMT_No <- function (input, output, session){
@@ -36,37 +50,37 @@ Report_Plot <- function(input, output, session){
       
       for(i in 1:nrow(Plot_Data)){
         assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
-             data.frame(Data = paste("Data_", i, sep = ""),
-                        get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["KMTs_per_kinetochore"]),
-             envir = .GlobalEnv)
+               data.frame(Data = paste("Data_", i, sep = ""),
+                          get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["KMTs_per_kinetochore"]),
+               envir = .GlobalEnv)
       }
       
       P1 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = "")), 
-                   aes_string("Data", "KMTs_per_kinetochore")) + 
+                    aes_string("Data", "KMTs_per_kinetochore")) + 
         geom_boxplot(fill = "grey20", color = "black") + theme_classic() +
         xlab("Data-set names") + ylab("Number of KMTs per kinetochore")
       
       tryCatch({
-         for(i in 2:nrow(Plot_Data)){
+        for(i in 2:nrow(Plot_Data)){
+          
+          P1 <<- P1 + geom_boxplot(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")), aes_string("Data", "KMTs_per_kinetochore"), 
+                                   fill = "grey30", color = "black")
+        }
         
-        P1 <<- P1 + geom_boxplot(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")), aes_string("Data", "KMTs_per_kinetochore"), 
-                                fill = "grey30", color = "black")
-      }
-      
-      All_KMT_No <<- get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))
-      
-      for(i in 2:nrow(Plot_Data)){
-        assign("All_KMT_No",
-               rbind(All_KMT_No["KMTs_per_kinetochore"],
-                     get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["KMTs_per_kinetochore"]),
-               envir = .GlobalEnv)
-      }
-      
-      All_KMT_No <<- data.frame(Data = "Average",
-                                All_KMT_No["KMTs_per_kinetochore"])
-      
-      P1 <<- P1 + geom_boxplot(data = All_KMT_No, aes("Avg.", KMTs_per_kinetochore), fill = "darkred", color = "black", outlier.alpha = 0) + 
-        geom_jitter(data = All_KMT_No, aes("Avg.", KMTs_per_kinetochore), alpha = 0.1, size = 1, width = 0.25)
+        All_KMT_No <<- get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))
+        
+        for(i in 2:nrow(Plot_Data)){
+          assign("All_KMT_No",
+                 rbind(All_KMT_No["KMTs_per_kinetochore"],
+                       get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["KMTs_per_kinetochore"]),
+                 envir = .GlobalEnv)
+        }
+        
+        All_KMT_No <<- data.frame(Data = "Average",
+                                  All_KMT_No["KMTs_per_kinetochore"])
+        
+        P1 <<- P1 + geom_boxplot(data = All_KMT_No, aes("Avg.", KMTs_per_kinetochore), fill = "darkred", color = "black", outlier.alpha = 0) + 
+          geom_jitter(data = All_KMT_No, aes("Avg.", KMTs_per_kinetochore), alpha = 0.1, size = 1, width = 0.25)
       },
       error = function(e){})
       

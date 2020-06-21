@@ -15,6 +15,7 @@ library("shinycssloaders")
 library("shinyWidgets")
 library("shinyBS")
 library("shinyalert")
+library("colourpicker")
 
 # Function LIbrary  ------------------------------------------------------------
 library("readxl")

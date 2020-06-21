@@ -284,12 +284,12 @@ P3 <- P3 + geom_density(data = All_T_Curv[with(All_T_Curv, `Elipse Position` == 
 print(P3)
 
 P3.1 <- ggplot(All_T_Curv[with(All_T_Curv, `Elipse Position` == "100%"),], aes(`KMTs length`, Curvature)) + 
-  geom_smooth( size = 1, color = "violetred4", se = F) + theme_classic()
+  geom_smooth( size = 1, color = "violetred4", se = T) + theme_classic()
 
 P3.1 <- P3.1 + geom_smooth(data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "50%"),], aes(`KMTs length`, Curvature),
-                           size = 1, color = "royalblue4", se = F)
+                           size = 1, color = "royalblue4", se = T)
 P3.1 <- P3.1 + geom_smooth(data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "25%" & `KMTs length` <= 3),], aes(`KMTs length`, Curvature),
-                           size = 1, color = "springgreen4", se = F)
+                           size = 1, color = "springgreen4", se = T)
 
 print(P3.1)
 
@@ -400,12 +400,12 @@ LC_bin_80 <- LC_bin_80[1:10, 1:3]
 LC_bin_45 <- LC_bin_45[1:10, 1:3]
 
 P4 <- ggplot(LC_bin_100, aes(V3, V1)) + 
-  geom_smooth(color = "violetred4", se = F) + theme_classic() +
+  geom_smooth(color = "violetred4", se = T) + theme_classic() +
   xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(0, 1) + ylim(1, 1.02)
 P4 <- P4 + geom_smooth(data = LC_bin_80, 
-                       aes(V3, V1), color = "royalblue4", se = F)
+                       aes(V3, V1), color = "royalblue4", se = T)
 P4 <- P4 + geom_smooth(data = LC_bin_45, 
-                       aes(V3, V1), color = "springgreen4", se = F)
+                       aes(V3, V1), color = "springgreen4", se = T)
 print(P4)
 
 
@@ -551,10 +551,10 @@ FA_bin_100 <- FA_bin_100[1:10, 1:3]
 FA_bin_80 <- FA_bin_80[1:10, 1:3]
 FA_bin_45 <- FA_bin_45[1:10, 1:3]
 
-P5 <- ggplot(FA_bin_100, aes(Relative_Position, Area)) + geom_smooth(method = "gam", color = "violetred4", se = FALSE, linetype = "solid") + theme_classic() +
+P5 <- ggplot(FA_bin_100, aes(Relative_Position, Area)) + geom_smooth(method = "gam", color = "violetred4", se = T, linetype = "solid") + theme_classic() +
   xlab("KMT Relative Position") + ylab("KMT polygon area") + xlim(0.0, 1)
-P5 <- P5 + geom_smooth(data = FA_bin_80, aes(Relative_Position, Area), color = "royalblue4", se = FALSE, linetype = "solid")
-P5 <- P5 + geom_smooth(data = FA_bin_45, aes(Relative_Position, Area), color = "springgreen4", se = FALSE, linetype = "solid")
+P5 <- P5 + geom_smooth(data = FA_bin_80, aes(Relative_Position, Area), color = "royalblue4", se = T, linetype = "solid")
+P5 <- P5 + geom_smooth(data = FA_bin_45, aes(Relative_Position, Area), color = "springgreen4", se = T, linetype = "solid")
 print(P5)
 
 # Neighborhood density  -------------------------------------------------------------------------------------------------------
@@ -617,10 +617,10 @@ ND_bin_100 <- ND_bin_100[1:11, 1:3]
 ND_bin_80 <- ND_bin_80[1:11, 1:3]
 ND_bin_45 <- ND_bin_45[1:11, 1:3]
 
-P6 <- ggplot(ND_bin_100, aes(Relative_Position, `Density`)) + geom_smooth(color = "violetred4", se = FALSE, linetype = "solid") + theme_classic() +
-  xlab("KMT Relative Position") + ylab("KMT focusing factor [%]") + xlim(-0.1, 1)
-P6 <- P6 + geom_smooth(data = ND_bin_80, aes(Relative_Position, `Density`), color = "royalblue4", se = FALSE, linetype = "solid")
-P6 <- P6 + geom_smooth(data = ND_bin_45, aes(Relative_Position, `Density`), color = "springgreen4", se = FALSE, linetype = "solid")
+P6 <- ggplot(ND_bin_100, aes(Relative_Position, `Density`)) + geom_smooth(color = "violetred4", se = T, linetype = "solid") + theme_classic() +
+  xlab("KMT Relative Position") + ylab("KMT focusing factor [%]") + xlim(-0.1, 1) + ylim(50,110)
+P6 <- P6 + geom_smooth(data = ND_bin_80, aes(Relative_Position, `Density`), color = "royalblue4", se = T, linetype = "solid")
+P6 <- P6 + geom_smooth(data = ND_bin_45, aes(Relative_Position, `Density`), color = "springgreen4", se = T, linetype = "solid")
 print(P6)
 
 P7 <-  ggplot(ND_bin_100, aes(`Density`)) + geom_density(kernel = "gaussian", color = "violetred4", linetype = "solid", size = 1) + theme_classic() + 
