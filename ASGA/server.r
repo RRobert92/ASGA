@@ -214,12 +214,22 @@ function(input, output, session) {
   })
   
   output$`Home-Report_Page` <- renderUI({
-    if(length(File_name[File_name$V2 == "KMT_No",2]) >= 1){
-      Report_Plot_KMT_No("Report")
-    }
+    tagList(
+      tags$p(class = "splash-subhead-Report",
+             "KMTs number per kinetochore"),
+      if(length(File_name[File_name$V2 == "KMT_No",2]) >= 1){
+        Report_Plot_KMT_No("Report")
+      },
+      tags$p(class = "splash-subhead-Report",
+             "KMT length distribution"),
+      if(length(File_name[File_name$V2 == "LD",2]) >= 1){
+        Report_Plot_LD("Report")
+      }
+    )
+    
   })
   
-  
+  # Refresh for the Report page -------------------------------------------------
   observeEvent(input$Refresh, {
     callModule(Report_Plot, "Home")
   })

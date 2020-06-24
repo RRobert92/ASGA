@@ -14,8 +14,8 @@
 
 # Mejor changes  ---------------------------------------------------------------
 
-- Added upload for the analysed data for plotting
-- Added analysis report page and its responsivness 
+- Added upload for the analyzed data for plotting
+- Added analysis report page and its responsiveness 
 - Allows to change names and color of a graphs
 
 # Minor changes ----------------------------------------------------------------
@@ -27,8 +27,9 @@
 
 # Other ------------------------------------------------------------------------
 
-- Change treshold for the ellipse model
+- Change threshold for the ellipse model
 - Added plotting for the Ellipse, plus end and unified model
+- Adjustment in a CSS style
 
 ################################################################################
 # v0.30.1 - Published 24/05/2020

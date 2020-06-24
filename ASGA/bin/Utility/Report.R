@@ -41,6 +41,10 @@ Report_Plot_KMT_No <- function (input, output, session){
   plotOutput("Home-plot_KMT_No")
 }
 
+Report_Plot_LD <- function (input, output, session){
+  plotOutput("Home-plot_LD")
+}
+
 Report_Plot <- function(input, output, session){
   
   output$`plot_KMT_No` <- renderPlot({
@@ -85,6 +89,51 @@ Report_Plot <- function(input, output, session){
       error = function(e){})
       
       print(P1)
+    },
+    error = function(e){})
+  })
+  
+  output$`plot_LD` <- renderPlot({
+    tryCatch({
+      
+      Plot_Data <<- File_name[File_name$V2 == "LD",]
+      
+      for(i in 1:nrow(Plot_Data)){
+        assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
+               data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
+                          get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["length"]),
+               envir = .GlobalEnv)
+      }
+      
+      P2 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = "")), 
+                    aes_string("length")) + 
+        geom_density(kernel = "gaussian", size = 1, color = get(paste("Data_", "color_", 1, sep = "")), linetype = "solid") + theme_classic() +
+        xlab("KMT lengths") + ylab("KMT density [Gaussian Kernal density]")
+      
+      tryCatch({
+        for(i in 2:nrow(Plot_Data)){
+          
+          P2 <<- P2 + geom_density(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")), aes_string("length"), 
+                                   color = get(paste("Data_", "color_", i, sep = "")), kernel = "gaussian")
+        }
+        
+        All_LD <<- get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = ""))
+        
+        for(i in 2:nrow(Plot_Data)){
+          assign("All_LD",
+                 rbind(All_LD["length"],
+                       get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["length"]),
+                 envir = .GlobalEnv)
+        }
+        
+        All_LD <<- data.frame(Data = "Average",
+                                  All_LD["length"])
+
+        P2 <<- P2 + geom_density(data = All_LD, aes(length), kernel = "gaussian", size = 1, color = "darkred", linetype = "solid")
+      },
+      error = function(e){})
+      
+      print(P2)
     },
     error = function(e){})
   })
