@@ -118,7 +118,7 @@ for(j in 1:numfiles){
   
   for(i in 1:nrow(get(paste("Data", j, "LD", sep = "_")))){
     
-    df[i,1] <- round(((get(paste("Data", j, "LD", sep = "_"))[i,3] - LD100min) / (LD100max - LD100min)) * 100, 0)
+    df[i,1] <- round(((get(paste("Data", j, "LD", sep = "_"))[i,"plus_dist_to_pole"] - LD100min) / (LD100max - LD100min)) * 100, 0)
   }
   names(df)[1] <- "PED"
   

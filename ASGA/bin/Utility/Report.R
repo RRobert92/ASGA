@@ -50,24 +50,24 @@ Report_Plot <- function(input, output, session){
       
       for(i in 1:nrow(Plot_Data)){
         assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
-               data.frame(Data = paste("Data_", i, sep = ""),
+               data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
                           get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["KMTs_per_kinetochore"]),
                envir = .GlobalEnv)
       }
       
       P1 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = "")), 
                     aes_string("Data", "KMTs_per_kinetochore")) + 
-        geom_boxplot(fill = "grey20", color = "black") + theme_classic() +
+        geom_boxplot(fill = get(paste("Data_", "color_", 1, sep = "")), color = "black") + theme_classic() +
         xlab("Data-set names") + ylab("Number of KMTs per kinetochore")
       
       tryCatch({
         for(i in 2:nrow(Plot_Data)){
           
           P1 <<- P1 + geom_boxplot(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")), aes_string("Data", "KMTs_per_kinetochore"), 
-                                   fill = "grey30", color = "black")
+                                   fill = get(paste("Data_", "color_", i, sep = "")), color = "black")
         }
         
-        All_KMT_No <<- get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))
+        All_KMT_No <<- get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = ""))
         
         for(i in 2:nrow(Plot_Data)){
           assign("All_KMT_No",

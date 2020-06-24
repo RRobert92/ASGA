@@ -16,6 +16,7 @@
 
 - Added upload for the analysed data for plotting
 - Added analysis report page and its responsivness 
+- Allows to change names and color of a graphs
 
 # Minor changes ----------------------------------------------------------------
 

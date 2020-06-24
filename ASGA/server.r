@@ -87,7 +87,14 @@ function(input, output, session) {
                input[[paste("Data_label", i, sep = "_")]],
                envir = .GlobalEnv)
       })
+      observeEvent(input[[paste("Data_color", i, sep = "_")]],{
+        assign(paste("Data_color", i, sep = "_"),
+               input[[paste("Data_color", i, sep = "_")]],
+               envir = .GlobalEnv)
+      })
     })
+    
+    
     
     callModule(Data_Plot_Settings, "Home")
     callModule(Report_Plot, "Home")
@@ -190,6 +197,11 @@ function(input, output, session) {
                input[[paste("Data_label", i, sep = "_")]],
                envir = .GlobalEnv)
       })
+      observeEvent(input[[paste("Data_color", i, sep = "_")]],{
+        assign(paste("Data_color", i, sep = "_"),
+               input[[paste("Data_color", i, sep = "_")]],
+               envir = .GlobalEnv)
+      })
     })
     
     callModule(Report_Plot, "Home")
@@ -206,4 +218,10 @@ function(input, output, session) {
       Report_Plot_KMT_No("Report")
     }
   })
+  
+  
+  observeEvent(input$Refresh, {
+    callModule(Report_Plot, "Home")
+  })
+  
 }
