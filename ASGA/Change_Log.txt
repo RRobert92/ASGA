@@ -23,13 +23,12 @@
 - Changed style of the Download button
 
 # Bug Fix ----------------------------------------------------------------------
-
+- Adjustment in a CSS style for differnt screen resolutions 
 
 # Other ------------------------------------------------------------------------
 
 - Change threshold for the ellipse model
 - Added plotting for the Ellipse, plus end and unified model
-- Adjustment in a CSS style
 
 ################################################################################
 # v0.30.1 - Published 24/05/2020
