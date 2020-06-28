@@ -238,7 +238,8 @@ function(input, output, session) {
         tagList(
           tags$p(class = "splash-subhead-Report",
                  "KMT length distribution"),
-          Report_Plot_LD("Report")
+          Report_Plot_LD("Report"),
+          Report_Plot_LD2("Report")
         )
         
       }

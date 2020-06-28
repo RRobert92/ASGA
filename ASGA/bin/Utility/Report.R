@@ -8,6 +8,7 @@
 # Created: 2020-05-21
 ################################################################################
 
+# Style of the setting for the plot --------------------------------------------
 Data_Plot_Settings <- function(input,output, session){
   
   tags$div(class = "splash-report-code",
@@ -46,6 +47,7 @@ Data_Plot_Settings <- function(input,output, session){
   )
 }
 
+# Render of a plots ------------------------------------------------------------
 Report_Plot_KMT_No <- function (input, output, session){
   plotOutput("Home-plot_KMT_No")
 }
@@ -54,8 +56,18 @@ Report_Plot_LD <- function (input, output, session){
   plotOutput("Home-plot_LD")
 }
 
+Report_Plot_LD2 <- function (input, output, session){
+  plotOutput("Home-plot_LD2")
+}
+
+Report_Plot_IKD <- function (input, output, session){
+  plotOutput("Home-plot_IKD")
+}
+
+# Set uo of a plot to render ---------------------------------------------------
 Report_Plot <- function(input, output, session){
   
+  # Plot for KMT no per kinetochore --------------------------------------------
   output$`plot_KMT_No` <- renderPlot({
     tryCatch({
       
@@ -144,19 +156,46 @@ Report_Plot <- function(input, output, session){
     error = function(e){})
   })
   
+  # Plot for KMT length distribution -------------------------------------------
   output$`plot_LD` <- renderPlot({
     tryCatch({
       
       Plot_Data <<- File_name[File_name$V2 == "LD",]
       
       for(i in 1:nrow(Plot_Data)){
-        assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
-               data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
-                          get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["length"]),
-               envir = .GlobalEnv)
+        if(get(paste("Data_bin", i, sep = "_")) == "all"){
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
+                 data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
+                            get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["length"]),
+                 envir = .GlobalEnv)
+          
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
+                 get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")),
+                 envir = .GlobalEnv)
+          
+        } else if (get(paste("Data_bin", i, sep = "_")) == "P1"){
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"],"_P1", sep = ""),
+                 data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
+                            get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"],"_P1", sep = ""))["length"]),
+                 envir = .GlobalEnv)
+          
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
+                 get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"],"_P1", sep = "")),
+                 envir = .GlobalEnv)
+          
+        } else if (get(paste("Data_bin", i, sep = "_")) == "P2"){
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"],"_P2", sep = ""),
+                 data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
+                            get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"],"_P2", sep = ""))["length"]),
+                 envir = .GlobalEnv)
+          
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
+                 get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"],"_P2", sep = "")),
+                 envir = .GlobalEnv)
+        }
       }
       
-      P2 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = "")), 
+      P2 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], "_bin", sep = "")), 
                     aes_string("length")) + 
         geom_density(kernel = "gaussian", size = 1, color = get(paste("Data_", "color_", 1, sep = "")), linetype = "solid") + theme_classic() +
         xlab("KMT lengths") + ylab("KMT density [Gaussian Kernal density]")
@@ -164,16 +203,16 @@ Report_Plot <- function(input, output, session){
       tryCatch({
         for(i in 2:nrow(Plot_Data)){
           
-          P2 <<- P2 + geom_density(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")), aes_string("length"), 
-                                   color = get(paste("Data_", "color_", i, sep = "")), kernel = "gaussian")
+          P2 <<- P2 + geom_density(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = "")), aes_string("length"), 
+                                   color = get(paste("Data_", "color_", i, sep = "")), kernel = "gaussian", size = 1)
         }
         
-        All_LD <<- get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], sep = ""))
+        All_LD <<- get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], "_bin", sep = ""))
         
         for(i in 2:nrow(Plot_Data)){
           assign("All_LD",
                  rbind(All_LD["length"],
-                       get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["length"]),
+                       get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""))["length"]),
                  envir = .GlobalEnv)
         }
         
@@ -185,6 +224,43 @@ Report_Plot <- function(input, output, session){
       error = function(e){})
       
       print(P2)
+    },
+    error = function(e){})
+  })
+  
+  # Plot for the LD showing a average length -----------------------------------
+  output$`plot_LD2` <- renderPlot({
+    tryCatch({
+      P2.1 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], "_bin", sep = "")), 
+                     aes_string("Data", "length")) + geom_violin(draw_quantiles = c(0.25, 0.5, 0.75), 
+                                                                 fill = get(paste("Data_", "color_", 1, sep = "")), color = "black") + 
+        theme_classic() + ylab("KMT lengths [um]") + ylim(0,10)
+      
+      tryCatch({
+        for(i in 2:nrow(Plot_Data)){
+          
+          P2.1 <<- P2.1 + geom_violin(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = "")), 
+                                      aes_string("Data", "length"), draw_quantiles = c(0.25, 0.5, 0.75),
+                                      fill = get(paste("Data_", "color_", i, sep = "")), color = "black")
+        }
+        
+        P2.1 <<- P2.1 + geom_violin(data = All_LD, 
+                                    aes_string("Data", "length"), draw_quantiles = c(0.25, 0.5, 0.75),
+                                    fill = "darkred", color = "black")
+      },
+      error = function(e){})
+      
+      print(P2.1)
+    },
+    error = function(e){})   
+  })
+
+  # Plot for the inter-kinetochore distance ------------------------------------
+  output$`plot_IKD` <- renderPlot({
+    tryCatch({
+      
+      
+      print(P3)
     },
     error = function(e){})
   })
