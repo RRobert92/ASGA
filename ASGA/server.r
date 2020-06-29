@@ -197,7 +197,8 @@ function(input, output, session) {
         color = "success"
       )
     })
-    # Collect information to start a polt after analysis ------------------------
+    
+    # Collect information to start a plot after analysis ------------------------
     lapply(1:numfiles, function(i){
       observeEvent(input[[paste("Data_label", i, sep = "_")]],{
         assign(paste("Data_label", i, sep = "_"),
@@ -241,7 +242,13 @@ function(input, output, session) {
           Report_Plot_LD("Report"),
           Report_Plot_LD2("Report")
         )
-        
+      },
+      if(length(File_name[File_name$V2 == "IKD",2]) >= 1){
+        tagList(
+          tags$p(class = "splash-subhead-Report",
+                 "Inter-kinetochore distance"),
+          Report_Plot_IKD("Report")
+        )
       }
     )
   })

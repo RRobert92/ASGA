@@ -113,7 +113,7 @@ label {
 
 .splash-container-report{
     background: #fdfdfd;
-    padding-top: 100px;
+    padding-top: 30%;
     padding-bottom: 30px;
     padding-left: 50px;
     padding-right: 50px;
@@ -122,9 +122,9 @@ label {
 
 .splash-content-report{
     padding-top: 0px;
-    padding-bottom: 30px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-left: 5%;
+    padding-right: 5%;
     text-align: center;
 }
 
@@ -236,7 +236,8 @@ label {
   color: black;
    letter-spacing: 0.05em;
     opacity: 0.8;
-    font-size: 120%;
+    font-size: 150%;
+    margin-top: 5%;
 }
 
 .splash-report{
@@ -277,12 +278,10 @@ label {
 
 }
 
-/* We want to give the content area some more padding */
 .content {
     padding: 1em 1em 3em;
 }
 
-/* This is the class used for the main content headers (<h2>) */
 .content-head {
     font-weight: 400;
     text-transform: uppercase;
@@ -290,12 +289,10 @@ label {
     margin: 2em 0 1em;
 }
 
-/* This is a modifier class used when the content-head is inside a ribbon */
 .content-head-ribbon {
     color: white;
 }
 
-/* This is the class used for the content sub-headers (<h3>) */
 .content-subhead {
     color: #1f8dd6;
 }
@@ -303,13 +300,11 @@ label {
         margin-right: 7px;
     }
 
-/* This is the class used for the dark-background areas. */
 .ribbon {
     background: #2d3e50;
     color: #aaa;
 }
 
-/* This is the class used for the footer */
 .footer {
     background: #111;
     position: absolute;
@@ -332,13 +327,10 @@ label {
 
 @media (min-width: 60em) {
 
-    /* We increase the body font size */
     body {
         font-size: 16px;
     }
 
-    /* We can align the menu header to the left, but float the
-    menu items to the right. */
     .home-menu {
         text-align: left;
     }
@@ -346,13 +338,6 @@ label {
             float: right;
         }
 
-    /* We increase the height of the splash-container */
-/*    .splash-container {
-        height: 500px;
-    }*/
-
-    /* We decrease the width of the .splash, since we have more width
-    to work with */
     .splash {
         width: 65%;
         height: 50%;
@@ -368,7 +353,7 @@ label {
       margin-left: 45px;
     }
     .splash-container-report{
-    padding-top: 150px;
+    padding-top: 16%;
     padding-bottom: 0px;
     padding-left: 250px;
     padding-right: 250px;
@@ -378,8 +363,8 @@ label {
     .splash-content-report{
     padding-top: 20px;
     padding-bottom: 50px;
-    padding-left: 350px;
-    padding-right: 350px;
+    padding-left: 15%;
+    padding-right: 15%;
     text-align: center;
     }
     
@@ -396,7 +381,6 @@ label {
       height: 50%;
     }
 
-    /* We remove the border-separator assigned to .l-box-lrg */
     .l-box-lrg {
         border: none;
     }

@@ -258,7 +258,27 @@ Report_Plot <- function(input, output, session){
   # Plot for the inter-kinetochore distance ------------------------------------
   output$`plot_IKD` <- renderPlot({
     tryCatch({
+      Plot_Data <<- File_name[File_name$V2 == "IKD",]
       
+      for(i in 1:nrow(Plot_Data)){
+        assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
+               data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
+                          get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["Inter-kinetochore distance"]),
+               envir = .GlobalEnv)
+      }
+      
+      P3 <<- ggplot(get(paste("Data_", Plot_Data[1,"V1"], "_", Plot_Data[1, "V2"], "_bin", sep = "")), 
+                    aes_string("Data", "Inter.kinetochore.distance")) + 
+        geom_boxplot(fill = get(paste("Data_", "color_", 1, sep = "")), color = "black") + theme_classic() +
+        xlab("Data-set names") + ylab("Inter-kinetochore distance [um]")
+      
+      tryCatch({
+        for(i in 2:nrow(Plot_Data)){
+          P3 <<- P3 + geom_boxplot(data = get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = "")), aes_string("Data", "Inter.kinetochore.distance"), 
+                                   fill = get(paste("Data_", "color_", i, sep = "")), color = "black")
+        }
+      },
+      error = function(e){})
       
       print(P3)
     },
