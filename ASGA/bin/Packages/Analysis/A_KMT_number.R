@@ -192,7 +192,7 @@ A_KMT_number <- function (input, output, session){
   
   progressSweetAlert(
     session = session, id = "P_KMT_number2_2",
-    title = "Counting no. of KMTs at each kinetochore from the Pole1...",
+    title = "Counting no. of KMTs at each kinetochore from the Pole2...",
     display_pct = TRUE, value = 0
   )
  
