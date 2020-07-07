@@ -17,13 +17,14 @@
 - Added upload for the analyzed data for plotting
 - Added analysis report page and its responsiveness 
 - Allows to change names and color of a graphs
+- Added tool for length and curvature of a fiber
 
 # Minor changes ----------------------------------------------------------------
 
 - Changed style of the Download button
 
 # Bug Fix ----------------------------------------------------------------------
-- Adjustment in a CSS style for differnt screen resolutions 
+- Adjustment in a CSS style for differnt screen resolutions
 
 # Other ------------------------------------------------------------------------
 
