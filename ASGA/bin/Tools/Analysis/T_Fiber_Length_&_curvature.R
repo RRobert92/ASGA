@@ -1,5 +1,5 @@
 #####################################################################################
-# Tool Fiber_curvature
+# Tool Fiber_Length_&_curvature
 #
 # The analysis tool to count no. of KMTs at each kinetochore
 #
@@ -13,15 +13,8 @@
 # Created: 2020-07-07
 #####################################################################################
 
-
-# Function: select leading KMT ------------------------------------------------------
-assign(paste(colnames(Segments)[x]),
-       leading_KMTsv2(x))
-
 # Function: Find point for lading KMTs, for j = j+5 == 0.5um -------------------------
 # Function: select leading KMT ------------------------------------------------------
-assign(paste(colnames(Segments)[x], "fiber", sep = "_"),
-       Leadig_Pointsv2(x))
 
 Leadig_Pointsv2 <- function(x) {
   j = 1
@@ -37,23 +30,7 @@ Leadig_Pointsv2 <- function(x) {
   leading_points <- na.omit(leading_points)
 }
 
-# Function: Find all points which correspond to the slice of the fiber ---------------------------
-assign(paste(colnames(Segments)[x], "fiber", sep = "_"),
-       find_polygon(x))
-
-# Function: Remove duplicated points -------------------------------------------------------------
-assign(paste(colnames(Segments)[x], "fiber", sep = "_"),
-       duplicated_points(x))
-
-# Function: Get a median point for each position and put cbind in first col ----------------------
-assign(paste(colnames(Segments)[x], "fiber", sep = "_"),
-       median_point(x))
-
-# Function: Get a a length of the fiber  ---------------------------------------------------------
-assign("Length",
-       Fiber_Length(x))
-print(Length)
-
+# Function: Get a length of the fiber  ---------------------------------------------------------
 Fiber_Length <- function(x){
   position <- data.frame()
   for (i in 1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
@@ -73,10 +50,7 @@ Fiber_Length <- function(x){
   DF[nrow(DF), 1]
 }
 
-assign("TC",
-       Fiber_Total_Curvature(x))
-print(TC)
-
+# Function: Get a total curvature  ---------------------------------------------------------
 Fiber_Total_Curvature <- function(x){
   position <- data.frame()
   position[1,1] <- data.frame(x = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1,1]))
@@ -92,8 +66,7 @@ Fiber_Total_Curvature <- function(x){
              Length = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1]))
 }
 
-assign(paste(colnames(Segments)[x], "fiber", sep = "_"),
-       relativ_pos_1_curv(x, Pole1))
+# Function: Get a relative position for pole 1  ---------------------------------------------------------
 relativ_pos_1_curv <- function(x, z){
   Fiber <- get(paste(colnames(Segments)[x], 
                      "fiber", 
@@ -116,6 +89,7 @@ relativ_pos_1_curv <- function(x, z){
   cbind(Fiber, relat_pos)
 }
 
+# Function: Get a relative position for pole 2  ---------------------------------------------------------
 relativ_pos_2_curv <- function(x, z){
   Fiber <- get(paste(colnames(Segments)[x], 
                      "fiber", 
@@ -136,8 +110,7 @@ relativ_pos_2_curv <- function(x, z){
                            names(relat_pos)[1] <- "Relative_position"
 }
 
-assign("test",
-       Fiber_Local_Curvature(x))
+# Function: Get a local curvature  ---------------------------------------------------------
 Fiber_Local_Curvature <- function(x){
   
   Fiber <- get(paste(colnames(Segments)[x], 
