@@ -110,11 +110,12 @@ ggsave(file="LD.svg", plot = P2)
 
 All_KMT_Minus_Ends <- rbind(Data_1_KMT_Minus_Ends, Data_2_KMT_Minus_Ends, Data_3_KMT_Minus_Ends)
 
-P2.4 <- ggplot(Data_1_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole)) + geom_smooth(method = "loess", linetype = "dashed", color = "black", se = F) + 
-  theme_classic() + xlab("KMT Relative Position") + ylab("KMT minus-end distance from the pole") + xlim(-0.2, 1)
-P2.4 <- P2.4 + geom_smooth(data = Data_2_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole), linetype = "dotdash", color = "black", se = F,  method = 'loess')
-P2.4 <- P2.4 + geom_smooth( data = Data_3_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole), linetype = "dotdash", color = "black", se = F,  method = 'loess')
-P2.4 <- P2.4 + geom_smooth( data = All_KMT_Minus_Ends, aes(Relative_minus_position, minus_dist_to_pole), linetype = "solid", color = "darkred",  method = 'loess')
+P2.4 <- ggplot(Data_1_KMT_Minus_Ends, aes(minus_dist_to_pole)) + geom_density(kernel = "gaussian", size = 1, linetype = "dashed", color = "black") + 
+  theme_classic() + xlab("KMT Relative Position") + ylab("KMT minus-end distance from the pole")
+P2.4 <- P2.4 + geom_density(data = Data_2_KMT_Minus_Ends, aes(minus_dist_to_pole), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
+P2.4 <- P2.4 + geom_density( data = Data_3_KMT_Minus_Ends, aes(minus_dist_to_pole), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
+P2.4 <- P2.4 + geom_density( data = All_KMT_Minus_Ends, aes(minus_dist_to_pole), linetype = "solid", color = "darkred",  kernel = "gaussian", size = 1) +
+  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "darkred", linetype = "dashed", size = 1)
 print(P2.4)
 
 
@@ -139,6 +140,15 @@ P3 <- P3 + geom_density(data = All_T_Curv, aes(Curvature), kernel = "gaussian", 
 
 print(P3)
 
+P3 <- ggplot(All_T_Curv, aes(Curvature)) + geom_density(kernel = "gaussian", size = 1, color = "darkred", linetype = "solid") + theme_classic() +
+  xlab("KMT curvatrure") + ylab("KMT density [Gaussian Kernal density]") + xlim(1,1.3) + 
+  geom_vline(data = All_T_Curv, aes(xintercept = median(Curvature)), color = "red", linetype = "dashed", size = 1)
+P3 <- P3 + geom_density(data = Data_5_KMT_Total_Curv, aes(Curvature), kernel = "gaussian", size = 1, color = "darkblue", linetype = "solid") + 
+  geom_vline(data = Data_5_KMT_Total_Curv, aes(xintercept = median(Curvature)), color = "blue", linetype = "dashed", size = 1)
+P3 <- P3 + geom_density(data = Data_7_KMT_Total_Curv, aes(Curvature), kernel = "gaussian", size = 1, color = "darkorange", linetype = "solid") + 
+  geom_vline(data = Data_7_KMT_Total_Curv, aes(xintercept = median(Curvature)), color = "orange", linetype = "dashed", size = 1)
+
+print(P3)
 
 ggsave(file="Total_curv.svg", plot = P3)
 
@@ -147,8 +157,14 @@ P3 <- ggplot(Data_1_KMT_Total_Curv, aes(`KMTs length`, Curvature)) + geom_smooth
 P3 <- P3 + geom_smooth(data = Data_2_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "black", linetype = "dotdash", se = F) 
 P3 <- P3 + geom_smooth(data = Data_3_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "black", linetype = "dotted", se = F) 
 All_T_Curv <- rbind(Data_1_KMT_Total_Curv, Data_2_KMT_Total_Curv, Data_3_KMT_Total_Curv)
-P3 <- P3 + geom_smooth(data = All_T_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "darkred", linetype = "solid") + stat_cor()
+P3 <- P3 + geom_smooth(data = All_T_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "darkred", linetype = "solid")
 
+print(P3)
+
+P3 <- ggplot(All_T_Curv, aes(`KMTs length`, Curvature)) + geom_smooth(method = 'loess', size = 1, color = "darkred", linetype = "solid", se = T) + theme_classic() +
+  xlab("KMT length") + ylab("KMT curvature ratio")
+P3 <- P3 + geom_smooth(data = Data_5_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "darkblue", linetype = "solid")
+P3 <- P3 + geom_smooth(data = Data_7_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "darkorange", linetype = "solid")
 print(P3)
 
 # Local curvature  -------------------------------------------------------------------------------------------------------
@@ -158,6 +174,8 @@ LC_bin_Data_2 <- data.frame()
 LC_bin_Data_3 <- data.frame()
 LC_bin_All <- data.frame()
 All_L_Curv <- rbind(Data_1_KMT_Local_Curv, Data_2_KMT_Local_Curv, Data_3_KMT_Local_Curv)
+LC_bin_Data_5 <- data.frame()
+LC_bin_Data_7 <- data.frame()
 
 i = 1
 j = 1
@@ -165,16 +183,22 @@ while (i >= -0.2){
   LC_bin_Data_1[j,1] <- median(as.matrix(Data_1_KMT_Local_Curv[with(Data_1_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_Data_2[j,1] <- median(as.matrix(Data_2_KMT_Local_Curv[with(Data_2_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_Data_3[j,1] <- median(as.matrix(Data_3_KMT_Local_Curv[with(Data_3_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+  LC_bin_Data_5[j,1] <- median(as.matrix(Data_5_KMT_Local_Curv[with(Data_5_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+  LC_bin_Data_7[j,1] <- median(as.matrix(Data_7_KMT_Local_Curv[with(Data_7_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_All[j,1] <- median(as.matrix(All_L_Curv[with(All_L_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   
   LC_bin_Data_1[j,2] <- sd(as.matrix(Data_1_KMT_Local_Curv[with(Data_1_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_Data_2[j,2] <- sd(as.matrix(Data_2_KMT_Local_Curv[with(Data_2_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_Data_3[j,2] <- sd(as.matrix(Data_3_KMT_Local_Curv[with(Data_3_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+  LC_bin_Data_5[j,2] <- sd(as.matrix(Data_5_KMT_Local_Curv[with(Data_5_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+  LC_bin_Data_7[j,2] <- sd(as.matrix(Data_7_KMT_Local_Curv[with(Data_7_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_All[j,2] <- sd(as.matrix(All_L_Curv[with(All_L_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   
   LC_bin_Data_1[j,3] <- median(as.matrix(Data_1_KMT_Local_Curv[with(Data_1_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
   LC_bin_Data_2[j,3] <- median(as.matrix(Data_2_KMT_Local_Curv[with(Data_2_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
   LC_bin_Data_3[j,3] <- median(as.matrix(Data_3_KMT_Local_Curv[with(Data_3_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
+  LC_bin_Data_5[j,3] <- median(as.matrix(Data_5_KMT_Local_Curv[with(Data_5_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
+  LC_bin_Data_7[j,3] <- median(as.matrix(Data_7_KMT_Local_Curv[with(Data_7_KMT_Local_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
   LC_bin_All[j,3] <- median(as.matrix(All_L_Curv[with(All_L_Curv, Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
   
     j = j + 1
@@ -187,6 +211,10 @@ LC_bin_Data_2 <- round(LC_bin_Data_2, 4)
 LC_bin_Data_2[3] <- round(LC_bin_Data_2[3], 2)
 LC_bin_Data_3 <- round(LC_bin_Data_3, 4)
 LC_bin_Data_3[3] <- round(LC_bin_Data_3[3], 2)
+LC_bin_Data_5 <- round(LC_bin_Data_5, 4)
+LC_bin_Data_5[3] <- round(LC_bin_Data_5[3], 2)
+LC_bin_Data_7 <- round(LC_bin_Data_7, 4)
+LC_bin_Data_7[3] <- round(LC_bin_Data_7[3], 2)
 LC_bin_All <- round(LC_bin_All, 4)
 LC_bin_All[3] <- round(LC_bin_All[3], 2)
 
@@ -199,6 +227,12 @@ names(LC_bin_Data_2)[3] <- "Relative_Position"
 names(LC_bin_Data_3)[1] <- "Curvature"
 names(LC_bin_Data_3)[2] <- "SD"
 names(LC_bin_Data_3)[3] <- "Relative_Position"
+names(LC_bin_Data_5)[1] <- "Curvature"
+names(LC_bin_Data_5)[2] <- "SD"
+names(LC_bin_Data_5)[3] <- "Relative_Position"
+names(LC_bin_Data_7)[1] <- "Curvature"
+names(LC_bin_Data_7)[2] <- "SD"
+names(LC_bin_Data_7)[3] <- "Relative_Position"
 names(LC_bin_All)[1] <- "Curvature"
 names(LC_bin_All)[2] <- "SD"
 names(LC_bin_All)[3] <- "Relative_Position"
@@ -207,21 +241,31 @@ P4 <- ggplot(Data_1_KMT_Local_Curv, aes(Relative_Position, Curvature)) + geom_sm
   xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(-0.2, 1) + ylim(1,1.02)
 P4 <- P4 + geom_smooth(data = Data_2_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotdash")
 P4 <- P4 + geom_smooth(data = Data_3_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotted")
-P4 <- P4 + geom_smooth(data = All_L_Curv, aes(Relative_Position, Curvature), color = "darkred", se = T, linetype = "solid")
-P4 <- P4 + geom_point(data = All_L_Curv, aes(Relative_Position, Curvature),  color = "darkred", alpha = 0.05)
+P4 <- P4 + geom_smooth(data = All_L_Curv, aes(Relative_Position, Curvature), color = "darkred", se = T, linetype = "solid") + stat_cor()
 
+print(P4)
+
+P4 <- ggplot(All_L_Curv, aes(Relative_Position, Curvature)) + geom_smooth(method = "gam", color = "darkred", se = T, linetype = "solid") + theme_classic() +
+  xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(-0.2, 1) + ylim(1,1.02)
+P4 <- P4 + geom_smooth(data = Data_5_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "blue", se = T, linetype = "solid")
+P4 <- P4 + geom_smooth(data = Data_7_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "orange", se = T, linetype = "solid")
 print(P4)
 
 P4 <- ggplot(LC_bin_Data_1, aes(Relative_Position, Curvature)) + geom_smooth(method = "gam", color = "black", se = FALSE, linetype = "dashed") + theme_classic() +
-  xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(-0.2, 1)
+  xlab("KMT Relative Position") + ylab("KMT Curvature ratio")
 P4 <- P4 + geom_smooth(data = LC_bin_Data_2, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotdash")
 P4 <- P4 + geom_smooth(data = LC_bin_Data_3, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotted")
 P4 <- P4 + geom_smooth(data = LC_bin_All, aes(Relative_Position, Curvature), color = "darkred", se = T, linetype = "solid") + stat_cor()
-P4 <- P4 + geom_point(data = LC_bin_All, aes(Relative_Position, Curvature),  color = "darkred", alpha = 0.05)
 
 print(P4)
 
-00ggsave(file="Local_curv.svg", plot = P4)
+P4 <- ggplot(LC_bin_All, aes(Relative_Position, Curvature)) + geom_smooth(method = "gam", color = "darkred", se = T, linetype = "solid") + theme_classic() +
+  xlab("KMT Relative Position") + ylab("KMT Curvature ratio")
+P4 <- P4 + geom_smooth(data = LC_bin_Data_5, aes(Relative_Position, Curvature), color = "blue", se = FALSE, linetype = "solid")
+P4 <- P4 + geom_smooth(data = LC_bin_Data_7, aes(Relative_Position, Curvature), color = "orange", se = FALSE, linetype = "solid")
+print(P4)
+
+ggsave(file="Local_curv.svg", plot = P4)
 
 # Fiber area  ------------------------------------------------------------------------------------------------------------
 
@@ -282,6 +326,12 @@ P5 <- P5 + geom_smooth(data = Data_3_Fiber_Area, aes(Relative_position, Alpha_ar
 P5 <- P5 + geom_smooth(data = All_fiber_area, aes(Relative_position, Alpha_area), color = "darkred", se = T, linetype = "solid")
 print(P5)
 
+P5 <- ggplot(All_fiber_area, aes(Relative_position, Alpha_area)) + geom_smooth(method = "gam", color = "darkred", se = T, linetype = "solid") + theme_classic() +
+  xlab("KMT Relative Position") + ylab("KMT polygon area") + xlim(-0.2, 1)
+P5 <- P5 + geom_smooth(data = Data_5_Fiber_Area, aes(Relative_position, Alpha_area), color = "blue", se = T, linetype = "solid")
+P5 <- P5 + geom_smooth(data = Data_7_Fiber_Area, aes(Relative_position, Alpha_area), color = "orange", se = T, linetype = "solid")
+print(P5)
+
 ggsave(file="Fiber_area.svg", plot = P5)
 
 # Fiber focused  ---------------------------------------------------------------------------------------------------------
@@ -295,6 +345,12 @@ P6 <- P6 + geom_smooth(data = Data_3_N_Density, aes(Relative_position, `Focused 
 P6 <- P6 + geom_smooth(data = All_fiber_focus, aes(Relative_position, `Focused KMTs %`), color = "darkred", se = T, linetype = "solid")
 print(P6)
 
+P6 <- ggplot(All_fiber_focus, aes(Relative_position, `Focused KMTs %`)) + geom_smooth(color = "darkred", se = FALSE, linetype = "solid") + theme_classic() +
+  xlab("KMT Relative Position") + ylab("KMT focusing factor [%]") + xlim(-0.2, 1)
+P6 <- P6 + geom_smooth(data = Data_5_N_Density, aes(Relative_position, `Focused KMTs %`), color = "blue", se = FALSE, linetype = "solid")
+P6 <- P6 + geom_smooth(data = Data_7_N_Density, aes(Relative_position, `Focused KMTs %`), color = "orange", se = FALSE, linetype = "solid")
+print(P6)
+
 ggsave(file="Fiber_focus_distribution.svg", plot = P6)
 
 P7 <-  ggplot(Data_1_N_Density, aes(`Focused KMTs %`)) + geom_density(kernel = "gaussian", color = "black", linetype = "dashed", size = 1) + theme_classic() + 
@@ -302,5 +358,11 @@ P7 <-  ggplot(Data_1_N_Density, aes(`Focused KMTs %`)) + geom_density(kernel = "
 P7 <-  P7 + geom_density(data = Data_2_N_Density, aes(`Focused KMTs %`), kernel = "gaussian", color = "black", linetype = "dotdash", size = 1)
 P7 <-  P7 + geom_density(data = Data_3_N_Density, aes(`Focused KMTs %`), kernel = "gaussian", color = "black", linetype = "dotted", size = 1)
 P7 <-  P7 + geom_density(data = All_fiber_focus, aes(`Focused KMTs %`), kernel = "gaussian", color = "darkred", linetype = "solid", size = 1)
+print(P7)
+
+P7 <-  ggplot(All_fiber_focus, aes(`Focused KMTs %`)) + geom_density(kernel = "gaussian", color = "darkred", linetype = "solid", size = 1) + theme_classic() + 
+  xlab("KMT focusing factor [%]") + ylab("No. of k-fibers [%]")
+P7 <-  P7 + geom_density(data = Data_5_N_Density, aes(`Focused KMTs %`), kernel = "gaussian", color = "blue", linetype = "solid", size = 1)
+P7 <-  P7 + geom_density(data = Data_7_N_Density, aes(`Focused KMTs %`), kernel = "gaussian", color = "orange", linetype = "solid", size = 1)
 print(P7)
 ggsave(file="Fiber_focus_no.svg", plot = P7)
