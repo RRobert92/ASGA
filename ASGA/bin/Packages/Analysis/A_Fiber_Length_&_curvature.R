@@ -30,9 +30,9 @@ A_Fiber_Length_Curv <- function (input, output, session){
       if("Leading" %in% colnames(get(paste(colnames(Segments)[i])))){
         
       }else{
-              assign(paste(colnames(Segments)[i]), 
-             leading_KMTsv2(i, Pole1),
-             envir=.GlobalEnv)
+        assign(paste(colnames(Segments)[i]), 
+               leading_KMTsv2(i, Pole1),
+               envir=.GlobalEnv)
       }
       
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
@@ -50,7 +50,7 @@ A_Fiber_Length_Curv <- function (input, output, session){
       assign("Length_f",
              Fiber_Length(i),
              envir = .GlobalEnv)
-
+      
       assign("Fiber_length",
              rbind(Fiber_length,
                    Length_f),
@@ -65,8 +65,8 @@ A_Fiber_Length_Curv <- function (input, output, session){
                    TC),
              envir = .GlobalEnv)
       
-      assign(paste(colnames(Segments)[x], "fiber", sep = "_"),
-             relativ_pos_1_curv(x),
+      assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
+             relativ_pos_1_curv(i),
              envir = .GlobalEnv)
       assign("LC",
              Fiber_Local_Curvature(i),
@@ -106,7 +106,7 @@ A_Fiber_Length_Curv <- function (input, output, session){
     title = "Calculating fiber length/Curvature for Pole2...",
     display_pct = TRUE, value = 0
   )
- 
+  
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)) {
     tryCatch({
       if("Leading" %in% colnames(get(paste(colnames(Segments)[i])))){
@@ -133,7 +133,6 @@ A_Fiber_Length_Curv <- function (input, output, session){
              Fiber_Length(i),
              envir = .GlobalEnv)
       
-      Length_f <- as.data.frame(Length_f)
       assign("Fiber_length",
              rbind(Fiber_length,
                    Length_f),
@@ -143,33 +142,25 @@ A_Fiber_Length_Curv <- function (input, output, session){
              Fiber_Total_Curvature(i),
              envir = .GlobalEnv)
       
-      TC <- as.data.frame(TC)
       assign("Fiber_Total_Curv",
              rbind(Fiber_Total_Curv,
                    TC),
              envir = .GlobalEnv)
       
-      assign(paste(colnames(Segments)[x], "fiber", sep = "_"),
-             relativ_pos_2_curv(x),
+      assign(paste(colnames(Segments)[i], "fiber", sep = "_"),
+             relativ_pos_2_curv(i),
              envir = .GlobalEnv)
       assign("LC",
              Fiber_Local_Curvature(i),
              envir = .GlobalEnv)
       
-      LC <- as.data.frame(LC)
       assign("Fiber_Local_Curv",
              rbind(Fiber_Local_Curv,
                    LC),
              envir = .GlobalEnv)
     },
     error = function(e){})
-    updateProgressBar(
-      session = session,
-      id = "P_Curv&length1",
-      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-                    0)
-    )
-    Sys.sleep(0.1)
+
   }
   
   closeSweetAlert(session = session)

@@ -86,7 +86,8 @@ relativ_pos_1_curv <- function(x){
   
   names(relat_pos)[1] <- "Relative_position"
   
-  cbind(Fiber, relat_pos)
+  cbind(Fiber, 
+        relat_pos)
 }
 
 # Function: Get a relative position for pole 2  ---------------------------------------------------------
@@ -107,6 +108,8 @@ relativ_pos_2_curv <- function(x){
   relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
   
   names(relat_pos)[1] <- "Relative_position"
+  cbind(Fiber,
+        relat_pos)
 }
 
 # Function: Get a local curvature  ---------------------------------------------------------

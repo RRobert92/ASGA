@@ -217,6 +217,9 @@ Save_Data <- function (input, output, session){
   
   # Save Data for Fiber length and curvature fiber ------------------------------
   tryCatch({
+    names(Fiber_Length_P1)[1] <- "Length"
+    names(Fiber_Length_P2)[1] <- "Length"
+    
     assign(paste("Data",current_data, "Fiber_Length_P1", sep = "_"),
            Fiber_Length_P1,
            envir = .GlobalEnv)
