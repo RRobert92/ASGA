@@ -10,7 +10,7 @@
 
 
 Save_Data <- function (input, output, session){
-# Save Data for LA ------------------------------------------------------------
+  # Save Data for LA ------------------------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "LD_P1", sep = "_"),
            LD_P1,
@@ -30,7 +30,7 @@ Save_Data <- function (input, output, session){
   },
   error = function(e){})
   
-# Save Data for KMT No --------------------------------------------------------
+  # Save Data for KMT No --------------------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "KMT_No_P1", sep = "_"),
            No_of_KMTs_at_kinetochore_P1,
@@ -52,7 +52,7 @@ Save_Data <- function (input, output, session){
   },error = function(e){})
   
   
-# Save Data for KMT at the Pole -----------------------------------------------
+  # Save Data for KMT at the Pole -----------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "KMT_Pole_P1", sep = "_"),
            KMTs_at_the_Pole1,
@@ -73,7 +73,7 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_KMT_Pole.xlsx", sep = ""))  
   },error = function(e){})
   
-# Save Data for KMT at the Pole -----------------------------------------------
+  # Save Data for KMT at the Pole -----------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "KMT_Minus_Ends", sep = "_"),
            Minus_end_position,
@@ -82,32 +82,32 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_KMT_Minus_Ends.xlsx", sep = "")) 
   },error = function(e){})
   
-# Save Data for end morphology Pole -------------------------------------------
+  # Save Data for end morphology Pole -------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "Minus_end_morphology_Pole1", sep = "_"),
            Minus_end_morphology_Pole1,
            envir = .GlobalEnv)
     write.xlsx(get(paste("Data",current_data, "Minus_end_morphology_Pole1", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Minus_end_morphology_Pole1.xlsx", sep = ""))
-
+    
     assign(paste("Data",current_data, "Plus_end_morphology_Pole1", sep = "_"),
            Plus_end_morphology_Pole1,
            envir = .GlobalEnv)
     write.xlsx(get(paste("Data",current_data, "Plus_end_morphology_Pole1", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Plus_end_morphology_Pole1.xlsx", sep = ""))
-
+    
     assign(paste("Data",current_data, "Minus_end_morphology_Pole2", sep = "_"),
            Minus_end_morphology_Pole2,
            envir = .GlobalEnv)
     write.xlsx(get(paste("Data",current_data, "Minus_end_morphology_Pole2", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Minus_end_morphology_Pole2.xlsx", sep = ""))
-
+    
     assign(paste("Data",current_data, "Plus_end_morphology_Pole2", sep = "_"),
            Plus_end_morphology_Pole2,
            envir = .GlobalEnv)    
     write.xlsx(get(paste("Data",current_data, "Plus_end_morphology_Pole2", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Plus_end_morphology_Pole2.xlsx", sep = ""))
-
+    
     assign(paste("Data",current_data, "Plus_end_morphology", sep = "_"),
            rbind(Plus_end_morphology_Pole1, Plus_end_morphology_Pole2),
            envir = .GlobalEnv)
@@ -120,7 +120,7 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_Minus_end_morphology.xlsx", sep = ""))  
   },error = function(e){})
   
-# Save Data for LKD -----------------------------------------------------------
+  # Save Data for LKD -----------------------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "IKD", sep = "_"),
            Inter_Kinetochore_Distance,
@@ -139,7 +139,7 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_IKD_KMT_No.xlsx", sep = "")) 
   },error = function(e){})
   
-# Save Data for total curvature -----------------------------------------------
+  # Save Data for total curvature -----------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "KMT_Total_Curv_P1", sep = "_"),
            KMTs_total_Curvature_P1,
@@ -158,7 +158,7 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_KMT_Total_Curv.xlsx", sep = "")) 
   },error = function(e){})
   
-# Save Data for local curvature ----------------------------------------------
+  # Save Data for local curvature ----------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "KMT_Local_Curv_P1", sep = "_"),
            KMTs_local_Curvature_P1,
@@ -177,7 +177,7 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_KMT_Local_Curv.xlsx", sep = "")) 
   },error = function(e){})
   
-# Save Data for Fiber area ----------------------------------------------------
+  # Save Data for Fiber area ----------------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "Fiber_Area_P1", sep = "_"),
            Fiber_area_P1,
@@ -196,7 +196,7 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_Fiber_Area.xlsx", sep = "")) 
   },error = function(e){})
   
-# Save Data for Density fiber -------------------------------------------------
+  # Save Data for Density fiber -------------------------------------------------
   tryCatch({
     assign(paste("Data",current_data, "N_Density_P1", sep = "_"),
            N_density_P1,
@@ -215,7 +215,62 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_N_Density.xlsx", sep = ""))
   },error = function(e){})
   
-# Save Data for nucleation ----------------------------------------------------
+  # Save Data for Fiber length and curvature fiber ------------------------------
+  tryCatch({
+    assign(paste("Data",current_data, "Fiber_Length_P1", sep = "_"),
+           Fiber_Length_P1,
+           envir = .GlobalEnv)
+    assign(paste("Data",current_data, "Fiber_Length_P2", sep = "_"),
+           Fiber_Length_P2,
+           envir = .GlobalEnv)
+    assign(paste("Data",current_data, "Fiber_Length", sep = "_"),
+           rbind(Fiber_Length_P1, Fiber_Length_P2),
+           envir = .GlobalEnv)
+
+    assign(paste("Data",current_data, "Fiber_Total_Curv_P1", sep = "_"),
+           Fiber_Total_Curv_P1,
+           envir = .GlobalEnv)
+    assign(paste("Data",current_data, "Fiber_Total_Curv_P2", sep = "_"),
+           Fiber_Total_Curv_P2,
+           envir = .GlobalEnv)
+    assign(paste("Data",current_data, "Fiber_Total_Curv", sep = "_"),
+           rbind(Fiber_Total_Curv_P1, Fiber_Total_Curv_P2),
+           envir = .GlobalEnv)
+    
+    assign(paste("Data",current_data, "Fiber_Local_Curv_P1", sep = "_"),
+           Fiber_Local_Curv_P1,
+           envir = .GlobalEnv)
+    assign(paste("Data",current_data, "Fiber_Local_Curv_P2", sep = "_"),
+           Fiber_Local_Curv_P2,
+           envir = .GlobalEnv)
+    assign(paste("Data",current_data, "Fiber_Local_Curv", sep = "_"),
+           rbind(Fiber_Local_Curv_P1, Fiber_Local_Curv_P2),
+           envir = .GlobalEnv)
+    
+    write.xlsx(get(paste("Data",current_data, "Fiber_Length_P1", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Length_P1.xlsx", sep = ""))  
+    write.xlsx(get(paste("Data",current_data, "Fiber_Length_P2", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Length_P2.xlsx", sep = "")) 
+    write.xlsx(get(paste("Data",current_data, "Fiber_Length", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Length.xlsx", sep = ""))
+    
+    write.xlsx(get(paste("Data",current_data, "Fiber_Total_Curv_P1", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Total_Curv_P1.xlsx", sep = ""))  
+    write.xlsx(get(paste("Data",current_data, "Fiber_Total_Curv_P2", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Total_Curv_P2.xlsx", sep = "")) 
+    write.xlsx(get(paste("Data",current_data, "Fiber_Total_Curv", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Total_Curv.xlsx", sep = ""))
+    
+    write.xlsx(get(paste("Data",current_data, "Fiber_Local_Curv_P1", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Local_Curv_P1.xlsx", sep = ""))  
+    write.xlsx(get(paste("Data",current_data, "Fiber_Local_Curv_P2", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Local_Curv_P2.xlsx", sep = "")) 
+    write.xlsx(get(paste("Data",current_data, "Fiber_Local_Curv", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Local_Curv.xlsx", sep = ""))
+    
+  },error = function(e){})
+  
+  # Save Data for nucleation ----------------------------------------------------
   tryCatch({
     assign(paste("Data", current_data, "KMTs_minus_seed_P1", sep = "_"),
            KMTs_minus_seed_P1,
@@ -235,7 +290,7 @@ Save_Data <- function (input, output, session){
   },error = function(e){})
   
   
-# Clean Environment -----------------------------------------------------------
+  # Clean Environment -----------------------------------------------------------
   rm(list = ls(pattern = "Pole"))
   rm(list = ls(pattern = "DF"))
 }

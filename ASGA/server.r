@@ -163,6 +163,10 @@ function(input, output, session) {
           callModule(A_Fiber_Area, "Home")
         }
         
+        if(input$`Home-Fiber_Curv_Length` == TRUE){
+          callModule(A_Fiber_Length_Curv, "Home")
+        }
+        
         if(input$`Home-KMT_Minus_End_Seeds` == TRUE){
           callModule(A_KMT_Minus_End_Seeds, "Home")
         }

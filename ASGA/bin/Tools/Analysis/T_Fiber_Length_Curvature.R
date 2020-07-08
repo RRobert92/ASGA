@@ -67,16 +67,16 @@ Fiber_Total_Curvature <- function(x){
 }
 
 # Function: Get a relative position for pole 1  ---------------------------------------------------------
-relativ_pos_1_curv <- function(x, z){
+relativ_pos_1_curv <- function(x){
   Fiber <- get(paste(colnames(Segments)[x], 
                      "fiber", 
                      sep = "_"))[1:3]
   
   relativ_pos_part1 <- lapply(Fiber[2], 
-                              function(y) {Fiber[2] - z[1,2]})
+                              function(y) {Fiber[2] - Pole1[1,2]})
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
   
-  relativ_pos_part2 <- Fiber[which.min(Fiber[,2]),2] - z[1,2]
+  relativ_pos_part2 <- Fiber[which.min(Fiber[,2]),2] - Pole1[1,2]
   
   relativ_positon <- lapply(relativ_pos_part1, 
                             function(y) {round(relativ_pos_part1[1] / relativ_pos_part2, 
@@ -90,24 +90,23 @@ relativ_pos_1_curv <- function(x, z){
 }
 
 # Function: Get a relative position for pole 2  ---------------------------------------------------------
-relativ_pos_2_curv <- function(x, z){
+relativ_pos_2_curv <- function(x){
   Fiber <- get(paste(colnames(Segments)[x], 
                      "fiber", 
                      sep = "_"))[1:3]
   
   relativ_pos_part1 <- lapply(Fiber[2], 
-                              function(y) {Fiber[2] - z[1,2]})
+                              function(y) {Fiber[2] - Pole2[1,2]})
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
   
-  relativ_pos_part2 <- get(Fiber[which.max(Fiber[,2]),2] - z[1,2]
-                           
-                           relativ_positon <- lapply(relativ_pos_part1, 
-                                                     function(y) {round(relativ_pos_part1[1] / relativ_pos_part2, 
-                                                                        2)})
-                           
-                           relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
-                           
-                           names(relat_pos)[1] <- "Relative_position"
+  relativ_pos_part2 <- Fiber[which.max(Fiber[,2]),2] - Pole2[1,2]
+  relativ_positon <- lapply(relativ_pos_part1, 
+                            function(y) {round(relativ_pos_part1[1] / relativ_pos_part2, 
+                                               2)})
+  
+  relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
+  
+  names(relat_pos)[1] <- "Relative_position"
 }
 
 # Function: Get a local curvature  ---------------------------------------------------------
@@ -116,7 +115,7 @@ Fiber_Local_Curvature <- function(x){
   Fiber <- get(paste(colnames(Segments)[x], 
                      "fiber", 
                      sep = "_"))[1:4]
-
+  
   DF <- data.frame()
   i = 1
   while (i < nrow(Fiber)){
@@ -134,18 +133,18 @@ Fiber_Local_Curvature <- function(x){
     i = i +4
   }
   DF <- na.omit(DF)
-
-    if(nrow(output_curve) == 0){
-      
-    } else {
-      DF <- cbind.data.frame(Curvature = DF[1],
-                             Relative_Position = DF[3],
-                             K_fiber_no = paste(colnames(Segments)[x]),
-                             End_Position = get(paste(colnames(Segments)[x]))[1,4],
-                             End_to_Pole = get(paste(colnames(Segments)[x]))[1,5],
-                             Elipse_Position = get(paste(colnames(Segments)[x]))[1,6])
-      names(DF)[1] <- "Curvature"
-      names(DF)[2] <- "Relative_Position"
-      DF
-    }
+  
+  if(nrow(DF) == 0){
+    
+  } else {
+    DF <- cbind.data.frame(Curvature = DF[1],
+                           Relative_Position = DF[3],
+                           K_fiber_no = paste(colnames(Segments)[x]),
+                           End_Position = get(paste(colnames(Segments)[x]))[1,4],
+                           End_to_Pole = get(paste(colnames(Segments)[x]))[1,5],
+                           Elipse_Position = get(paste(colnames(Segments)[x]))[1,6])
+    names(DF)[1] <- "Curvature"
+    names(DF)[2] <- "Relative_Position"
+    DF
   }
+}
