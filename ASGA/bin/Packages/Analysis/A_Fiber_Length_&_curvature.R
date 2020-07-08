@@ -50,8 +50,7 @@ A_Fiber_Length_Curv <- function (input, output, session){
       assign("Length_f",
              Fiber_Length(i),
              envir = .GlobalEnv)
-      
-      Length_f <- as.data.frame(Length_f)
+
       assign("Fiber_length",
              rbind(Fiber_length,
                    Length_f),
@@ -61,7 +60,6 @@ A_Fiber_Length_Curv <- function (input, output, session){
              Fiber_Total_Curvature(i),
              envir = .GlobalEnv)
       
-      TC <- as.data.frame(TC)
       assign("Fiber_Total_Curv",
              rbind(Fiber_Total_Curv,
                    TC),
@@ -74,7 +72,6 @@ A_Fiber_Length_Curv <- function (input, output, session){
              Fiber_Local_Curvature(i),
              envir = .GlobalEnv)
       
-      LC <- as.data.frame(LC)
       assign("Fiber_Local_Curv",
              rbind(Fiber_Local_Curv,
                    LC),
