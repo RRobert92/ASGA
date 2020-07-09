@@ -9,7 +9,7 @@
 ################################################################################
 
 ################################################################################
-# v0.31 - Unpublished
+# v0.31 - Published 09/07/2020
 ################################################################################
 
 # Mejor changes  ---------------------------------------------------------------
@@ -18,13 +18,14 @@
 - Added analysis report page and its responsiveness 
 - Allows to change names and color of a graphs
 - Added tool for length and curvature of a fiber
+- Added tool for calculation of a kinetochore area and it's position
 
 # Minor changes ----------------------------------------------------------------
 
 - Changed style of the Download button
 
 # Bug Fix ----------------------------------------------------------------------
-- Adjustment in a CSS style for differnt screen resolutions
+- Adjustment in a CSS style for different screen resolutions
 
 # Other ------------------------------------------------------------------------
 
