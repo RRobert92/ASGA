@@ -271,6 +271,22 @@ Mean_DF <- get(paste(colnames(Segments)[x],
                      "fiber", 
                      sep = "_"))[3:5]
 
+dist <- data.frame()
+for(j in 1:ncol(DF)){
+  dist[j,1] <- Points[as.numeric(DF[1,j] + 1), "X Coord"]
+  dist[j,2] <- Points[as.numeric(DF[1,j] + 1), "Y Coord"]
+  dist[j,3] <- Points[as.numeric(DF[1,j] + 1), "Z Coord"]
+}
+dist <- na.omit(dist)
+dist[4:6] <- Mean_DF[1,1:3]
+dist$distance <- apply(dist, 
+                       1, 
+                       function(y) dist(matrix(y, 
+                                               nrow = 2, 
+                                               byrow = TRUE)))
+fiber_radius <- round(as.numeric(max(dist$distance) * 2),
+                      2)
+
 DF_full <- data.frame()
 
 for(i in 1:nrow(DF)){
@@ -295,7 +311,7 @@ for(i in 1:nrow(DF)){
                         3)
   DF_full[i,2] <- round(sd(dist$distance),
                         3)
-  DF_full[i,3] <- round((length(which(dist$distance <= 0.2)) * 100) / nrow(dist),
+  DF_full[i,3] <- round((length(which(dist$distance <= fiber_radius)) * 100) / nrow(dist),
                         0)
   DF_full[i,4] <- get(paste(colnames(Segments)[x]))[1,5]
   DF_full[i,5] <- get(paste(colnames(Segments)[x]))[1,6]

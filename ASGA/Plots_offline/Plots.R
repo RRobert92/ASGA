@@ -72,16 +72,14 @@ print(P2.1)
 
 P2.2 <- ggplot(All_LD, aes(length)) + geom_density(kernel = "gaussian", size = 1, color = "darkred", linetype = "solid") + theme_classic() +
   xlab("KMT lengths") + ylab("KMT density [Gaussian Kernal density]")
-P2.2 <- P2.2  + geom_density(data = All_LD_RPE, aes(length), kernel = "gaussian", size = 1, color = "darkgreen", linetype = "solid")
-P2.2 <- P2.2  + geom_density(data = All_LD_U2OS, aes(length), kernel = "gaussian", size = 1, color = "darkorange", linetype = "solid")
+P2.2 <- P2.2  + geom_density(data = Data_5_LD, aes(length), kernel = "gaussian", size = 1, color = "darkgreen", linetype = "solid")
+P2.2 <- P2.2  + geom_density(data = Data_7_LD, aes(length), kernel = "gaussian", size = 1, color = "darkorange", linetype = "solid")
 print(P2.2)
 
 P2.3 <- ggplot(All_LD, aes("Average HeLa", length)) + geom_violin(draw_quantiles = c(0.25, 0.5, 0.75), fill = "darkred", color = "black") + theme_classic() +
   ylab("KMT lengths [um]") + ylim(0,10)
-All_LD_RPE <- rbind(Data_5_LD)
-P2.3 <- P2.3  + geom_violin(data = All_LD_RPE, aes("RPE-1 wt #5", length), draw_quantiles = c(0.25, 0.5, 0.75), fill = "darkgreen", color = "black")
-All_LD_U2OS <- rbind(Data_7_LD)
-P2.3 <- P2.3  + geom_violin(data = All_LD_U2OS, aes("U2OS wt #7", length), draw_quantiles = c(0.25, 0.5, 0.75), fill = "darkorange", color = "black")
+P2.3 <- P2.3  + geom_violin(data = Data_5_LD, aes("RPE-1 wt #5", length), draw_quantiles = c(0.25, 0.5, 0.75), fill = "darkgreen", color = "black")
+P2.3 <- P2.3  + geom_violin(data = Data_7_LD, aes("U2OS wt #7", length), draw_quantiles = c(0.25, 0.5, 0.75), fill = "darkorange", color = "black")
 print(P2.3)
 
 for(i in 1:numfiles){
@@ -153,7 +151,7 @@ print(P3)
 ggsave(file="Total_curv.svg", plot = P3)
 
 P3 <- ggplot(Data_1_KMT_Total_Curv, aes(`KMTs length`, Curvature)) + geom_smooth(method = 'loess', size = 1, color = "black", linetype = "dashed", se = F) + theme_classic() +
-  xlab("KMT length") + ylab("KMT curvature ratio") 
+  xlab("KMT length") + ylab("KMT curvature ratio")
 P3 <- P3 + geom_smooth(data = Data_2_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "black", linetype = "dotdash", se = F) 
 P3 <- P3 + geom_smooth(data = Data_3_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "black", linetype = "dotted", se = F) 
 All_T_Curv <- rbind(Data_1_KMT_Total_Curv, Data_2_KMT_Total_Curv, Data_3_KMT_Total_Curv)
@@ -162,7 +160,7 @@ P3 <- P3 + geom_smooth(data = All_T_Curv, aes(`KMTs length`, Curvature), method 
 print(P3)
 
 P3 <- ggplot(All_T_Curv, aes(`KMTs length`, Curvature)) + geom_smooth(method = 'loess', size = 1, color = "darkred", linetype = "solid", se = T) + theme_classic() +
-  xlab("KMT length") + ylab("KMT curvature ratio")
+  xlab("KMT length") + ylab("KMT curvature ratio") + stat_cor()
 P3 <- P3 + geom_smooth(data = Data_5_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "darkblue", linetype = "solid")
 P3 <- P3 + geom_smooth(data = Data_7_KMT_Total_Curv, aes(`KMTs length`, Curvature), method = 'loess', size = 1, color = "darkorange", linetype = "solid")
 print(P3)
@@ -297,10 +295,10 @@ P6 <- P6 + geom_smooth(data = Data_3_N_Density, aes(Relative_position, `Focused 
 P6 <- P6 + geom_smooth(data = All_fiber_focus, aes(Relative_position, `Focused KMTs %`), color = "darkred", se = T, linetype = "solid")
 print(P6)
 
-P6 <- ggplot(All_fiber_focus, aes(Relative_position, `Focused KMTs %`)) + geom_smooth(color = "darkred", se = FALSE, linetype = "solid") + theme_classic() +
+P6 <- ggplot(All_fiber_focus, aes(Relative_position, `Focused KMTs %`)) + geom_smooth(color = "darkred", se = T, linetype = "solid") + theme_classic() +
   xlab("KMT Relative Position") + ylab("KMT focusing factor [%]") + xlim(-0.2, 1)
-P6 <- P6 + geom_smooth(data = Data_5_N_Density, aes(Relative_position, `Focused KMTs %`), color = "blue", se = FALSE, linetype = "solid")
-P6 <- P6 + geom_smooth(data = Data_7_N_Density, aes(Relative_position, `Focused KMTs %`), color = "orange", se = FALSE, linetype = "solid")
+P6 <- P6 + geom_smooth(data = Data_5_N_Density, aes(Relative_position, `Focused KMTs %`), color = "blue", se = T, linetype = "solid")
+P6 <- P6 + geom_smooth(data = Data_7_N_Density, aes(Relative_position, `Focused KMTs %`), color = "orange", se = T, linetype = "solid")
 print(P6)
 
 ggsave(file="Fiber_focus_distribution.svg", plot = P6)
@@ -323,4 +321,9 @@ ggsave(file="Fiber_focus_no.svg", plot = P7)
 
 All_minus_seed <- rbind(Data_1_KMTs_minus_seed, Data_2_KMTs_minus_seed, Data_3_KMTs_minus_seed)
 
-ggplot(Data_3_KMTs_minus_seed, aes(Relative_pos, colour = I_class)) + geom_density()
+P8 <- ggplot(All_minus_seed, aes(Relative_pos, colour = I_class)) + geom_density(kernel = "gaussian", size = 1) + theme_classic()
+P8 <- P8 + geom_density(data = Data_1_KMTs_minus_seed, aes(Relative_pos, colour = I_class), kernel = "gaussian", size = 1)
+P8 <- P8 + geom_density(data = Data_2_KMTs_minus_seed, aes(Relative_pos, colour = I_class), kernel = "gaussian", size = 1)
+P8 <- P8 + geom_density(data = Data_3_KMTs_minus_seed, aes(Relative_pos, colour = I_class), kernel = "gaussian", size = 1)
+
+print(P8)
