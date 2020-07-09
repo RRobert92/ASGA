@@ -293,6 +293,7 @@ Save_Data <- function (input, output, session){
   },error = function(e){})
   
   # Save Data for kinetochore area ----------------------------------------------
+  tryCatch({
   assign(paste("Data", current_data, "K_Core_Area_P1", sep = "_"),
          K_Core_Area_P1,
          envir = .GlobalEnv)
@@ -309,6 +310,7 @@ Save_Data <- function (input, output, session){
              paste("Data/", "Data_",current_data, "_K_Core_Area_P2.xlsx", sep = ""))
   write.xlsx(get(paste("Data",current_data, "K_Core_Area", sep = "_")), 
              paste("Data/", "Data_",current_data, "_K_Core_Area.xlsx", sep = ""))
+  },error = function(e){})
   
   # Clean Environment -----------------------------------------------------------
   rm(list = ls(pattern = "Pole"))
