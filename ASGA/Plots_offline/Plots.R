@@ -279,7 +279,7 @@ print(P5)
 P5 <- ggplot(All_fiber_area, aes(Relative_position, Alpha_area)) + geom_smooth(method = "gam", color = "darkred", se = T, linetype = "solid") + theme_classic() +
   xlab("KMT Relative Position") + ylab("KMT polygon area") + xlim(-0.2, 1)
 P5 <- P5 + geom_smooth(data = Data_5_Fiber_Area, aes(Relative_position, Alpha_area), color = "blue", se = T, linetype = "solid")
-P5 <- P5 + geom_smooth(data = Data_7_Fiber_Area, aes(Relative_position, Alpha_area), color = "orange", se = T, linetype = "solid")
+P5 <- P5 + geom_smooth(data = Data_8_Fiber_Area, aes(Relative_position, Alpha_area), color = "orange", se = T, linetype = "solid")
 print(P5)
 
 ggsave(file="Fiber_area.svg", plot = P5)
@@ -298,7 +298,7 @@ print(P6)
 P6 <- ggplot(All_fiber_focus, aes(Relative_position, `Focused KMTs %`)) + geom_smooth(color = "darkred", se = T, linetype = "solid") + theme_classic() +
   xlab("KMT Relative Position") + ylab("KMT focusing factor [%]") + xlim(-0.2, 1)
 P6 <- P6 + geom_smooth(data = Data_5_N_Density, aes(Relative_position, `Focused KMTs %`), color = "blue", se = T, linetype = "solid")
-P6 <- P6 + geom_smooth(data = Data_7_N_Density, aes(Relative_position, `Focused KMTs %`), color = "orange", se = T, linetype = "solid")
+P6 <- P6 + geom_smooth(data = Data_8_N_Density, aes(Relative_position, `Focused KMTs %`), color = "orange", se = T, linetype = "solid")
 print(P6)
 
 ggsave(file="Fiber_focus_distribution.svg", plot = P6)

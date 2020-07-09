@@ -45,7 +45,7 @@ A_K_Core_Area <- function (input, output, session){
       assign("KCA",
              Kinetochore_Size(i),
              envir = .GlobalEnv)
-      assign("K_core_area",
+      assign("K_Core_Area",
              rbind(K_Core_Area,
                    KCA),
              envir = .GlobalEnv)
@@ -99,7 +99,7 @@ A_K_Core_Area <- function (input, output, session){
       assign("KCA",
              Kinetochore_Size(i),
              envir = .GlobalEnv)
-      assign("K_core_area",
+      assign("K_Core_Area",
              rbind(K_Core_Area,
                    KCA),
              envir = .GlobalEnv)
