@@ -56,6 +56,7 @@ R library
 - shinyWidgets
 - shinyBS
 - shinyalert
+- colourpicker
 - readxl
 - plyr
 - tidyverse
