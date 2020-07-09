@@ -50,6 +50,7 @@ source("bin/Tools/Analysis/T_End_Morphology.R")
 source("bin/Tools/Analysis/T_Fiber_Area.R")
 source("bin/Tools/Analysis/T_KMT_Minus_End_Seeds.R")
 source("bin/Tools/Analysis/T_Fiber_Length_Curvature.R")
+source("bin/Tools/Analysis/T_Kinetochore_Area.R")
 
 source("bin/Utility/Report.R")
 
@@ -61,3 +62,4 @@ source("bin/Packages/Analysis/A_End_Morphology.R")
 source("bin/Packages/Analysis/A_Fiber_Area.R")
 source("bin/Packages/Analysis/A_KMT_Minus_End_Seeds.R")
 source("bin/Packages/Analysis/A_Fiber_Length_&_curvature.R")
+source("bin/Packages/Analysis/A_Kinetochore_Area.R")

@@ -292,6 +292,23 @@ Save_Data <- function (input, output, session){
                paste("Data/", "Data_",current_data, "_KMTs_minus_seed.xlsx", sep = ""))   
   },error = function(e){})
   
+  # Save Data for kinetochore area ----------------------------------------------
+  assign(paste("Data", current_data, "K_Core_Area_P1", sep = "_"),
+         K_Core_Area_P1,
+         envir = .GlobalEnv)
+  assign(paste("Data", current_data, "K_Core_Area_P2", sep = "_"),
+         K_Core_Area_P2,
+         envir = .GlobalEnv)
+  assign(paste("Data",current_data, "K_Core_Area", sep = "_"),
+         rbind(K_Core_Area_P1, K_Core_Area_P2),
+         envir = .GlobalEnv) 
+  
+  write.xlsx(get(paste("Data",current_data, "K_Core_Area_P1", sep = "_")), 
+             paste("Data/", "Data_",current_data, "_K_Core_Area_P1.xlsx", sep = ""))
+  write.xlsx(get(paste("Data",current_data, "K_Core_Area_P2", sep = "_")), 
+             paste("Data/", "Data_",current_data, "_K_Core_Area_P2.xlsx", sep = ""))
+  write.xlsx(get(paste("Data",current_data, "K_Core_Area", sep = "_")), 
+             paste("Data/", "Data_",current_data, "_K_Core_Area.xlsx", sep = ""))
   
   # Clean Environment -----------------------------------------------------------
   rm(list = ls(pattern = "Pole"))

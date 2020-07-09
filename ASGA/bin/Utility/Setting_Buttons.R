@@ -47,7 +47,6 @@ Setting_Buttons_UI <- function(id){
            right = TRUE,
            status = "info"
          ),
-         
          materialSwitch(
            inputId = ns("Fiber_Area"),
            label = "Fiber Area & Neighorhood Densit",
@@ -58,6 +57,13 @@ Setting_Buttons_UI <- function(id){
          materialSwitch(
            inputId = ns("Fiber_Curv_Length"),
            label = "Fiber length & curvature",
+           value = FALSE, 
+           right = TRUE,
+           status = "info"
+         ),
+         materialSwitch(
+           inputId = ns("k_core_area"),
+           label = "Area and position of the kinetochore",
            value = FALSE, 
            right = TRUE,
            status = "info"
@@ -180,7 +186,7 @@ Setting_Buttons_Server <- function (input, output, session){
       }
     })
   })
-  
+
   # Reactivity for Fiber curve and length button --------------------------------
   observeEvent(input$`Fiber_Curv_Length`,{
     if(input$`Fiber_Curv_Length` == TRUE){
@@ -193,6 +199,22 @@ Setting_Buttons_Server <- function (input, output, session){
         "This tool will analyze the length of a k-fiber based on the assumption that a fiber
         is a fiber till it has at least 3 KMTs, the fiber total and local curvature is calculated 
         using the fiber generated based on the above assumption.
+        For more information see 'Wiki' page"
+      }
+    })
+  })
+  
+  # Reactivity for Fiber curve and length button --------------------------------
+  observeEvent(input$`k_core_area`,{
+    if(input$`k_core_area` == TRUE){
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
+    }
+    All_Closed()
+    
+    output$`Tool_Info` <- renderUI({
+      if(input$`k_core_area` == TRUE){
+        "This tool will analyze the area of the kinetochore and combine it with kinetochore position in the spindle
+        and number of the KMTs at the kinetochore.
         For more information see 'Wiki' page"
       }
     })
@@ -215,7 +237,7 @@ Setting_Buttons_Server <- function (input, output, session){
       updateMaterialSwitch(session, "Fiber_Area", FALSE)
       updateMaterialSwitch(session, "KMT_Minus_End_Seeds", FALSE)
       updateMaterialSwitch(session, "Fiber_Curv_Length", FALSE)
-      
+      updateMaterialSwitch(session, "k_core_area", FALSE)
     }
   })
   
@@ -227,7 +249,8 @@ Setting_Buttons_Server <- function (input, output, session){
         input$`End_Morphology` == FALSE &&
         input$`Fiber_Area` == FALSE &&
         input$`KMT_Minus_End_Seeds` == FALSE &&
-        input$`Fiber_Curv_Length` == FALSE){
+        input$`Fiber_Curv_Length` == FALSE &&
+        input$`k_core_area` == FALSE){
       updateMaterialSwitch(session, "All_Anaysis", TRUE)
     }
   }

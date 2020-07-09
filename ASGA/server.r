@@ -171,6 +171,9 @@ function(input, output, session) {
           callModule(A_KMT_Minus_End_Seeds, "Home")
         }
         
+        if(input$`Home-k_core_area` == TRUE){
+          callModule(A_K_Core_Area, "Home")
+        }
         callModule(Save_Data ,"Home")
         
       }
