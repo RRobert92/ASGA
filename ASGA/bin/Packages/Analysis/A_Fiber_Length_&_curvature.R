@@ -102,7 +102,7 @@ A_Fiber_Length_Curv <- function (input, output, session){
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
   
   progressSweetAlert(
-    session = session, id = "P_Curv&length1",
+    session = session, id = "P_Curv&length2",
     title = "Calculating fiber length/Curvature for Pole2...",
     display_pct = TRUE, value = 0
   )
@@ -113,7 +113,7 @@ A_Fiber_Length_Curv <- function (input, output, session){
         
       }else{
         assign(paste(colnames(Segments)[i]), 
-               leading_KMTsv2(i, Pole1),
+               leading_KMTsv2(i, Pole2),
                envir=.GlobalEnv)
       }
       
@@ -160,7 +160,14 @@ A_Fiber_Length_Curv <- function (input, output, session){
              envir = .GlobalEnv)
     },
     error = function(e){})
-
+    
+    updateProgressBar(
+      session = session,
+      id = "P_Curv&length2",
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
+                    0)
+    )
+    Sys.sleep(0.1)
   }
   
   closeSweetAlert(session = session)

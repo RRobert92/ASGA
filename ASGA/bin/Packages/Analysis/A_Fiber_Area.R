@@ -116,7 +116,7 @@ A_Fiber_Area <- function (input, output, session){
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)) {
     tryCatch({
       assign(paste(colnames(Segments)[i]), 
-             leading_KMTsv2(i, Pole1),
+             leading_KMTsv2(i, Pole2),
              envir=.GlobalEnv)
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              Leadig_Points(i),
