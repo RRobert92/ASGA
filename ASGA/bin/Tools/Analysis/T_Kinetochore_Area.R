@@ -35,7 +35,7 @@ Kinetochore_Size <- function(x){
                          function(y) dist(matrix(y, 
                                                  nrow = 2, 
                                                  byrow = TRUE)))
-  fiber_radius <- round(as.numeric(max(dist$distance) * 2),
+  fiber_radius <- round(as.numeric(max(dist$distance)),
                         2)
   
   DF <- data.frame(Kinetochore_area = as.numeric(pi * fiber_radius^2),
