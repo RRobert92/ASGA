@@ -28,6 +28,7 @@ Kinetochore_Size <- function(x){
     dist[j,2] <- Points[as.numeric(DF[2,j] + 1), "Y Coord"]
     dist[j,3] <- Points[as.numeric(DF[2,j] + 1), "Z Coord"]
   }
+  
   dist <- na.omit(dist)
   dist[4:6] <- Mean_DF[2,1:3]
   dist$distance <- apply(dist, 
@@ -35,8 +36,8 @@ Kinetochore_Size <- function(x){
                          function(y) dist(matrix(y, 
                                                  nrow = 2, 
                                                  byrow = TRUE)))
-  fiber_radius <- round(as.numeric(max(dist$distance)),
-                        2)
+  
+  fiber_radius <- as.numeric(max(dist$distance))
   
   DF <- data.frame(Kinetochore_area = as.numeric(pi * fiber_radius^2),
                    KMT_no = as.numeric(nrow(get(paste(colnames(Segments)[x])))),
