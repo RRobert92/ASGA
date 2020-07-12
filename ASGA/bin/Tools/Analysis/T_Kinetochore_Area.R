@@ -24,12 +24,12 @@ Kinetochore_Size <- function(x){
   
   dist <- data.frame()
   for(j in 1:ncol(DF)){
-    dist[j,1] <- Points[as.numeric(DF[1,j] + 1), "X Coord"]
-    dist[j,2] <- Points[as.numeric(DF[1,j] + 1), "Y Coord"]
-    dist[j,3] <- Points[as.numeric(DF[1,j] + 1), "Z Coord"]
+    dist[j,1] <- Points[as.numeric(DF[2,j] + 1), "X Coord"]
+    dist[j,2] <- Points[as.numeric(DF[2,j] + 1), "Y Coord"]
+    dist[j,3] <- Points[as.numeric(DF[2,j] + 1), "Z Coord"]
   }
   dist <- na.omit(dist)
-  dist[4:6] <- Mean_DF[1,1:3]
+  dist[4:6] <- Mean_DF[2,1:3]
   dist$distance <- apply(dist, 
                          1, 
                          function(y) dist(matrix(y, 
