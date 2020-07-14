@@ -15,12 +15,12 @@ A_KMT_Torque <- function (input, output, session){
   
   progressSweetAlert(
     session = session, id = "P_Torque1",
-    title = "Calculating fiber length/Curvature for Pole1...",
+    title = "Calculating KMT torque for Pole1...",
     display_pct = TRUE, value = 0
   )
   
-  bin <- data.frame()
-  Torque <- data.frame()
+  bin <<- data.frame()
+  Torque <<- data.frame()
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
     tryCatch({
       if("Leading" %in% colnames(get(paste(colnames(Segments)[i])))){
@@ -57,10 +57,10 @@ A_KMT_Torque <- function (input, output, session){
              envir=.GlobalEnv)
       assign("Torque",
              rbind(Torque,
-                   bin))
+                   bin),
+             envir=.GlobalEnv)
     },
     error = function(e){})
-    
     updateProgressBar(
       session = session,
       id = "P_Torque1",
@@ -79,10 +79,12 @@ A_KMT_Torque <- function (input, output, session){
   
   progressSweetAlert(
     session = session, id = "P_Torque2",
-    title = "Calculating fiber length/Curvature for Pole1...",
+    title = "Calculating KMT torque for Pole2...",
     display_pct = TRUE, value = 0
   )
   
+  bin <<- data.frame()
+  Torque <<- data.frame()
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")) : as.numeric(ncol(Segments) - 4)) {
     tryCatch({
       if("Leading" %in% colnames(get(paste(colnames(Segments)[i])))){
@@ -119,13 +121,14 @@ A_KMT_Torque <- function (input, output, session){
              envir=.GlobalEnv)
       assign("Torque",
              rbind(Torque,
-                   bin))
+                   bin),
+             envir=.GlobalEnv)
     },
     error = function(e){})
     
     updateProgressBar(
       session = session,
-      id = "P_Curv&length2",
+      id = "P_Torque2",
       value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
                     0)
     )

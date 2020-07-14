@@ -122,6 +122,9 @@ Save_Data <- function (input, output, session){
  
   # Save Data for KMT torque ----------------------------------------------
   tryCatch({
+    names(Fiber_Torque_P1)[1] <- "Angle"
+    names(Fiber_Torque_P2)[1] <- "Angle"
+    
     assign(paste("Data", current_data, "Fiber_Torque_P1", sep = "_"),
            Fiber_Torque_P1,
            envir = .GlobalEnv)
