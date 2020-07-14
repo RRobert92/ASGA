@@ -119,6 +119,26 @@ Save_Data <- function (input, output, session){
     write.xlsx(get(paste("Data",current_data, "Minus_end_morphology", sep = "_")), 
                paste("Data/", "Data_",current_data, "_Minus_end_morphology.xlsx", sep = ""))  
   },error = function(e){})
+ 
+  # Save Data for KMT torque ----------------------------------------------
+  tryCatch({
+    assign(paste("Data", current_data, "Fiber_Torque_P1", sep = "_"),
+           Fiber_Torque_P1,
+           envir = .GlobalEnv)
+    assign(paste("Data", current_data, "Fiber_Torque_P2", sep = "_"),
+           Fiber_Torque_P2,
+           envir = .GlobalEnv)
+    assign(paste("Data",current_data, "Fiber_Torque", sep = "_"),
+           rbind(Fiber_Torque_P1, Fiber_Torque_P2),
+           envir = .GlobalEnv) 
+    
+    write.xlsx(get(paste("Data",current_data, "Fiber_Torque_P1", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Torque_P1.xlsx", sep = ""))
+    write.xlsx(get(paste("Data",current_data, "Fiber_Torque_P2", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Torque_P2.xlsx", sep = ""))
+    write.xlsx(get(paste("Data",current_data, "Fiber_Torque", sep = "_")), 
+               paste("Data/", "Data_",current_data, "_Fiber_Torque.xlsx", sep = ""))
+  },error = function(e){})
   
   # Save Data for LKD -----------------------------------------------------------
   tryCatch({

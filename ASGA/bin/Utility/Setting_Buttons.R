@@ -48,6 +48,13 @@ Setting_Buttons_UI <- function(id){
            status = "info"
          ),
          materialSwitch(
+           inputId = ns("KMT_Torque"),
+           label = "KMT Torque",
+           value = FALSE, 
+           right = TRUE,
+           status = "info"
+         ),
+         materialSwitch(
            inputId = ns("Fiber_Area"),
            label = "Fiber Area & Neighorhood Densit",
            value = FALSE, 
@@ -155,6 +162,21 @@ Setting_Buttons_Server <- function (input, output, session){
     })
   })
   
+  # Reactivity for End_morphology -------------------------------------------------
+  observeEvent(input$`KMT_Torque`,{
+    if(input$`KMT_Torque` == TRUE){
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
+    }
+    All_Closed()
+    
+    output$`Tool_Info` <- renderUI({
+      if(input$`KMT_Torque` == TRUE){
+        "This tool will analyze a torque of a KMTs in a fiber.
+        For more information see 'Wiki' page"
+      }
+    })
+  })
+  
   # Reactivity for fiber area ---------------------------------------------------
   observeEvent(input$`Fiber_Area`,{
     if(input$`Fiber_Area` == TRUE){
@@ -234,6 +256,7 @@ Setting_Buttons_Server <- function (input, output, session){
       updateMaterialSwitch(session, "IKD", FALSE)
       updateMaterialSwitch(session, "Curvature", FALSE)
       updateMaterialSwitch(session, "End_Morphology", FALSE)
+      updateMaterialSwitch(session, "KMT_Torque", FALSE)
       updateMaterialSwitch(session, "Fiber_Area", FALSE)
       updateMaterialSwitch(session, "KMT_Minus_End_Seeds", FALSE)
       updateMaterialSwitch(session, "Fiber_Curv_Length", FALSE)
@@ -247,6 +270,7 @@ Setting_Buttons_Server <- function (input, output, session){
         input$`IKD` == FALSE &&
         input$`Curvature` == FALSE &&
         input$`End_Morphology` == FALSE &&
+        input$`KMT_Torque` == FALSE &&
         input$`Fiber_Area` == FALSE &&
         input$`KMT_Minus_End_Seeds` == FALSE &&
         input$`Fiber_Curv_Length` == FALSE &&

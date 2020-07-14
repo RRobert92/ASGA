@@ -139,6 +139,7 @@ function(input, output, session) {
           callModule(A_IKD, "Home")
           callModule(A_Curvature, "Home")
           callModule(A_End_Morphology, "Home")
+          callModule(A_KMT_Torque, "Home")
           callModule(A_Fiber_Area, "Home")
           callModule(A_Fiber_Length_Curv, "Home")
           callModule(A_KMT_Minus_End_Seeds, "Home")
@@ -176,6 +177,11 @@ function(input, output, session) {
         if(input$`Home-k_core_area` == TRUE){
           callModule(A_K_Core_Area, "Home")
         }
+        
+        if(input$`Home-KMT_Torque` == TRUE){
+          callModule(A_KMT_Torque, "Home")
+        }
+        
         callModule(Save_Data ,"Home")
         
       }
