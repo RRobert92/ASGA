@@ -13,7 +13,7 @@
 A_End_Morphology <- function (input, output, session){
 
   if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
-    End_type_error <- End_Type_Error()
+    End_type_error <<- End_Type_Error()
   }
   
 if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
@@ -21,9 +21,9 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
 # Analyze end morphology for Pole1 ---------------------------------------------
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
   
-  Plus_end_morphology_Pole1 <- End_distribution_Plus(which(colnames(Segments) == "Pole1_00"), 1)
+  Plus_end_morphology_Pole1 <<- End_distribution_Plus(which(colnames(Segments) == "Pole1_00"), 1)
   
-  Minus_end_morphology_Pole1 <- End_distribution_Minus(which(colnames(Segments) == "Pole1_00"), 1)
+  Minus_end_morphology_Pole1 <<- End_distribution_Minus(which(colnames(Segments) == "Pole1_00"), 1)
   
   progressSweetAlert(
     session = session, id = "P_End_Morphology1",
@@ -37,19 +37,23 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
       
       assign("DF",
              End_distribution_Plus(i,
-                                   1))
+                                   1),
+             envir=.GlobalEnv)
       
       assign("Plus_end_morphology_Pole1",
              rbind(Plus_end_morphology_Pole1,
-                   DF))
+                   DF),
+             envir=.GlobalEnv)
       
       assign("DF",
              End_distribution_Minus(i,
-                                    1))
+                                    1),
+             envir=.GlobalEnv)
       
       assign("Minus_end_morphology_Pole1",
              rbind(Minus_end_morphology_Pole1,
-                   DF))
+                   DF),
+             envir=.GlobalEnv)
     },
     error = function(e){})
     
@@ -102,9 +106,9 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   
   tryCatch({
     
-    Plus_end_morphology_Pole2 <- End_distribution_Plus(which(colnames(Segments) == "Pole2_00"),2)
+    Plus_end_morphology_Pole2 <<- End_distribution_Plus(which(colnames(Segments) == "Pole2_00"),2)
     
-    Minus_end_morphology_Pole2 <- End_distribution_Minus(which(colnames(Segments) == "Pole2_00"),2)
+    Minus_end_morphology_Pole2 <<- End_distribution_Minus(which(colnames(Segments) == "Pole2_00"),2)
   },
   error = function(e){}
   )
@@ -121,19 +125,23 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
       
       assign("DF",
              End_distribution_Plus(i,
-                                   2))
+                                   2),
+             envir=.GlobalEnv)
       
       assign("Plus_end_morphology_Pole2",
              rbind(Plus_end_morphology_Pole2,
-                   DF))
+                   DF),
+             envir=.GlobalEnv)
       
       assign("DF",
              End_distribution_Minus(i,
-                                    2))
+                                    2),
+             envir=.GlobalEnv)
       
       assign("Minus_end_morphology_Pole2",
              rbind(Minus_end_morphology_Pole2,
-                   DF))
+                   DF),
+             envir=.GlobalEnv)
     },
     error = function(e){}
     )

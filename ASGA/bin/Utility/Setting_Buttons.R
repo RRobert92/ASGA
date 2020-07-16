@@ -49,7 +49,7 @@ Setting_Buttons_UI <- function(id){
          ),
          materialSwitch(
            inputId = ns("KMT_Torque"),
-           label = "KMT Torque",
+           label = "KMT Torque (Beta)",
            value = FALSE, 
            right = TRUE,
            status = "info"
