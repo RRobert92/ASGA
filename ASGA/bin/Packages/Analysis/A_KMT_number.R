@@ -81,10 +81,10 @@ A_KMT_number <- function (input, output, session){
   error = function(e){})
   
 # Set-up for Pole2  ------------------------------------------------------------
-  KMTs_at_the_Pole2 <- KMTs_to_the_Pole(which(colnames(Segments) == "Pole1_00"))
+  KMTs_at_the_Pole2 <- KMTs_to_the_Pole(which(colnames(Segments) == "Pole2_00"))
   names(KMTs_at_the_Pole2)[1] <- "No. of KMTs"
   
-  KMTs_to_the_Pole2_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments) == "Pole1_00"))
+  KMTs_to_the_Pole2_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments) == "Pole2_00"))
   names(KMTs_to_the_Pole2_and_length)[1] <- "No. of KMTs"
   names(KMTs_to_the_Pole2_and_length)[2] <- "KMTs length"
   names(KMTs_to_the_Pole2_and_length)[3] <- "Minus end dist."

@@ -207,87 +207,143 @@ Pre_Analysis <- function (input, output, session){
              envir=.GlobalEnv)
     },
     error = function(e){})
-    
-    updateProgressBar(
-      session = session,
-      id = "AnalyseLD2",
-      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-                    0)
-    )
-    Sys.sleep(0.1)
+
   }
 
   
 # Collect Length Distribution Data for Pole1 --------------------------------------------------
-  LD_P1 <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"]
-  Plus_end <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["plus_dist_to_kinetochore_core"]
-  Dist_pole <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["plus_dist_to_pole"]
-  Elips <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Elipse_Position"]
-  Minus_dist <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["minus_dist_to_pole"]
-  k_fiber <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Fiber_Name"]
-  LD_P1 <<- cbind(LD_P1,
-                 Plus_end,
-                 Dist_pole,
-                 Elips,
-                 Minus_dist,
-                 k_fiber)
+  assign("LD_P1",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"],
+         envir=.GlobalEnv)
+  assign("Plus_end_pos",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["plus_dist_to_kinetochore_core"],
+         envir=.GlobalEnv)
+  assign("Dist_pole",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["plus_dist_to_pole"],
+         envir=.GlobalEnv)
+  assign("Elips",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Elipse_Position"],
+         envir=.GlobalEnv)
+  assign("Minus_dist",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["minus_dist_to_pole"],
+         envir=.GlobalEnv)
+  assign("k_fiber",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Fiber_Name"],
+         envir=.GlobalEnv)
+  assign("LD_P1",
+         cbind(LD_P1,
+               Plus_end_pos,
+               Dist_pole,
+               Elips,
+               Minus_dist,
+               k_fiber),
+         envir=.GlobalEnv)
   
   for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     tryCatch({
-      DF_LD <<- get(paste(colnames(Segments)[i]))["length"]
-      DF_Plus_end <<- get(paste(colnames(Segments)[i]))["plus_dist_to_kinetochore_core"]
-      DF_Dist_pole <<- get(paste(colnames(Segments)[i]))["plus_dist_to_pole"]
-      DF_Elips <<- get(paste(colnames(Segments)[i]))["Elipse_Position"]
-      Minus_dist <<- get(paste(colnames(Segments)[i]))["minus_dist_to_pole"]
-      k_fiber <<- get(paste(colnames(Segments)[i]))["Fiber_Name"]
-      DF <<- cbind(DF_LD,
-                  DF_Plus_end,
-                  DF_Dist_pole,
-                  DF_Elips,
-                  Minus_dist,
-                  k_fiber)
+      assign("DF_LD",
+             get(paste(colnames(Segments)[i]))["length"],
+             envir=.GlobalEnv)
+      assign("DF_Plus_end",
+             get(paste(colnames(Segments)[i]))["plus_dist_to_kinetochore_core"],
+             envir=.GlobalEnv)
+      assign("DF_Dist_pole",
+             get(paste(colnames(Segments)[i]))["plus_dist_to_pole"],
+             envir=.GlobalEnv)
+      assign("DF_Elips",
+             get(paste(colnames(Segments)[i]))["Elipse_Position"],
+             envir=.GlobalEnv)
+      assign("Minus_dist",
+             get(paste(colnames(Segments)[i]))["minus_dist_to_pole"],
+             envir=.GlobalEnv)
+      assign("k_fiber",
+             get(paste(colnames(Segments)[i]))["Fiber_Name"],
+             envir=.GlobalEnv)
+      assign("DF_LD_P1",
+             cbind(DF_LD,
+                   DF_Plus_end,
+                   DF_Dist_pole,
+                   DF_Elips,
+                   Minus_dist,
+                   k_fiber),
+             envir=.GlobalEnv)
       
-      LD_P1 <<- rbind(LD_P1, 
-                     DF)
+      assign("LD_P1",
+             rbind(LD_P1, 
+                   DF_LD_P1),
+             envir=.GlobalEnv)
+
     },
     error = function(e){})
     
   }
   
-# Collect Length Distribution Data for Pole1 --------------------------------------------------
+# Collect Length Distribution Data for Pole2 --------------------------------------------------
   tryCatch({
-    LD_P2 <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["length"]
-    Minus_dist <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["minus_dist_to_pole"]
-    Plus_end <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_kinetochore_core"]
-    Dist_pole <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_pole"]
-    Elips <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["Elipse_Position"]
-    k_fiber <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["Fiber_Name"]
-    LD_P2 <<- cbind(LD_P2,
-                   Plus_end,
-                   Dist_pole,
-                   Elips,
-                   Minus_dist,
-                   k_fiber)
+
+    assign("LD_P2",
+           get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["length"],
+           envir=.GlobalEnv)
+    assign("Plus_end_pos",
+           get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_kinetochore_core"],
+           envir=.GlobalEnv)
+    assign("Dist_pole",
+           get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["plus_dist_to_pole"],
+           envir=.GlobalEnv)
+    assign("Elips",
+           get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["Elipse_Position"],
+           envir=.GlobalEnv)
+    assign("Minus_dist",
+           get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["minus_dist_to_pole"],
+           envir=.GlobalEnv)
+    assign("k_fiber",
+           get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["Fiber_Name"],
+           envir=.GlobalEnv)
+    assign("LD_P2",
+           cbind(LD_P2,
+                 Plus_end_pos,
+                 Dist_pole,
+                 Elips,
+                 Minus_dist,
+                 k_fiber),
+           envir=.GlobalEnv)
+    
   }, error = function(e){})
   
   
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
     tryCatch({
-      DF_LD <<- get(paste(colnames(Segments)[i]))["length"]
-      Minus_dist <<- get(paste(colnames(Segments)[i]))["minus_dist_to_pole"]
-      DF_Plus_end <<- get(paste(colnames(Segments)[i]))["plus_dist_to_kinetochore_core"]
-      DF_Dist_pole <<- get(paste(colnames(Segments)[i]))["plus_dist_to_pole"]
-      DF_Elips <<- get(paste(colnames(Segments)[i]))["Elipse_Position"]
-      k_fiber <<- get(paste(colnames(Segments)[i]))["Fiber_Name"]
-      DF <<- cbind(DF_LD,
-                  DF_Plus_end,
-                  DF_Dist_pole,
-                  DF_Elips,
-                  Minus_dist,
-                  k_fiber)
+      assign("DF_LD",
+             get(paste(colnames(Segments)[i]))["length"],
+             envir=.GlobalEnv)
+      assign("DF_Plus_end",
+             get(paste(colnames(Segments)[i]))["plus_dist_to_kinetochore_core"],
+             envir=.GlobalEnv)
+      assign("DF_Dist_pole",
+             get(paste(colnames(Segments)[i]))["plus_dist_to_pole"],
+             envir=.GlobalEnv)
+      assign("DF_Elips",
+             get(paste(colnames(Segments)[i]))["Elipse_Position"],
+             envir=.GlobalEnv)
+      assign("Minus_dist",
+             get(paste(colnames(Segments)[i]))["minus_dist_to_pole"],
+             envir=.GlobalEnv)
+      assign("k_fiber",
+             get(paste(colnames(Segments)[i]))["Fiber_Name"],
+             envir=.GlobalEnv)
+      assign("DF_LD_P2",
+             cbind(DF_LD,
+                   DF_Plus_end,
+                   DF_Dist_pole,
+                   DF_Elips,
+                   Minus_dist,
+                   k_fiber),
+             envir=.GlobalEnv)
       
-      LD_P2 <<- rbind(LD_P2, 
-                     DF)
+      assign("LD_P2",
+             rbind(LD_P2, 
+                   DF_LD_P2),
+             envir=.GlobalEnv)
     },
     error = function(e){})
   }
