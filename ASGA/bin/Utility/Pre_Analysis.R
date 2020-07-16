@@ -130,9 +130,9 @@ Pre_Analysis <- function (input, output, session){
         Plus_end[j,1:3] <<- get(paste(colnames(Segments)[i], j, sep = "_"))[1,2:4]
         j = j + 1
       }
-      Plus_end <<- data.frame(X_Median = c(median(as.matrix(Plus_end[1]))),
-                             Y_Median = c(median(as.matrix(Plus_end[2]))),
-                             Z_Median = c(median(as.matrix(Plus_end[3]))))
+      Plus_end <- data.frame(X_Median = c(median(as.matrix(na.omit(Plus_end[1])))),
+                             Y_Median = c(median(as.matrix(na.omit(Plus_end[2])))),
+                             Z_Median = c(median(as.matrix(na.omit(Plus_end[3])))))
       Kinetochore_Avg[i,1:3] <<- Plus_end
     },
     error = function(e){
@@ -350,14 +350,6 @@ Pre_Analysis <- function (input, output, session){
              envir=.GlobalEnv)
     },
     error = function(e){})
-    
-    updateProgressBar(
-      session = session,
-      id = "RelativePos1",
-      value = round((i - 1) / total * 100,
-                    0)
-    )
-    Sys.sleep(0.1)
   }
 
   
@@ -419,14 +411,6 @@ Pre_Analysis <- function (input, output, session){
       
     },
     error = function(e){})
-    
-    updateProgressBar(
-      session = session,
-      id = "RelativePos2",
-      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-                    0)
-    )
-    Sys.sleep(0.1)
   }
   closeSweetAlert(session = session)
   
