@@ -157,7 +157,7 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   
   closeSweetAlert(session = session)
   
-# Bin data for the Pole1 --------------------------------------------------------
+# Bin data for the Pole2 --------------------------------------------------------
   tryCatch({
     if(ncol(Nodes %>% select(starts_with("EndType"))) >= 2){
       Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
