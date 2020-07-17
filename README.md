@@ -71,8 +71,9 @@ R library
 <a name="Quick_start_IN"></a>
 ### Installation
 ```
-git clone https://github.com/RRobert92/ASGA/tree/master/ASGA
-shiny::runApp()
+install.packages("remotes")
+remotes::install_github("RRobert92/ASGA")
+
 ```
 <a name="Contributing"></a>
 # Contributing
