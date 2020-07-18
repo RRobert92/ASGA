@@ -6,18 +6,19 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-17 
+# Debugged/Reviewed: Robert Kiewisz 18/07/2020
 ################################################################################
 
 
 # Set-up analysis --------------------------------------------------------------
 A_Fiber_Area <- function (input, output, session){
   
-# Analyze fiber area and fiber density for Pole1 -------------------------------
+  # Analyze fiber area and fiber density for Pole1 -------------------------------
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
   
   progressSweetAlert(
     session = session, id = "P_fiber_area1",
-    title = "Calculating fiber area for Pole1...",
+    title = "Calculating fiber area for the Pole1...",
     display_pct = TRUE, value = 0
   )
   
@@ -73,43 +74,50 @@ A_Fiber_Area <- function (input, output, session){
   }
   closeSweetAlert(session = session)
   
-  Fiber_area_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], 
-                             "fiber", 
-                             sep = "_"))
+  assign("Fiber_area_P1",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], 
+                   "fiber", 
+                   sep = "_")),
+         envir=.GlobalEnv)
   
-  
-  N_density_P1 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], 
-                            "NDensity",
-                            sep = "_"))
+  assign("N_density_P1",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")], 
+                   "NDensity",
+                   sep = "_")),
+         envir=.GlobalEnv)
   
   for (i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
     tryCatch({
-      Fiber_area_P1 <- rbind(Fiber_area_P1,
-                             get(paste(colnames(Segments)[i], 
-                                       "fiber", 
-                                       sep = "_")))
+      assign("Fiber_area_P1",
+             rbind(Fiber_area_P1,
+                   get(paste(colnames(Segments)[i], 
+                             "fiber", 
+                             sep = "_"))),
+             envir=.GlobalEnv)
     },
     error = function(e){})
     
     tryCatch({
-    N_density_P1 <- rbind(N_density_P1,
-                          get(paste(colnames(Segments)[i], 
-                                    "NDensity", 
-                                    sep = "_")))
-  },
-  error = function(e){})
+      assign("N_density_P1",
+             rbind(N_density_P1,
+                   get(paste(colnames(Segments)[i], 
+                             "NDensity", 
+                             sep = "_"))),
+             envir=.GlobalEnv)
+    },
+    error = function(e){})
   }
   
   Fiber_area_P1 <<- Fiber_area_P1
   N_density_P1 <<- N_density_P1
   
-# Analyze fiber area and fiber density for Pole2 -------------------------------
+  # Analyze fiber area and fiber density for Pole2 -------------------------------
   total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
   
   progressSweetAlert(
     session = session, id = "P_fiber_area2",
-    title = "Calculating fiber area for Pole2...",
+    title = "Calculating fiber area for the Pole2...",
     display_pct = TRUE, value = 0
   )
   
@@ -154,6 +162,7 @@ A_Fiber_Area <- function (input, output, session){
              envir=.GlobalEnv)
     },
     error = function(e){})
+    
     updateProgressBar(
       session = session,
       id = "P_fiber_area2",
@@ -165,31 +174,40 @@ A_Fiber_Area <- function (input, output, session){
   
   closeSweetAlert(session = session)
   
-  Fiber_area_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], 
-                            "fiber", 
-                            sep = "_"))
+  assign("Fiber_area_P2",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], 
+                   "fiber", 
+                   sep = "_")),
+         envir=.GlobalEnv)
   
-  N_density_P2 <- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], 
-                            "NDensity", 
-                            sep = "_"))
+  assign("N_density_P2",
+         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")], 
+                   "NDensity", 
+                   sep = "_")),
+         envir=.GlobalEnv)
   
-  for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4))  {
+  for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)) {
     tryCatch({
-      Fiber_area_P2 <- rbind(Fiber_area_P2,
-                             get(paste(colnames(Segments)[i], 
-                                       "fiber", 
-                                       sep = "_")))
+      assign("Fiber_area_P2",
+             rbind(Fiber_area_P2,
+                   get(paste(colnames(Segments)[i], 
+                             "fiber", 
+                             sep = "_"))),
+             envir=.GlobalEnv)
     },
     error = function(e){})
     
     tryCatch({
-      N_density_P2 <- rbind(N_density_P2,
-                            get(paste(colnames(Segments)[i], 
-                                      "NDensity", 
-                                      sep = "_")))
+      assign("N_density_P2",
+             rbind(N_density_P2,
+                   get(paste(colnames(Segments)[i], 
+                             "NDensity", 
+                             sep = "_"))),
+             envir=.GlobalEnv)
     },
     error = function(e){})
   }
+  
   Fiber_area_P2 <<- Fiber_area_P2
   N_density_P2 <<- N_density_P2
 }

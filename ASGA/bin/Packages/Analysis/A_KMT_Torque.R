@@ -6,10 +6,11 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-07-07
+# Debugged/Reviewed: Robert Kiewisz 18/07/2020
 ################################################################################
 
 A_KMT_Torque <- function (input, output, session){
-# Set-up analysis --------------------------------------------------------------
+  
   # Analyze KMT torque for Pole1 -------------------------------
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
   
@@ -137,4 +138,6 @@ A_KMT_Torque <- function (input, output, session){
   closeSweetAlert(session = session)
 
   Fiber_Torque_P2 <<- Torque
+  rm(bin,
+     Torque)
 }
