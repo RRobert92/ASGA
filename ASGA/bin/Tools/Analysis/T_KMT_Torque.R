@@ -13,28 +13,32 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-29
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################################
-
 
 # Function: ... ------------------------------------------------------------------
 
 # pick a point i and i + 1
 # median as a zero, recalculate position of a points 
-# 
 KMTs_torque_in_fiber <- function(x){
   angle1 <- data.frame()
+  
   for(j in 1:ncol(select(get(paste(colnames(Segments)[x], "fiber", sep = "_")), 
-                         starts_with("V")))){
+                         starts_with("V")))) {
     tryCatch({
       angle <- data.frame()
+      
       for (i in 2:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))){
         df1 <- data.frame(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,"X_Coord"],
                           get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,"Z_Coord"])
+        
         df2 <- data.frame(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i+1,"X_Coord"],
                           get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i+1,"Z_Coord"])
+        
         DF1 <- select(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,], 
                       starts_with("V"))
         DF1 <- DF1[j]
+        
         DF2 <- select(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i+1,], 
                       starts_with("V"))
         DF2 <- DF2[j]
@@ -47,7 +51,6 @@ KMTs_torque_in_fiber <- function(x){
         DF2_Coord[1,1] <- Points[as.numeric(DF2[1,1] + 1), "X Coord"]
         DF2_Coord[1,2] <- Points[as.numeric(DF2[1,1] + 1), "Z Coord"]
         
-        
         tryCatch({
           rad1 <- atan2(DF1_Coord[1,2], DF1_Coord[1,1])
           rad2 <- atan2(DF2_Coord[1,2], DF2_Coord[1,1])
@@ -56,11 +59,13 @@ KMTs_torque_in_fiber <- function(x){
         },
         error = function(e){})
       }
+      
       angle <- sum(na.omit(angle))
       angle1[j,1] <- angle * (180/pi)
     },
     error = function(e){})
   }
+  
   angle1 <- median(as.matrix(angle1))
   angle1
 }

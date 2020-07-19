@@ -11,11 +11,11 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-07-07
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 #####################################################################################
 
 # Function: Find point for lading KMTs, for j = j+5 == 0.5um -------------------------
 # Function: select leading KMT ------------------------------------------------------
-
 Leadig_Pointsv2 <- function(x) {
   j = 1
   leading_points <- data.frame(Leading_ID = as.numeric())
@@ -27,12 +27,14 @@ Leadig_Pointsv2 <- function(x) {
     
     j = j + 4
   }
+  
   leading_points <- na.omit(leading_points)
 }
 
 # Function: Get a length of the fiber  ---------------------------------------------------------
 Fiber_Length <- function(x){
   position <- data.frame()
+  
   for (i in 1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
     position[i,1] <- data.frame(x = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,1]))
     position[i,2] <- data.frame(y = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,2]))
@@ -47,6 +49,8 @@ Fiber_Length <- function(x){
                                                                                                                                             sep = "_")))-1),
                                                                                                                 ncol(position)]))
   DF <- cbind(position[ncol(position)], get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1:3])
+  rm(position)
+  
   DF[nrow(DF), 1]
 }
 
@@ -60,8 +64,11 @@ Fiber_Total_Curvature <- function(x){
   position[1,5] <- data.frame(y1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),2]))
   position[1,6] <- data.frame(z1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),3]))
   position$dist <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
+  
   ratio <- data.frame()
   ratio[1,1] <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1] / position$dist
+  rm(position)
+  
   data.frame(Ratio = c(ratio[1,1]),
              Length = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1]))
 }
@@ -86,6 +93,7 @@ relativ_pos_1_curv <- function(x){
   
   names(relat_pos)[1] <- "Relative_position"
   
+  rm(relativ_pos_part1, relativ_pos_part2, relativ_positon)
   cbind(Fiber, 
         relat_pos)
 }
@@ -108,11 +116,13 @@ relativ_pos_2_curv <- function(x){
   relat_pos = data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
   
   names(relat_pos)[1] <- "Relative_position"
+  
+  rm(relativ_pos_part1, relativ_pos_part2, relativ_positon)
   cbind(Fiber,
         relat_pos)
 }
 
-# Function: Get a local curvature  ---------------------------------------------------------
+# Function: Get a local curvature  ----------------------------------------------------------------------
 Fiber_Local_Curvature <- function(x){
   
   Fiber <- get(paste(colnames(Segments)[x], 

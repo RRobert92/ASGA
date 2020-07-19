@@ -12,8 +12,8 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-04-17
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################################
-
 
 # Function: select leading KMT ------------------------------------------------------------------
 leading_KMTsv2 <- function(x, y) {
@@ -22,7 +22,8 @@ leading_KMTsv2 <- function(x, y) {
   
   while (j <= as.numeric(nrow(get(colnames(Segments)[x])))) {
     KMT_lenght <- Segments[as.numeric(get(colnames(Segments)[x])[j, 1] + 1), 
-                               as.numeric(ncol(Segments) - 3)] / 10000
+                           as.numeric(ncol(Segments) - 3)] / 10000
+    
     m_end_to_pole <- data.frame(x = c(y[1, 1]),
                                 y = c(y[1, 2]),
                                 z = c(y[1, 3]),
@@ -128,10 +129,10 @@ duplicated_points <- function(x){
 # Function: Get a median point for each position and put cbind in first col ---------------------
 median_point <- function(x){
   
-# for loop to create df of x y z coord for each position
-# median of x y z coord
-# writ it in a table
-# cbind with Pole1_00_fiber
+  # for loop to create df of x y z coord for each position
+  # median of x y z coord
+  # writ it in a table
+  # cbind with Pole1_00_fiber
   
   Median_id <- data.frame(X_Coord = as.numeric(),
                           Y_Coord = as.numeric(),
@@ -262,68 +263,69 @@ polygon_area <- function(x){
 
 # Function: Find neighborhood density for selected areas ------------------------------------------
 Neighorhood_densit <- function(x){
-DF <- select(get(paste(colnames(Segments)[x], 
+  DF <- select(get(paste(colnames(Segments)[x], 
+                         "fiber", 
+                         sep = "_")), 
+               starts_with("V"))
+  
+  Mean_DF <- get(paste(colnames(Segments)[x], 
                        "fiber", 
-                       sep = "_")), 
-             starts_with("V"))
-
-Mean_DF <- get(paste(colnames(Segments)[x], 
-                     "fiber", 
-                     sep = "_"))[3:5]
-
-dist <- data.frame()
-for(j in 1:ncol(DF)){
-  dist[j,1] <- Points[as.numeric(DF[1,j] + 1), "X Coord"]
-  dist[j,2] <- Points[as.numeric(DF[1,j] + 1), "Y Coord"]
-  dist[j,3] <- Points[as.numeric(DF[1,j] + 1), "Z Coord"]
-}
-dist <- na.omit(dist)
-dist[4:6] <- Mean_DF[1,1:3]
-dist$distance <- apply(dist, 
-                       1, 
-                       function(y) dist(matrix(y, 
-                                               nrow = 2, 
-                                               byrow = TRUE)))
-fiber_radius <- round(as.numeric(max(dist$distance) * 2),
-                      2)
-
-DF_full <- data.frame()
-
-for(i in 1:nrow(DF)){
+                       sep = "_"))[3:5]
+  
   dist <- data.frame()
-  
   for(j in 1:ncol(DF)){
-    dist[j,1] <- Points[as.numeric(DF[i,j] + 1), "X Coord"]
-    dist[j,2] <- Points[as.numeric(DF[i,j] + 1), "Y Coord"]
-    dist[j,3] <- Points[as.numeric(DF[i,j] + 1), "Z Coord"]
-    
+    dist[j,1] <- Points[as.numeric(DF[1,j] + 1), "X Coord"]
+    dist[j,2] <- Points[as.numeric(DF[1,j] + 1), "Y Coord"]
+    dist[j,3] <- Points[as.numeric(DF[1,j] + 1), "Z Coord"]
   }
-  dist <- na.omit(dist)
-  dist[4:6] <- Mean_DF[i,1:3]
   
+  dist <- na.omit(dist)
+  dist[4:6] <- Mean_DF[1,1:3]
   dist$distance <- apply(dist, 
                          1, 
                          function(y) dist(matrix(y, 
                                                  nrow = 2, 
                                                  byrow = TRUE)))
+  fiber_radius <- round(as.numeric(max(dist$distance) * 2),
+                        2)
   
-  DF_full[i,1] <- round(mean(dist$distance),
-                        3)
-  DF_full[i,2] <- round(sd(dist$distance),
-                        3)
-  DF_full[i,3] <- round((length(which(dist$distance <= fiber_radius)) * 100) / nrow(dist),
-                        0)
-  DF_full[i,4] <- get(paste(colnames(Segments)[x]))[1,5]
-  DF_full[i,5] <- get(paste(colnames(Segments)[x]))[1,6]
-}
-
-names(DF_full)[1] <- "Mean"
-names(DF_full)[2] <- "SD"
-names(DF_full)[3] <- "Focused KMTs %"
-names(DF_full)[4] <- "plus_dist_to_pole"
-names(DF_full)[5] <- "Elipse_Position"
-DF_full
-
+  DF_full <- data.frame()
+  
+  for(i in 1:nrow(DF)){
+    dist <- data.frame()
+    
+    for(j in 1:ncol(DF)){
+      dist[j,1] <- Points[as.numeric(DF[i,j] + 1), "X Coord"]
+      dist[j,2] <- Points[as.numeric(DF[i,j] + 1), "Y Coord"]
+      dist[j,3] <- Points[as.numeric(DF[i,j] + 1), "Z Coord"]
+      
+    }
+    dist <- na.omit(dist)
+    dist[4:6] <- Mean_DF[i,1:3]
+    
+    dist$distance <- apply(dist, 
+                           1, 
+                           function(y) dist(matrix(y, 
+                                                   nrow = 2, 
+                                                   byrow = TRUE)))
+    
+    DF_full[i,1] <- round(mean(dist$distance),
+                          3)
+    DF_full[i,2] <- round(sd(dist$distance),
+                          3)
+    DF_full[i,3] <- round((length(which(dist$distance <= fiber_radius)) * 100) / nrow(dist),
+                          0)
+    DF_full[i,4] <- get(paste(colnames(Segments)[x]))[1,5]
+    DF_full[i,5] <- get(paste(colnames(Segments)[x]))[1,6]
+  }
+  
+  names(DF_full)[1] <- "Mean"
+  names(DF_full)[2] <- "SD"
+  names(DF_full)[3] <- "Focused KMTs %"
+  names(DF_full)[4] <- "plus_dist_to_pole"
+  names(DF_full)[5] <- "Elipse_Position"
+  DF_full
+  
 }
 
 # Function: Relative position of points between kinetochore and the pole1 ----------------------

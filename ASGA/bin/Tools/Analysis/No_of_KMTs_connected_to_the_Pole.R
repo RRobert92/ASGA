@@ -11,14 +11,14 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-04-17
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 #####################################################################################
-
 
 # Tool Include  only no of KMTs at a pole -------------------------------------------
 KMTs_to_the_Pole <- function(x){
   No_of_KMTs <- data.frame()
   DF <- get(colnames(Segments)[x])[with(get(colnames(Segments)[x]), 
-                                            minus_dist_to_pole <= Minus_Threshold & minus_dist_to_pole > 0),]
+                                        minus_dist_to_pole <= Minus_Threshold & minus_dist_to_pole > 0),]
   if (nrow(DF) == 0){
     No_of_KMTs <- 0
   } else {
@@ -31,7 +31,7 @@ KMTs_to_the_Pole <- function(x){
 KMTs_to_the_Pole_vs_length <- function(x){
   No_of_KMTs <- data.frame()
   DF <- get(colnames(Segments)[x])[with(get(colnames(Segments)[x]),
-                                            minus_dist_to_pole <= Minus_Threshold & minus_dist_to_pole > 0),]
+                                        minus_dist_to_pole <= Minus_Threshold & minus_dist_to_pole > 0),]
   if (nrow(DF) == 0){
     DF[1,] <- NA
     No_of_KMTs <- data.frame(c(nrow(DF)),

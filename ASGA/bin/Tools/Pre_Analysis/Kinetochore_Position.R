@@ -7,16 +7,16 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-16
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 #####################################################################################################
-
 
 # Calculate median kinetochore position  ---------------------------------------
 Kinetochore_position <- function(){
   Plus_end <- data.frame()
   Kinetochore_Avg <- data.frame()
   
-  for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)){
+  for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
     j = 1
     
     tryCatch({
@@ -53,4 +53,7 @@ Kinetochore_position <- function(){
                                       Z_Mean = c(mean(as.matrix(Pole_avg[3]))))
   
   Kinetochore_projected
+  
+  rm(Plus_end,
+     Kinetochore_Avg)
 }

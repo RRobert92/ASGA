@@ -8,8 +8,8 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-04-17
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################################
-
 
 # Function: to calculate kinetochore size  -----------------------------------------------------
 Kinetochore_Size <- function(x){
@@ -23,6 +23,7 @@ Kinetochore_Size <- function(x){
                        sep = "_"))[1:3]
   
   dist <- data.frame()
+  
   for(j in 1:ncol(DF)){
     dist[j,1] <- Points[as.numeric(DF[2,j] + 1), "X Coord"]
     dist[j,2] <- Points[as.numeric(DF[2,j] + 1), "Y Coord"]
@@ -38,6 +39,8 @@ Kinetochore_Size <- function(x){
                                                  byrow = TRUE)))
   
   fiber_radius <- as.numeric(max(dist$distance))
+  
+  rm(dist)
   
   DF <- data.frame(Kinetochore_area = as.numeric(pi * fiber_radius^2),
                    KMT_no = as.numeric(nrow(get(paste(colnames(Segments)[x])))),
