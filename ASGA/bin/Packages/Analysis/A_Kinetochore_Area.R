@@ -1,11 +1,11 @@
 ################################################################################
-# Packages Kinetochore area
+# Packages Fiber_AreaKinetochore area
 # (c) 2019 Kiewisz
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-17 
-# Debugged/Reviewed: Robert Kiewisz 18/07/2020
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
 
@@ -26,12 +26,11 @@ A_K_Core_Area <- function (input, output, session){
     tryCatch({
       if("Leading" %in% colnames(get(paste(colnames(Segments)[i])))){
         
-      } else {
+      }else{
         assign(paste(colnames(Segments)[i]), 
                leading_KMTsv2(i, Pole1),
                envir=.GlobalEnv)
       }
-      
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              Leadig_Pointsv2(i),
              envir=.GlobalEnv)
@@ -65,7 +64,7 @@ A_K_Core_Area <- function (input, output, session){
   closeSweetAlert(session = session)
   
   K_Core_Area_P1 <<- K_Core_Area
-  
+
   # Analyze kinetochore area Pole2 ----------------------------------------------  
   total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) - 
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
@@ -81,12 +80,11 @@ A_K_Core_Area <- function (input, output, session){
     tryCatch({
       if("Leading" %in% colnames(get(paste(colnames(Segments)[i])))){
         
-      } else {
+      }else{
         assign(paste(colnames(Segments)[i]), 
                leading_KMTsv2(i, Pole2),
                envir=.GlobalEnv)
       }
-      
       assign(paste(colnames(Segments)[i], "fiber", sep = "_"), 
              Leadig_Pointsv2(i),
              envir=.GlobalEnv)
@@ -101,11 +99,11 @@ A_K_Core_Area <- function (input, output, session){
              envir=.GlobalEnv)
       assign("KCA",
              Kinetochore_Size(i),
-             envir=.GlobalEnv)
+             envir = .GlobalEnv)
       assign("K_Core_Area",
              rbind(K_Core_Area,
                    KCA),
-             envir=.GlobalEnv)
+             envir = .GlobalEnv)
     },
     error = function(e){})
     
@@ -121,6 +119,4 @@ A_K_Core_Area <- function (input, output, session){
   closeSweetAlert(session = session)
   
   K_Core_Area_P2 <<- K_Core_Area
-  
-  rm(K_Core_Area)
 }

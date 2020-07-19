@@ -6,11 +6,11 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-18
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
-
 Pre_Analysis <- function (input, output, session){
-# Sort single KMT --------------------------------------------------------------
+  # Sort single KMT --------------------------------------------------------------
   progressSweetAlert(
     session = session, id = "SingleKMT",
     title = "Sorting data for single KMT",
@@ -56,8 +56,8 @@ Pre_Analysis <- function (input, output, session){
     Sys.sleep(0.1)
   }
   closeSweetAlert(session = session)
-
-# Sort Points in KMT at a Pole1 ------------------------------------------------
+  
+  # Sort Points in KMT at a Pole1 ------------------------------------------------
   progressSweetAlert(
     session = session, id = "Pre_Analysis",
     title = "Sorting points based on (+) and (-) ends for the Pole_1...",
@@ -80,10 +80,10 @@ Pre_Analysis <- function (input, output, session){
       }
     },
     error = function(e){})
-  
+    
   }
-
-# Sort Points in KMT at a Pole2 ------------------------------------------------
+  
+  # Sort Points in KMT at a Pole2 ------------------------------------------------
   z=2
   updateProgressBar(
     session = session,
@@ -114,11 +114,11 @@ Pre_Analysis <- function (input, output, session){
     error = function(e){})
     
   }
-
-# Get ID for the ellipse Rx and Rz for 100%, 50% and 25% -----------------------
+  
+  # Get ID for the ellipse Rx and Rz for 100%, 50% and 25% -----------------------
   Plus_end <<- data.frame()
   Kinetochore_Avg <<- data.frame()
-
+  
   assign("Kinetochore_projected",
          Kinetochore_position(),
          envir = .GlobalEnv)
@@ -143,8 +143,8 @@ Pre_Analysis <- function (input, output, session){
   Kinetochore_Avg <<- na.omit(Kinetochore_Avg)
   Pole_avg <<- rbind(Pole1, Pole2)
   Pole_avg <<- data.frame(X_Mean = c(mean(as.matrix(Pole_avg[1]))),
-                         Y_Mean = c(mean(as.matrix(Pole_avg[2]))),
-                         Z_Mean = c(mean(as.matrix(Pole_avg[3]))))
+                          Y_Mean = c(mean(as.matrix(Pole_avg[2]))),
+                          Z_Mean = c(mean(as.matrix(Pole_avg[3]))))
   Rx100 <<- data.frame()
   Rx100[1,1] <<- max(Kinetochore_Avg$X_Median)
   Rx100[1,1] <<- abs(Rx100[1,1] - Pole_avg$X_Mean)
@@ -164,8 +164,8 @@ Pre_Analysis <- function (input, output, session){
   Rz100 <<- max(Rz100)
   Rz50 <<- Rz100*0.75
   Rz25 <<- Rz100*0.50
- 
-# Analyze Length Distribution for Pole1 --------------------------------------------------
+  
+  # Analyze Length Distribution for Pole1 --------------------------------------------------
   z=3
   updateProgressBar(
     session = session,
@@ -184,10 +184,10 @@ Pre_Analysis <- function (input, output, session){
              envir=.GlobalEnv)
     },
     error = function(e){})
-  
+    
   }
   
-# Analyze Length Distribution for Pole2 --------------------------------------------------
+  # Analyze Length Distribution for Pole2 --------------------------------------------------
   z=4
   updateProgressBar(
     session = session,
@@ -207,11 +207,11 @@ Pre_Analysis <- function (input, output, session){
              envir=.GlobalEnv)
     },
     error = function(e){})
-
+    
   }
-
   
-# Collect Length Distribution Data for Pole1 --------------------------------------------------
+  
+  # Collect Length Distribution Data for Pole1 --------------------------------------------------
   assign("LD_P1",
          get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"],
          envir=.GlobalEnv)
@@ -272,15 +272,14 @@ Pre_Analysis <- function (input, output, session){
              rbind(LD_P1, 
                    DF_LD_P1),
              envir=.GlobalEnv)
-
+      
     },
     error = function(e){})
     
   }
   
-# Collect Length Distribution Data for Pole2 --------------------------------------------------
+  # Collect Length Distribution Data for Pole2 --------------------------------------------------
   tryCatch({
-
     assign("LD_P2",
            get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["length"],
            envir=.GlobalEnv)
@@ -309,7 +308,6 @@ Pre_Analysis <- function (input, output, session){
            envir=.GlobalEnv)
     
   }, error = function(e){})
-  
   
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
     tryCatch({
@@ -348,7 +346,7 @@ Pre_Analysis <- function (input, output, session){
     error = function(e){})
   }
   
-# Analyze Relative Position for Pole1 --------------------------------------------------------
+  # Analyze Relative Position for Pole1 --------------------------------------------------------
   z=5
   updateProgressBar(
     session = session,
@@ -407,10 +405,9 @@ Pre_Analysis <- function (input, output, session){
     },
     error = function(e){})
   }
-
   
-#  Analyze Relative Position for Pole2 --------------------------------------------------------
-
+  #  Analyze Relative Position for Pole2 --------------------------------------------------------
+  
   z=6
   updateProgressBar(
     session = session,

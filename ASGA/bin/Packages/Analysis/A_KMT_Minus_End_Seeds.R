@@ -5,8 +5,8 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-17
-# Debugged/Reviewed: Robert Kiewisz 18/07/2020
+# Created: 2020-05-17 
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
 
@@ -22,19 +22,14 @@ A_KMT_Minus_End_Seeds <- function (input, output, session){
     display_pct = TRUE, value = 0
   )
   
-  assign("KMTs_minus_seed_P1",
-         Minus_end_seed(which(colnames(Segments) == "Pole1_00")),
-         envir=.GlobalEnv)
+  KMTs_minus_seed_P1 <- Minus_end_seed(which(colnames(Segments) == "Pole1_00"))
   
   for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
     tryCatch({
       assign("DF",
-             Minus_end_seed(i),
-             envir=.GlobalEnv)
-      assign("KMTs_minus_seed_P1",
-             rbind(KMTs_minus_seed_P1,
-                   DF),
-             envir=.GlobalEnv)
+             Minus_end_seed(i))
+      KMTs_minus_seed_P1 <- rbind(KMTs_minus_seed_P1,
+                                  DF)
     },
     error = function(e){})
    
@@ -46,6 +41,7 @@ A_KMT_Minus_End_Seeds <- function (input, output, session){
     )
     Sys.sleep(0.1)
   }
+  KMTs_minus_seed_P1 <<- KMTs_minus_seed_P1
   closeSweetAlert(session = session)
   
 # Analyze (-) ends nucleation from the KMT for Pole2 ---------------------------
@@ -59,28 +55,21 @@ A_KMT_Minus_End_Seeds <- function (input, output, session){
   )
   
   if(nrow(Pole2_00) == 0){
-    assign("KMTs_minus_seed_P2",
-           data.frame(),
-           envir=.GlobalEnv)
+    KMTs_minus_seed_P2 <- data.frame()
     
   } else {
-    assign("KMTs_minus_seed_P2",
-           Minus_end_seed(which(colnames(Segments) == "Pole2_00")),
-           envir=.GlobalEnv)
+    KMTs_minus_seed_P2 <- Minus_end_seed(which(colnames(Segments) == "Pole2_00"))
+    
   }
   
   for(i in as.numeric(which(colnames(Segments) == "Pole2_00")+1) : as.numeric(ncol(Segments) - 4)){
     tryCatch({
       assign("DF",
-             Minus_end_seed(i),
-             envir=.GlobalEnv)
-      assign("KMTs_minus_seed_P2",
-             rbind(KMTs_minus_seed_P2,
-                   DF),
-             envir=.GlobalEnv)
+             Minus_end_seed(i))
+      KMTs_minus_seed_P2 <- rbind(KMTs_minus_seed_P2,
+                                  DF)
     },
     error = function(e){})
-    
     updateProgressBar(
       session = session,
       id = "P_nucleation2",
@@ -89,5 +78,6 @@ A_KMT_Minus_End_Seeds <- function (input, output, session){
     )
     Sys.sleep(0.1)
   }
+  KMTs_minus_seed_P2 <<- KMTs_minus_seed_P2
   closeSweetAlert(session = session)
 }

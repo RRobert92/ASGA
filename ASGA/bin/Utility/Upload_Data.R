@@ -6,6 +6,7 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-17
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
 
@@ -34,12 +35,14 @@ Getfiles_Server <- function (input, output, session){
                Data,
                envir=.GlobalEnv) 
       }, error = function(e){})
+      
       tryCatch({
         Data <-  read_excel(input$file$datapath[i], sheet = "Points")
         assign(paste("Data", "Points", i ,sep = "_"), 
                Data,
                envir=.GlobalEnv)
       }, error = function(e){})
+      
       tryCatch({
         Data <-  read_excel(input$file$datapath[i], sheet = "Segments")
         assign(paste("Data", "Segments", i ,sep = "_"), 
@@ -66,7 +69,7 @@ Getfiles_Server <- function (input, output, session){
       text <- "dataset's"
     }
     
-# Pop-UP windows with Completion/Errors  ----------------------------------------
+    # Pop-UP windows with Completion/Errors  ----------------------------------------
     if(DataTest == 1){
       sendSweetAlert(
         session = session,
@@ -174,7 +177,7 @@ Getfiles_Server <- function (input, output, session){
       title = "Loading your data",
       display_pct = TRUE, value = 0
     )
-
+    
     
     for(i in 1:numfiles){
       tryCatch({
@@ -187,7 +190,7 @@ Getfiles_Server <- function (input, output, session){
                get(File_name[i])[2:ncol(get(File_name[i]))],
                envir=.GlobalEnv)
       }, error = function(e){})
-
+      
       updateProgressBar(
         session = session,
         id = "LoadData",
@@ -197,6 +200,7 @@ Getfiles_Server <- function (input, output, session){
       Sys.sleep(0.1)
     }
     closeSweetAlert(session = session)
+    
     showTab(inputId = "innavbar-GS", target = "Settings")    
   })
 }

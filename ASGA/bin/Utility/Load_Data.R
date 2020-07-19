@@ -6,20 +6,20 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-22
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
-
 Load_Data <- function (input, output, session){
-# Set-up ----------------------------------------------------------------------
+  # Set-up ----------------------------------------------------------------------
   Segments <<- get(paste("Data", "Segments", current_data, sep = "_"))
   Points <<- get(paste("Data", "Points", current_data, sep = "_"))
   Nodes <<- get(paste("Data", "Nodes", current_data, sep = "_"))
   Pole1 <<- "Pole1"
   Pole2 <<- "Pole2"
-  Minus_Threshold <<- 1.2
-  minus_distance <<- 0.055
+  Minus_Threshold <<- 1.2 #um
+  minus_distance <<- 0.055 #um
   
-# Load Segments ----------------------------------------------------------------
+  # Load Segments ----------------------------------------------------------------
   ncolumn <<- ncol(Segments)
   Segments_1_KMT <<- Segments %>% filter_at(vars(starts_with(Pole1)),
                                             any_vars(.>= 1))
@@ -53,19 +53,20 @@ Load_Data <- function (input, output, session){
                                            "Node ID #2",
                                            "Point IDs")
   
-# Load Poles ------------------------------------------------------------------
+  # Load Poles ------------------------------------------------------------------
   Pole1 <<- Nodes %>% filter_at(vars(Pole1),
                                 any_vars(.>=1))
   Pole1 <<- data.frame(X = c(Pole1 %>% select("X Coord")/10000),
                        Y = c(Pole1 %>% select("Y Coord")/10000),
                        Z = c(Pole1 %>% select("Z Coord")/10000))
+  
   Pole2 <<- Nodes %>% filter_at(vars(Pole2),
                                 any_vars(.>=1))
   Pole2 <<- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
                        Y = c(Pole2 %>% select("Y Coord")/10000),
                        Z = c(Pole2 %>% select("Z Coord")/10000))
   
-# Load Nodes ------------------------------------------------------------------
+  # Load Nodes ------------------------------------------------------------------
   if(ncol(Nodes %>% select(starts_with("EndType"))) == 1){
     Nodes <<- Nodes %>% select("Node ID", 
                                "X Coord",
@@ -99,7 +100,7 @@ Load_Data <- function (input, output, session){
   
   Nodes[2:4] <<- Nodes[2:4]/10000
   
-# Load Points -----------------------------------------------------------------
+  # Load Points -----------------------------------------------------------------
   Points <<- Points %>% select("Point ID", 
                                "X Coord",
                                "Y Coord",

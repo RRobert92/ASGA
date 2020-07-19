@@ -6,6 +6,7 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-21
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
 # Style of the setting for the plot --------------------------------------------
@@ -18,12 +19,14 @@ Data_Plot_Settings <- function(input,output, session){
                                        label = paste("Data", i, sep = "_"), 
                                        value = paste("Data", i, sep = "_"))
                            })),
+                    
                     column(4,
                            lapply(1:numfiles, function(i){
                              colourInput(inputId = paste("Data_color", i, sep = "_"), 
                                          label = paste("Select Colour for Data_", i, sep = ""),
                                          value = paste("gray"))
                            })),
+                    
                     column(4,
                            lapply(1:numfiles, function(i){
                              selectInput(inputId = paste("Data_bin", i, sep = "_"), 
@@ -34,6 +37,7 @@ Data_Plot_Settings <- function(input,output, session){
                                          selected = "All")
                            }))
            ),
+           
            fluidRow(column(12,
                            
                            tags$div(class = "table-GS-Center",

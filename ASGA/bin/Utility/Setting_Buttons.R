@@ -6,6 +6,7 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-19
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
 # Setting_BUttons_UI  ----------------------------------------------------------
@@ -208,7 +209,7 @@ Setting_Buttons_Server <- function (input, output, session){
       }
     })
   })
-
+  
   # Reactivity for Fiber curve and length button --------------------------------
   observeEvent(input$`Fiber_Curv_Length`,{
     if(input$`Fiber_Curv_Length` == TRUE){

@@ -6,15 +6,15 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-17
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
-
 
 # Check Data  ------------------------------------------------------------------
 CheckData <- function(i){
   tryCatch({
     Test_Segments <- colnames(get(paste("Data", "Segments", i, sep = "_")))[1] == "Segment ID" && 
-    colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_")))] == "Point IDs" && 
-    colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_"))) - 3] == "length"
+      colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_")))] == "Point IDs" && 
+      colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_"))) - 3] == "length"
   },
   error = function(e){})
   
@@ -33,41 +33,41 @@ CheckData <- function(i){
   } else {}
   
   tryCatch({
-  Test_Pole2 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole2)) == "Pole2"    
+    Test_Pole2 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole2)) == "Pole2"    
   },
   error = function(e){})
-
+  
   if (!exists("Test_Pole2")){
     Test_Pole2 <- FALSE
   } else {} 
   
-# State value of data check  --------------------------------------------------
-if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
-  DataTest <<- 1
-  
-} else if (Test_Segments == TRUE && which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") > 
-           which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole2_00")){
-  DataTest <<- 2
-  
-} else if (Test_Segments == FALSE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
-  
-  DataTest <<- 3
-  
-} else if (Test_Segments == TRUE && Test_Pole1 == FALSE) {
-  
-  DataTest <<- 4
-  
-} else if (Test_Segments == TRUE && Test_Pole2 == FALSE) {
-  
-  DataTest <<- 5
-  
-} else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
-  
-  DataTest <<- 6
-} else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE){
-  
-  DataTest <<- 7
-}else if (!exists(get(paste("Data", "Segments", i, sep = "_")))){
-  DataTest <<- 0
-}
+  # State value of data check  --------------------------------------------------
+  if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
+    DataTest <<- 1
+    
+  } else if (Test_Segments == TRUE && which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") > 
+             which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole2_00")){
+    DataTest <<- 2
+    
+  } else if (Test_Segments == FALSE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
+    
+    DataTest <<- 3
+    
+  } else if (Test_Segments == TRUE && Test_Pole1 == FALSE) {
+    
+    DataTest <<- 4
+    
+  } else if (Test_Segments == TRUE && Test_Pole2 == FALSE) {
+    
+    DataTest <<- 5
+    
+  } else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
+    
+    DataTest <<- 6
+  } else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE){
+    
+    DataTest <<- 7
+  }else if (!exists(get(paste("Data", "Segments", i, sep = "_")))){
+    DataTest <<- 0
+  }
 }

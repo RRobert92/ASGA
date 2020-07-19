@@ -6,25 +6,19 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-17
-# Debugged/Reviewed: Robert Kiewisz 18/07/2020
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
-
 
 # Set-up analysis --------------------------------------------------------------
 A_Curvature <- function (input, output, session){
-  
-  # Analyze total & local curvature for Pole1 ------------------------------------
+ 
+# Analyze total & local curvature for Pole1 ------------------------------------
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
+  KMTs_total_Curvature_P1 <- total_curvature(which(colnames(Segments) == "Pole1_00"))
   
-  if(nrow(Pole1_00) == 0){
-    KMTs_total_Curvature_P1 <- data.frame()
-    KMTs_local_Curvature_P1 <- data.frame()
-  } else {
-    KMTs_total_Curvature_P1 <- total_curvature(which(colnames(Segments) == "Pole1_00"))
-    tryCatch({
-      KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_00"))
-    }, error = function(e){})
-  }
+  tryCatch({
+    KMTs_local_Curvature_P1 <- local_curvature(which(colnames(Segments) == "Pole1_00"))
+  }, error = function(e){})
   
   progressSweetAlert(
     session = session, id = "P_TL_Curvature1",
@@ -33,28 +27,25 @@ A_Curvature <- function (input, output, session){
   )
   
   for(i in as.numeric(which(colnames(Segments) == "Pole1_00")+1) : as.numeric(which(colnames(Segments) == "Pole2_00") - 1)){
-    DF <- data.frame()
+
     tryCatch({
       assign("DF",
              total_curvature(i),
-             envir=.GlobalEnv)
+             envir = .GlobalEnv)
       assign("KMTs_total_Curvature_P1",
              rbind(KMTs_total_Curvature_P1,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
     },
     error = function(e){}
     )
     
-    DF <- data.frame()
     tryCatch({
       assign("DF",
              local_curvature(i),
-             envir=.GlobalEnv)
+             envir = .GlobalEnv)
       assign("KMTs_local_Curvature_P1",
              rbind(KMTs_local_Curvature_P1,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
     },
     error = function(e){}
     )
@@ -68,7 +59,6 @@ A_Curvature <- function (input, output, session){
     Sys.sleep(0.1)
   }
   closeSweetAlert(session = session)
-  
   KMTs_total_Curvature_P1 <<- KMTs_total_Curvature_P1
   KMTs_local_Curvature_P1 <<- KMTs_local_Curvature_P1
   
@@ -96,12 +86,10 @@ A_Curvature <- function (input, output, session){
     DF <- data.frame()
     tryCatch({
       assign("DF",
-             total_curvature(i),
-             envir=.GlobalEnv)
+             total_curvature(i))
       assign("KMTs_total_Curvature_P2",
              rbind(KMTs_total_Curvature_P2,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
     },
     error = function(e){}
     )
@@ -109,12 +97,10 @@ A_Curvature <- function (input, output, session){
     DF <- data.frame()
     tryCatch({
       assign("DF",
-             local_curvature(i),
-             envir=.GlobalEnv)
+             local_curvature(i))
       assign("KMTs_local_Curvature_P2",
              rbind(KMTs_local_Curvature_P2,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
     },
     error = function(e){}
     )
@@ -130,5 +116,4 @@ A_Curvature <- function (input, output, session){
   closeSweetAlert(session = session)
   KMTs_total_Curvature_P2 <<- KMTs_total_Curvature_P2
   KMTs_local_Curvature_P2 <<- KMTs_local_Curvature_P2
-  rm(DF)
 }

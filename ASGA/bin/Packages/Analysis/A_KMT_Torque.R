@@ -6,17 +6,17 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-07-07
-# Debugged/Reviewed: Robert Kiewisz 18/07/2020
+# Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
 A_KMT_Torque <- function (input, output, session){
-  
+# Set-up analysis --------------------------------------------------------------
   # Analyze KMT torque for Pole1 -------------------------------
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00") : as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
   
   progressSweetAlert(
     session = session, id = "P_Torque1",
-    title = "Calculating KMT torque for Pole1...",
+    title = "Calculating KMT torque for the Pole1...",
     display_pct = TRUE, value = 0
   )
   
@@ -80,7 +80,7 @@ A_KMT_Torque <- function (input, output, session){
   
   progressSweetAlert(
     session = session, id = "P_Torque2",
-    title = "Calculating KMT torque for Pole2...",
+    title = "Calculating KMT torque for the Pole2...",
     display_pct = TRUE, value = 0
   )
   
@@ -92,7 +92,7 @@ A_KMT_Torque <- function (input, output, session){
         
       }else{
         assign(paste(colnames(Segments)[i]), 
-               leading_KMTsv2(i, Pole1),
+               leading_KMTsv2(i, Pole2),
                envir=.GlobalEnv)
       }
       
@@ -138,6 +138,4 @@ A_KMT_Torque <- function (input, output, session){
   closeSweetAlert(session = session)
 
   Fiber_Torque_P2 <<- Torque
-  rm(bin,
-     Torque)
 }
