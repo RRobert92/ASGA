@@ -10,12 +10,13 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16 
+# Created: 2020-05-16
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 #####################################################################################################
-
 
 # Sort Points of each KMT  --------------------------------------------------------------------------
 Select_Points <- function(x, y) {
   selected_points <- data.frame(str_split(gsub("[^[:digit:]]", ",", y[x, 2]), pattern = ","))
+  
   points <- data.frame(Point_ID = selected_points[, 1])
 }

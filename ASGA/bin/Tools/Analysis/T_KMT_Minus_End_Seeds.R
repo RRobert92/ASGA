@@ -12,25 +12,25 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-04-17
+# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 ########################################################################################################
-
 
 # Function: Calculate minus end distributions ----------------------------------------------------------
 Minus_end_seed <- function(x){
   Minus_end <- data.frame()
-
+  
   for(i in 1:nrow(get(paste(colnames(Segments)[x])))){
     DF <- data.frame()
     
     for(j in 1:nrow(get(paste(colnames(Segments)[x], i, sep = "_")))){
       tryCatch({
-       
+        
         p_to_P <- Nodes[with(Nodes, `X Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2] + as.numeric(minus_distance * 2)) & 
-                                    `X Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2] - as.numeric(minus_distance * 2))),]
+                               `X Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,2] - as.numeric(minus_distance * 2))),]
         p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3] + as.numeric(minus_distance * 2)) & 
-                                      `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3] - as.numeric(minus_distance * 2))),]
+                                `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,3] - as.numeric(minus_distance * 2))),]
         p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4] + as.numeric(minus_distance * 2)) & 
-                                      `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4] - as.numeric(minus_distance * 2))),]
+                                `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x],i, sep = "_"))[j,4] - as.numeric(minus_distance * 2))),]
         p_to_P[5:7] <- get(paste(colnames(Segments)[x],i, sep = "_"))[j,2:4]
         
         p_to_P$dist <- apply(p_to_P[2:7], 
@@ -65,32 +65,35 @@ Minus_end_seed <- function(x){
             DF[k,1:2] <- NA
           }
         }
+        
         defin_end <- na.omit(defin_end)
         DF <- na.omit(DF)
         
         if(nrow(DF) > 0){
           end_type <- data.frame()
+          
           for(k in 1:nrow(defin_end)){
             N1 <- Nodes %>% filter_at(vars(starts_with("Node")), any_vars(. == (defin_end[k,2])))
             N2 <- Nodes %>% filter_at(vars(starts_with("Node")), any_vars(. == (defin_end[k,3])))
             
             if(defin_end[k,4] == "SMT"){
               N1_to_pole1 <- sqrt((Pole1[1,1] - N1[1,2])^2 +
-                                  (Pole1[1,2] - N1[1,3])^2 + 
-                                  (Pole1[1,3] - N1[1,4])^2)
+                                    (Pole1[1,2] - N1[1,3])^2 + 
+                                    (Pole1[1,3] - N1[1,4])^2)
               N1_to_pole2 <- sqrt((Pole2[1,1] - N1[1,2])^2 + 
-                                  (Pole2[1,2] - N1[1,3])^2 + 
-                                  (Pole2[1,3] - N1[1,4])^2)
+                                    (Pole2[1,2] - N1[1,3])^2 + 
+                                    (Pole2[1,3] - N1[1,4])^2)
               N2_to_pole1 <- sqrt((Pole1[1,1] - N2[1,2])^2 + 
-                                  (Pole1[1,2] - N2[1,3])^2 + 
-                                  (Pole1[1,3] - N2[1,4])^2)
+                                    (Pole1[1,2] - N2[1,3])^2 + 
+                                    (Pole1[1,3] - N2[1,4])^2)
               N2_to_pole2 <- sqrt((Pole2[1,1] - N2[1,2])^2 + 
-                                  (Pole2[1,2] - N2[1,3])^2 + 
-                                  (Pole2[1,3] - N2[1,4])^2)
+                                    (Pole2[1,2] - N2[1,3])^2 + 
+                                    (Pole2[1,3] - N2[1,4])^2)
               Node_to_Pole <- rbind(N1_to_pole1,
                                     N1_to_pole2,
                                     N2_to_pole1,
                                     N2_to_pole2)
+              
               if(which.min(as.matrix(Node_to_Pole)) == 1){
                 end_type[k,1] <- "Minus"
                 end_type[k,2] <- "Plus"
@@ -107,9 +110,10 @@ Minus_end_seed <- function(x){
                 end_type[k,1:2] <- NA
               }
             } else if(defin_end[k,4] == "KMT"){
+              
               if(nrow(Segments[as.numeric(defin_end[k,1]+1),] %>% filter_at(vars(starts_with("Pole1")), any_vars(. == 1))) == 1){
-
-# calculate (-) end for Pole 1 -------------------------------------------------------------------------
+                
+                # calculate (-) end for Pole 1 -------------------------------------------------------------------------
                 N1_to_pole1 <- sqrt((Pole1[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
                                       (Pole1[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
                                       (Pole1[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
@@ -128,14 +132,14 @@ Minus_end_seed <- function(x){
                   end_type[k,2] <- "Minus"
                 }
               } else if (nrow(Segments[as.numeric(defin_end[k,1]+1),] %>% filter_at(vars(starts_with("Pole2")), any_vars(. == 1))) == 1){
-        
-# calculate (-) end for Pole 2 -------------------------------------------------------------------------
+                
+                # calculate (-) end for Pole 2 -------------------------------------------------------------------------
                 N1_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,2]+1),2])^2 + 
-                                    (Pole2[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
-                                    (Pole2[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
+                                      (Pole2[1,2] - Nodes[as.numeric(defin_end[k,2]+1),3])^2 + 
+                                      (Pole2[1,3] - Nodes[as.numeric(defin_end[k,2]+1),4])^2)
                 N2_to_pole2 <- sqrt((Pole2[1,1] - Nodes[as.numeric(defin_end[k,3]+1),2])^2 + 
-                                    (Pole2[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
-                                    (Pole2[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
+                                      (Pole2[1,2] - Nodes[as.numeric(defin_end[k,3]+1),3])^2 + 
+                                      (Pole2[1,3] - Nodes[as.numeric(defin_end[k,3]+1),4])^2)
                 
                 Node_to_Pole <- rbind(N1_to_pole2,
                                       N2_to_pole2)
@@ -150,6 +154,7 @@ Minus_end_seed <- function(x){
               }
             }
           }
+          
           defin_end <- cbind(defin_end,
                              end_type)
           
@@ -164,6 +169,7 @@ Minus_end_seed <- function(x){
               }
             }
           }
+          
           defin_end <- na.omit(defin_end)
           DF <- na.omit(DF)
         }
@@ -192,6 +198,7 @@ Minus_end_seed <- function(x){
     
     list <- unique(Minus_end$Interactor_ID)
     Temp <- data.frame()
+    
     for(k in list){
       DF <- Minus_end %>% filter_at(vars("Interactor_ID"),
                                     any_vars(. == k))
@@ -199,6 +206,6 @@ Minus_end_seed <- function(x){
     }
     Minus_end <- na.omit(Temp)
   }
-
+  
   Minus_end
 }
