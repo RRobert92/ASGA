@@ -11,14 +11,15 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-03-17
-# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 #####################################################################################
+
 
 # Tool LD  --------------------------------------------------------------------------
 Analyse_LD <- function(x, y){
   
-  # Get position of all (+) ends in the fiber, calculate median position,
-  # and take it as a kinetochore position
+# Get position of all (+) ends in the fiber, calculate median position,
+# and take it as a kinetochore position
+  
   Plus_end <- data.frame()
   for (i in 1:nrow(get(colnames(Segments)[x]))){
     Plus_end[i,1:3] <- get(paste(colnames(Segments)[x], 
@@ -43,10 +44,10 @@ Analyse_LD <- function(x, y){
              ((Plus_end[1,3] - Kinetochore_projected[1,3])^2/(Rz100^2))) <= 1
   
   if(R25 == TRUE && R50 == TRUE && R100 == TRUE){
-    elipse[1,1] <- "50%"
+    elipse[1,1] <- "25%"
     
   } else if(R50 == TRUE && R100 == TRUE){
-    elipse[1,1] <- "75%"
+    elipse[1,1] <- "50%"
     
   } else if (R100 == TRUE){
     elipse[1,1] <- "100%"
@@ -55,16 +56,15 @@ Analyse_LD <- function(x, y){
     elipse[1,1] <- "100%"
     
   }
+# Get position of the kinetochore on the metaphase plate------------------------------
   
-  # Get position of the kinetochore on the metaphase plate------------------------------
   for (i in 1:nrow(get(colnames(Segments)[x]))){
     Minus_end <- paste(colnames(Segments)[x], 
                        i, 
                        sep = "_")
-    
     Minus_Distst_to_the_pole <- sqrt((y[1,1] - (get(Minus_end)[nrow(get(Minus_end)),2]))^2 + 
-                                       (y[1,2] - (get(Minus_end)[nrow(get(Minus_end)),3]))^2 + 
-                                       (y[1,3] - (get(Minus_end)[nrow(get(Minus_end)),4]))^2)
+                                     (y[1,2] - (get(Minus_end)[nrow(get(Minus_end)),3]))^2 + 
+                                     (y[1,3] - (get(Minus_end)[nrow(get(Minus_end)),4]))^2)
     
     Bind_Data [i,1] <- get(colnames(Segments)[x])[i,1]
     Bind_Data [i,2] <- get(colnames(Segments)[x])[i,3]/10000
@@ -74,7 +74,7 @@ Analyse_LD <- function(x, y){
     Bind_Data [i,6] <- elipse
     Bind_Data [i,7] <- colnames(Segments)[x]
   }
-  
+
   names(Bind_Data)[1] <- "Segment ID"
   names(Bind_Data)[2] <- "length"
   names(Bind_Data)[3] <- "minus_dist_to_pole"
@@ -83,6 +83,5 @@ Analyse_LD <- function(x, y){
   names(Bind_Data)[6] <- "Elipse_Position"
   names(Bind_Data)[7] <- "Fiber_Name"
   
-  rm(Plus_end, elipse)
   Bind_Data
 }

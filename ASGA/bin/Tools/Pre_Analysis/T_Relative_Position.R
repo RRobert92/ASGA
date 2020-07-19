@@ -11,9 +11,9 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16
-# Debugged/Reviewed: Robert Kiewisz 19/07/2020
+# Created: 2020-05-16 
 #########################################################################################################
+
 
 # Relative Position for Pole1 ---------------------------------------------------------------------------
 relativ_pos_1 <- function(x, y){

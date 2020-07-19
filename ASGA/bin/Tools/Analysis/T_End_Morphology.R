@@ -10,8 +10,8 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-04-21
-# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 #####################################################################################
+
 
 # Tool End Morphology ---------------------------------------------------------------
 End_Type_Error <- function(){
@@ -24,6 +24,7 @@ End_Type_Error <- function(){
   }
   End_type_error
 }
+
 
 # Analyze the end distribution according to the relative position of the KMT end ----
 # X is here no. of column in the "Segment" ------------------------------------------

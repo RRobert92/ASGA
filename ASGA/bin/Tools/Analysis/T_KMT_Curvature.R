@@ -12,13 +12,12 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-04-17
-# Debugged/Reviewed: Robert Kiewisz 19/07/2020
 #####################################################################################
+
 
 # Function: Calculate total curvature ----------------------------------------------
 total_curvature <- function(x){
   curvarture <- data.frame()
-  
   for (i in 1:nrow(get(paste(colnames(Segments)[x])))){
     KMT <- get(paste(colnames(Segments)[x], 
                      i, 
@@ -51,13 +50,12 @@ total_curvature <- function(x){
 # Count the curvature ratio for each step
 local_curvature <- function(x){
   full_data <- data.frame()
-  
-  for (i in 1:nrow(get(paste(colnames(Segments)[x])))) {
+  for (i in 1:nrow(get(paste(colnames(Segments)[x])))){
     KMT <- get(paste(colnames(Segments)[x], 
                      i, 
                      sep = "_"))
     
-    # Get curve length ------------------------------------------------------------------
+# Get curve length ------------------------------------------------------------------
     output_curve <- data.frame(Curve = as.numeric())
     j = 1
     
@@ -67,13 +65,13 @@ local_curvature <- function(x){
     }
     output_curve <- na.omit(output_curve)
     
-    # Get full length -------------------------------------------------------------------
+# Get full length -------------------------------------------------------------------
     output_full <- data.frame(Full_L = as.numeric())
     j = 1
     
-    while (j < nrow(KMT)) {
+    while (j < nrow(KMT)){
       local_c <- data.frame()
-      for(k in j:as.numeric(j+24)) {
+      for(k in j:as.numeric(j+24)){
         local_c[k,1] <- sqrt((KMT[k,2] - KMT[k+1,2])^2 + (KMT[k,3] - KMT[k+1,3])^2 + (KMT[k,4] - KMT[k+1,4])^2)
       }
       local_c <- local_c[j:nrow(local_c),1]
@@ -83,30 +81,29 @@ local_curvature <- function(x){
     }
     output_full <- na.omit(output_full)
     
-    # get mean relative position --------------------------------------------------------
+# get mean relative position --------------------------------------------------------
     output_mean <- data.frame(Mean_Position = as.numeric())
     j = 1  
     
-    while(j < nrow(KMT)) {
+    while(j < nrow(KMT)){
       output_mean[j,] <- (KMT[j,5] + KMT[j+24,5])/2
       j = j + 24
     }
     output_mean <- na.omit(output_mean)
     
-    if(nrow(output_curve) == 0) {
+    if(nrow(output_curve) == 0){
       
     } else {
-      DF <- cbind.data.frame(Curvature = output_full$Full_L/output_curve$Curve,
-                             Relative_Position = output_mean$Mean_Position,
-                             K_fiber_no = x,
-                             KMT_no = i,
-                             End_Position = get(paste(colnames(Segments)[x]))[i,4],
-                             End_to_Pole = get(paste(colnames(Segments)[x]))[i,5],
-                             Elipse_Position = get(paste(colnames(Segments)[x]))[i,6])
-      full_data <- rbind(full_data, 
-                         DF)
+          DF <- cbind.data.frame(Curvature = output_full$Full_L/output_curve$Curve,
+                           Relative_Position = output_mean$Mean_Position,
+                           K_fiber_no = x,
+                           KMT_no = i,
+                           End_Position = get(paste(colnames(Segments)[x]))[i,4],
+                           End_to_Pole = get(paste(colnames(Segments)[x]))[i,5],
+                           Elipse_Position = get(paste(colnames(Segments)[x]))[i,6])
+    full_data <- rbind(full_data, 
+                       DF)
     }
   }
-  
   full_data
 }

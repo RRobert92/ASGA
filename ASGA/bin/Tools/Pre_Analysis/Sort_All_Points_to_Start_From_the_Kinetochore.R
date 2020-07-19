@@ -7,9 +7,10 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-16
-# Debugged/Reviewed: Robert Kiewisz 19/07/2020
+# Created: 2020-05-16 
 #####################################################################################################
+
+
 
 # Calculate kinetochore position for Pole1  ---------------------------------------------------------
 Sort_by_distance_to_pole1 <- function(y){
