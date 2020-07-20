@@ -11,6 +11,7 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-07-07
+# Reviewed: Robert Kiewisz 20/07/2020
 #####################################################################################
 
 # Function: Find point for lading KMTs, for j = j+5 == 0.5um -------------------------
@@ -60,10 +61,22 @@ Fiber_Total_Curvature <- function(x){
   position[1,5] <- data.frame(y1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),2]))
   position[1,6] <- data.frame(z1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),3]))
   position$dist <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
-  ratio <- data.frame()
-  ratio[1,1] <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1] / position$dist
-  data.frame(Ratio = c(ratio[1,1]),
-             Length = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))),1]))
+  
+  output_length <- data.frame()
+  KMT <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))
+  j = 1
+  
+  while (j < nrow(KMT)) {
+    output_length[j,1] <- sqrt((KMT[j,1] - KMT[j+1,1])^2 + 
+                                 (KMT[j,2] - KMT[j+1,2])^2 + 
+                                 (KMT[j,3] - KMT[j+1,3])^2) 
+    j = j + 1
+  }
+  output_length <- sum(na.omit(output_length))
+  
+  ratio <- output_length / position$dist
+  data.frame(Ratio = c(ratio),
+             Fiber_Length = output_length)
 }
 
 # Function: Get a relative position for pole 1  ---------------------------------------------------------
@@ -122,7 +135,9 @@ Fiber_Local_Curvature <- function(x){
   DF <- data.frame()
   i = 1
   while (i < nrow(Fiber)){
-    curve_seg <- sqrt((Fiber[i,1] - Fiber[i+4,1])^2 + (Fiber[i,2] - Fiber[i+4,2])^2 + (Fiber[i,3] - Fiber[i+4,3])^2)
+    curve_seg <- sqrt((Fiber[i,1] - Fiber[i+4,1])^2 + 
+                        (Fiber[i,2] - Fiber[i+4,2])^2 + 
+                        (Fiber[i,3] - Fiber[i+4,3])^2)
     
     full <- data.frame()
     full_bin <- Fiber[i:as.numeric(i+4),]
