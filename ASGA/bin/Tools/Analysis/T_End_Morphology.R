@@ -17,7 +17,7 @@
 End_Type_Error <- function(){
   if(ncol(Nodes %>% select(starts_with("EndType"))) == 2){
     End_type_error <- data.frame(Correct = c(round(table(Nodes[,7])["TRUE"]*100/nrow(Nodes), 2)),
-                                 Wrong = c(round(table(Nodes[,7])["TRUE"]*100/nrow(Nodes),
+                                 Wrong = c(round(table(Nodes[,7])["FALSE"]*100/nrow(Nodes),
                                                  2)))
   } else {
     break

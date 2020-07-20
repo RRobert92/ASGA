@@ -36,23 +36,19 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
       
       assign("DF",
              End_distribution_Plus(i,
-                                   1),
-             envir=.GlobalEnv)
+                                   1))
       
       assign("Plus_end_morphology_Pole1",
              rbind(Plus_end_morphology_Pole1,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
       
       assign("DF",
              End_distribution_Minus(i,
-                                    1),
-             envir=.GlobalEnv)
+                                    1))
       
       assign("Minus_end_morphology_Pole1",
              rbind(Minus_end_morphology_Pole1,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
     },
     error = function(e){})
     
@@ -123,23 +119,19 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
       
       assign("DF",
              End_distribution_Plus(i,
-                                   2),
-             envir=.GlobalEnv)
+                                   2))
       
       assign("Plus_end_morphology_Pole2",
              rbind(Plus_end_morphology_Pole2,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
       
       assign("DF",
              End_distribution_Minus(i,
-                                    2),
-             envir=.GlobalEnv)
+                                    2))
       
       assign("Minus_end_morphology_Pole2",
              rbind(Minus_end_morphology_Pole2,
-                   DF),
-             envir=.GlobalEnv)
+                   DF))
     },
     error = function(e){}
     )
