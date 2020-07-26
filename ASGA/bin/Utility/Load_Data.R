@@ -16,8 +16,6 @@ Load_Data <- function (input, output, session){
   Nodes <<- get(paste("Data", "Nodes", current_data, sep = "_"))
   Pole1 <<- "Pole1"
   Pole2 <<- "Pole2"
-  Minus_Threshold <<- 1.2 #um
-  minus_distance <<- 0.055 #um
   
   # Load Segments ----------------------------------------------------------------
   ncolumn <<- ncol(Segments)
