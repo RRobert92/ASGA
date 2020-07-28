@@ -54,28 +54,14 @@ for(j in 1:numfiles){
       df[i,1] <- get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"]
       
     } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "100%" &&
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] < 55){
-      df[i,1] <- "50%"
-      
-    } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "100%" &&
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] >= 55){
-      df[i,1] <- "100%"
-      
-    } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "50%" &&
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "25%" &&
               get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] >= 75){
-      df[i,1] <- "100%"
-      
-    } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "50%" &&
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] < 75){
       df[i,1] <- "50%"
       
     } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "25%"){
-      df[i,1] <- "25%"
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "50%" &&
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] > 75){
+      df[i,1] <- "100%"
       
     }
     names(df)[1] <- "Uni_Model"
@@ -142,43 +128,35 @@ for(j in 1:numfiles){
       df[i,1] <- get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"]
       
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
-              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "100%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 70){
-      df[i,1] <- "100%"
-      
-    } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
-              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "100%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 70 && 
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] > 50){
+              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "25%" &&
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 75){
       df[i,1] <- "50%"
-      
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
-               get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "100%" &&
-               get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 50){
+              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "25%" &&
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] < 75){
       df[i,1] <- "25%"
-      
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
               get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "50%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 70){
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 75){
       df[i,1] <- "100%"
-      
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
               get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "50%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 50){
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] < 45){
       df[i,1] <- "25%"
-      
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
-              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "25%"){
-      df[i,1] <- "25%"
-      
+              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "100%" &&
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 50){
+      df[i,1] <- "50%"
+    } else {
+      df[i,1] <- get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"]
     }
-    
+
     names(df)[1] <- "Uni_Model"
   }
   
   assign(paste("Data", j, "LD", sep = "_"),
          cbind(get(paste("Data", j, "LD", sep = "_")),
-               df)) 
+               df))
 }
 
 
