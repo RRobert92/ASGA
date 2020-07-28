@@ -12,10 +12,9 @@
 
 P1 <- ggplot(Data_1_KMT_No, aes("Metaphase #1", KMTs_per_kinetochore)) + 
   geom_boxplot(fill = "grey20", color = "black") + theme_classic() +
-  xlab("Data-set names") + ylab("Number of KMTs per kinetochore")
+  xlab("Data-set names") + ylab("Number of KMTs per kinetochore") + ylim(0,20)
 P1<- P1 + geom_boxplot(data = Data_2_KMT_No, aes("Metaphase #2", KMTs_per_kinetochore), fill = "grey30", color = "black")
 P1<- P1 + geom_boxplot(data = Data_3_KMT_No, aes("Metaphase #3", KMTs_per_kinetochore), fill = "grey40", color = "black")
-P1<- P1 + geom_boxplot(data = Data_3_KMT_No, aes("Metaphase #3", KMTs_per_kinetochore), fill = "grey50", color = "black")
 P1<- P1 + geom_boxplot(data = Data_4_KMT_No, aes("RPE-1 wt #4", KMTs_per_kinetochore), fill = "grey60", color = "black")
 P1<- P1 + geom_boxplot(data = Data_5_KMT_No, aes("RPE-1 wt #5", KMTs_per_kinetochore), fill = "grey70", color = "black")
 P1<- P1 + geom_boxplot(data = Data_6_KMT_No, aes("U2OS wt #6", KMTs_per_kinetochore), fill = "grey80", color = "black")
@@ -37,6 +36,18 @@ print(P1)
 
 ggsave(file="KMT_no.svg", plot = P1)
 
+# Number of KMTs at the pole ----------------------------------------------------------------------------------------------
+P1.1 <- ggplot(Data_1_KMT_Pole, aes("Metaphase #1", KMTs_at_the_Pole)) + 
+  geom_boxplot(fill = "grey20", color = "black") + theme_classic() +
+  xlab("Data-set names") + ylab("Number of KMTs per kinetochore") + ylim(0,20)
+P1.1<- P1.1 + geom_boxplot(data = Data_2_KMT_Pole, aes("Metaphase #2", KMTs_at_the_Pole), fill = "grey30", color = "black")
+P1.1<- P1.1 + geom_boxplot(data = Data_3_KMT_Pole, aes("Metaphase #3", KMTs_at_the_Pole), fill = "grey40", color = "black")
+All_KMT_Pole <- rbind(Data_1_KMT_Pole, Data_2_KMT_Pole, Data_3_KMT_Pole)
+P1.1<- P1.1 + geom_boxplot(data = All_KMT_Pole, aes("Avg. HeLa", KMTs_at_the_Pole), fill = "darkred", color = "black", outlier.alpha = 0) + 
+  geom_jitter(data = All_KMT_Pole, aes("Avg. HeLa", KMTs_at_the_Pole), alpha = 0.1, size = 1, width = 0.25)
+
+print(P1.1)
+
 # Inter kinetochore distance ----------------------------------------------------------------------------------------------
 
 P0 <- ggplot(Data_1_IKD, aes("Metaphase #1", `Inter-kinetochore distance`)) + 
@@ -48,7 +59,12 @@ P0 <- P0 + geom_boxplot(data = Data_4_IKD, aes("Metaphase #4", `Inter-kinetochor
 P0 <- P0 + geom_boxplot(data = Data_5_IKD, aes("Metaphase #5", `Inter-kinetochore distance`), fill = "grey60", color = "black")
 P0 <- P0 + geom_boxplot(data = Data_6_IKD, aes("Metaphase #6", `Inter-kinetochore distance`), fill = "grey70", color = "black")
 P0 <- P0 + geom_boxplot(data = Data_7_IKD, aes("Metaphase #7", `Inter-kinetochore distance`), fill = "grey80", color = "black")
-
+ALL_IKD <- rbind(Data_1_IKD, Data_2_IKD, Data_3_IKD)
+P0 <- P0 + geom_boxplot(data = ALL_IKD, aes("HeLa average", `Inter-kinetochore distance`), fill = "darkred", color = "black")
+ALL_IKD <- rbind(Data_4_IKD, Data_5_IKD)
+P0 <- P0 + geom_boxplot(data = ALL_IKD, aes("RPE-1 average", `Inter-kinetochore distance`), fill = "darkgreen", color = "black")
+ALL_IKD <- rbind(Data_6_IKD, Data_7_IKD)
+P0 <- P0 + geom_boxplot(data = ALL_IKD, aes("U2OS average", `Inter-kinetochore distance`), fill = "orange", color = "black")
 print(P0)
 
 
@@ -108,22 +124,22 @@ ggsave(file="LD.svg", plot = P2)
 
 All_KMT_Minus_Ends <- rbind(Data_1_KMT_Minus_Ends, Data_2_KMT_Minus_Ends, Data_3_KMT_Minus_Ends)
 
-P2.4 <- ggplot(Data_1_KMT_Minus_Ends, aes(minus_dist_to_pole)) + geom_density(kernel = "gaussian", size = 1, linetype = "dashed", color = "black") + 
-  theme_classic() + xlab("KMT Relative Position") + ylab("KMT minus-end distance from the pole")
-P2.4 <- P2.4 + geom_density(data = Data_2_KMT_Minus_Ends, aes(minus_dist_to_pole), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
-P2.4 <- P2.4 + geom_density( data = Data_3_KMT_Minus_Ends, aes(minus_dist_to_pole), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
-P2.4 <- P2.4 + geom_density( data = All_KMT_Minus_Ends, aes(minus_dist_to_pole), linetype = "solid", color = "darkred",  kernel = "gaussian", size = 1) +
-  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "darkred", linetype = "dashed", size = 1)
+P2.4 <- ggplot(Data_1_KMT_Minus_Ends, aes(Relative_minus_position)) + geom_density(kernel = "gaussian", size = 1, linetype = "dashed", color = "black") + 
+  theme_classic() + xlab("KMT minus-end distance from the pole") + ylab("KMT density [Gaussian Kernel density]")
+P2.4 <- P2.4 + geom_density(data = Data_2_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
+P2.4 <- P2.4 + geom_density( data = Data_3_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
+P2.4 <- P2.4 + geom_density( data = All_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "solid", color = "darkred",  kernel = "gaussian", size = 1) +
+  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "darkred", linetype = "dashed", size = 1)
 print(P2.4)
 
 
-P2.5 <- ggplot(All_KMT_Minus_Ends, aes(minus_dist_to_pole)) + geom_density(kernel = "gaussian", size = 1, color = "darkred", linetype = "solid") + 
-  theme_classic() + xlab("KMT minus-end distance from the pole") + ylab("KMT density [Gaussian Kernal density]") +
-  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "red", linetype = "dashed", size = 1)
-P2.5 <- P2.5 + geom_density(data = Data_5_KMT_Minus_Ends, aes(minus_dist_to_pole), kernel = "gaussian", size = 1, color = "darkgreen") +
-  geom_vline(data = Data_5_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "green", linetype = "dashed", size = 1)
-P2.5 <- P2.5 + geom_density(data = Data_7_KMT_Minus_Ends, aes(minus_dist_to_pole), kernel = "gaussian", size = 1, color = "darkorange") +
-  geom_vline(data = Data_7_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "orange", linetype = "dashed", size = 1)
+P2.5 <- ggplot(All_KMT_Minus_Ends, aes(Relative_minus_position)) + geom_density(kernel = "gaussian", size = 1, color = "darkred", linetype = "solid") + 
+  theme_classic() + xlab("KMT minus-end distance from the pole") + ylab("KMT density [Gaussian Kernel density]") +
+  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "red", linetype = "dashed", size = 1)
+P2.5 <- P2.5 + geom_density(data = Data_5_KMT_Minus_Ends, aes(Relative_minus_position), kernel = "gaussian", size = 1, color = "darkgreen") +
+  geom_vline(data = Data_5_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "green", linetype = "dashed", size = 1)
+P2.5 <- P2.5 + geom_density(data = Data_7_KMT_Minus_Ends, aes(Relative_minus_position), kernel = "gaussian", size = 1, color = "darkorange") +
+  geom_vline(data = Data_7_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "orange", linetype = "dashed", size = 1)
 print(P2.5)
 
 # Total curvature  --------------------------------------------------------------------------------------------------------
@@ -134,7 +150,7 @@ P3 <- P3 + geom_density(data = Data_2_KMT_Total_Curv, aes(Curvature), kernel = "
 P3 <- P3 + geom_density(data = Data_3_KMT_Total_Curv, aes(Curvature), kernel = "gaussian", size = 1, color = "black", linetype = "dotted") 
 All_T_Curv <- rbind(Data_1_KMT_Total_Curv, Data_2_KMT_Total_Curv, Data_3_KMT_Total_Curv)
 P3 <- P3 + geom_density(data = All_T_Curv, aes(Curvature), kernel = "gaussian", size = 1, color = "darkred", linetype = "solid") + 
-  geom_vline(data = All_T_Curv, aes(xintercept = median(Curvature)), color = "blue", linetype = "dashed", size = 1)
+  geom_vline(data = All_T_Curv, aes(xintercept = mean(Curvature)), color = "blue", linetype = "dashed", size = 1)
 
 print(P3)
 
@@ -281,6 +297,12 @@ P5 <- ggplot(All_fiber_area, aes(Relative_position, Alpha_area)) + geom_smooth(m
 P5 <- P5 + geom_smooth(data = Data_5_Fiber_Area, aes(Relative_position, Alpha_area), color = "blue", se = T, linetype = "solid")
 P5 <- P5 + geom_smooth(data = Data_8_Fiber_Area, aes(Relative_position, Alpha_area), color = "orange", se = T, linetype = "solid")
 print(P5)
+
+P7.1 <- ggplot(All_fiber_area, aes(Relative_position, Roundness)) + geom_smooth(method = "loess", colour = "darkred") + stat_cor() + theme_classic2() + ylim(0,0.6)
+P7.1 <- P7.1 + geom_smooth(data=Data_1_Fiber_Area, aes(Relative_position, Roundness),method = "loess", color = "black", se = FALSE, linetype = "dashed")
+P7.1 <- P7.1 + geom_smooth(data=Data_2_Fiber_Area, aes(Relative_position, Roundness),method = "loess", color = "black", se = FALSE, linetype = "dotdash")
+P7.1 <- P7.1 + geom_smooth(data=Data_3_Fiber_Area, aes(Relative_position, Roundness),method = "loess", color = "black", se = FALSE, linetype = "dotdash")
+print(P7.1)
 
 ggsave(file="Fiber_area.svg", plot = P5)
 

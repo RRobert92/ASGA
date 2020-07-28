@@ -79,14 +79,11 @@ Report_Plot <- function(input, output, session){
       
       for(i in 1:nrow(Plot_Data)){
         if(get(paste("Data_bin", i, sep = "_")) == "all"){
-          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
                  data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
                             get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["KMTs_per_kinetochore"]),
                  envir = .GlobalEnv)
-          
-          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
-                 get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")),
-                 envir = .GlobalEnv)
+
           
         } else if (get(paste("Data_bin", i, sep = "_")) == "P1"){
           assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"],"_P1", sep = ""),
@@ -168,13 +165,9 @@ Report_Plot <- function(input, output, session){
       
       for(i in 1:nrow(Plot_Data)){
         if(get(paste("Data_bin", i, sep = "_")) == "all"){
-          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""),
+          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
                  data.frame(Data = get(paste("Data_", "label_", i, sep = "")),
                             get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = ""))["length"]),
-                 envir = .GlobalEnv)
-          
-          assign(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
-                 get(paste("Data_", Plot_Data[i,"V1"], "_", Plot_Data[i, "V2"], sep = "")),
                  envir = .GlobalEnv)
           
         } else if (get(paste("Data_bin", i, sep = "_")) == "P1"){

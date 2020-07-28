@@ -59,8 +59,8 @@ for(j in 1:numfiles){
       df[i,1] <- "50%"
       
     } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
-               get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "100%" &&
-               get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] >= 55){
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "100%" &&
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] >= 55){
       df[i,1] <- "100%"
       
     } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
@@ -112,7 +112,7 @@ print(P1)
 for(j in 1:numfiles){
   LD100max <- max(get(paste("Data", j, "LD", sep = "_"))$`plus_dist_to_pole`)
   LD100min <- min(get(paste("Data", j, "LD", sep = "_"))$`plus_dist_to_pole`)
-  LD80 <- ((75*(LD100max-LD100min))+(100*LD100min))/100
+  LD80 <- ((70*(LD100max-LD100min))+(100*LD100min))/100
   LD45 <- ((50*(LD100max-LD100min))+(100*LD100min))/100
   df <- data.frame()
   
@@ -130,9 +130,9 @@ for(j in 1:numfiles){
   test <- data.frame()
   for(i in 1:nrow(get(paste("Data", j, "LD", sep = "_")))){
     
-    if(get(paste("Data", j, "LD", sep = "_"))[i,"PED"] < 50){
+    if(get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 50){
       test <- "25%"
-    } else if(get(paste("Data", j, "LD", sep = "_"))[i, "PED"] > 75){
+    } else if(get(paste("Data", j, "LD", sep = "_"))[i, "PED"] >= 70){
       test <- "100%"
     } else {
       test <- "50%"
@@ -143,23 +143,29 @@ for(j in 1:numfiles){
       
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
               get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "100%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] < 55){
-      df[i,1] <- "50%"
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 70){
+      df[i,1] <- "100%"
       
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
               get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "100%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 55){
-      df[i,1] <- "100%"
-      
-    } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
-              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "50%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 75){
-      df[i,1] <- "100%"
-      
-    } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
-              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "50%" &&
-              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] < 75){
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 70 && 
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] > 50){
       df[i,1] <- "50%"
+      
+    } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
+               get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "100%" &&
+               get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 50){
+      df[i,1] <- "25%"
+      
+    } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
+              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "50%" &&
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] >= 70){
+      df[i,1] <- "100%"
+      
+    } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
+              get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "50%" &&
+              get(paste("Data", j, "LD", sep = "_"))[i,"PED"] <= 50){
+      df[i,1] <- "25%"
       
     } else if(test != get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] && 
               get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"] == "25%"){
@@ -288,7 +294,7 @@ P3.1 <- ggplot(All_T_Curv[with(All_T_Curv, `Elipse Position` == "100%"),], aes(`
 
 P3.1 <- P3.1 + geom_smooth(data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "50%"),], aes(`KMTs length`, Curvature),
                            size = 1, color = "royalblue4", se = T)
-P3.1 <- P3.1 + geom_smooth(data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "25%" & `KMTs length` <= 3),], aes(`KMTs length`, Curvature),
+P3.1 <- P3.1 + geom_smooth(data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "25%"),], aes(`KMTs length`, Curvature),
                            size = 1, color = "springgreen4", se = T)
 
 print(P3.1)
@@ -371,25 +377,25 @@ j = 1
 
 while (i >= -0.2){
   LC_bin_100[j,1] <- median(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "100%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "100%"),],
-                                                                                                      Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+                                                                                                Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_80[j,1] <- median(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "50%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "50%"),],
-                                                                                                    Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+                                                                                              Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_45[j,1] <- median(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "25%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "25%"),],
-                                                                                                    Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+                                                                                              Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   
   LC_bin_100[j,2] <- sd(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "100%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "100%"),],
-                                                                                                  Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+                                                                                            Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_80[j,2] <- sd(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "50%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "50%"),],
-                                                                                                Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+                                                                                          Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   LC_bin_45[j,2] <- sd(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "25%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "25%"),],
-                                                                                                Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
+                                                                                          Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][1]))
   
   LC_bin_100[j,3] <- median(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "100%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "100%"),],
-                                                                                                      Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
+                                                                                                Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
   LC_bin_80[j,3] <- median(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "50%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "50%"),],
-                                                                                                    Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
+                                                                                              Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
   LC_bin_45[j,3] <- median(as.matrix(All_L_Curv[with(All_L_Curv, `Uni_Model` == "25%"),][with(All_L_Curv[with(All_L_Curv, `Uni_Model` == "25%"),],
-                                                                                                    Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
+                                                                                              Relative_Position <= i & Relative_Position >= as.numeric(i-0.1)),][2]))
   
   j = j + 1
   i = i - 0.1
@@ -507,25 +513,25 @@ i = 1
 j = 1 
 while (i >= -0.2){
   FA_bin_100[j,1] <- median(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "100%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "100%"),],
-                                                                                                              Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
+                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
   FA_bin_80[j,1] <- median(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "50%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "50%"),],
-                                                                                                            Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
+                                                                                                      Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
   FA_bin_45[j,1] <- median(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "25%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "25%"),],
-                                                                                                            Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
+                                                                                                      Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
   
   FA_bin_100[j,2] <- sd(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "100%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "100%"),],
-                                                                                                          Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
+                                                                                                    Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
   FA_bin_80[j,2] <- sd(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "50%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "50%"),],
-                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
+                                                                                                  Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
   FA_bin_45[j,2] <- sd(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "25%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "25%"),],
-                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
+                                                                                                  Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][2]))
   
   FA_bin_100[j,3] <- median(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "100%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "100%"),],
-                                                                                                              Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][1]))
+                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][1]))
   FA_bin_80[j,3] <- median(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "50%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "50%"),],
-                                                                                                            Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][1]))
+                                                                                                      Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][1]))
   FA_bin_45[j,3] <- median(as.matrix(All_fiber_area[with(All_fiber_area, `Uni_Model` == "25%"),][with(All_fiber_area[with(All_fiber_area, `Uni_Model` == "25%"),],
-                                                                                                            Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][1]))
+                                                                                                      Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][1]))
   j = j + 1
   i = i - 0.1
 }
@@ -552,7 +558,7 @@ FA_bin_80 <- FA_bin_80[1:10, 1:3]
 FA_bin_45 <- FA_bin_45[1:10, 1:3]
 
 P5 <- ggplot(FA_bin_100, aes(Relative_Position, Area)) + geom_smooth(method = "gam", color = "violetred4", se = T, linetype = "solid") + theme_classic() +
-  xlab("KMT Relative Position") + ylab("KMT polygon area") + xlim(0.0, 1)
+  xlab("KMT Relative Position") + ylab("KMT polygon area") + xlim(-0.2, 1)
 P5 <- P5 + geom_smooth(data = FA_bin_80, aes(Relative_Position, Area), color = "royalblue4", se = T, linetype = "solid")
 P5 <- P5 + geom_smooth(data = FA_bin_45, aes(Relative_Position, Area), color = "springgreen4", se = T, linetype = "solid")
 print(P5)
@@ -573,25 +579,25 @@ i = 1
 j = 1 
 while (i >= -0.2){
   ND_bin_100[j,1] <- median(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "100%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "100%"),],
-                                                                                                                Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
+                                                                                                          Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
   ND_bin_80[j,1] <- median(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "50%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "50%"),],
-                                                                                                              Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
+                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
   ND_bin_45[j,1] <- median(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "25%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "25%"),],
-                                                                                                              Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
+                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
   
   ND_bin_100[j,2] <- sd(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "100%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "100%"),],
-                                                                                                            Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
+                                                                                                      Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
   ND_bin_80[j,2] <- sd(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "50%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "50%"),],
-                                                                                                          Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
+                                                                                                    Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
   ND_bin_45[j,2] <- sd(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "25%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "25%"),],
-                                                                                                          Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
+                                                                                                    Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][3]))
   
   ND_bin_100[j,3] <- median(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "100%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "100%"),],
-                                                                                                                Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][6]))
+                                                                                                          Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][6]))
   ND_bin_80[j,3] <- median(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "50%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "50%"),],
-                                                                                                              Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][6]))
+                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][6]))
   ND_bin_45[j,3] <- median(as.matrix(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "25%"),][with(All_fiber_focus[with(All_fiber_focus, `Uni_Model` == "25%"),],
-                                                                                                              Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][6]))
+                                                                                                        Relative_position <= i & Relative_position >= as.numeric(i-0.1)),][6]))
   j = j + 1
   i = i - 0.1
 }
@@ -629,9 +635,3 @@ P7 <-  P7 + geom_density(data = ND_bin_80, aes(`Density`), kernel = "gaussian", 
 P7 <-  P7 + geom_density(data = ND_bin_45, aes(`Density`), kernel = "gaussian", color = "springgreen4", linetype = "solid", size = 1)
 print(P7)
 
-Labels <- data.frame()
-DF <-  Data_1_LD %>% distinct(Fiber_Name, .keep_all = TRUE)
-for(i in 1:nrow(DF)){
-  Labels[i,1] <- DF[i,"Fiber_Name"]
-  Labels[i,2] <- DF[i,"Uni_Model"]
-  }
