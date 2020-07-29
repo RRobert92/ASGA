@@ -42,9 +42,9 @@ for(j in 1:numfiles){
   test <- data.frame()
   for(i in 1:nrow(get(paste("Data", j, "KMT_No", sep = "_")))){
     
-    if(get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] < 50){
+    if(get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] <= 50){
       test <- "25%"
-    } else if(get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] > 75){
+    } else if(get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] >= 70){
       test <- "100%"
     } else {
       test <- "50%"
@@ -57,13 +57,26 @@ for(j in 1:numfiles){
               get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "25%" &&
               get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] >= 75){
       df[i,1] <- "50%"
-      
+    } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "25%" &&
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] < 75){
+      df[i,1] <- "25%"
     } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
               get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "50%" &&
-              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] > 75){
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] >= 75){
       df[i,1] <- "100%"
-      
+    } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "50%" &&
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] < 45){
+      df[i,1] <- "25%"
+    } else if(test != get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] && 
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"] == "100%" &&
+              get(paste("Data", j, "KMT_No", sep = "_"))[i,"PED"] <= 50){
+      df[i,1] <- "50%"
+    } else {
+      df[i,1] <- get(paste("Data", j, "KMT_No", sep = "_"))[i,"Elipse Position"]
     }
+    
     names(df)[1] <- "Uni_Model"
   }
   
