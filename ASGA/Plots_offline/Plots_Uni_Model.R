@@ -105,6 +105,45 @@ P1 <- P1 + geom_boxplot(data = All_KMT_No[with(All_KMT_No, `Uni_Model` == "25%")
 
 print(P1)
 
+P1.1 <-  ggplot(Data_1_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "100%"),], aes("Outer #1", KMTs_per_kinetochore)) + 
+  geom_boxplot(fill = "violetred4", color = "black", outlier.alpha = 0) + theme_classic() +
+  xlab("Data-set names") + ylab("Number of KMTs per kinetochore") + 
+  geom_jitter(data = Data_1_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "100%"),], aes("Outer #1", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+P1.1 <- P1.1 + geom_boxplot(data = Data_2_KMT_No[with(Data_2_KMT_No, `Uni_Model` == "100%"),], aes("Outer #2", KMTs_per_kinetochore),
+                            fill = "violetred3", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_2_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "100%"),], aes("Outer #2", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+P1.1 <- P1.1 + geom_boxplot(data = Data_3_KMT_No[with(Data_3_KMT_No, `Uni_Model` == "100%"),], aes("Outer #3", KMTs_per_kinetochore),
+                            fill = "violetred2", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_3_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "100%"),], aes("Outer #3", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+
+P1.1 <- P1.1 + geom_boxplot(data = Data_1_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "50%"),], aes("Middle #1", KMTs_per_kinetochore),
+                            fill = "royalblue4", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_1_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "50%"),], aes("Middle #1", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+P1.1 <- P1.1 + geom_boxplot(data = Data_2_KMT_No[with(Data_2_KMT_No, `Uni_Model` == "50%"),], aes("Middle #2", KMTs_per_kinetochore),
+                            fill = "royalblue3", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_2_KMT_No[with(Data_2_KMT_No, `Uni_Model` == "50%"),], aes("Middle #2", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+P1.1 <- P1.1 + geom_boxplot(data = Data_3_KMT_No[with(Data_3_KMT_No, `Uni_Model` == "50%"),], aes("Middle #3", KMTs_per_kinetochore),
+                            fill = "royalblue2", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_3_KMT_No[with(Data_3_KMT_No, `Uni_Model` == "50%"),], aes("Middle #3", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+
+P1.1 <- P1.1 + geom_boxplot(data = Data_1_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "25%"),], aes("Inner #1", KMTs_per_kinetochore),
+                            fill = "springgreen4", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_1_KMT_No[with(Data_1_KMT_No, `Uni_Model` == "25%"),], aes("Inner #1", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+P1.1 <- P1.1 + geom_boxplot(data = Data_2_KMT_No[with(Data_2_KMT_No, `Uni_Model` == "25%"),], aes("Inner #2", KMTs_per_kinetochore),
+                            fill = "springgreen3", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_2_KMT_No[with(Data_2_KMT_No, `Uni_Model` == "25%"),], aes("Inner #2", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+P1.1 <- P1.1 + geom_boxplot(data = Data_3_KMT_No[with(Data_3_KMT_No, `Uni_Model` == "25%"),], aes("Inner #3", KMTs_per_kinetochore),
+                            fill = "springgreen2", color = "black",
+                            outlier.alpha = 0) +
+  geom_jitter(data = Data_3_KMT_No[with(Data_3_KMT_No, `Uni_Model` == "25%"),], aes("Inner #3", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+print(P1.1)
 # Length distribution -----------------------------------------------------------------------------------------------------
 
 for(j in 1:numfiles){
@@ -162,7 +201,7 @@ for(j in 1:numfiles){
     } else {
       df[i,1] <- get(paste("Data", j, "LD", sep = "_"))[i,"Elipse_Position"]
     }
-
+    
     names(df)[1] <- "Uni_Model"
   }
   
@@ -192,6 +231,52 @@ P2 <- P2  + geom_density(data = All_LD[with(All_LD, `Uni_Model` == "25%"),],
 
 print(P2)
 
+P2.1 <- ggplot(Data_1_LD[with(Data_1_LD, `Uni_Model` == "100%"),], aes(length)) + 
+  geom_density(kernel = "gaussian", size = 1, color = "violetred4") + theme_classic() +
+  xlab("KMT lengths") + ylab("KMT density [Gaussian Kernal density]") +
+  geom_vline(data = Data_1_LD[with(Data_1_LD, `Uni_Model` == "100%"),], 
+             aes(xintercept = mean(length)), color = "violetred4", linetype = "dashed", size = 1)
+
+P2.1 <- P2.1  + geom_density(data = Data_1_LD[with(Data_1_LD, `Uni_Model` == "50%"),], 
+                         aes(length), kernel = "gaussian", size = 1, color = "royalblue4") +
+  geom_vline(data = Data_1_LD[with(Data_1_LD, `Uni_Model` == "50%"),], 
+             aes(xintercept = mean(length)), color = "royalblue4", linetype = "dashed", size = 1)
+
+P2.1 <- P2.1  + geom_density(data = Data_1_LD[with(Data_1_LD, `Uni_Model` == "25%"),], 
+                         aes(length), kernel = "gaussian", size = 1, color = "springgreen4") +
+  geom_vline(data = Data_1_LD[with(Data_1_LD, `Uni_Model` == "25%"),], 
+             aes(xintercept = mean(length)), color = "springgreen4", linetype = "dashed", size = 1)
+
+P2.1 <- P2.1  + geom_density(data = Data_2_LD[with(Data_2_LD, `Uni_Model` == "100%"),], 
+                             aes(length), kernel = "gaussian", size = 1, color = "violetred3") +
+  geom_vline(data = Data_2_LD[with(Data_2_LD, `Uni_Model` == "100%"),], 
+             aes(xintercept = mean(length)), color = "violetred3", linetype = "dashed", size = 1)
+
+P2.1 <- P2.1  + geom_density(data = Data_2_LD[with(Data_2_LD, `Uni_Model` == "50%"),], 
+                             aes(length), kernel = "gaussian", size = 1, color = "royalblue3") +
+  geom_vline(data = Data_2_LD[with(Data_2_LD, `Uni_Model` == "50%"),], 
+             aes(xintercept = mean(length)), color = "royalblue3", linetype = "dashed", size = 1)
+
+P2.1 <- P2.1  + geom_density(data = Data_2_LD[with(Data_2_LD, `Uni_Model` == "25%"),], 
+                             aes(length), kernel = "gaussian", size = 1, color = "springgreen3") +
+  geom_vline(data = Data_2_LD[with(Data_2_LD, `Uni_Model` == "25%"),], 
+             aes(xintercept = mean(length)), color = "springgreen3", linetype = "dashed", size = 1)
+P2.1 <- P2.1  + geom_density(data = Data_3_LD[with(Data_3_LD, `Uni_Model` == "100%"),], 
+                             aes(length), kernel = "gaussian", size = 1, color = "violetred2") +
+  geom_vline(data = Data_3_LD[with(Data_3_LD, `Uni_Model` == "100%"),], 
+             aes(xintercept = mean(length)), color = "violetred2", linetype = "dashed", size = 1)
+
+P2.1 <- P2.1  + geom_density(data = Data_3_LD[with(Data_3_LD, `Uni_Model` == "50%"),], 
+                             aes(length), kernel = "gaussian", size = 1, color = "royalblue2") +
+  geom_vline(data = Data_3_LD[with(Data_3_LD, `Uni_Model` == "50%"),], 
+             aes(xintercept = mean(length)), color = "royalblue2", linetype = "dashed", size = 1)
+
+P2.1 <- P2.1  + geom_density(data = Data_3_LD[with(Data_3_LD, `Uni_Model` == "25%"),], 
+                             aes(length), kernel = "gaussian", size = 1, color = "springgreen2") +
+  geom_vline(data = Data_3_LD[with(Data_3_LD, `Uni_Model` == "25%"),], 
+             aes(xintercept = mean(length)), color = "springgreen2", linetype = "dashed", size = 1)
+
+print(P2.1)
 # Total curvature  -------------------------------------------------------------------------------------------------------
 
 
