@@ -29,6 +29,8 @@ source("bin/Utility/Save_Data.R")
 
 # Global Settings  -------------------------------------------------------------
 options(shiny.maxRequestSize = 1024*1024^2)
+options(shiny.host = '127.0.0.1')
+options(shiny.port = 7878)
 
 DataTest <<- 0
 numfiles <<- 0
