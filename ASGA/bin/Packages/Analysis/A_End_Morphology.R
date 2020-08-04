@@ -69,7 +69,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
     Plus_end_morphology_Pole1 <- Plus_end_morphology_Pole1 %>% select("Fiber",
                                                                       starts_with("EndType"),
                                                                       "Entype_Different",
-                                                                      "Relative_plus_position")
+                                                                      "Relative_plus_position",
+                                                                      "Node_ID")
     for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
       names(Plus_end_morphology_Pole1)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
     }
@@ -77,7 +78,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
     Minus_end_morphology_Pole1 <- Minus_end_morphology_Pole1 %>% select("Fiber",
                                                                         starts_with("EndType"),
                                                                         "Entype_Different",
-                                                                        "Relative_minus_position")
+                                                                        "Relative_minus_position",
+                                                                        "Node_ID")
     for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
       names(Minus_end_morphology_Pole1)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
     }
@@ -85,11 +87,13 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
   } else {
     Plus_end_morphology_Pole1 <- Plus_end_morphology_Pole1 %>% select("Fiber",
                                                                       starts_with("EndType"),
-                                                                      "Relative_plus_position")
+                                                                      "Relative_plus_position",
+                                                                      "Node_ID")
     names(Plus_end_morphology_Pole1)[2] <- "EndType_1"
     Minus_end_morphology_Pole1 <- Minus_end_morphology_Pole1 %>% select("Fiber",
                                                                         starts_with("EndType"),
-                                                                        "Relative_minus_position")
+                                                                        "Relative_minus_position",
+                                                                        "Node_ID")
     names(Minus_end_morphology_Pole1)[2] <- "EndType_1"
   }
   Plus_end_morphology_Pole1 <<- Plus_end_morphology_Pole1
@@ -153,7 +157,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
       Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
                                                                         starts_with("EndType"),
                                                                         "Entype_Different",
-                                                                        "Relative_plus_position")
+                                                                        "Relative_plus_position",
+                                                                        "Node_ID")
       for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
         names(Plus_end_morphology_Pole2)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
       }
@@ -161,7 +166,8 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
       Minus_end_morphology_Pole2 <- Minus_end_morphology_Pole2 %>% select("Fiber",
                                                                           starts_with("EndType"),
                                                                           "Entype_Different",
-                                                                          "Relative_minus_position")
+                                                                          "Relative_minus_position",
+                                                                          "Node_ID")
       for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType")))+1)){
         names(Minus_end_morphology_Pole2)[i] <- paste("EndType_", as.numeric(i-1), sep = "")
       }
@@ -169,11 +175,13 @@ if(ncol(Nodes %>% select(starts_with("EndType"))) >= 1){
     } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 1){
       Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select("Fiber",
                                                                         starts_with("EndType"),
-                                                                        "Relative_plus_position")
+                                                                        "Relative_plus_position",
+                                                                        "Node_ID")
       names(Plus_end_morphology_Pole2)[2] <- "EndType_1"
       Minus_end_morphology_Pole2 <- Minus_end_morphology_Pole2 %>% select("Fiber",
                                                                           starts_with("EndType"),
-                                                                          "Relative_minus_position")
+                                                                          "Relative_minus_position",
+                                                                          "Node_ID")
       names(Minus_end_morphology_Pole2)[2] <- "EndType_1"
     }
   },

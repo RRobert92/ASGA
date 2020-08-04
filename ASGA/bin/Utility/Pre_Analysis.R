@@ -133,12 +133,12 @@ Pre_Analysis <- function (input, output, session){
       Plus_end <<- data.frame(X_Median = c(median(as.matrix(na.omit(Plus_end[1])))),
                              Y_Median = c(median(as.matrix(na.omit(Plus_end[2])))),
                              Z_Median = c(median(as.matrix(na.omit(Plus_end[3])))))
+      Kinetochore_Avg[i,1:3] <<- Plus_end
+      Plus_end <- data.frame()
     },
     error = function(e){
       Kinetochore_Avg[i,1:3] <<- NA
     })
-    Kinetochore_Avg[i,1:3] <<- Plus_end
-    Plus_end <<- data.frame()
   }
   
   Kinetochore_Avg <<- na.omit(Kinetochore_Avg)
