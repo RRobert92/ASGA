@@ -160,7 +160,7 @@ summary(t_anova)
 All_KMT_Minus_Ends <- rbind(Data_1_KMT_Minus_Ends, Data_2_KMT_Minus_Ends, Data_3_KMT_Minus_Ends)
 
 P2.4 <- ggplot(Data_1_KMT_Minus_Ends, aes(Relative_minus_position)) + geom_density(kernel = "gaussian", size = 1, linetype = "dashed", color = "black") + 
-  theme_classic() + xlab("KMT minus-end distance from the pole") + ylab("KMT density [Gaussian Kernel density]")
+  theme_classic() + xlab("KMT minus-end distance from the pole") + ylab("KMT density [Gaussian Kernel density]") + xlim(-0.2, 1)
 P2.4 <- P2.4 + geom_density(data = Data_2_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
 P2.4 <- P2.4 + geom_density( data = Data_3_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
 P2.4 <- P2.4 + geom_density( data = All_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "solid", color = "darkred",  kernel = "gaussian", size = 1) +
@@ -207,7 +207,7 @@ P3 <- P3 + geom_density(data = Data_2_KMT_Total_Curv, aes(Curvature), kernel = "
 P3 <- P3 + geom_density(data = Data_3_KMT_Total_Curv, aes(Curvature), kernel = "gaussian", size = 1, color = "black", linetype = "dotted") 
 All_T_Curv <- rbind(Data_1_KMT_Total_Curv, Data_2_KMT_Total_Curv, Data_3_KMT_Total_Curv)
 P3 <- P3 + geom_density(data = All_T_Curv, aes(Curvature), kernel = "gaussian", size = 1, color = "darkred", linetype = "solid") + 
-  geom_vline(data = All_T_Curv, aes(xintercept = mean(Curvature)), color = "blue", linetype = "dashed", size = 1)
+  geom_vline(data = All_T_Curv, aes(xintercept = median(Curvature)), color = "blue", linetype = "dashed", size = 1)
 
 print(P3)
 
@@ -321,7 +321,7 @@ names(LC_bin_All)[2] <- "SD"
 names(LC_bin_All)[3] <- "Relative_Position"
 
 P4 <- ggplot(Data_1_KMT_Local_Curv, aes(Relative_Position, Curvature)) + geom_smooth(method = "gam", color = "black", se = FALSE, linetype = "dashed") + theme_classic() +
-  xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(-0.2, 1) + ylim(1,1.02)
+  xlab("KMT Relative Position") + ylab("KMT Curvature ratio")
 P4 <- P4 + geom_smooth(data = Data_2_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotdash")
 P4 <- P4 + geom_smooth(data = Data_3_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotted")
 P4 <- P4 + geom_smooth(data = All_L_Curv, aes(Relative_Position, Curvature), color = "darkred", se = T, linetype = "solid") + stat_cor()
@@ -346,7 +346,7 @@ t_anova <- aov(Curvature ~ No, t)
 summary(t_anova)
 
 P4 <- ggplot(LC_bin_Data_1, aes(Relative_Position, Curvature)) + geom_smooth(method = "gam", color = "black", se = FALSE, linetype = "dashed") + theme_classic() +
-  xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + xlim(-0.2, 1)
+  xlab("KMT Relative Position") + ylab("KMT Curvature ratio") + geom_point()
 P4 <- P4 + geom_smooth(data = LC_bin_Data_2, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotdash")
 P4 <- P4 + geom_smooth(data = LC_bin_Data_3, aes(Relative_Position, Curvature), color = "black", se = FALSE, linetype = "dotted")
 P4 <- P4 + geom_smooth(data = LC_bin_All, aes(Relative_Position, Curvature), color = "darkred", se = T, linetype = "solid") + stat_cor()
@@ -453,4 +453,5 @@ P8 <- P8 + geom_density(data = Data_1_KMTs_minus_seed, aes(Relative_pos, colour 
 P8 <- P8 + geom_density(data = Data_2_KMTs_minus_seed, aes(Relative_pos, colour = I_class), kernel = "gaussian", size = 1)
 P8 <- P8 + geom_density(data = Data_3_KMTs_minus_seed, aes(Relative_pos, colour = I_class), kernel = "gaussian", size = 1)
 
+ggplot(All_minus_seed, aes("1", Relative_pos, colour = I_class)) + geom_quasirandom(method = "tukeyDense", size = 1) + theme_classic()
 print(P8)
