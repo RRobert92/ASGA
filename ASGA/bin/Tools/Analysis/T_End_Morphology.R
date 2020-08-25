@@ -57,6 +57,7 @@ End_distribution_Plus <- function(x, y){
                                                         "Relative_plus_position"])
         
         Plus[i,1] <- x
+        Plus[i,9] <- as.numeric(Segments[as.numeric(S_ID+1), "Node ID #1"])
         
       } else {
         Plus[i,1:8] <- cbind(Node_2,
@@ -64,10 +65,12 @@ End_distribution_Plus <- function(x, y){
                                                         "Relative_plus_position"])
         
         Plus[i,1] <- x
+        Plus[i,9] <- as.numeric(Segments[as.numeric(S_ID+1), "Node ID #2"])
       }
     }
     names(Plus)[1] <- "Fiber"
     names(Plus)[8] <- "Relative_plus_position"
+    names(Plus)[9] <- "Node_ID"
     
     rm(S_ID, N_ID_1, N_ID_2, Node_1, Node_2, y)
     
@@ -108,6 +111,7 @@ End_distribution_Minus <- function(x, y){
                                                          "Relative_minus_position"])
         
         Minus[i,1] <- x
+        Minus[i,9] <- as.numeric(Segments[as.numeric(S_ID+1), "Node ID #1"])
         
       } else {
         Minus[i,1:8] <- cbind(Node_1,
@@ -115,10 +119,12 @@ End_distribution_Minus <- function(x, y){
                                                          "Relative_minus_position"])
         
         Minus[i,1] <- x
+        Minus[i,9] <- as.numeric(Segments[as.numeric(S_ID+1), "Node ID #2"])
       }
     }
     names(Minus)[1] <- "Fiber"
     names(Minus)[8] <- "Relative_minus_position"
+    names(Minus)[9] <- "Node_ID"
     
     rm(S_ID, N_ID_1, N_ID_2, Node_1, Node_2, y)
     

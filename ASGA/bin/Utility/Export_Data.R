@@ -9,15 +9,15 @@
 # Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
-Export_Data <- function (input, output, session){
+ExportData <- function(input, output, session) {
   # Set Data dir -----------------------------------------------------------------
   setwd("Data/")
-  
-  # Zip all file and cleand dir --------------------------------------------------
-  Zip_Files <- list.files(path = getwd(), pattern = ".xlsx$")
+
+  # Zip all file and cleaned dir --------------------------------------------------
+  ZipFiles <- list.files(path = getwd(), pattern = ".xlsx$")
   zip::zipr(zipfile = "ASGA_Data.zip", files = Zip_Files)
-  
-  file.remove(Zip_Files)
+
+  file.remove(ZipFiles)
   # Back to main dir -------------------------------------------------------------
   setwd("../")
 }

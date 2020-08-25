@@ -9,101 +9,133 @@
 # Reviewed: Robert Kiewisz 19/07/2020
 ################################################################################
 
-Load_Data <- function (input, output, session){
+Load_Data <- function(input, output, session) {
   # Set-up ----------------------------------------------------------------------
   Segments <<- get(paste("Data", "Segments", current_data, sep = "_"))
   Points <<- get(paste("Data", "Points", current_data, sep = "_"))
   Nodes <<- get(paste("Data", "Nodes", current_data, sep = "_"))
   Pole1 <<- "Pole1"
   Pole2 <<- "Pole2"
-  
+
   # Load Segments ----------------------------------------------------------------
-  ncolumn <<- ncol(Segments)
-  Segments_1_KMT <<- Segments %>% filter_at(vars(starts_with(Pole1)),
-                                            any_vars(.>= 1))
-  Segments_1_KMT <<- Segments_1_KMT %>% select("Segment ID",
-                                               "length",
-                                               "Node ID #1",
-                                               "Node ID #2",
-                                               "Point IDs")
-  
-  Segments_2_KMT <<- Segments %>% filter_at(vars(starts_with(Pole2)),
-                                            any_vars(.>= 1))
-  Segments_2_KMT <<- Segments_2_KMT %>% select("Segment ID",
-                                               "length",
-                                               "Node ID #1",
-                                               "Node ID #2",
-                                               "Point IDs")
-  
-  Segments_KMT <<- Segments %>% filter_at(vars(starts_with("Pole")),
-                                          any_vars(.>=1))
-  Segments_KMT <<- Segments_KMT %>% select("Segment ID",
-                                           "length",
-                                           "Node ID #1",
-                                           "Node ID #2",
-                                           "Point IDs")
-  
-  Segments_SMT <<- Segments %>% filter_at(vars(starts_with("Pole")),
-                                          all_vars(.< 1))
-  Segments_SMT <<- Segments_SMT %>% select("Segment ID",
-                                           "length",
-                                           "Node ID #1",
-                                           "Node ID #2",
-                                           "Point IDs")
-  
+  NColumn <<- ncol(Segments)
+  Segments1KMT <<- Segments %>% filter_at(
+    vars(starts_with(Pole1)),
+    any_vars(. >= 1)
+  )
+  Segments1KMT <<- Segments1KMT %>% select(
+    "Segment ID",
+    "length",
+    "Node ID #1",
+    "Node ID #2",
+    "Point IDs"
+  )
+
+  Segments2KMT <<- Segments %>% filter_at(
+    vars(starts_with(Pole2)),
+    any_vars(. >= 1)
+  )
+  Segments2KMT <<- Segments2KMT %>% select(
+    "Segment ID",
+    "length",
+    "Node ID #1",
+    "Node ID #2",
+    "Point IDs"
+  )
+
+  SegmentsKMT <<- Segments %>% filter_at(
+    vars(starts_with("Pole")),
+    any_vars(. >= 1)
+  )
+  SegmentsKMT <<- SegmentsKMT %>% select(
+    "Segment ID",
+    "length",
+    "Node ID #1",
+    "Node ID #2",
+    "Point IDs"
+  )
+
+  SegmentsSMT <<- Segments %>% filter_at(
+    vars(starts_with("Pole")),
+    all_vars(. < 1)
+  )
+  SegmentsSMT <<- SegmentsSMT %>% select(
+    "Segment ID",
+    "length",
+    "Node ID #1",
+    "Node ID #2",
+    "Point IDs"
+  )
+
   # Load Poles ------------------------------------------------------------------
-  Pole1 <<- Nodes %>% filter_at(vars(Pole1),
-                                any_vars(.>=1))
-  Pole1 <<- data.frame(X = c(Pole1 %>% select("X Coord")/10000),
-                       Y = c(Pole1 %>% select("Y Coord")/10000),
-                       Z = c(Pole1 %>% select("Z Coord")/10000))
-  
-  Pole2 <<- Nodes %>% filter_at(vars(Pole2),
-                                any_vars(.>=1))
-  Pole2 <<- data.frame(X = c(Pole2 %>% select("X Coord")/10000),
-                       Y = c(Pole2 %>% select("Y Coord")/10000),
-                       Z = c(Pole2 %>% select("Z Coord")/10000))
-  
+  Pole1 <<- Nodes %>% filter_at(
+    vars(Pole1),
+    any_vars(. >= 1)
+  )
+  Pole1 <<- data.frame(
+    X = c(Pole1 %>% select("X Coord") / 10000),
+    Y = c(Pole1 %>% select("Y Coord") / 10000),
+    Z = c(Pole1 %>% select("Z Coord") / 10000)
+  )
+
+  Pole2 <<- Nodes %>% filter_at(
+    vars(Pole2),
+    any_vars(. >= 1)
+  )
+  Pole2 <<- data.frame(
+    X = c(Pole2 %>% select("X Coord") / 10000),
+    Y = c(Pole2 %>% select("Y Coord") / 10000),
+    Z = c(Pole2 %>% select("Z Coord") / 10000)
+  )
+
   # Load Nodes ------------------------------------------------------------------
-  if(ncol(Nodes %>% select(starts_with("EndType"))) == 1){
-    Nodes <<- Nodes %>% select("Node ID", 
-                               "X Coord",
-                               "Y Coord",
-                               "Z Coord",
-                               starts_with("EndType"))
-    
-  } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 2){
-    Nodes <<- Nodes %>% select("Node ID", 
-                               "X Coord",
-                               "Y Coord",
-                               "Z Coord",
-                               starts_with("EndType"))
-    
-    compare <<- data.frame()
-    
-    for(i in 1:nrow(Nodes %>% select(starts_with("EndType")))){
-      compare[i,1] <- Nodes[i,5] == Nodes[i,6]
+  if (ncol(Nodes %>% select(starts_with("EndType"))) == 1) {
+    Nodes <<- Nodes %>% select(
+      "Node ID",
+      "X Coord",
+      "Y Coord",
+      "Z Coord",
+      starts_with("EndType")
+    )
+  } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 2) {
+    Nodes <<- Nodes %>% select(
+      "Node ID",
+      "X Coord",
+      "Y Coord",
+      "Z Coord",
+      starts_with("EndType")
+    )
+
+    Compare <<- data.frame()
+
+    for (i in 1:nrow(Nodes %>% select(starts_with("EndType")))) {
+      Compare[i, 1] <- Nodes[i, 5] == Nodes[i, 6]
     }
-    Nodes <<- cbind(Nodes,
-                    compare[1])
+    Nodes <<- cbind(
+      Nodes,
+      Compare[1]
+    )
     names(Nodes)[7] <<- "Entype_Different"
-    rm(compare)
-    
+    rm(Compare)
   } else {
-    Nodes <<- Nodes %>% select("Node ID", 
-                               "X Coord",
-                               "Y Coord",
-                               "Z Coord")
+    Nodes <<- Nodes %>% select(
+      "Node ID",
+      "X Coord",
+      "Y Coord",
+      "Z Coord"
+    )
   }
-  
-  Nodes[2:4] <<- Nodes[2:4]/10000
-  
+
+  Nodes[2:4] <<- Nodes[2:4] / 10000
+
   # Load Points -----------------------------------------------------------------
-  Points <<- Points %>% select("Point ID", 
-                               "X Coord",
-                               "Y Coord",
-                               "Z Coord")
-  
-  Points[2:4] <<- Points[2:4]/10000
+  Points <<- Points %>% select(
+    "Point ID",
+    "X Coord",
+    "Y Coord",
+    "Z Coord"
+  )
+
+  Points[2:4] <<- Points[2:4] / 10000
   names(Points)[1] <<- "Point_ID"
 }
