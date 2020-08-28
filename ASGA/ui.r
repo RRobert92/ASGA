@@ -15,7 +15,7 @@ fluidPage(
   
   useShinyalert(),
   
-  navbarPage(title = apptitle,
+  navbarPage(title = App_title,
              collapsible = TRUE,
              inverse = TRUE,
              position = "fixed-top",

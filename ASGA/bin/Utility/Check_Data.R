@@ -10,7 +10,7 @@
 ################################################################################
 
 # Check Data  ------------------------------------------------------------------
-CheckData <- function(i) {
+Check_Data <- function(i) {
   tryCatch(
     {
       Test_Segments <- colnames(get(paste("Data", "Segments", i, sep = "_")))[1] == "Segment ID" &&
@@ -48,20 +48,20 @@ CheckData <- function(i) {
   } else {}
 
   # State value of data check  --------------------------------------------------
-  if (TestSegments == TRUE && TestPole1 == TRUE && TestPole2 == TRUE) {
+  if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 1
-  } else if (TestSegments == TRUE && which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") >
+  } else if (Test_Segments == TRUE && which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") >
     which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole2_00")) {
     DataTest <<- 2
-  } else if (TestSegments == FALSE && TestPole1 == TRUE && TestPole2 == TRUE) {
+  } else if (Test_Segments == FALSE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 3
-  } else if (TestSegments == TRUE && TestPole1 == FALSE) {
+  } else if (Test_Segments == TRUE && Test_Pole1 == FALSE) {
     DataTest <<- 4
-  } else if (TestSegments == TRUE && TestPole2 == FALSE) {
+  } else if (Test_Segments == TRUE && Test_Pole1 == FALSE) {
     DataTest <<- 5
-  } else if (TestSegments == TRUE && TestPole1 == TRUE && TestPole2 == TRUE) {
+  } else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 6
-  } else if (TestSegments == TRUE && TestPole1 == TRUE && TestPole2 == TRUE) {
+  } else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 7
   } else if (!exists(get(paste("Data", "Segments", i, sep = "_")))) {
     DataTest <<- 0

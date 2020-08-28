@@ -84,7 +84,7 @@ function(input, output, session) {
     File_name <<- df
     rm(df, name)
 
-    # Collect information to start a polt after analysis ------------------------
+    # Collect information to start a plot after analysis ------------------------
 
     lapply(1:numfiles, function(i) {
       observeEvent(input[[paste("Data_label", i, sep = "_")]], {

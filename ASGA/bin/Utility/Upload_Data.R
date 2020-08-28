@@ -61,7 +61,7 @@ Getfiles_Server <- function(input, output, session) {
       )
 
       # Check Data  -------------------------------------------------------------
-      CheckData(i)
+      Check_Data(i)
       updateProgressBar(
         session = session,
         id = "LoadData",
