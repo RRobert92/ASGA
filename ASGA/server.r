@@ -43,7 +43,17 @@ function(input, output, session) {
   output$Upload <- renderUI({
     UploadData_UI("GetStarted")
   })
-
+  
+  # Load standard data ---------------------------------------------------------
+  observeEvent(input$`Test_unit`, {
+    callModule(Standard_data, "Home")
+    showTab(inputId = "innavbar-GS", target = "Settings")
+    updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
+    numfiles <<- 1
+    DataTest <<- 1
+    Test <<- TRUE
+  })
+  
   # Download zip files ---------------------------------------------------------
   output$downloadData <- downloadHandler(
     filename = function() {
@@ -58,8 +68,10 @@ function(input, output, session) {
     }
   )
 
-  # Page responsiveness after loading data  ----------------------------------------
+  # Page responsiveness after loading data  --------------------------------------
   observeEvent(input$`Home-file`, {
+    Test <<- FALSE
+    
     showTab(inputId = "innavbar-GS", target = "Settings")
     if (DataTest == 1) {
       updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
@@ -70,6 +82,8 @@ function(input, output, session) {
 
   # Page responsiveness after loading data  ----------------------------------------
   observeEvent(input$`Home-file1`, {
+    Test <<- FALSE
+    
     showTab(inputId = "innavbar-GS", target = "Report")
     updateTabsetPanel(session, "innavbar-GS", selected = "Report")
     File_name <<- as.data.frame(File_name)
@@ -135,8 +149,11 @@ function(input, output, session) {
         current_data <<- y
         incProgress(1 / numfiles, detail = paste("Data set no.", y, sep = " "))
         Sys.sleep(0.1)
+        
+        if(Test == FALSE){
+          callModule(Load_Data, "Home")
+        }
 
-        callModule(Load_Data, "Home")
         callModule(Pre_Analysis, "Home")
 
         if (input$`Home-All_Anaysis` == TRUE) {

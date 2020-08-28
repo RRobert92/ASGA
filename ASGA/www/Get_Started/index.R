@@ -67,6 +67,18 @@ GetStarted_UI <- function(id) {
                 )
               )
             )
+          ),
+          tags$div(
+            class = "splash-input-GS-row",
+            tags$div(
+              class = "splash-input-GS-test",
+              actionBttn(
+                inputId = "Test_unit",
+                label = "Test",
+                style = "material-flat",
+                color = "primary"
+              )
+            )
           )
         ),
         tags$div(
