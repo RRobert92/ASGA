@@ -95,27 +95,19 @@ rm(Fiber_1, Fiber_2, Fiber_3, df)
 All_KMT_No <- rbind(Data_1_KMT_No, Data_2_KMT_No, Data_3_KMT_No)
 
 P1 <- ggplot(All_KMT_No[with(All_KMT_No, `Uni_Model` == "100%"), ], aes("Outer", KMTs_per_kinetochore)) +
-  geom_boxplot(fill = "violetred4", color = "black", outlier.alpha = 0) +
+  geom_quasirandom(color = "violetred4", method = "tukeyDense", size = 1) +
   theme_classic() +
   xlab("Data-set names") +
   ylab("Number of KMTs per kinetochore") +
-  ylim(0, 20) +
-  geom_jitter(data = All_KMT_No[with(All_KMT_No, `Uni_Model` == "100%"), ], aes("Outer", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+  ylim(0, 20)
 
-P1 <- P1 + geom_boxplot(
+P1 <- P1 + geom_quasirandom(
   data = All_KMT_No[with(All_KMT_No, `Uni_Model` == "50%"), ], aes("Middle", KMTs_per_kinetochore),
-  fill = "royalblue4", color = "black",
-  outlier.alpha = 0
-) +
-  geom_jitter(data = All_KMT_No[with(All_KMT_No, `Uni_Model` == "50%"), ], aes("Middle", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
+  color = "royalblue4",method = "tukeyDense", size = 1)
 
-P1 <- P1 + geom_boxplot(
+P1 <- P1 + geom_quasirandom(
   data = All_KMT_No[with(All_KMT_No, `Uni_Model` == "25%"), ], aes("Inner", KMTs_per_kinetochore),
-  fill = "springgreen4", color = "black",
-  outlier.alpha = 0
-) +
-  geom_jitter(data = All_KMT_No[with(All_KMT_No, `Uni_Model` == "25%"), ], aes("Inner", KMTs_per_kinetochore), alpha = 0.2, size = 1, width = 0.25)
-
+  color = "springgreen4", method = "tukeyDense", size = 1)
 print(P1)
 
 t <- rbind(All_KMT_No[with(All_KMT_No, Uni_Model == "100%"), ], All_KMT_No[with(All_KMT_No, Uni_Model == "25%"), ])
@@ -139,26 +131,17 @@ for (i in 1:numfiles) {
 
 All_KMT_Pole <- rbind(Data_1_KMT_Pole, Data_2_KMT_Pole, Data_3_KMT_Pole)
 P1.1 <- ggplot(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "100%"), ], aes("Outer", KMTs_at_the_Pole)) +
-  geom_boxplot(fill = "violetred4", color = "black", outlier.alpha = 0) +
+  geom_quasirandom(color = "violetred4", method = "tukeyDense", size = 1) +
   theme_classic() +
   xlab("Data-set names") +
   ylab("Number of KMTs per kinetochore") +
-  ylim(0, 20) +
-  geom_jitter(data = All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "100%"), ], aes("Outer", KMTs_at_the_Pole), alpha = 0.2, size = 1, width = 0.25)
-
-P1.1 <- P1.1 + geom_boxplot(
+  ylim(0, 20) 
+P1.1 <- P1.1 + geom_quasirandom(
   data = All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "50%"), ], aes("Middle", KMTs_at_the_Pole),
-  fill = "royalblue4", color = "black",
-  outlier.alpha = 0
-) +
-  geom_jitter(data = All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "50%"), ], aes("Middle", KMTs_at_the_Pole), alpha = 0.2, size = 1, width = 0.25)
-
-P1.1 <- P1.1 + geom_boxplot(
+  color = "royalblue4", method = "tukeyDense", size = 1) 
+P1.1 <- P1.1 + geom_quasirandom(
   data = All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "25%"), ], aes("Inner", KMTs_at_the_Pole),
-  fill = "springgreen4", color = "black",
-  outlier.alpha = 0
-) +
-  geom_jitter(data = All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "25%"), ], aes("Inner", KMTs_at_the_Pole), alpha = 0.2, size = 1, width = 0.25)
+  color = "springgreen4", method = "tukeyDense", size = 1)
 
 print(P1.1)
 
@@ -240,34 +223,19 @@ for (j in 1:numfiles) {
 
 All_LD <- rbind(Data_1_LD, Data_2_LD, Data_3_LD)
 
-P2 <- ggplot(All_LD[with(All_LD, `Uni_Model` == "100%"), ], aes(length)) +
-  geom_density(kernel = "gaussian", size = 1, color = "violetred4") +
+P2 <- ggplot(All_LD[with(All_LD, `Uni_Model` == "100%"), ], aes("Outer", length)) +
+  geom_quasirandom(method = "tukeyDense", size = 1, color = "violetred4") +
   theme_classic() +
   xlab("KMT lengths") +
-  ylab("KMT density [Gaussian Kernal density]") +
-  geom_vline(
-    data = All_LD[with(All_LD, `Uni_Model` == "100%"), ],
-    aes(xintercept = mean(length)), color = "violetred4", linetype = "dashed", size = 1
-  )
+  ylab("KMT density [Gaussian Kernal density]") + ylim(0,10)
 
-P2 <- P2 + geom_density(
+P2 <- P2 + geom_quasirandom(
   data = All_LD[with(All_LD, `Uni_Model` == "50%"), ],
-  aes(length), kernel = "gaussian", size = 1, color = "royalblue4"
-) +
-  geom_vline(
-    data = All_LD[with(All_LD, `Uni_Model` == "50%"), ],
-    aes(xintercept = mean(length)), color = "royalblue4", linetype = "dashed", size = 1
-  )
+  aes("Middle", length), method = "tukeyDense", size = 1, color = "royalblue4")
 
-P2 <- P2 + geom_density(
+P2 <- P2 + geom_quasirandom(
   data = All_LD[with(All_LD, `Uni_Model` == "25%"), ],
-  aes(length), kernel = "gaussian", size = 1, color = "springgreen4"
-) +
-  geom_vline(
-    data = All_LD[with(All_LD, `Uni_Model` == "25%"), ],
-    aes(xintercept = mean(length)), color = "springgreen4", linetype = "dashed", size = 1
-  )
-
+  aes("Inner", length), method = "tukeyDense", size = 1, color = "springgreen4")
 print(P2)
 
 P2.1 <- ggplot(All_LD[with(All_LD, `Uni_Model` == "100%"), ], aes("Outer", length)) +
@@ -310,9 +278,9 @@ for (j in 1:numfiles) {
   df <- data.frame()
   test <- data.frame()
   for (i in 1:nrow(get(paste("Data", j, "KMT_Total_Curv", sep = "_")))) {
-    if (get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] < 50) {
+    if (get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] <= 50) {
       test <- "25%"
-    } else if (get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] > 75) {
+    } else if (get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] >= 70) {
       test <- "100%"
     } else {
       test <- "50%"
@@ -358,33 +326,20 @@ for (j in 1:numfiles) {
 
 All_T_Curv <- rbind(Data_1_KMT_Total_Curv, Data_2_KMT_Total_Curv, Data_3_KMT_Total_Curv)
 
-P3 <- ggplot(All_T_Curv[with(All_T_Curv, `Elipse Position` == "100%"), ], aes(Curvature)) +
-  geom_density(kernel = "gaussian", size = 1, color = "violetred4") +
+P3 <- ggplot(All_T_Curv[with(All_T_Curv, `Elipse Position` == "100%"), ], aes("Outer", Curvature)) +
+  geom_quasirandom(method = "tukeyDense", size = 1, color = "violetred4") +
   theme_classic() +
   xlab("KMT curvatrure") +
-  ylab("KMT density [Gaussian Kernal density]") +
-  xlim(1, 1.3) +
-  geom_vline(
-    data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "100%"), ],
-    aes(xintercept = mean(Curvature)), color = "violetred4", linetype = "dashed", size = 1
-  )
+  ylab("KMT density [Gaussian Kernal density]")
 
-P3 <- P3 + geom_density(
+P3 <- P3 + geom_quasirandom(
   data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "50%"), ],
-  aes(Curvature), kernel = "gaussian", size = 1, color = "royalblue4"
-) +
-  geom_vline(
-    data = All_T_Curv[with(All_T_Curv, `Elipse  Position` == "50%"), ],
-    aes(xintercept = mean(Curvature)), color = "royalblue4", linetype = "dashed", size = 1
-  )
-P3 <- P3 + geom_density(
+  aes("Middle", Curvature), method = "tukeyDense", size = 1, color = "royalblue4"
+)
+P3 <- P3 + geom_quasirandom(
   data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "25%"), ],
-  aes(Curvature), kernel = "gaussian", size = 1, color = "springgreen4"
-) +
-  geom_vline(
-    data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "25%"), ],
-    aes(xintercept = mean(Curvature)), color = "springgreen4", linetype = "dashed", size = 1
-  )
+  aes("Inner", Curvature), method = "tukeyDense", size = 1, color = "springgreen4"
+)
 
 print(P3)
 

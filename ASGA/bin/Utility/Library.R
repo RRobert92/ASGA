@@ -5,8 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-21
-# Reviewed: Robert Kiewisz 19/07/2020
+# Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 
 # Shiny Library  ---------------------------------------------------------------

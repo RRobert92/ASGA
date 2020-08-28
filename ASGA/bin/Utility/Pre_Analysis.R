@@ -6,7 +6,7 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-18
-# Reviewed: Robert Kiewisz 19/07/2020
+# Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 
 Pre_Analysis <- function(input, output, session) {

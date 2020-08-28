@@ -11,10 +11,10 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-04-17
+# Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 #####################################################################################
 
-
 # Tool  -----------------------------------------------------------------------------
-No_of_KMTs <- function(x){
-  nrow(get(colnames(Segments)[x])) 
+No_of_KMTs <- function(x) {
+  nrow(get(colnames(Segments)[x]))
 }

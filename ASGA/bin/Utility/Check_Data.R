@@ -6,39 +6,39 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-05-17
-# Reviewed: Robert Kiewisz 19/07/2020
+# Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 
 # Check Data  ------------------------------------------------------------------
 CheckData <- function(i) {
   tryCatch(
     {
-      TestSegments <- colnames(get(paste("Data", "Segments", i, sep = "_")))[1] == "Segment ID" &&
+      Test_Segments <- colnames(get(paste("Data", "Segments", i, sep = "_")))[1] == "Segment ID" &&
         colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_")))] == "Point IDs" &&
         colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_"))) - 3] == "length"
     },
     error = function(e) {}
   )
 
-  if (!exists("TestSegments")) {
-    TestSegments <- FALSE
+  if (!exists("Test_Segments")) {
+    Test_Segments <- FALSE
   } else {}
 
   tryCatch(
     {
-      TestPole1 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole1)) == "Pole1"
+      Test_Pole1 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole1)) == "Pole1"
     },
     error = function(e) {}
   )
 
 
   if (!exists("Test_Pole1")) {
-    TestPole1 <- FALSE
+    Test_Pole1 <- FALSE
   } else {}
 
   tryCatch(
     {
-      TestPole2 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole2)) == "Pole2"
+      Test_Pole2 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole2)) == "Pole2"
     },
     error = function(e) {}
   )
