@@ -19,11 +19,11 @@ Standard_data <- function(input, output, session) {
 
   # Load Segments ----------------------------------------------------------------
   NColumn <<- ncol(Segments)
-  Segments1KMT <<- Segments %>% filter_at(
+  Segments_1_KMT <<- Segments %>% filter_at(
     vars(starts_with("Pole1")),
     any_vars(. >= 1)
   )
-  Segments1KMT <<- Segments1KMT %>% select(
+  Segments_1_KMT <<- Segments_1_KMT %>% select(
     "Segment ID",
     "length",
     "Node ID #1",
@@ -31,11 +31,11 @@ Standard_data <- function(input, output, session) {
     "Point IDs"
   )
   
-  Segments2KMT <<- Segments %>% filter_at(
+  Segments_2_KMT <<- Segments %>% filter_at(
     vars(starts_with("Pole2")),
     any_vars(. >= 1)
   )
-  Segments2KMT <<- Segments2KMT %>% select(
+  Segments_2_KMT <<- Segments_2_KMT %>% select(
     "Segment ID",
     "length",
     "Node ID #1",
@@ -43,11 +43,11 @@ Standard_data <- function(input, output, session) {
     "Point IDs"
   )
   
-  SegmentsKMT <<- Segments %>% filter_at(
+  Segments_KMT <<- Segments %>% filter_at(
     vars(starts_with("Pole")),
     any_vars(. >= 1)
   )
-  SegmentsKMT <<- SegmentsKMT %>% select(
+  Segments_KMT <<- Segments_KMT %>% select(
     "Segment ID",
     "length",
     "Node ID #1",
@@ -55,11 +55,11 @@ Standard_data <- function(input, output, session) {
     "Point IDs"
   )
   
-  SegmentsSMT <<- Segments %>% filter_at(
+  Segments_SMT <<- Segments %>% filter_at(
     vars(starts_with("Pole")),
     all_vars(. < 1)
   )
-  SegmentsSMT <<- SegmentsSMT %>% select(
+  Segments_SMT <<- Segments_SMT %>% select(
     "Segment ID",
     "length",
     "Node ID #1",
