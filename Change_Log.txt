@@ -9,17 +9,19 @@
 ################################################################################
 
 ################################################################################
-# v0.31.2 - Unpublished
+# v0.32 - Unpublished
 ################################################################################
 
 # Mejor changes  ---------------------------------------------------------------
-- Code reviewed
+- Code reviewed and standardized according to the tidyverse guidelines
+- Added renv library management 
+- Added custom test unit and shinytest unit
 
 # Minor changes ----------------------------------------------------------------
 - Added node_id as an output of end_morpology
 
 # Bug Fix ----------------------------------------------------------------------
-
+- Review entire code (v0.31.1)
 
 # Other ------------------------------------------------------------------------
 - added ASGA logo

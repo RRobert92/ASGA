@@ -44,6 +44,16 @@ function(input, output, session) {
     UploadData_UI("GetStarted")
   })
 
+  # Load standard data ---------------------------------------------------------
+  observeEvent(input$`Test_unit`, {
+    callModule(Standard_data, "Home")
+    showTab(inputId = "innavbar-GS", target = "Settings")
+    updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
+    numfiles <<- 1
+    DataTest <<- 1
+    Test <<- TRUE
+  })
+
   # Download zip files ---------------------------------------------------------
   output$downloadData <- downloadHandler(
     filename = function() {
@@ -58,8 +68,10 @@ function(input, output, session) {
     }
   )
 
-  # Page responsiveness after loading data  ----------------------------------------
+  # Page responsiveness after loading data  --------------------------------------
   observeEvent(input$`Home-file`, {
+    Test <<- FALSE
+
     showTab(inputId = "innavbar-GS", target = "Settings")
     if (DataTest == 1) {
       updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
@@ -70,6 +82,8 @@ function(input, output, session) {
 
   # Page responsiveness after loading data  ----------------------------------------
   observeEvent(input$`Home-file1`, {
+    Test <<- FALSE
+
     showTab(inputId = "innavbar-GS", target = "Report")
     updateTabsetPanel(session, "innavbar-GS", selected = "Report")
     File_name <<- as.data.frame(File_name)
@@ -136,7 +150,10 @@ function(input, output, session) {
         incProgress(1 / numfiles, detail = paste("Data set no.", y, sep = " "))
         Sys.sleep(0.1)
 
-        callModule(Load_Data, "Home")
+        if (Test == FALSE) {
+          callModule(Load_Data, "Home")
+        }
+
         callModule(Pre_Analysis, "Home")
 
         if (input$`Home-All_Anaysis` == TRUE) {
@@ -189,10 +206,12 @@ function(input, output, session) {
 
         callModule(Save_Data, "Home")
       }
-
+      
+      if(Test == FALSE){
       showTab(inputId = "innavbar-GS", target = "Report")
       updateTabsetPanel(session, "innavbar", selected = "Report")
-
+      }
+      
       File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
       numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
       df <- data.frame()
@@ -206,45 +225,62 @@ function(input, output, session) {
       rm(df, name)
     })
 
-    # Download data-set ----------------------------------------------------------
-    output$`Home-Download_Button` <- renderUI({
-      downloadBttn(
-        "downloadData",
-        label = "Download",
-        style = "material-flat",
-        color = "success"
-      )
-    })
+    if (Test == FALSE) {
+      # Download data-set ----------------------------------------------------------
+      output$`Home-Download_Button` <- renderUI({
+        downloadBttn(
+          "downloadData",
+          label = "Download",
+          style = "material-flat",
+          color = "success"
+        )
+      })
 
-    # Collect information to start a plot after analysis ------------------------
-    lapply(1:numfiles, function(i) {
-      observeEvent(input[[paste("Data_label", i, sep = "_")]], {
-        assign(paste("Data_label", i, sep = "_"),
-          input[[paste("Data_label", i, sep = "_")]],
-          envir = .GlobalEnv
-        )
+      # Collect information to start a plot after analysis ------------------------
+      lapply(1:numfiles, function(i) {
+        observeEvent(input[[paste("Data_label", i, sep = "_")]], {
+          assign(paste("Data_label", i, sep = "_"),
+            input[[paste("Data_label", i, sep = "_")]],
+            envir = .GlobalEnv
+          )
+        })
+        observeEvent(input[[paste("Data_color", i, sep = "_")]], {
+          assign(paste("Data_color", i, sep = "_"),
+            input[[paste("Data_color", i, sep = "_")]],
+            envir = .GlobalEnv
+          )
+        })
+        observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
+          assign(paste("Data_bin", i, sep = "_"),
+            input[[paste("Data_bin", i, sep = "_")]],
+            envir = .GlobalEnv
+          )
+        })
       })
-      observeEvent(input[[paste("Data_color", i, sep = "_")]], {
-        assign(paste("Data_color", i, sep = "_"),
-          input[[paste("Data_color", i, sep = "_")]],
-          envir = .GlobalEnv
-        )
-      })
-      observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
-        assign(paste("Data_bin", i, sep = "_"),
-          input[[paste("Data_bin", i, sep = "_")]],
-          envir = .GlobalEnv
-        )
-      })
-    })
 
-    callModule(Report_Plot, "Home")
+      callModule(Report_Plot, "Home")
+    } else {
+      callModule(Test_Test, "Home")
+      
+      setwd("Data/")
+      Files <<- list.files(path = getwd(), pattern = ".xlsx$")
+      file.remove(Files)
+      setwd("../")
+      
+      rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
+      
+      Test <<- FALSE
+      source("global.r")
+      
+      updateTabsetPanel(session, "innavbar-GS", selected = "UploadData")
+      callModule(Test_Result, "Home")
+    }
   })
 
 
   # Report page output ---------------------------------------------------------
   output$`Home-Plot_Settings` <- renderUI({
-    Data_Plot_Settings("Report")
+    Report_Plot_Settings("Report")
   })
 
   output$`Home-Report_Page` <- renderUI({

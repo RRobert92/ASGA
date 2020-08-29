@@ -36,7 +36,7 @@ options(shiny.port = 7878)
 DataTest <<- 0
 numfiles <<- 0
 Minus_Threshold <<- 1.68 # Minus end distance to the pole [um]
-minus_distance <<- 0.035 # Minus end distance of any MT to the KMT [um]
+Minus_Distance <<- 0.035 # Minus end distance of any MT to the KMT [um]
 
 # Global Functions  ------------------------------------------------------------
 source("bin/Tools/Pre_Analysis/Sort_by_Fiber.R")
@@ -70,3 +70,7 @@ source("bin/Packages/Analysis/A_KMT_Minus_End_Seeds.R")
 source("bin/Packages/Analysis/A_Fiber_Length_&_curvature.R")
 source("bin/Packages/Analysis/A_Kinetochore_Area.R")
 source("bin/Packages/Analysis/A_KMT_Torque.R")
+
+# Test Unit ---------------------------------------------------------------------
+source("tests/Load_Std_Data.R")
+source("tests/Test_Output.R")

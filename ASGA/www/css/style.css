@@ -192,6 +192,14 @@ label {
   padding: 10px;
 }
 
+.splash-input-GS-test{
+  max-width: 100%;
+  margin: auto;
+  float: none;
+  width: 50%;
+  padding: 10px;
+}
+
 .splash-input-GS-row:after{
   width: 50%;
   content: "";

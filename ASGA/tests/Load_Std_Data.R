@@ -1,26 +1,26 @@
 ################################################################################
-# Module Load_Data
+# Module Standard_data
 #
 # (c) 2019 Kiewisz
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-22
+# Created: 2020-08-29
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 
-Load_Data <- function(input, output, session) {
-  # Set-up ----------------------------------------------------------------------
-  Segments <<- get(paste("Data", "Segments", current_data, sep = "_"))
-  Points <<- get(paste("Data", "Points", current_data, sep = "_"))
-  Nodes <<- get(paste("Data", "Nodes", current_data, sep = "_"))
-  Pole1 <<- "Pole1"
-  Pole2 <<- "Pole2"
+Standard_data <- function(input, output, session) {
+  Nodes <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+                       sheet = "Nodes")
+  Segments <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+                          sheet = "Segments")
+  Points <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+                        sheet = "Points")
 
   # Load Segments ----------------------------------------------------------------
   NColumn <<- ncol(Segments)
   Segments_1_KMT <<- Segments %>% filter_at(
-    vars(starts_with(Pole1)),
+    vars(starts_with("Pole1")),
     any_vars(. >= 1)
   )
   Segments_1_KMT <<- Segments_1_KMT %>% select(
@@ -30,9 +30,9 @@ Load_Data <- function(input, output, session) {
     "Node ID #2",
     "Point IDs"
   )
-
+  
   Segments_2_KMT <<- Segments %>% filter_at(
-    vars(starts_with(Pole2)),
+    vars(starts_with("Pole2")),
     any_vars(. >= 1)
   )
   Segments_2_KMT <<- Segments_2_KMT %>% select(
@@ -42,7 +42,7 @@ Load_Data <- function(input, output, session) {
     "Node ID #2",
     "Point IDs"
   )
-
+  
   Segments_KMT <<- Segments %>% filter_at(
     vars(starts_with("Pole")),
     any_vars(. >= 1)
@@ -54,7 +54,7 @@ Load_Data <- function(input, output, session) {
     "Node ID #2",
     "Point IDs"
   )
-
+  
   Segments_SMT <<- Segments %>% filter_at(
     vars(starts_with("Pole")),
     all_vars(. < 1)
@@ -66,10 +66,10 @@ Load_Data <- function(input, output, session) {
     "Node ID #2",
     "Point IDs"
   )
-
+  
   # Load Poles ------------------------------------------------------------------
   Pole1 <<- Nodes %>% filter_at(
-    vars(Pole1),
+    vars("Pole1"),
     any_vars(. >= 1)
   )
   Pole1 <<- data.frame(
@@ -77,9 +77,9 @@ Load_Data <- function(input, output, session) {
     Y = c(Pole1 %>% select("Y Coord") / 10000),
     Z = c(Pole1 %>% select("Z Coord") / 10000)
   )
-
+  
   Pole2 <<- Nodes %>% filter_at(
-    vars(Pole2),
+    vars("Pole2"),
     any_vars(. >= 1)
   )
   Pole2 <<- data.frame(
@@ -87,7 +87,7 @@ Load_Data <- function(input, output, session) {
     Y = c(Pole2 %>% select("Y Coord") / 10000),
     Z = c(Pole2 %>% select("Z Coord") / 10000)
   )
-
+  
   # Load Nodes ------------------------------------------------------------------
   if (ncol(Nodes %>% select(starts_with("EndType"))) == 1) {
     Nodes <<- Nodes %>% select(
@@ -105,9 +105,9 @@ Load_Data <- function(input, output, session) {
       "Z Coord",
       starts_with("EndType")
     )
-
+    
     Compare <<- data.frame()
-
+    
     for (i in 1:nrow(Nodes %>% select(starts_with("EndType")))) {
       Compare[i, 1] <- Nodes[i, 5] == Nodes[i, 6]
     }
@@ -125,9 +125,9 @@ Load_Data <- function(input, output, session) {
       "Z Coord"
     )
   }
-
+  
   Nodes[2:4] <<- Nodes[2:4] / 10000
-
+  
   # Load Points -----------------------------------------------------------------
   Points <<- Points %>% select(
     "Point ID",
@@ -135,7 +135,7 @@ Load_Data <- function(input, output, session) {
     "Y Coord",
     "Z Coord"
   )
-
+  
   Points[2:4] <<- Points[2:4] / 10000
   names(Points)[1] <<- "Point_ID"
 }
