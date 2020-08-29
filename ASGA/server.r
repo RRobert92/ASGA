@@ -52,6 +52,7 @@ function(input, output, session) {
     numfiles <<- 1
     DataTest <<- 1
     Test <<- TRUE
+    
   })
   
   # Download zip files ---------------------------------------------------------
@@ -261,7 +262,7 @@ function(input, output, session) {
 
   # Report page output ---------------------------------------------------------
   output$`Home-Plot_Settings` <- renderUI({
-    Data_Plot_Settings("Report")
+    Report_Plot_Settings("Report")
   })
 
   output$`Home-Report_Page` <- renderUI({

@@ -10,7 +10,7 @@
 ################################################################################
 
 # Style of the setting for the plot --------------------------------------------
-Data_Plot_Settings <- function(input, output, session) {
+Report_Plot_Settings <- function(input, output, session) {
   tags$div(
     class = "splash-report-code",
     fluidRow(

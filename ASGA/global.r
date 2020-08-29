@@ -36,7 +36,7 @@ options(shiny.port = 7878)
 DataTest <<- 0
 numfiles <<- 0
 Minus_Threshold <<- 1.68 # Minus end distance to the pole [um]
-minus_distance <<- 0.035 # Minus end distance of any MT to the KMT [um]
+Minus_Distance <<- 0.035 # Minus end distance of any MT to the KMT [um]
 
 # Global Functions  ------------------------------------------------------------
 source("bin/Tools/Pre_Analysis/Sort_by_Fiber.R")
