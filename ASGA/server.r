@@ -46,7 +46,6 @@ function(input, output, session) {
 
   # Load standard data ---------------------------------------------------------
   observeEvent(input$`Test_unit`, {
-    callModule(Standard_data, "Home")
     showTab(inputId = "innavbar-GS", target = "Settings")
     updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
     numfiles <<- 1
@@ -145,81 +144,81 @@ function(input, output, session) {
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`, {
     if (Test == FALSE) {
-    withProgress(message = "Analyzing:", value = 1, {
-      for (y in 1:numfiles) {
-        current_data <<- y
-        incProgress(1 / numfiles, detail = paste("Data set no.", y, sep = " "))
-        Sys.sleep(0.1)
+      withProgress(message = "Analyzing:", value = 1, {
+        for (y in 1:numfiles) {
+          current_data <<- y
+          incProgress(1 / numfiles, detail = paste("Data set no.", y, sep = " "))
+          Sys.sleep(0.1)
 
           callModule(Load_Data, "Home")
           callModule(Pre_Analysis, "Home")
 
-        if (input$`Home-All_Anaysis` == TRUE) {
-          callModule(A_KMT_number, "Home")
-          callModule(A_IKD, "Home")
-          callModule(A_Curvature, "Home")
-          callModule(A_End_Morphology, "Home")
-          callModule(A_KMT_Torque, "Home")
-          callModule(A_Fiber_Area, "Home")
-          callModule(A_Fiber_Length_Curv, "Home")
-          callModule(A_KMT_Minus_End_Seeds, "Home")
-          callModule(A_K_Core_Area, "Home")
+          if (input$`Home-All_Anaysis` == TRUE) {
+            callModule(A_KMT_number, "Home")
+            callModule(A_IKD, "Home")
+            callModule(A_Curvature, "Home")
+            callModule(A_End_Morphology, "Home")
+            callModule(A_KMT_Torque, "Home")
+            callModule(A_Fiber_Area, "Home")
+            callModule(A_Fiber_Length_Curv, "Home")
+            callModule(A_KMT_Minus_End_Seeds, "Home")
+            callModule(A_K_Core_Area, "Home")
+          }
+
+          if (input$`Home-KMT_number` == TRUE) {
+            callModule(A_KMT_number, "Home")
+          }
+
+          if (input$`Home-IKD` == TRUE) {
+            callModule(A_IKD, "Home")
+          }
+
+          if (input$`Home-Curvature` == TRUE) {
+            callModule(A_Curvature, "Home")
+          }
+
+          if (input$`Home-End_Morphology` == TRUE) {
+            callModule(A_End_Morphology, "Home")
+          }
+
+          if (input$`Home-Fiber_Area` == TRUE) {
+            callModule(A_Fiber_Area, "Home")
+          }
+
+          if (input$`Home-Fiber_Curv_Length` == TRUE) {
+            callModule(A_Fiber_Length_Curv, "Home")
+          }
+
+          if (input$`Home-KMT_Minus_End_Seeds` == TRUE) {
+            callModule(A_KMT_Minus_End_Seeds, "Home")
+          }
+
+          if (input$`Home-k_core_area` == TRUE) {
+            callModule(A_K_Core_Area, "Home")
+          }
+
+          if (input$`Home-KMT_Torque` == TRUE) {
+            callModule(A_KMT_Torque, "Home")
+          }
+
+          callModule(Save_Data, "Home")
         }
 
-        if (input$`Home-KMT_number` == TRUE) {
-          callModule(A_KMT_number, "Home")
-        }
+        showTab(inputId = "innavbar-GS", target = "Report")
+        updateTabsetPanel(session, "innavbar", selected = "Report")
 
-        if (input$`Home-IKD` == TRUE) {
-          callModule(A_IKD, "Home")
+        File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
+        numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
+        df <- data.frame()
+        for (i in 1:nrow(File_name)) {
+          name <- as.data.frame(str_split(File_name[i, 1], "_"))
+          df[i, 1] <- as.numeric(name[2, 1])
+          name <- as.data.frame(str_split(File_name[i, 1], paste("Data_", df[i, 1], "_", sep = "")))
+          df[i, 2] <- as.character(name[2, 1])
         }
-
-        if (input$`Home-Curvature` == TRUE) {
-          callModule(A_Curvature, "Home")
-        }
-
-        if (input$`Home-End_Morphology` == TRUE) {
-          callModule(A_End_Morphology, "Home")
-        }
-
-        if (input$`Home-Fiber_Area` == TRUE) {
-          callModule(A_Fiber_Area, "Home")
-        }
-
-        if (input$`Home-Fiber_Curv_Length` == TRUE) {
-          callModule(A_Fiber_Length_Curv, "Home")
-        }
-
-        if (input$`Home-KMT_Minus_End_Seeds` == TRUE) {
-          callModule(A_KMT_Minus_End_Seeds, "Home")
-        }
-
-        if (input$`Home-k_core_area` == TRUE) {
-          callModule(A_K_Core_Area, "Home")
-        }
-
-        if (input$`Home-KMT_Torque` == TRUE) {
-          callModule(A_KMT_Torque, "Home")
-        }
-
-        callModule(Save_Data, "Home")
-      }
-      
-      showTab(inputId = "innavbar-GS", target = "Report")
-      updateTabsetPanel(session, "innavbar", selected = "Report")
-      
-      File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
-      numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
-      df <- data.frame()
-      for (i in 1:nrow(File_name)) {
-        name <- as.data.frame(str_split(File_name[i, 1], "_"))
-        df[i, 1] <- as.numeric(name[2, 1])
-        name <- as.data.frame(str_split(File_name[i, 1], paste("Data_", df[i, 1], "_", sep = "")))
-        df[i, 2] <- as.character(name[2, 1])
-      }
-      File_name <<- na.omit(df)
-      rm(df, name)
-    })
+        File_name <<- na.omit(df)
+        rm(df, name)
+      })
 
       # Download data-set ----------------------------------------------------------
       output$`Home-Download_Button` <- renderUI({
@@ -254,23 +253,33 @@ function(input, output, session) {
       })
 
       callModule(Report_Plot, "Home")
-      
     } else {
+      Nodes <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+        sheet = "Nodes"
+      )
+      Segments <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+        sheet = "Segments"
+      )
+      Points <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+        sheet = "Points"
+      )
+
+      callModule(Load_Data, "Home")
       callModule(Run_Test, "Home")
       callModule(Test_Test, "Home")
-      
+
       updateTabsetPanel(session, "innavbar-GS", selected = "UploadData")
       callModule(Test_Result, "Home")
-      
+
       setwd("Data/")
       Files <<- list.files(path = getwd(), pattern = ".xlsx$")
       file.remove(Files)
       setwd("../")
-      
-      if(Test_df == TRUE){
-      rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)        
+
+      if (Test_df == TRUE) {
+        rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
       }
-      
+
       Test <<- FALSE
       source("global.r")
     }

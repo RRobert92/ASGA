@@ -11,9 +11,12 @@
 
 Load_Data <- function(input, output, session) {
   # Set-up ----------------------------------------------------------------------
-  Segments <<- get(paste("Data", "Segments", current_data, sep = "_"))
-  Points <<- get(paste("Data", "Points", current_data, sep = "_"))
-  Nodes <<- get(paste("Data", "Nodes", current_data, sep = "_"))
+  if (Test == FALSE) {
+    Segments <<- get(paste("Data", "Segments", current_data, sep = "_"))
+    Points <<- get(paste("Data", "Points", current_data, sep = "_"))
+    Nodes <<- get(paste("Data", "Nodes", current_data, sep = "_"))
+  }
+
   Pole1 <<- "Pole1"
   Pole2 <<- "Pole2"
 

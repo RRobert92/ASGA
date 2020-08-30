@@ -16,7 +16,7 @@ Run_Test <- function(input, output, session) {
     Sys.sleep(0.1)
     Test_value <<- data.frame()
     current_data <<- 1
-    
+
     tryCatch(
       {
         callModule(Pre_Analysis, "Home")
@@ -140,7 +140,6 @@ Run_Test <- function(input, output, session) {
 
     File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
     File_name <<- na.omit(File_name)
-
   })
 }
 
@@ -169,7 +168,7 @@ Test_Result <- function(input, output, session) {
       text = paste("The test result was positive. All work as intended.", " Error no. ", as.character(Bad_funtions), sep = ""),
       type = "success",
       btn_labels = c("Confirm"),
-      btn_colors = NULL
+      btn_colors = "#a5dc86"
     )
   } else {
     confirmSweetAlert(
@@ -180,7 +179,7 @@ Test_Result <- function(input, output, session) {
       Test results are included in `Test_value` data.frame.", "Error no. ", as.character(Bad_funtions[, 2]), sep = ""),
       type = "warning",
       btn_labels = c("Confirm"),
-      btn_colors = NULL
+      btn_colors = "#f8bb86"
     )
   }
 }

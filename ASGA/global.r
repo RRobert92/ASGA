@@ -72,5 +72,4 @@ source("bin/Packages/Analysis/A_Kinetochore_Area.R")
 source("bin/Packages/Analysis/A_KMT_Torque.R")
 
 # Test Unit ---------------------------------------------------------------------
-source("tests/Load_Std_Data.R")
 source("tests/Test_Output.R")
