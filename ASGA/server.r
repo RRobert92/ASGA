@@ -144,17 +144,15 @@ function(input, output, session) {
 
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`, {
+    if (Test == FALSE) {
     withProgress(message = "Analyzing:", value = 1, {
       for (y in 1:numfiles) {
         current_data <<- y
         incProgress(1 / numfiles, detail = paste("Data set no.", y, sep = " "))
         Sys.sleep(0.1)
 
-        if (Test == FALSE) {
           callModule(Load_Data, "Home")
-        }
-
-        callModule(Pre_Analysis, "Home")
+          callModule(Pre_Analysis, "Home")
 
         if (input$`Home-All_Anaysis` == TRUE) {
           callModule(A_KMT_number, "Home")
@@ -207,10 +205,8 @@ function(input, output, session) {
         callModule(Save_Data, "Home")
       }
       
-      if(Test == FALSE){
       showTab(inputId = "innavbar-GS", target = "Report")
       updateTabsetPanel(session, "innavbar", selected = "Report")
-      }
       
       File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
       numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
@@ -225,7 +221,6 @@ function(input, output, session) {
       rm(df, name)
     })
 
-    if (Test == FALSE) {
       # Download data-set ----------------------------------------------------------
       output$`Home-Download_Button` <- renderUI({
         downloadBttn(
@@ -259,21 +254,25 @@ function(input, output, session) {
       })
 
       callModule(Report_Plot, "Home")
+      
     } else {
+      callModule(Run_Test, "Home")
       callModule(Test_Test, "Home")
+      
+      updateTabsetPanel(session, "innavbar-GS", selected = "UploadData")
+      callModule(Test_Result, "Home")
       
       setwd("Data/")
       Files <<- list.files(path = getwd(), pattern = ".xlsx$")
       file.remove(Files)
       setwd("../")
       
-      rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
+      if(Test_df == TRUE){
+      rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)        
+      }
       
       Test <<- FALSE
       source("global.r")
-      
-      updateTabsetPanel(session, "innavbar-GS", selected = "UploadData")
-      callModule(Test_Result, "Home")
     }
   })
 
