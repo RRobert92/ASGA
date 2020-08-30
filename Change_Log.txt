@@ -9,13 +9,13 @@
 ################################################################################
 
 ################################################################################
-# v0.32 - Unpublished
+# v0.32 - Published 30/08/2020
 ################################################################################
 
 # Mejor changes  ---------------------------------------------------------------
 - Code reviewed and standardized according to the tidyverse guidelines
 - Added renv library management 
-- Added custom test unit and shinytest unit
+- Added custom test unit
 
 # Minor changes ----------------------------------------------------------------
 - Added node_id as an output of end_morpology
