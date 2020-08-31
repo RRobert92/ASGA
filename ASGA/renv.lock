@@ -219,13 +219,6 @@
       "Repository": "CRAN",
       "Hash": "2ba60a82dd9b6ca3cee0d8e2574cdf0e"
     },
-    "debugme": {
-      "Package": "debugme",
-      "Version": "1.1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "2d8a9e4f08f3dd669cb8ddd1eb575959"
-    },
     "desc": {
       "Package": "desc",
       "Version": "1.2.0",
@@ -562,26 +555,12 @@
       "Repository": "CRAN",
       "Hash": "2ebd34a38f4248281096cc723535b66d"
     },
-    "parsedate": {
-      "Package": "parsedate",
-      "Version": "1.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "9ab1426429ad716b42088a0fd8e909ee"
-    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.4.6",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "bdf26e55ccb7df3e49a490150277f002"
-    },
-    "pingr": {
-      "Package": "pingr",
-      "Version": "2.0.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "e293e79be42ffd336d938937fd3017fb"
     },
     "pkgbuild": {
       "Package": "pkgbuild",
@@ -610,13 +589,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ec0e5ab4e5f851f6ef32cd1d1984957f"
-    },
-    "png": {
-      "Package": "png",
-      "Version": "0.1-7",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "03b7076c234cb3331288919983326c55"
     },
     "praise": {
       "Package": "praise",
@@ -694,13 +666,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "c66b930d20bb6d858cd18e1cebcfae5c"
-    },
-    "rematch2": {
-      "Package": "rematch2",
-      "Version": "2.1.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "76c9e04c712a05848ae7a23d2f170a40"
     },
     "renv": {
       "Package": "renv",
@@ -821,20 +786,6 @@
       "Repository": "CRAN",
       "Hash": "b40a5207b6624f6e2b8cdb50689cdb69"
     },
-    "shinytest": {
-      "Package": "shinytest",
-      "Version": "1.4.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "9697b1139098fc6a7231a4b893316501"
-    },
-    "showimage": {
-      "Package": "showimage",
-      "Version": "1.0.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "841927b226db842d24d9c288c99ed27b"
-    },
     "sourcetools": {
       "Package": "sourcetools",
       "Version": "0.1.7",
@@ -932,13 +883,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ce4f6271baa94776db692f1cb2055bee"
-    },
-    "webdriver": {
-      "Package": "webdriver",
-      "Version": "1.0.5",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "966f2cee50cf95fdbce9c395187b2baf"
     },
     "webshot": {
       "Package": "webshot",
