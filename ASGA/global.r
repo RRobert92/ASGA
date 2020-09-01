@@ -57,6 +57,7 @@ source("bin/Tools/Analysis/T_KMT_Minus_End_Seeds.R")
 source("bin/Tools/Analysis/T_Fiber_Length_Curvature.R")
 source("bin/Tools/Analysis/T_Kinetochore_Area.R")
 source("bin/Tools/Analysis/T_KMT_Torque.R")
+source("bin/Tools/Analysis/T_Bridging_MT.R")
 
 source("bin/Utility/Report.R")
 
