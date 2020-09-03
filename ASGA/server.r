@@ -141,6 +141,12 @@ function(input, output, session) {
   # Relativity for the Settings button  ----------------------------------------
   callModule(Setting_Buttons_Server, "Home")
 
+  observeEvent(input$Fiber_area_config, {
+    assign("Fiber_area_config",
+           round(as.numeric(input$Fiber_area_config)/20,0),
+           envir = .GlobalEnv
+    )
+  })
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`, {
     if (Test == FALSE) {

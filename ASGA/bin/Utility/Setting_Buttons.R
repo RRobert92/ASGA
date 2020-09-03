@@ -177,6 +177,7 @@ Setting_Buttons_Server <- function(input, output, session) {
         For more information see 'Wiki' page"
       }
     })
+    
   })
 
   # Reactivity for fiber area ---------------------------------------------------
@@ -190,9 +191,16 @@ Setting_Buttons_Server <- function(input, output, session) {
       if (input$`Fiber_Area` == TRUE) {
         "This tool will analyze the area of each fiber based on the polygon approach, and
         the neighborhood density along Kinetochore-Pole axis.
-        For more information see 'Wiki' page"
+        For more information see 'Wiki' page."
+        textInput(
+          inputId = "Fiber_area_config",
+          label = "Want to change the analysis parameter? 
+        Standard (500 nm)",
+          value = 500
+        )
       }
     })
+    
   })
 
   # Reactivity for minu end seeds -----------------------------------------------
