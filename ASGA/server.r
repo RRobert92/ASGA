@@ -206,7 +206,8 @@ function(input, output, session) {
 
         showTab(inputId = "innavbar-GS", target = "Report")
         updateTabsetPanel(session, "innavbar", selected = "Report")
-
+        hideTab(inputId = "innavbar-GS", target = "Settings")
+        
         File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
         numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
         df <- data.frame()
