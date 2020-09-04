@@ -106,12 +106,8 @@ GetStarted_UI <- function(id) {
           fluidRow(
             Setting_Buttons_UI("Home"),
             column(
-              4,
+              8,
               uiOutput(ns("Tool_Info_1"))
-            ),
-            column(
-              4,
-              uiOutput(ns("Tool_Info_2"))
             )
           ),
           tags$div(

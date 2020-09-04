@@ -92,44 +92,42 @@ Setting_Buttons_Server <- function(input, output, session) {
 
   # Reactivity for KMT number ---------------------------------------------------
   observeEvent(input$`KMT_number`, {
-    if (input$`KMT_number` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
-      All_Closed()
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
-      output$`Tool_Info_1` <- renderUI({
-        if (input$`KMT_number` == TRUE) {
-          "This tool will analyze how many KMTs can be found on each kinetochore. 
+    output$`Tool_Info_1` <- renderUI({
+      if (input$`KMT_number` == TRUE) {
+        "This tool will analyze how many KMTs can be found on each kinetochore. 
         And how many of KMTs has their (-) ends in a distance of 1 um from the centrosome.
         For more information see 'Wiki' page"
-        }
-      })
+      }
+    })
 
-      output$`Tool_Info_2` <- renderUI({
-        if (input$`KMT_number` == TRUE) {
-          shinyalert(
-            "Set-up analysis parameter",
-            "Threshold for the microtubule minus-end interaction with the spindle pole. [um]",
-            type = "input",
-            inputId = "KMT_no_config",
-            inputValue = 1.68,
-            confirmButtonCol = "#a5dc86",
-          )
-        }
-      })
-      observeEvent(input[["KMT_no_config"]], {
-        assign("Minus_Threshold",
-          as.numeric(input[["KMT_no_config"]]),
-          envir = .GlobalEnv
-        )
-      })
+    if (input$`KMT_number` == TRUE) {
+      shinyalert(
+        "Set-up analysis parameter",
+        "Threshold for the microtubule minus-end interaction with the spindle pole. [um]",
+        type = "input",
+        inputId = "KMT_no_config",
+        inputValue = 1.68,
+        confirmButtonCol = "#a5dc86",
+      )
+    }
+
+    observeEvent(input[["KMT_no_config"]], {
+      assign("Minus_Threshold",
+        as.numeric(input[["KMT_no_config"]]),
+        envir = .GlobalEnv
+      )
+    })
   })
 
   # Reactivity for IKD ----------------------------------------------------------
   observeEvent(input$`IKD`, {
-    if (input$`IKD` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`IKD` == TRUE) {
@@ -138,28 +136,32 @@ Setting_Buttons_Server <- function(input, output, session) {
       }
     })
 
-    output$`Tool_Info_2` <- renderUI({
-    })
-
     if (input$`IKD` == TRUE) {
-      confirmSweetAlert(
-        session,
-        inputId = "IKD_confirmation",
-        title = "Want to confirm ?",
-        text = "The Inter-Kinetochore distance will be calculated. This analysis relies on corresponding k-fiber labels.
+      shinyalert(
+        "Want to confirm ?",
+        "The Inter-Kinetochore distance will be calculated. This analysis relies on corresponding k-fiber labels.
       e.g. sister-kinetochore for Pole1_00 is Pole2_00.",
-        type = "question",
-        btn_labels = c("Cancel", "Confirm"),
-        btn_colors = NULL
+        type = "warning",
+        inputId = "IKD_confirmation",
+        confirmButtonText = "Confirm",
+        confirmButtonCol = "#a5dc86",
+        showCancelButton = TRUE,
+        cancelButtonText = "Cancel"
       )
     }
+    
+    observeEvent(input[["IKD_confirmation"]], {
+      if(input[["IKD_confirmation"]] == FALSE){
+        updateMaterialSwitch(session, "IKD", FALSE)
+      }
+    })
   })
 
   # Reactivity for Curvature ----------------------------------------------------
   observeEvent(input$`Curvature`, {
-    if (input$`Curvature` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`Curvature` == TRUE) {
@@ -167,16 +169,13 @@ Setting_Buttons_Server <- function(input, output, session) {
         For more information see 'Wiki' page"
       }
     })
-
-    output$`Tool_Info_2` <- renderUI({
-    })
   })
 
   # Reactivity for End_morphology -------------------------------------------------
   observeEvent(input$`End_Morphology`, {
-    if (input$`End_Morphology` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`End_Morphology` == TRUE) {
@@ -184,16 +183,13 @@ Setting_Buttons_Server <- function(input, output, session) {
         For more information see 'Wiki' page"
       }
     })
-
-    output$`Tool_Info_2` <- renderUI({
-    })
   })
 
   # Reactivity for End_morphology -------------------------------------------------
   observeEvent(input$`KMT_Torque`, {
-    if (input$`KMT_Torque` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`KMT_Torque` == TRUE) {
@@ -201,16 +197,13 @@ Setting_Buttons_Server <- function(input, output, session) {
         For more information see 'Wiki' page"
       }
     })
-
-    output$`Tool_Info_2` <- renderUI({
-    })
   })
 
   # Reactivity for fiber area ---------------------------------------------------
   observeEvent(input$`Fiber_Area`, {
-    if (input$`Fiber_Area` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`Fiber_Area` == TRUE) {
@@ -220,31 +213,30 @@ Setting_Buttons_Server <- function(input, output, session) {
       }
     })
 
-    output$`Tool_Info_2` <- renderUI({
-      if (input$`Fiber_Area` == TRUE) {
-        shinyalert(
-          "Set-up analysis parameter",
-          "Bin size used to calculate fiber area every specified distance on the spindle pole axis [nm]",
-          type = "input",
-          inputId = "Fiber_area_config",
-          inputValue = 500,
-          confirmButtonCol = "#a5dc86",
-        )
-      }
-    })
+    if (input$`Fiber_Area` == TRUE) {
+      shinyalert(
+        "Set-up analysis parameter",
+        "Bin size used to calculate fiber area every specified distance on the spindle pole axis [nm]",
+        type = "input",
+        inputId = "Fiber_area_config",
+        inputValue = 500,
+        confirmButtonCol = "#a5dc86",
+      )
+    }
+
     observeEvent(input[["Fiber_area_config"]], {
       assign("Fiber_area_config",
-             round(as.numeric(input[["Fiber_area_config"]])/20, 0) - 1,
-             envir = .GlobalEnv
+        round(as.numeric(input[["Fiber_area_config"]]) / 20, 0) - 1,
+        envir = .GlobalEnv
       )
     })
   })
 
   # Reactivity for minu end seeds -----------------------------------------------
   observeEvent(input$`KMT_Minus_End_Seeds`, {
-    if (input$`KMT_Minus_End_Seeds` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`KMT_Minus_End_Seeds` == TRUE) {
@@ -253,32 +245,31 @@ Setting_Buttons_Server <- function(input, output, session) {
         For more information see 'Wiki' page"
       }
     })
-    
-    output$`Tool_Info_2` <- renderUI({
-      if (input$`KMT_Minus_End_Seeds` == TRUE) {
-        shinyalert(
-          "Set-up analysis parameter",
-          "Interaction distance between kinetochore microtubule and microtubule minus-end [um]",
-          type = "input",
-          inputId = "Minus_end_config",
-          inputValue = 0.035,
-          confirmButtonCol = "#a5dc86",
-        )
-      }
-    })
+
+    if (input$`KMT_Minus_End_Seeds` == TRUE) {
+      shinyalert(
+        "Set-up analysis parameter",
+        "Interaction distance between kinetochore microtubule and microtubule minus-end [um]",
+        type = "input",
+        inputId = "Minus_end_config",
+        inputValue = 0.035,
+        confirmButtonCol = "#a5dc86",
+      )
+    }
+
     observeEvent(input[["Minus_end_config"]], {
       assign("Minus_Distance",
-             as.numeric(input[["Minus_end_config"]]),
-             envir = .GlobalEnv
+        as.numeric(input[["Minus_end_config"]]),
+        envir = .GlobalEnv
       )
     })
   })
 
   # Reactivity for Fiber curve and length button --------------------------------
   observeEvent(input$`Fiber_Curv_Length`, {
-    if (input$`Fiber_Curv_Length` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`Fiber_Curv_Length` == TRUE) {
@@ -288,16 +279,13 @@ Setting_Buttons_Server <- function(input, output, session) {
         For more information see 'Wiki' page"
       }
     })
-
-    output$`Tool_Info_2` <- renderUI({
-    })
   })
 
   # Reactivity for Fiber curve and length button --------------------------------
   observeEvent(input$`k_core_area`, {
-    if (input$`k_core_area` == TRUE) {
-      updateMaterialSwitch(session, "All_Anaysis", FALSE)
-    }
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`k_core_area` == TRUE) {
@@ -305,9 +293,6 @@ Setting_Buttons_Server <- function(input, output, session) {
         and number of the KMTs at the kinetochore.
         For more information see 'Wiki' page"
       }
-    })
-
-    output$`Tool_Info_2` <- renderUI({
     })
   })
 
@@ -324,16 +309,12 @@ Setting_Buttons_Server <- function(input, output, session) {
       updateMaterialSwitch(session, "KMT_Minus_End_Seeds", FALSE)
       updateMaterialSwitch(session, "Fiber_Curv_Length", FALSE)
       updateMaterialSwitch(session, "k_core_area", FALSE)
+
+      output$`Tool_Info_1` <- renderUI({
+        "All analysis will be run with the stamdard settings. 
+        For more information see 'Wiki' page"
+      })
     }
-
-    output$`Tool_Info_1` <- renderUI({
-      if (input$`All_Anaysis` == TRUE) {
-        "All analysis will be run. For more information see 'Wiki' page"
-      }
-    })
-
-    output$`Tool_Info_2` <- renderUI({
-    })
   })
 
   All_Closed <- function() {
@@ -347,6 +328,20 @@ Setting_Buttons_Server <- function(input, output, session) {
       input$`Fiber_Curv_Length` == FALSE &&
       input$`k_core_area` == FALSE) {
       updateMaterialSwitch(session, "All_Anaysis", TRUE)
+    }
+  }
+
+  Any_One <- function() {
+    if (input$`KMT_number` == TRUE ||
+      input$`IKD` == TRUE ||
+      input$`Curvature` == TRUE ||
+      input$`End_Morphology` == TRUE ||
+      input$`KMT_Torque` == TRUE ||
+      input$`Fiber_Area` == TRUE ||
+      input$`KMT_Minus_End_Seeds` == TRUE ||
+      input$`Fiber_Curv_Length` == TRUE ||
+      input$`k_core_area` == TRUE) {
+      updateMaterialSwitch(session, "All_Anaysis", FALSE)
     }
   }
 }
