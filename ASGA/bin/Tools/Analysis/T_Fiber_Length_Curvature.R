@@ -14,7 +14,7 @@
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 #####################################################################################
 
-# Function: Find point for lading KMTs, for j = j+5 == 0.5um ------------------------
+# Function: Find point for lading KMTs, for j = j+4 == 0.1um ------------------------
 # Function: select leading KMT ------------------------------------------------------
 
 Leadig_Pointsv2 <- function(x) {

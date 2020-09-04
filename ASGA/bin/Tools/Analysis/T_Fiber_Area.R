@@ -60,7 +60,7 @@ Leadig_Points <- function(x) {
       sep = "_"
     ))[j, 1]
 
-    j <- j + 24
+    j <- j + Fiber_area_config
   }
   leading_points <- na.omit(leading_points)
 }
