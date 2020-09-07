@@ -71,6 +71,6 @@ source("bin/Packages/Analysis/A_KMT_Minus_End_Seeds.R")
 source("bin/Packages/Analysis/A_Fiber_Length_&_curvature.R")
 source("bin/Packages/Analysis/A_Kinetochore_Area.R")
 source("bin/Packages/Analysis/A_KMT_Torque.R")
-
+source("bin/Packages/Analysis/A_MT_Bridging.R")
 # Test Unit ---------------------------------------------------------------------
 source("tests/Test_Output.R")

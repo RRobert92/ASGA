@@ -13,44 +13,47 @@
 ########################################################################################################
 
 # Function:  -------------------------------------------------------------------------------------------
+Segment_Interaction <- function(x){
+  cores <- detectCores()
+  cl<- makeCluster(cores)
+  registerDoParallel(cl)
+  
+  system.time({
+    DF <- data.frame()
+    Final <- foreach(x = 1:1000, .combine=rbind) %dopar% {
+      p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x,2] + (Minus_Distance)) &
+                              `X Coord` >= as.numeric(Points[x,2] - (Minus_Distance))), ]
+      p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Points[x,3] + (Minus_Distance * 2)) &
+                              `Y Coord` >= as.numeric(Points[x,3] - (Minus_Distance))), ]
+      p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(Points[x,4] + (Minus_Distance * 2)) &
+                              `Z Coord` >= as.numeric(Points[x,4] - (Minus_Distance))), ]
+      p_to_P[5:7] <- Points[x, 2:4]
+      
+      p_to_P$dist <- apply(
+        p_to_P[2:7],
+        1,
+        function(y) {
+          dist(matrix(y,
+                      nrow = 2,
+                      byrow = TRUE
+          ))
+        }
+      )
+      
+      DF_1 <- data.frame(p_to_P[with(p_to_P, dist <= Minus_Distance & dist > 0), "Point_ID"],
+                         p_to_P[with(p_to_P, dist <= Minus_Distance & dist > 0), "dist"])
+      names(DF_1)[1] <- "Point_ID_2"
+      DF_1 <- data.frame(Points[x,1],
+                         DF_1)
+      names(DF_1)[1] <- "Point_ID_1"
+      names(DF_1)[3] <- "dist"
+      DF_1
+    }
+    stopCluster(cl)
+  })
+}
 
 Bridging_MT <- function(x) {
   
-  for (i in 1:nrow(get(paste(colnames(Segments)[x])))) {
-    DF <- data.frame()
-    
-    for (j in 1:nrow(get(paste(colnames(Segments)[x], i, sep = "_")))) {
-      
-      # Creat boundery box around selected point
-      tryCatch(
-        {
-          p_to_P <- Points[with(Points, `X Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2] + as.numeric(Minus_Distance * 2)) &
-                                 `X Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2] - as.numeric(Minus_Distance * 2))), ]
-          p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] + as.numeric(Minus_Distance * 2)) &
-                                  `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] - as.numeric(Minus_Distance * 2))), ]
-          p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] + as.numeric(Minus_Distance * 2)) &
-                                  `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] - as.numeric(Minus_Distance * 2))), ]
-          p_to_P[5:7] <- get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2:4]
-          
-          p_to_P$dist <- apply(
-            p_to_P[2:7],
-            1,
-            function(y) {
-              dist(matrix(y,
-                          nrow = 2,
-                          byrow = TRUE
-              ))
-            }
-          )
-          DF <- data.frame(
-            p_to_P[with(p_to_P, dist <= Minus_Distance & dist >= 0), "Node ID"],
-            p_to_P[with(p_to_P, dist <= Minus_Distance & dist >= 0), "dist"]
-          )
-        },
-        warning = function(w) {}
-      )
-      
-      
-    }
-  }
+
 }
