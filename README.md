@@ -8,7 +8,7 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/RRobert92/MT_Analysis)
 ![Status](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
-**Spindle analysis tool** is an open-source cluster of tools with its ongoing development for a meiotic and mitotic spindle analysis. Key futures:
+**Spindle analysis tool** is an open-source cluster of tools with its ongoing development for meiotic and mitotic spindle analysis. Key futures:
   
 1. Online access
 
