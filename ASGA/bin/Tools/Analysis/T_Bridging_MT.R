@@ -1,13 +1,15 @@
 ########################################################################################################
 # Tool MT_bridging
 #
-# Function to calculate interaction lenth for any KMTs
-
+# Function to calculate interaction length for all MT
+# The tool is calculating interaction for all points and searching for continues interaction on MT of 
+# 500 nm (modifiable). Sorted interactions are then fed to the network analysis to determine no. of
+# first-degree interaction, and no. of bundled MT.
 #
 # (c) 2019 Kiewisz
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
-# Author: Robert Kiewisz/ Gunar Fabig
+# Author: Robert Kiewisz / Gunar Fabig
 # Created: 2020-09-01
 # Reviewed: 
 ########################################################################################################
@@ -15,11 +17,11 @@
 # Function:  -------------------------------------------------------------------------------------------
 Segment_Interaction <- function(x){
   cores <- detectCores()
-  cl<- makeCluster(cores)
+  cl <- makeCluster(cores)
   registerDoParallel(cl)
   
   system.time({
-    DF <- foreach(x = 1:1000, .combine=rbind) %dopar% {
+    DF <- foreach(x = 1:nrow(Points), .combine=rbind) %dopar% {
       p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x,2] + (Minus_Distance)) &
                               `X Coord` >= as.numeric(Points[x,2] - (Minus_Distance))), ]
       p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Points[x,3] + (Minus_Distance * 2)) &
