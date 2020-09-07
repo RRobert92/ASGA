@@ -19,8 +19,7 @@ Segment_Interaction <- function(x){
   registerDoParallel(cl)
   
   system.time({
-    DF <- data.frame()
-    Final <- foreach(x = 1:1000, .combine=rbind) %dopar% {
+    DF <- foreach(x = 1:1000, .combine=rbind) %dopar% {
       p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x,2] + (Minus_Distance)) &
                               `X Coord` >= as.numeric(Points[x,2] - (Minus_Distance))), ]
       p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Points[x,3] + (Minus_Distance * 2)) &
