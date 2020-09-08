@@ -53,45 +53,71 @@ Point_interaction <- function() {
       names(DF_1)[1] <- "Point_ID_1"
       names(DF_1)[3] <- "dist"
 
-      DF_1$Segment_ID_1 <- apply(DF_1[1], 1, function(y) {
-        i <- 1
-        while (i < nrow(Segments)) {
-          if (y[1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[i, 98]), split = ",")[[1]] == FALSE) {
-            i <- i + 1
-          } else {
-            break
-          }
-        }
-        i - 1
-      })
-
-      DF_1$Segment_ID_2 <- apply(DF_1[2], 1, function(y) {
-        i <- 1
-        while (i < nrow(Segments)) {
-          if (y[1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[i, 98]), split = ",")[[1]] == FALSE) {
-            i <- i + 1
-          } else {
-            break
-          }
-        }
-        i - 1
-      })
-      Compare_ID <- apply(DF_1[4:5], 1, function(y) {
-        y[1] == y[2]
-      })
-
-      for (i in 1:nrow(DF_1)) {
-        if (Compare_ID[i] == TRUE) {
-          DF_1[i, 1:5] <- NA
-        }
-      }
       DF_1
     }
     stopCluster(cl)
-    DF <- na.omit(DF)
   })
 }
 
-Bridging_MT <- function(x) {
+Segment_to_point <- function(x) {
+  system.time({
+    cores <- detectCores()
+    cl <- makeCluster(cores)
+    registerDoParallel(cl)
+    
+  IDs <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
+    j <- 1
+    while (j < nrow(Segments)) {
+      if (DF[i,1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[i, 98]), split = ",")[[1]] == FALSE) {
+        j <- j + 1
+      } else {
+        break
+      }
+    }
+    i - 1
+  }
+  stopCluster(cl)
+  
+  IDs <- as.data.frame(IDs)
+  names(IDs)[1] <- "Segment_ID_1"
+  DF <- cbind(DF, IDs)
+  rm(IDs)
+  
+  
+  cl <- makeCluster(cores)
+  registerDoParallel(cl)
+  
+  IDs <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
+    j <- 1
+    while (j < nrow(Segments)) {
+      if (DF[i,1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[i, 98]), split = ",")[[1]] == FALSE) {
+        j <- j + 1
+      } else {
+        break
+      }
+    }
+    i - 1
+  }
+  stopCluster(cl)
+  
+  IDs <- as.data.frame(IDs)
+  names(IDs)[1] <- "Segment_ID_2"
+  DF <- cbind(DF, IDs)
+  rm(IDs)
+  
+  })
+
+  
+  Compare_ID <- apply(DF[4:5], 1, function(y) {
+    y[1] == y[2]
+  })
+  
+  for (i in 1:nrow(DF)) {
+    if (Compare_ID[i] == TRUE) {
+      DF_1[i, 1:5] <- NA
+    } else {
+      DF_1[i,1:5] <- DF[i,1:5]
+    }
+  }
 
 }
