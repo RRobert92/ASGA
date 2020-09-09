@@ -59,130 +59,66 @@ Point_interaction <- function() {
     DF_1[with(DF_1, `V1` < -1 | `V1` > 1), 1:3]
   }
   stopCluster(cl)
-
-  # Assign segments to the points --------------------------------------------------------------------
-  system.time({
-  cores <- detectCores()
-  cl <- makeCluster(cores)
-  registerDoParallel(cl)
-
-  Segment_ID_1 <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
-
-    if (i > 1000) {
-      j <- round(DF[i, 1] / 180, 0)
-    } else if (i > 10000){
-      j <- round(DF[i, 1] *0.0075, 0)
-    } else if (i > 100000){
-      j <- round(DF[i, 1] *0.0085, 0)
-    } else if (i > 200000){
-      j <- round(DF[i, 1] *0.009, 0)
-    } else {
-      j <- 1
-    }
-
-    
-    while (j < nrow(Segments)) {
-      if (DF[i, 1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[j, "Point IDs"]), split = ",")[[1]] == FALSE) {
-        j <- j + 1
-      } else {
-        break
-      }
-    }
-    Segment_ID_DF <- j - 1
-    Segment_ID_DF
-  }
-  stopCluster(cl)
-  })
-  DF <- cbind(DF, as_tibble(Segment_ID_1))
-
-  cores <- detectCores()
-  cl <- makeCluster(cores)
-  registerDoParallel(cl)
-
-  Segment_ID_2 <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
-    if (i > 1000) {
-      j <- round(DF[i, 2] / 200, 0)
-    } else {
-      j <- 1
-    }
-
-    while (j < nrow(Segments)) {
-      if (DF[i, 2] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[j, "Point IDs"]), split = ",")[[1]] == FALSE) {
-        j <- j + 1
-      } else {
-        break
-      }
-    }
-
-    Segment_ID_DF <- j - 1
-    Segment_ID_DF
-  }
-  stopCluster(cl)
-  DF <- cbind(DF, as_tibble(Segment_ID_2))
-
-
-  Compare_ID <- apply(DF[4:5], 1, function(y) {
-    y[1] == y[2]
-  })
 }
 
-Segment_to_point <- function(x) {
+Segment_to_point <- function() {
+  # Assign segments to the points ----------------------------------------------------------------------
   system.time({
     cores <- detectCores()
     cl <- makeCluster(cores)
     registerDoParallel(cl)
 
-    IDs <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
-      j <- 1
-      while (j < nrow(Segments)) {
-        if (DF[i, 1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[i, 98]), split = ",")[[1]] == FALSE) {
+
+    Segment_ID <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
+      Segment_ID_DF <- as_tibble()
+      if (i > 1000) {
+        j <- round(DF[i, 1] / 180, 0)
+      } else if (i > 10000) {
+        j <- round(DF[i, 1] * 0.0075, 0)
+      } else {
+        j <- 1
+      }
+
+      test_condition <- TRUE
+      while (test_condition == TRUE) {
+        variable <- DF[i, 1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[j, "Point IDs"]), split = ",")[[1]]
+
+        if (variable == FALSE) {
           j <- j + 1
         } else {
-          break
+          test_condition <- FALSE
         }
       }
-      i - 1
+      Segment_ID_DF[i, 1] <- j - 1
+
+      if (i > 1000) {
+        j <- round(DF[i, 2] / 180, 0)
+      } else if (i > 10000) {
+        j <- round(DF[i, 2] * 0.0075, 0)
+      } else {
+        j <- 1
+      }
+
+      test_condition <- TRUE
+      while (test_condition == TRUE) {
+        variable <- DF[i, 2] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[j, "Point IDs"]), split = ",")[[1]]
+
+        if (variable == FALSE) {
+          j <- j + 1
+        } else {
+          test_condition <- FALSE
+        }
+      }
+      Segment_ID_DF[i, 2] <- j - 1
+      Segment_ID_DF
     }
     stopCluster(cl)
   })
-  IDs <- as.data.frame(IDs)
-  names(IDs)[1] <- "Segment_ID_1"
-  DF <- cbind(DF, IDs)
-  rm(IDs)
 
-
-  cl <- makeCluster(cores)
-  registerDoParallel(cl)
-
-  IDs <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
-    j <- 1
-    while (j < nrow(Segments)) {
-      if (DF[i, 1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[i, 98]), split = ",")[[1]] == FALSE) {
-        j <- j + 1
-      } else {
-        break
-      }
-    }
-    i - 1
-  }
-  stopCluster(cl)
-
-  IDs <- as.data.frame(IDs)
-  names(IDs)[1] <- "Segment_ID_2"
-  DF <- cbind(DF, IDs)
-  rm(IDs)
-
-
+  Segment_ID <- as_tibble(Segment_ID_1)
+  DF <- cbind(DF, Segment_ID_1)
 
   Compare_ID <- apply(DF[4:5], 1, function(y) {
     y[1] == y[2]
   })
-
-  for (i in 1:nrow(DF)) {
-    if (Compare_ID[i] == TRUE) {
-      DF_1[i, 1:5] <- NA
-    } else {
-      DF_1[i, 1:5] <- DF[i, 1:5]
-    }
-  }
 }
