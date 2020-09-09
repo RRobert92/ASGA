@@ -17,7 +17,7 @@
 # Function:  -------------------------------------------------------------------------------------------
 Point_interaction <- function() {
 
-  # Calculate distant of the point to other point in the boundery box-----------------------------------
+  # Calculate distant of the point to other point in the boundary box ~15 min --------------------------
   cores <- detectCores()
   cl <- makeCluster(cores)
   registerDoParallel(cl)
@@ -61,17 +61,26 @@ Point_interaction <- function() {
   stopCluster(cl)
 
   # Assign segments to the points --------------------------------------------------------------------
+  system.time({
   cores <- detectCores()
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
   Segment_ID_1 <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
+
     if (i > 1000) {
-      j <- round(DF[i, 1] / 200, 0)
+      j <- round(DF[i, 1] / 180, 0)
+    } else if (i > 10000){
+      j <- round(DF[i, 1] *0.0075, 0)
+    } else if (i > 100000){
+      j <- round(DF[i, 1] *0.0085, 0)
+    } else if (i > 200000){
+      j <- round(DF[i, 1] *0.009, 0)
     } else {
       j <- 1
     }
 
+    
     while (j < nrow(Segments)) {
       if (DF[i, 1] %in% strsplit(gsub("[^[:digit:]]", ",", Segments[j, "Point IDs"]), split = ",")[[1]] == FALSE) {
         j <- j + 1
@@ -83,6 +92,7 @@ Point_interaction <- function() {
     Segment_ID_DF
   }
   stopCluster(cl)
+  })
   DF <- cbind(DF, as_tibble(Segment_ID_1))
 
   cores <- detectCores()
