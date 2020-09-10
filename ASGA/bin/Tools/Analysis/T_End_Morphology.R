@@ -120,9 +120,9 @@ End_distribution_Minus <- function(x, y) {
       ])
       Node_2 <- Nodes[as.numeric(N_ID_2 + 1), ]
 
-      if (abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])) {
+      if (abs(Node_1["Y Coord"] - y["Y.Coord"]) < abs(Node_2["Y Coord"] - y["Y.Coord"])) {
         Minus[i, 1:8] <- cbind(
-          Node_2,
+          Node_1,
           get(colnames(Segments)[x])[
             i,
             "Relative_minus_position"
@@ -133,7 +133,7 @@ End_distribution_Minus <- function(x, y) {
         Minus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
       } else {
         Minus[i, 1:8] <- cbind(
-          Node_1,
+          Node_2,
           get(colnames(Segments)[x])[
             i,
             "Relative_minus_position"
