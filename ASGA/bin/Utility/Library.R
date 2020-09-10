@@ -26,6 +26,10 @@ library("readxl")
 library("xlsx")
 library("zip")
 
+# Parallel computing Library -------------------------------------------------------------
+library("foreach")
+library("doParallel")
+
 # Plotting Library -------------------------------------------------------------
 library("ggplot2")
 library("ggbeeswarm")
