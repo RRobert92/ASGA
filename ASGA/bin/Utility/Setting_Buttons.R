@@ -105,13 +105,12 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
 
     if (input$`KMT_number` == TRUE) {
-      shinyalert(
-        "Set-up analysis parameter",
-        "Threshold for the microtubule minus-end interaction with the spindle pole. [um]",
-        type = "input",
-        inputId = "KMT_no_config",
-        inputValue = 1.68,
-        confirmButtonCol = "#a5dc86",
+      inputSweetAlert(
+        session = session, 
+        type = "info",
+        inputId = "KMT_no_config", input = "text",
+        title = "Set-up analysis parameter",
+        text = "Threshold for the microtubule minus-end interaction with the spindle pole. Unit [um]"
       )
     }
 
@@ -137,16 +136,15 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
 
     if (input$`IKD` == TRUE) {
-      shinyalert(
-        "Want to confirm ?",
-        "The Inter-Kinetochore distance will be calculated. This analysis relies on corresponding k-fiber labels.
+      confirmSweetAlert(
+        session = session, 
+        type = "question",
+        inputId = "IKD_confirmation", input = "text",
+        title = "Want to confirm ?",
+        text = "The Inter-Kinetochore distance will be calculated. This analysis relies on corresponding k-fiber labels.
       e.g. sister-kinetochore for Pole1_00 is Pole2_00.",
-        type = "warning",
-        inputId = "IKD_confirmation",
-        confirmButtonText = "Confirm",
-        confirmButtonCol = "#a5dc86",
-        showCancelButton = TRUE,
-        cancelButtonText = "Cancel"
+        btn_labels = c("Cancel", "Confirm"),
+        btn_colors = c("#C95050", "#a5dc86")
       )
     }
     
@@ -214,13 +212,12 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
 
     if (input$`Fiber_Area` == TRUE) {
-      shinyalert(
-        "Set-up analysis parameter",
-        "Bin size used to calculate fiber area every specified distance on the spindle pole axis [nm]",
-        type = "input",
-        inputId = "Fiber_area_config",
-        inputValue = 500,
-        confirmButtonCol = "#a5dc86",
+      inputSweetAlert(
+        session = session, 
+        type = "info",
+        inputId = "Fiber_area_config", input = "text",
+        title = "Set-up analysis parameter",
+        text = "Bin size used to calculate fiber area every specified distance on the spindle pole axis. Unit [nm]"
       )
     }
 
@@ -247,13 +244,12 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
 
     if (input$`KMT_Minus_End_Seeds` == TRUE) {
-      shinyalert(
-        "Set-up analysis parameter",
-        "Interaction distance between kinetochore microtubule and microtubule minus-end [um]",
-        type = "input",
-        inputId = "Minus_end_config",
-        inputValue = 0.035,
-        confirmButtonCol = "#a5dc86",
+      inputSweetAlert(
+        session = session, 
+        type = "info",
+        inputId = "Minus_end_config", input = "text",
+        title = "Set-up analysis parameter",
+        text = "Interaction distance between kinetochore microtubule and microtubule minus-end. Unit [um]"
       )
     }
 

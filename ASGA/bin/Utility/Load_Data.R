@@ -109,17 +109,17 @@ Load_Data <- function(input, output, session) {
       starts_with("EndType")
     )
 
-    Compare <<- data.frame()
+    Compare_module <<- tibble()
 
     for (i in 1:nrow(Nodes %>% select(starts_with("EndType")))) {
-      Compare[i, 1] <- Nodes[i, 5] == Nodes[i, 6]
+      Compare_module[i, 1] <- Nodes[i, 5] == Nodes[i, 6]
     }
     Nodes <<- cbind(
       Nodes,
-      Compare[1]
+      Compare_module[1]
     )
     names(Nodes)[7] <<- "Entype_Different"
-    rm(Compare)
+    rm(Compare_module)
   } else {
     Nodes <<- Nodes %>% select(
       "Node ID",

@@ -140,13 +140,8 @@ function(input, output, session) {
 
   # Relativity for the Settings button  ----------------------------------------
   callModule(Setting_Buttons_Server, "Home")
+  
 
-  observeEvent(input$Fiber_area_config, {
-    assign("Fiber_area_config",
-           round(as.numeric(input$Fiber_area_config)/20,0),
-           envir = .GlobalEnv
-    )
-  })
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`, {
     if (Test == FALSE) {
@@ -212,7 +207,6 @@ function(input, output, session) {
 
         showTab(inputId = "innavbar-GS", target = "Report")
         updateTabsetPanel(session, "innavbar", selected = "Report")
-        hideTab(inputId = "innavbar-GS", target = "Settings")
         
         File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
         numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
