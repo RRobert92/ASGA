@@ -139,7 +139,11 @@ Segment_to_point <- function() {
   Segment_ID <- tibble(Segments_ID_2 = Segment_ID)
   DF <- cbind(DF, Segment_ID)
 
-  Compare_ID <- apply(DF[4:5], 1, function(y) {
+  Compare_ID <- tibble(Test = apply(DF[4:5], 1, function(y) {
     y[1] == y[2]
-  })
+  }))
+  
+  DF <- cbind(DF, Compare_ID)
+  DF <- DF[with(DF, `Test` == FALSE),1:5]
+  rm(Compare_ID, Segment_ID,t, t_df)
 }
