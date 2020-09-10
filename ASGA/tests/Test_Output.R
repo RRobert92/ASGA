@@ -14,131 +14,132 @@ Run_Test <- function(input, output, session) {
   withProgress(message = "Analyzing:", value = 1, {
     incProgress(1, detail = "Test in progress...")
     Sys.sleep(0.1)
-    Test_value <<- data.frame()
+    Test_value <<- tibble()
     current_data <<- 1
 
     tryCatch(
       {
         callModule(Pre_Analysis, "Home")
-        Test_value[1, 1] <<- TRUE
+        Test_value[1, 1] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 1] <<- FALSE
+        Test_value[1, 1] <- FALSE
       }
     )
-    names(Test_value)[1] <<- "Pre_Analsis"
+    names(Test_value)[1] <- "Pre_Analsis"
 
     tryCatch(
       {
         callModule(A_KMT_number, "Home")
-        Test_value[1, 2] <<- TRUE
+        Test_value[1, 2] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 2] <<- FALSE
+        Test_value[1, 2] <- FALSE
       }
     )
-    names(Test_value)[2] <<- "KMT_number"
+    names(Test_value)[2] <- "KMT_number"
 
     tryCatch(
       {
         callModule(A_IKD, "Home")
-        Test_value[1, 3] <<- TRUE
+        Test_value[1, 3] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 3] <<- FALSE
+        Test_value[1, 3] <- FALSE
       }
     )
-    names(Test_value)[3] <<- "IKD"
+    names(Test_value)[3] <- "IKD"
 
     tryCatch(
       {
         callModule(A_Curvature, "Home")
-        Test_value[1, 4] <<- TRUE
+        Test_value[1, 4] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 4] <<- FALSE
+        Test_value[1, 4] <- FALSE
       }
     )
-    names(Test_value)[4] <<- "Curvature"
+    names(Test_value)[4] <- "Curvature"
 
     tryCatch(
       {
         callModule(A_End_Morphology, "Home")
-        Test_value[1, 5] <<- TRUE
+        Test_value[1, 5] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 5] <<- FALSE
+        Test_value[1, 5] <- FALSE
       }
     )
-    names(Test_value)[5] <<- "End_Morphology"
+    names(Test_value)[5] <- "End_Morphology"
 
     tryCatch(
       {
         callModule(A_KMT_Torque, "Home")
-        Test_value[1, 6] <<- TRUE
+        Test_value[1, 6] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 6] <<- FALSE
+        Test_value[1, 6] <- FALSE
       }
     )
-    names(Test_value)[6] <<- "KMT_Torque"
+    names(Test_value)[6] <- "KMT_Torque"
 
     tryCatch(
       {
         callModule(A_Fiber_Area, "Home")
-        Test_value[1, 7] <<- TRUE
+        Test_value[1, 7] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 7] <<- FALSE
+        Test_value[1, 7] <- FALSE
       }
     )
-    names(Test_value)[7] <<- "Fiber_area"
+    names(Test_value)[7] <- "Fiber_area"
 
     tryCatch(
       {
         callModule(A_Fiber_Length_Curv, "Home")
-        Test_value[1, 8] <<- TRUE
+        Test_value[1, 8] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 8] <<- FALSE
+        Test_value[1, 8] <- FALSE
       }
     )
-    names(Test_value)[8] <<- "Fiber_L&C"
+    names(Test_value)[8] <- "Fiber_L&C"
 
     tryCatch(
       {
         callModule(A_KMT_Minus_End_Seeds, "Home")
-        Test_value[1, 9] <<- TRUE
+        Test_value[1, 9] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 9] <<- FALSE
+        Test_value[1, 9] <- FALSE
       }
     )
-    names(Test_value)[9] <<- "Nucleation"
+    names(Test_value)[9] <- "Nucleation"
 
     tryCatch(
       {
         callModule(A_K_Core_Area, "Home")
-        Test_value[1, 10] <<- TRUE
+        Test_value[1, 10] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 10] <<- FALSE
+        Test_value[1, 10] <- FALSE
       }
     )
-    names(Test_value)[10] <<- "K_Core_Area"
+    names(Test_value)[10] <- "K_Core_Area"
 
     tryCatch(
       {
         callModule(Save_Data, "Home")
-        Test_value[1, 11] <<- TRUE
+        Test_value[1, 11] <- TRUE
       },
       error = function(e) {
-        Test_value[1, 11] <<- FALSE
+        Test_value[1, 11] <- FALSE
       }
     )
-    names(Test_value)[11] <<- "Save"
+    names(Test_value)[11] <- "Save"
 
-    File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
+    Test_value <<- Test_value
+    File_name <<- as_tibble(ls(pattern = "Data_", envir = .GlobalEnv))
     File_name <<- na.omit(File_name)
   })
 }
