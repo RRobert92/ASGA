@@ -63,22 +63,21 @@ Point_interaction <- function() {
 
 Segment_to_point <- function() {
   # Assign segments to the points ----------------------------------------------------------------------
-  system.time({
-    t <-tibble(round(Segments$length/200, 0))
+    t <- tibble(round(Segments$length/190, 0))
     names(t)[1] <- "n"
     t_df <- tibble()
     for(i in 1:nrow(t)){
-      t_df[i,1] <- sum(t$n[1:i]) 
+      t_df[i,1] <- sum(t$n[1:i]) - 100
     }
     
   cores <- detectCores()
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
-  Segment_ID <- foreach(i = 1:100000, .combine = rbind) %dopar% {
+  Segment_ID <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
     
-     j = which.min(as.matrix(abs(t_df[1] - DF[i,1]))) - 1
-    if(j==0){
+     j = which.min(as.matrix(abs(t_df[1] - DF[i,1]))) - 5
+    if(j < 1){
       j=1
     }
    
@@ -101,44 +100,44 @@ Segment_to_point <- function() {
     Segment_ID_DF
   }
   stopCluster(cl)
-})
-  Segment_ID <- as_tibble(Segment_ID)
-  DF <- cbind(DF, Segment_ID)
-  names(DF)[4] <- "Segments_ID_1"
 
+  Segment_ID <- tibble(Segments_ID_1 = Segment_ID)
+  DF <- cbind(DF, Segment_ID)
+
+  
   cores <- detectCores()
   cl <- makeCluster(cores)
   registerDoParallel(cl)
-
-
+  
   Segment_ID <- foreach(i = 1:nrow(DF), .combine = rbind) %dopar% {
-    if (i > 1000) {
-      j <- round(DF[i, 2] / 180, 0)
-    } else if (i > 10000) {
-      j <- round(DF[i, 2] * 0.0075, 0)
-    } else {
-      j <- 1
+    
+    j = which.min(as.matrix(abs(t_df[1] - DF[i,2]))) - 5
+    if(j < 1){
+      j=1
     }
-
+    
+    
+    test_condition <- TRUE
     while (test_condition == TRUE) {
-      variable_1 <- 0 < gregexpr(paste(",", as.character(DF[i, 2]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1]
-      variable_2 <- 0 < gregexpr(paste(as.character(DF[i, 2]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1]
-      variable_3 <- 0 < gregexpr(paste(",", as.character(DF[i, 2]), sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1]
-
-      if (variable_1 && variable_2 && variable_3 == FALSE) {
-        j <- j + 1
-      } else {
+      
+      if (0 < gregexpr(paste(",", as.character(DF[i, 2]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1] || 
+          0 < gregexpr(paste(as.character(DF[i, 2]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1] || 
+          0 < gregexpr(paste(",", as.character(DF[i, 2]), sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1]) {
+        
         test_condition <- FALSE
+      } else {
+        
+        j <- j + 1
       }
     }
+    
     Segment_ID_DF <- j - 1
     Segment_ID_DF
   }
   stopCluster(cl)
-
-  Segment_ID <- as_tibble(Segment_ID)
+  
+  Segment_ID <- tibble(Segments_ID_2 = Segment_ID)
   DF <- cbind(DF, Segment_ID)
-  names(DF)[5] <- "Segments_ID_2"
 
   Compare_ID <- apply(DF[4:5], 1, function(y) {
     y[1] == y[2]
