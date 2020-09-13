@@ -201,6 +201,9 @@ function(input, output, session) {
           if (input$`Home-KMT_Torque` == TRUE) {
             callModule(A_KMT_Torque, "Home")
           }
+          if (input$`Home-MT_Interaction` == TRUE) {
+            callModule(A_MT_Bridging, "Home")
+          }
 
           callModule(Save_Data, "Home")
         }

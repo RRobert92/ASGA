@@ -83,6 +83,13 @@ Setting_Buttons_UI <- function(id) {
       value = FALSE,
       right = TRUE,
       status = "info"
+    ),
+    materialSwitch(
+      inputId = ns("MT_Interaction"),
+      label = "MT Interaction (Alpha)",
+      value = FALSE,
+      right = TRUE,
+      status = "info"
     )
   )
 }
@@ -292,6 +299,56 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
   })
 
+  # Reactivity for MT interaction button --------------------------------
+  observeEvent(input$`MT_Interaction`, {
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
+    
+    output$`Tool_Info_1` <- renderUI({
+      if (input$`MT_Interaction` == TRUE) {
+        "This tool allowas to calculate interaction between every MT in the data set.
+        For more information see 'Wiki' page"
+      }
+    })
+    
+    if (input$`MT_Interaction` == TRUE) {
+      confirmSweetAlert(
+        session = session, 
+        type = "question",
+        inputId = "Interaction_confirmation", input = "text",
+        title = "Want to confirm ?",
+        text = "These tools will calculate the interaction of every MT. It required long computation time,
+        and therefore by standard, this analysis is switched off!
+        It is strongly suggested to run this analysis using a computer cluster.",
+        btn_labels = c("Cancel", "Confirm"),
+        btn_colors = c("#C95050", "#a5dc86")
+      )
+    }
+    
+    observeEvent(input[["Interaction_confirmation"]], {
+      if(input[["Interaction_confirmation"]] == FALSE){
+        updateMaterialSwitch(session, "MT_Interaction", FALSE)
+      } else if (input[["Interaction_confirmation"]] == TRUE && 
+                 input$`MT_Interaction` == TRUE){
+        inputSweetAlert(
+          session = session, 
+          type = "info",
+          inputId = "MT_point_config", input = "text",
+          title = "Set-up analysis parameter",
+          text = "Interaction distance between microtubule and other microtubule. Unit [um]"
+        )
+      }
+    })
+    
+    observeEvent(input[["MT_point_config"]], {
+      assign("MT_point_config",
+             as.numeric(input[["MT_point_config"]]),
+             envir = .GlobalEnv
+      )
+    })
+  })
+  
   # Reactivity for all button --------------------------------------------------
 
   observeEvent(input$`All_Anaysis`, {
@@ -305,6 +362,7 @@ Setting_Buttons_Server <- function(input, output, session) {
       updateMaterialSwitch(session, "KMT_Minus_End_Seeds", FALSE)
       updateMaterialSwitch(session, "Fiber_Curv_Length", FALSE)
       updateMaterialSwitch(session, "k_core_area", FALSE)
+      updateMaterialSwitch(session, "MT_Interaction", FALSE)
 
       output$`Tool_Info_1` <- renderUI({
         "All analysis will be run with the stamdard settings. 
@@ -322,7 +380,8 @@ Setting_Buttons_Server <- function(input, output, session) {
       input$`Fiber_Area` == FALSE &&
       input$`KMT_Minus_End_Seeds` == FALSE &&
       input$`Fiber_Curv_Length` == FALSE &&
-      input$`k_core_area` == FALSE) {
+      input$`k_core_area` == FALSE &&
+      input$`MT_Interaction` == FALSE) {
       updateMaterialSwitch(session, "All_Anaysis", TRUE)
     }
   }
@@ -336,7 +395,8 @@ Setting_Buttons_Server <- function(input, output, session) {
       input$`Fiber_Area` == TRUE ||
       input$`KMT_Minus_End_Seeds` == TRUE ||
       input$`Fiber_Curv_Length` == TRUE ||
-      input$`k_core_area` == TRUE) {
+      input$`k_core_area` == TRUE ||
+      input$`MT_Interaction` == TRUE) {
       updateMaterialSwitch(session, "All_Anaysis", FALSE)
     }
   }

@@ -19,12 +19,12 @@ Point_interaction <- function(x) {
 
   # Calculate distant of the point to other point in the boundary box ~15 min --------------------------
 
-  p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x, 2] + (Minus_Distance)) &
-    `X Coord` >= as.numeric(Points[x, 2] - (Minus_Distance))), ]
-  p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Points[x, 3] + (Minus_Distance * 2)) &
-    `Y Coord` >= as.numeric(Points[x, 3] - (Minus_Distance))), ]
-  p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(Points[x, 4] + (Minus_Distance * 2)) &
-    `Z Coord` >= as.numeric(Points[x, 4] - (Minus_Distance))), ]
+  p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x, 2] + (MT_point_config)) &
+    `X Coord` >= as.numeric(Points[x, 2] - (MT_point_config))), ]
+  p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Points[x, 3] + (MT_point_config * 2)) &
+    `Y Coord` >= as.numeric(Points[x, 3] - (MT_point_config))), ]
+  p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(Points[x, 4] + (MT_point_config * 2)) &
+    `Z Coord` >= as.numeric(Points[x, 4] - (MT_point_config))), ]
   p_to_P[5:7] <- Points[
     x,
     2:4
@@ -43,11 +43,11 @@ Point_interaction <- function(x) {
 
   DF_1 <- data.frame(
     p_to_P[
-      with(p_to_P, dist <= Minus_Distance & dist > 0),
+      with(p_to_P, dist <= MT_point_config & dist > 0),
       "Point_ID"
     ],
     p_to_P[
-      with(p_to_P, dist <= Minus_Distance & dist > 0),
+      with(p_to_P, dist <= MT_point_config & dist > 0),
       "dist"
     ]
   )
@@ -111,7 +111,7 @@ Segment_to_point <- function(x) {
 
   if (x == 2) {
     Compare_ID <- tibble(Test = apply(
-      MT_Interaction[4:5],
+      DF[4:5],
       1,
       function(y) {
         y[1] == y[2]

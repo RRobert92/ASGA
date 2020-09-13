@@ -8,7 +8,6 @@
 # Created: 2020-05-20
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
-
 # Title of the app -------------------------------------------------------------
 App_title <- "ASGA v0.32"
 
@@ -28,15 +27,17 @@ source("bin/Utility/Pre_Analysis.R")
 source("bin/Utility/Load_Data.R")
 source("bin/Utility/Save_Data.R")
 
-# Global Settings  -------------------------------------------------------------
+# Global server settings  ------------------------------------------------------
 options(shiny.maxRequestSize = 1024 * 1024^2)
 options(shiny.host = "127.0.0.1")
 options(shiny.port = 7878)
 
+# Global tool settings  --------------------------------------------------------
 DataTest <<- 0
 numfiles <<- 0
 Minus_Threshold <<- 1.68 # Minus end distance to the pole [um]
 Minus_Distance <<- 0.035 # Minus end distance of any MT to the KMT [um]
+MT_point_config <<- 0.035 # Distance of any MT to the MT [um]
 Fiber_area_config <<- 24
 
 # Global Functions  ------------------------------------------------------------
@@ -73,5 +74,6 @@ source("bin/Packages/Analysis/A_Fiber_Length_&_curvature.R")
 source("bin/Packages/Analysis/A_Kinetochore_Area.R")
 source("bin/Packages/Analysis/A_KMT_Torque.R")
 source("bin/Packages/Analysis/A_MT_Bridging.R")
+
 # Test Unit ---------------------------------------------------------------------
 source("tests/Test_Output.R")

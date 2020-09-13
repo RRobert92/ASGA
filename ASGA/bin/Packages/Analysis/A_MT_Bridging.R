@@ -6,7 +6,7 @@
 #
 # Author: Robert Kiewisz / Gunar Fabig
 # Created: 2020-09-01
-# Reviewed: 
+# Reviewed:
 ################################################################################
 
 # Set-up analysis --------------------------------------------------------------
@@ -15,42 +15,43 @@ A_MT_Bridging <- function(input, output, session) {
   progressSweetAlert(
     session = session, id = "P_MT_Bridginig",
     title = "Calculating microtubule interaction...",
-    display_pct = TRUE, value = round(0 / 3 * 100,0)
+    display_pct = TRUE, value = round(0 / 3 * 100, 0)
   )
-  
+
   # Calculate all interaction --------------------------------------------------
   cores <- detectCores()
   cl <- makeCluster(cores)
   registerDoParallel(cl)
-  
+
   MT_Interaction <<- foreach(i = 1:nrow(Points), .combine = rbind, .export = ls(.GlobalEnv)) %dopar% {
-  
-         Point_interaction(i)
+    Point_interaction(i)
   }
   stopCluster(cl)
-  
+
   updateProgressBar(
     session = session,
     id = "P_MT_Bridginig",
     title = "Pre-sorting data of MT interaction...",
-    value = round(1 / 3 * 100,0))
-  Sys.sleep(0.1)
-  
-  assign("MT_Interaction",
-         Segment_to_point(1),
-         envir = .GlobalEnv
+    value = round(1 / 3 * 100, 0)
   )
-  
+  Sys.sleep(0.1)
+
+  assign("MT_Interaction",
+    Segment_to_point(1),
+    envir = .GlobalEnv
+  )
+
   updateProgressBar(
     session = session,
     id = "P_MT_Bridginig",
-    value = round(2 / 3 * 100,0))
-  Sys.sleep(0.1)
-  
-  assign("MT_Interaction",
-         Segment_to_point(2),
-         envir = .GlobalEnv
+    value = round(2 / 3 * 100, 0)
   )
-  
+  Sys.sleep(0.1)
+
+  assign("MT_Interaction",
+    Segment_to_point(2),
+    envir = .GlobalEnv
+  )
+
   closeSweetAlert(session = session)
 }

@@ -129,15 +129,26 @@ Run_Test <- function(input, output, session) {
 
     tryCatch(
       {
-        callModule(Save_Data, "Home")
+        callModule(A_MT_Bridging, "Home")
         Test_value[1, 11] <- TRUE
       },
       error = function(e) {
         Test_value[1, 11] <- FALSE
       }
     )
-    names(Test_value)[11] <- "Save"
+    names(Test_value)[11] <- "MT Interaction"
 
+    tryCatch(
+      {
+        callModule(Save_Data, "Home")
+        Test_value[1, 12] <- TRUE
+      },
+      error = function(e) {
+        Test_value[1, 12] <- FALSE
+      }
+    )
+    names(Test_value)[12] <- "Save"
+    
     Test_value <<- Test_value
     File_name <<- as_tibble(ls(pattern = "Data_", envir = .GlobalEnv))
     File_name <<- na.omit(File_name)
