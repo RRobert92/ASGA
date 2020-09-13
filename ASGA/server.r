@@ -48,6 +48,7 @@ function(input, output, session) {
   observeEvent(input$`Test_unit`, {
     showTab(inputId = "innavbar-GS", target = "Settings")
     updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
+
     numfiles <<- 1
     DataTest <<- 1
     Test <<- TRUE
@@ -61,8 +62,10 @@ function(input, output, session) {
     content = function(fname) {
       setwd("Data/")
       on.exit(setwd("../"))
+
       Zip_Files <- list.files(path = getwd(), pattern = ".xlsx$")
       zipr(zipfile = fname, files = Zip_Files)
+
       file.remove(Zip_Files)
     }
   )
@@ -85,16 +88,21 @@ function(input, output, session) {
 
     showTab(inputId = "innavbar-GS", target = "Report")
     updateTabsetPanel(session, "innavbar-GS", selected = "Report")
+
     File_name <<- as.data.frame(File_name)
     numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
+
     df <- data.frame()
+
     for (i in 1:nrow(File_name)) {
       name <- as.data.frame(str_split(File_name[i, 1], "_"))
       df[i, 1] <- as.numeric(name[2, 1])
       name <- as.data.frame(str_split(File_name[i, 1], paste("Data_", df[i, 1], "_", sep = "")))
       df[i, 2] <- as.character(name[2, 1])
     }
+
     File_name <<- df
+
     rm(df, name)
 
     # Collect information to start a plot after analysis ------------------------
@@ -106,12 +114,14 @@ function(input, output, session) {
           envir = .GlobalEnv
         )
       })
+
       observeEvent(input[[paste("Data_color", i, sep = "_")]], {
         assign(paste("Data_color", i, sep = "_"),
           input[[paste("Data_color", i, sep = "_")]],
           envir = .GlobalEnv
         )
       })
+
       observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
         assign(paste("Data_bin", i, sep = "_"),
           input[[paste("Data_bin", i, sep = "_")]],
@@ -119,8 +129,6 @@ function(input, output, session) {
         )
       })
     })
-
-
 
     callModule(Data_Plot_Settings, "Home")
     callModule(Report_Plot, "Home")
@@ -140,7 +148,7 @@ function(input, output, session) {
 
   # Relativity for the Settings button  ----------------------------------------
   callModule(Setting_Buttons_Server, "Home")
-  
+
 
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`, {
@@ -210,28 +218,27 @@ function(input, output, session) {
 
         showTab(inputId = "innavbar-GS", target = "Report")
         updateTabsetPanel(session, "innavbar", selected = "Report")
-        
+
         File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
         numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
+
         df <- data.frame()
+
         for (i in 1:nrow(File_name)) {
           name <- as.data.frame(str_split(File_name[i, 1], "_"))
           df[i, 1] <- as.numeric(name[2, 1])
           name <- as.data.frame(str_split(File_name[i, 1], paste("Data_", df[i, 1], "_", sep = "")))
           df[i, 2] <- as.character(name[2, 1])
         }
+
         File_name <<- na.omit(df)
+
         rm(df, name)
       })
 
       # Download data-set ----------------------------------------------------------
       output$`Home-Download_Button` <- renderUI({
-        downloadBttn(
-          "downloadData",
-          label = "Download",
-          style = "material-flat",
-          color = "success"
-        )
+        downloadBttn("downloadData", label = "Download", style = "material-flat", color = "success")
       })
 
       # Collect information to start a plot after analysis ------------------------
@@ -242,12 +249,14 @@ function(input, output, session) {
             envir = .GlobalEnv
           )
         })
+
         observeEvent(input[[paste("Data_color", i, sep = "_")]], {
           assign(paste("Data_color", i, sep = "_"),
             input[[paste("Data_color", i, sep = "_")]],
             envir = .GlobalEnv
           )
         })
+
         observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
           assign(paste("Data_bin", i, sep = "_"),
             input[[paste("Data_bin", i, sep = "_")]],
@@ -258,13 +267,18 @@ function(input, output, session) {
 
       callModule(Report_Plot, "Home")
     } else {
-      Nodes <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+      Nodes <<- read_excel(
+        "tests/ASGA_Test_Data_Set.xlsx",
         sheet = "Nodes"
       )
-      Segments <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+
+      Segments <<- read_excel(
+        "tests/ASGA_Test_Data_Set.xlsx",
         sheet = "Segments"
       )
-      Points <<- read_excel("tests/ASGA_Test_Data_Set.xlsx",
+
+      Points <<- read_excel(
+        "tests/ASGA_Test_Data_Set.xlsx",
         sheet = "Points"
       )
 
@@ -299,29 +313,25 @@ function(input, output, session) {
     tagList(
       if (length(File_name[File_name$V2 == "KMT_No", 2]) >= 1) {
         tagList(
-          tags$p(
-            class = "splash-subhead-Report",
-            "KMTs number per kinetochore"
-          ),
+          tags$p(class = "splash-subhead-Report", "KMTs number per kinetochore"),
+
           Report_Plot_KMT_No("Report")
         )
       },
+
       if (length(File_name[File_name$V2 == "LD", 2]) >= 1) {
         tagList(
-          tags$p(
-            class = "splash-subhead-Report",
-            "KMT length distribution"
-          ),
+          tags$p(class = "splash-subhead-Report", "KMT length distribution"),
+
           Report_Plot_LD("Report"),
           Report_Plot_LD2("Report")
         )
       },
+
       if (length(File_name[File_name$V2 == "IKD", 2]) >= 1) {
         tagList(
-          tags$p(
-            class = "splash-subhead-Report",
-            "Inter-kinetochore distance"
-          ),
+          tags$p(class = "splash-subhead-Report", "Inter-kinetochore distance"),
+
           Report_Plot_IKD("Report")
         )
       }

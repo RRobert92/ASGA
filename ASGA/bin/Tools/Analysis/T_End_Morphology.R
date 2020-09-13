@@ -18,14 +18,12 @@ End_Type_Error <- function() {
   if (ncol(Nodes %>% select(starts_with("EndType"))) == 2) {
     End_type_error <- data.frame(
       Correct = c(round(table(Nodes[, 7])["TRUE"] * 100 / nrow(Nodes), 2)),
-      Wrong = c(round(
-        table(Nodes[, 7])["FALSE"] * 100 / nrow(Nodes),
-        2
-      ))
+      Wrong = c(round(table(Nodes[, 7])["FALSE"] * 100 / nrow(Nodes),2))
     )
   } else {
     break
   }
+  
   End_type_error
 }
 
@@ -58,21 +56,15 @@ End_distribution_Plus <- function(x, y) {
       if (abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])) {
         Plus[i, 1:8] <- cbind(
           Node_1,
-          get(colnames(Segments)[x])[
-            i,
-            "Relative_plus_position"
-          ]
-        )
+          get(colnames(Segments)[x])[i, "Relative_plus_position"]
+          )
 
         Plus[i, 1] <- x
         Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
       } else {
         Plus[i, 1:8] <- cbind(
           Node_2,
-          get(colnames(Segments)[x])[
-            i,
-            "Relative_plus_position"
-          ]
+          get(colnames(Segments)[x])[i, "Relative_plus_position"]
         )
 
         Plus[i, 1] <- x
@@ -108,25 +100,17 @@ End_distribution_Minus <- function(x, y) {
     for (i in 1:nrow(get(colnames(Segments)[x]))) {
       S_ID <- get(colnames(Segments)[x])[i, 1]
 
-      N_ID_1 <- as.numeric(Segments[
-        as.numeric(S_ID + 1),
-        "Node ID #1"
-      ])
+      N_ID_1 <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
       Node_1 <- Nodes[as.numeric(N_ID_1 + 1), ]
 
-      N_ID_2 <- as.numeric(Segments[
-        as.numeric(S_ID + 1),
-        "Node ID #2"
-      ])
+      N_ID_2 <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
       Node_2 <- Nodes[as.numeric(N_ID_2 + 1), ]
+      
 
       if (abs(Node_1["Y Coord"] - y["Y.Coord"]) < abs(Node_2["Y Coord"] - y["Y.Coord"])) {
         Minus[i, 1:8] <- cbind(
           Node_1,
-          get(colnames(Segments)[x])[
-            i,
-            "Relative_minus_position"
-          ]
+          get(colnames(Segments)[x])[i, "Relative_minus_position"]
         )
 
         Minus[i, 1] <- x
@@ -134,10 +118,7 @@ End_distribution_Minus <- function(x, y) {
       } else {
         Minus[i, 1:8] <- cbind(
           Node_2,
-          get(colnames(Segments)[x])[
-            i,
-            "Relative_minus_position"
-          ]
+          get(colnames(Segments)[x])[i, "Relative_minus_position"]
         )
 
         Minus[i, 1] <- x

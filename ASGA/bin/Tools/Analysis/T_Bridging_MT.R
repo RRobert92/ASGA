@@ -21,43 +21,34 @@ Point_interaction <- function(x) {
 
   p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x, 2] + (MT_point_config)) &
     `X Coord` >= as.numeric(Points[x, 2] - (MT_point_config))), ]
+  
   p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Points[x, 3] + (MT_point_config * 2)) &
     `Y Coord` >= as.numeric(Points[x, 3] - (MT_point_config))), ]
+  
   p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(Points[x, 4] + (MT_point_config * 2)) &
     `Z Coord` >= as.numeric(Points[x, 4] - (MT_point_config))), ]
-  p_to_P[5:7] <- Points[
-    x,
-    2:4
-  ]
+  
+  p_to_P[5:7] <- Points[x, 2:4]
 
   p_to_P$dist <- apply(
     p_to_P[2:7],
     1,
-    function(y) {
-      dist(matrix(y,
-        nrow = 2,
-        byrow = TRUE
-      ))
-    }
+    function(y) {dist(matrix(y, nrow = 2, byrow = TRUE))}
   )
 
   DF_1 <- data.frame(
-    p_to_P[
-      with(p_to_P, dist <= MT_point_config & dist > 0),
-      "Point_ID"
-    ],
-    p_to_P[
-      with(p_to_P, dist <= MT_point_config & dist > 0),
-      "dist"
-    ]
+    p_to_P[with(p_to_P, dist <= MT_point_config & dist > 0), "Point_ID"],
+    p_to_P[with(p_to_P, dist <= MT_point_config & dist > 0), "dist"]
   )
   names(DF_1)[1] <- "Point_ID_2"
+  
   DF_1 <- data.frame(
     Points[x, 1],
     DF_1
   )
   names(DF_1)[1] <- "Point_ID_1"
   names(DF_1)[3] <- "dist"
+  
   DF_1 <- cbind(DF_1, c(DF_1[1] - DF_1[2]))
   names(DF_1)[4] <- "V1"
 
@@ -68,6 +59,7 @@ Segment_to_point <- function(x) {
   # Assign segments to the points ----------------------------------------------------------------------
   Length_estiamtion <- tibble(round(Segments$length / 190, 0))
   names(Length_estiamtion)[1] <- "no"
+  
   Length_estiamtion_df <- tibble()
   for (i in 1:nrow(Length_estiamtion)) {
     Length_estiamtion_df[i, 1] <- sum(Length_estiamtion$no[1:i]) - 100
@@ -77,12 +69,10 @@ Segment_to_point <- function(x) {
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
-  Segment_ID <- foreach(
-    i = 1:nrow(MT_Interaction),
-    .combine = rbind,
-    .export = ls(.GlobalEnv)
+  Segment_ID <- foreach(i = 1:nrow(MT_Interaction), .combine = rbind, .export = ls(.GlobalEnv)
   ) %dopar% {
     j <- which.min(as.matrix(abs(Length_estiamtion_df[1] - MT_Interaction[i, x]))) - 5
+    
     if (j < 1) {
       j <- 1
     }
@@ -104,25 +94,18 @@ Segment_to_point <- function(x) {
   stopCluster(cl)
 
   Segment_ID <- tibble(Segments_ID = Segment_ID)
-  DF <- cbind(
-    MT_Interaction,
-    Segment_ID
-  )
+  DF <- cbind(MT_Interaction,Segment_ID)
 
   if (x == 2) {
     Compare_ID <- tibble(Test = apply(
       DF[4:5],
       1,
-      function(y) {
-        y[1] == y[2]
-      }
+      function(y) {y[1] == y[2]}
     ))
 
-    DF <- cbind(
-      DF,
-      Compare_ID
-    )
+    DF <- cbind(DF, Compare_ID)
     DF <- DF[with(DF, `Test` == FALSE), 1:5]
   }
+  
   DF
 }

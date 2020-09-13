@@ -17,20 +17,14 @@
 
 # Relative Position for Pole1 ---------------------------------------------------------------------------
 relativ_pos_1 <- function(x, y) {
-  relativ_pos_part1 <- lapply(
-    y[3],
-    function(z) {
-      y[3] - Pole1[1, 2]
-    }
-  )
+  relativ_pos_part1 <- lapply(y[3], function(z) {y[3] - Pole1[1, 2]})
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y Coord"]][["Y Coord"]])
 
   relativ_pos_part2 <- x[1, 3] - Pole1[1, 2]
+  
   relativ_positon <- lapply(
     relativ_pos_part1,
-    function(z) {
-      round(relativ_pos_part1[1] / relativ_pos_part2, 2)
-    }
+    function(z) {round(relativ_pos_part1[1] / relativ_pos_part2, 2)}
   )
 
   relat_pos <- data.frame(relativ_positon[["relativ_pos_part1...Y.Coord......Y.Coord..."]][["relativ_pos_part1...Y.Coord......Y.Coord..."]])
@@ -40,20 +34,14 @@ relativ_pos_1 <- function(x, y) {
 
 # Relative Position for Pole2 ---------------------------------------------------------------------------
 relativ_pos_2 <- function(x, y) {
-  relativ_pos_part1 <- lapply(
-    y[3],
-    function(z) {
-      y[3] - Pole2[1, 2]
-    }
-  )
+  relativ_pos_part1 <- lapply(y[3], function(z) {y[3] - Pole2[1, 2]})
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y Coord"]][["Y Coord"]])
 
   relativ_pos_part2 <- x[1, 3] - Pole2[1, 2]
+  
   relativ_positon <- lapply(
     relativ_pos_part1,
-    function(z) {
-      round(relativ_pos_part1[1] / relativ_pos_part2, 2)
-    }
+    function(z) {round(relativ_pos_part1[1] / relativ_pos_part2, 2)}
   )
 
   relat_pos <- data.frame(relativ_positon[["relativ_pos_part1...Y.Coord......Y.Coord..."]][["relativ_pos_part1...Y.Coord......Y.Coord..."]])

@@ -24,9 +24,11 @@ A_End_Morphology <- function(input, output, session) {
     Minus_end_morphology_Pole1 <<- End_distribution_Minus(which(colnames(Segments) == "Pole1_00"), 1)
 
     progressSweetAlert(
-      session = session, id = "P_End_Morphology1",
+      session = session, 
+      id = "P_End_Morphology1",
       title = "Calcualting (+) & (-) end morphology for the Pole_1...",
-      display_pct = TRUE, value = 0
+      display_pct = TRUE, 
+      value = 0
     )
 
     for (i in as.numeric(which(colnames(Segments) == "Pole1_00") + 1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
@@ -36,34 +38,22 @@ A_End_Morphology <- function(input, output, session) {
 
           assign(
             "DF",
-            End_distribution_Plus(
-              i,
-              1
-            )
+            End_distribution_Plus(i, 1)
           )
 
           assign(
             "Plus_end_morphology_Pole1",
-            rbind(
-              Plus_end_morphology_Pole1,
-              DF
-            )
+            rbind(Plus_end_morphology_Pole1, DF)
           )
 
           assign(
             "DF",
-            End_distribution_Minus(
-              i,
-              1
-            )
+            End_distribution_Minus(i, 1)
           )
 
           assign(
             "Minus_end_morphology_Pole1",
-            rbind(
-              Minus_end_morphology_Pole1,
-              DF
-            )
+            rbind(Minus_end_morphology_Pole1, DF)
           )
         },
         error = function(e) {}
@@ -72,10 +62,7 @@ A_End_Morphology <- function(input, output, session) {
       updateProgressBar(
         session = session,
         id = "P_End_Morphology1",
-        value = round(
-          (i - 1) / total * 100,
-          0
-        )
+        value = round((i - 1) / total * 100, 0)
       )
       Sys.sleep(0.1)
     }
@@ -122,6 +109,7 @@ A_End_Morphology <- function(input, output, session) {
       )
       names(Minus_end_morphology_Pole1)[2] <- "EndType_1"
     }
+    
     Plus_end_morphology_Pole1 <<- Plus_end_morphology_Pole1
     Minus_end_morphology_Pole1 <<- Minus_end_morphology_Pole1
 
@@ -138,9 +126,11 @@ A_End_Morphology <- function(input, output, session) {
     )
 
     progressSweetAlert(
-      session = session, id = "P_End_Morphology2",
+      session = session, 
+      id = "P_End_Morphology2",
       title = "Calcualting (+) & (-) end morphology for the Pole_2...",
-      display_pct = TRUE, value = 0
+      display_pct = TRUE, 
+      value = 0
     )
 
     for (i in as.numeric(which(colnames(Segments) == "Pole2_00") + 1):as.numeric(ncol(Segments) - 4)) {
@@ -150,34 +140,22 @@ A_End_Morphology <- function(input, output, session) {
 
           assign(
             "DF",
-            End_distribution_Plus(
-              i,
-              2
-            )
+            End_distribution_Plus(i, 2)
           )
 
           assign(
             "Plus_end_morphology_Pole2",
-            rbind(
-              Plus_end_morphology_Pole2,
-              DF
-            )
+            rbind(Plus_end_morphology_Pole2, DF)
           )
 
           assign(
             "DF",
-            End_distribution_Minus(
-              i,
-              2
-            )
+            End_distribution_Minus(i, 2)
           )
 
           assign(
             "Minus_end_morphology_Pole2",
-            rbind(
-              Minus_end_morphology_Pole2,
-              DF
-            )
+            rbind(Minus_end_morphology_Pole2, DF)
           )
         },
         error = function(e) {}
@@ -186,10 +164,7 @@ A_End_Morphology <- function(input, output, session) {
       updateProgressBar(
         session = session,
         id = "P_End_Morphology2",
-        value = round(
-          (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-          0
-        )
+        value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
       )
       Sys.sleep(0.1)
     }
@@ -240,6 +215,7 @@ A_End_Morphology <- function(input, output, session) {
       },
       error = function(e) {}
     )
+    
     tryCatch(
       {
         Plus_end_morphology_Pole2 <<- Plus_end_morphology_Pole2

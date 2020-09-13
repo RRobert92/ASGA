@@ -11,8 +11,7 @@
 
 # Style of the setting for the plot --------------------------------------------
 Report_Plot_Settings <- function(input, output, session) {
-  tags$div(
-    class = "splash-report-code",
+  tags$div(class = "splash-report-code",
     fluidRow(
       column(
         4,
@@ -55,9 +54,7 @@ Report_Plot_Settings <- function(input, output, session) {
 
     fluidRow(column(
       12,
-
-      tags$div(
-        class = "table-GS-Center",
+      tags$div(class = "table-GS-Center",
         actionBttn(
           inputId = "Refresh",
           label = "Refresh",
@@ -136,17 +133,13 @@ Report_Plot <- function(input, output, session) {
           if (get(paste("Data_bin", i, sep = "_")) == "P1") {
             assign(paste("Data_", Plot_Data[i, "V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
               get(paste("Data_", Plot_Data[i, "V1"], "_", Plot_Data[i, "V2"], "_bin", sep = "")) %>%
-                rename(
-                  KMTs_per_kinetochore = No_of_KMTs_at_kinetochore_P1...1.
-                ),
+                rename(KMTs_per_kinetochore = No_of_KMTs_at_kinetochore_P1...1.),
               envir = .GlobalEnv
             )
           } else if (get(paste("Data_bin", i, sep = "_")) == "P2") {
             assign(paste("Data_", Plot_Data[i, "V1"], "_", Plot_Data[i, "V2"], "_bin", sep = ""),
               get(paste("Data_", Plot_Data[i, "V1"], "_", Plot_Data[i, "V2"], "_bin", sep = "")) %>%
-                rename(
-                  KMTs_per_kinetochore = No_of_KMTs_at_kinetochore_P2...1.
-                ),
+                rename(KMTs_per_kinetochore = No_of_KMTs_at_kinetochore_P2...1.),
               envir = .GlobalEnv
             )
           }
@@ -273,10 +266,7 @@ Report_Plot <- function(input, output, session) {
               )
             }
 
-            All_LD <<- data.frame(
-              Data = "Average",
-              All_LD["length"]
-            )
+            All_LD <<- data.frame(Data = "Average", All_LD["length"])
 
             P2 <<- P2 + geom_density(data = All_LD, aes(length), kernel = "gaussian", size = 1, color = "darkred", linetype = "solid")
           },

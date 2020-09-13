@@ -23,6 +23,7 @@ A_KMT_number <- function(input, output, session) {
   names(KMTs_to_the_Pole1_and_length)[3] <- "Minus end dist."
   names(KMTs_to_the_Pole1_and_length)[4] <- "Plus end dist. to k-core"
   names(KMTs_to_the_Pole1_and_length)[5] <- "Plus end dist. to pole"
+  
   KMTs_to_the_Pole1_and_length <- as.data.frame(KMTs_to_the_Pole1_and_length)
 
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
@@ -32,9 +33,11 @@ A_KMT_number <- function(input, output, session) {
 
 
   progressSweetAlert(
-    session = session, id = "P_KMT_number1_1",
+    session = session, 
+    id = "P_KMT_number1_1",
     title = "Calculating no. of KMTs reaching the pole1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   # Analyze KMT at the Pole1 -----------------------------------------------------
@@ -46,10 +49,7 @@ A_KMT_number <- function(input, output, session) {
           KMTs_to_the_Pole(i)
         )
         names(DF1)[1] <- "No. of KMTs"
-        KMTs_at_the_Pole1 <- rbind(
-          KMTs_at_the_Pole1,
-          DF1
-        )
+        KMTs_at_the_Pole1 <- rbind(KMTs_at_the_Pole1, DF1)
 
         assign(
           "DF2",
@@ -62,10 +62,7 @@ A_KMT_number <- function(input, output, session) {
         names(DF2)[4] <- "Plus end dist. to k-core"
         names(DF2)[5] <- "Plus end dist. to pole"
 
-        KMTs_to_the_Pole1_and_length <- rbind(
-          KMTs_to_the_Pole1_and_length,
-          DF2
-        )
+        KMTs_to_the_Pole1_and_length <- rbind(KMTs_to_the_Pole1_and_length, DF2)
         KMTs_to_the_Pole1_and_length <- na.omit(KMTs_to_the_Pole1_and_length)
       },
       error = function(e) {}
@@ -75,10 +72,7 @@ A_KMT_number <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_KMT_number1_1",
-      value = round(
-        (i - 1) / total * 100,
-        0
-      )
+      value = round((i - 1) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
@@ -112,9 +106,11 @@ A_KMT_number <- function(input, output, session) {
   DF2 <- data.frame()
 
   progressSweetAlert(
-    session = session, id = "P_KMT_number2_1",
+    session = session, 
+    id = "P_KMT_number2_1",
     title = "Calculating no. of KMTs reaching the pole2...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE,
+    value = 0
   )
 
   # Analyze KMT at the Pole2 -----------------------------------------------------
@@ -126,10 +122,7 @@ A_KMT_number <- function(input, output, session) {
           KMTs_to_the_Pole(i)
         )
         names(DF1)[1] <- "No. of KMTs"
-        KMTs_at_the_Pole2 <- rbind(
-          KMTs_at_the_Pole2,
-          DF1
-        )
+        KMTs_at_the_Pole2 <- rbind(KMTs_at_the_Pole2, DF1)
 
         assign(
           "DF2",
@@ -142,10 +135,7 @@ A_KMT_number <- function(input, output, session) {
         names(DF2)[4] <- "Plus end dist. to k-core"
         names(DF2)[5] <- "Plus end dist. to pole"
 
-        KMTs_to_the_Pole2_and_length <- rbind(
-          KMTs_to_the_Pole2_and_length,
-          DF2
-        )
+        KMTs_to_the_Pole2_and_length <- rbind(KMTs_to_the_Pole2_and_length, DF2)
         KMTs_to_the_Pole2_and_length <- na.omit(KMTs_to_the_Pole2_and_length)
       },
       error = function(e) {}
@@ -155,10 +145,7 @@ A_KMT_number <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_KMT_number2_1",
-      value = round(
-        (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-        0
-      )
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
@@ -179,9 +166,11 @@ A_KMT_number <- function(input, output, session) {
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 
   progressSweetAlert(
-    session = session, id = "P_KMT_number1_2",
+    session = session, 
+    id = "P_KMT_number1_2",
     title = "Counting no. of KMTs at each kinetochore from the Pole1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in as.numeric(which(colnames(Segments) == "Pole1_00") + 1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
@@ -192,10 +181,7 @@ A_KMT_number <- function(input, output, session) {
           No_of_KMTs(i)
         )
         names(DF)[1] <- "No. of KMTs"
-        No_of_KMTs_at_kinetochore_P1 <- rbind(
-          No_of_KMTs_at_kinetochore_P1,
-          DF
-        )
+        No_of_KMTs_at_kinetochore_P1 <- rbind(No_of_KMTs_at_kinetochore_P1, DF)
       },
       error = function(e) {}
     )
@@ -203,10 +189,7 @@ A_KMT_number <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_KMT_number1_2",
-      value = round(
-        (i - 1) / total * 100,
-        0
-      )
+      value = round((i - 1) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
@@ -228,9 +211,11 @@ A_KMT_number <- function(input, output, session) {
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
   progressSweetAlert(
-    session = session, id = "P_KMT_number2_2",
+    session = session, 
+    id = "P_KMT_number2_2",
     title = "Counting no. of KMTs at each kinetochore from the Pole2...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00") + 1):as.numeric(ncol(Segments) - 4)) {
@@ -243,20 +228,14 @@ A_KMT_number <- function(input, output, session) {
 
         names(DF)[1] <- "No. of KMTs"
 
-        No_of_KMTs_at_kinetochore_P2 <- rbind(
-          No_of_KMTs_at_kinetochore_P2,
-          DF
-        )
+        No_of_KMTs_at_kinetochore_P2 <- rbind(No_of_KMTs_at_kinetochore_P2, DF)
       },
       error = function(e) {}
     )
     updateProgressBar(
       session = session,
       id = "P_KMT_number2_2",
-      value = round(
-        (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-        0
-      )
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }

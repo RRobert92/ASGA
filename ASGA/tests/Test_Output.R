@@ -14,6 +14,7 @@ Run_Test <- function(input, output, session) {
   withProgress(message = "Analyzing:", value = 1, {
     incProgress(1, detail = "Test in progress...")
     Sys.sleep(0.1)
+
     Test_value <<- tibble()
     current_data <<- 1
 
@@ -148,7 +149,7 @@ Run_Test <- function(input, output, session) {
       }
     )
     names(Test_value)[12] <- "Save"
-    
+
     Test_value <<- Test_value
     File_name <<- as_tibble(ls(pattern = "Data_", envir = .GlobalEnv))
     File_name <<- na.omit(File_name)
@@ -158,6 +159,7 @@ Run_Test <- function(input, output, session) {
 # Test analysis results --------------------------------------------------------
 Test_Test <- function(input, output, session) {
   Test_df <<- data.frame()
+  
   Test_df[1, 1] <<- nrow(File_name) == 43
   Test_df[1, 2] <<- ncol(Test_value) == length(Test_value[Test_value == TRUE])
 

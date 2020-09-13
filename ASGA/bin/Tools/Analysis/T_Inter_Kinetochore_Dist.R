@@ -21,25 +21,15 @@ Inter_Kinetochore_Dist <- function() {
     tryCatch(
       {
         DF_Pole1 <- colnames(Segments)[i]
-        DF <- data.frame(str_split(gsub(
-          "[^[:digit:]]",
-          "Pole_1",
-          DF_Pole1
-        ),
-        pattern = "Pole_1"
-        ))
-        DF_Pole2 <- paste("Pole2",
-          DF[6, 1],
-          sep = "_"
-        )
+        DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
+        
+        DF_Pole2 <- paste("Pole2", DF[6, 1], sep = "_")
 
         Plus_end_1 <- data.frame()
         for (j in 1:nrow(get(DF_Pole1))) {
-          Plus_end_1[j, 1:3] <- get(paste(DF_Pole1,
-            j,
-            sep = "_"
-          ))[1, 2:4]
+          Plus_end_1[j, 1:3] <- get(paste(DF_Pole1, j, sep = "_"))[1, 2:4]
         }
+        
         Plus_end_1 <- data.frame(
           X_Median = c(median(as.matrix(Plus_end_1[1]))),
           Y_Median = c(median(as.matrix(Plus_end_1[2]))),
@@ -48,10 +38,7 @@ Inter_Kinetochore_Dist <- function() {
 
         Plus_end_2 <- data.frame()
         for (j in 1:nrow(get(DF_Pole2))) {
-          Plus_end_2[j, 1:3] <- get(paste(DF_Pole2,
-            j,
-            sep = "_"
-          ))[1, 2:4]
+          Plus_end_2[j, 1:3] <- get(paste(DF_Pole2, j, sep = "_"))[1, 2:4]
         }
         Plus_end_2 <- data.frame(
           X_Median = c(median(as.matrix(Plus_end_2[1]))),
@@ -71,6 +58,7 @@ Inter_Kinetochore_Dist <- function() {
 
   DF <- Inter_Kinetochore_Distance
   names(DF)[1] <- "Inter-kinetochore distance"
+  
   na.omit(DF)
 }
 
@@ -84,17 +72,9 @@ Compare_KMTs_no_for_sister <- function() {
     tryCatch(
       {
         DF_Pole1 <- colnames(Segments)[i]
-        DF <- data.frame(str_split(gsub(
-          "[^[:digit:]]",
-          "Pole_1",
-          DF_Pole1
-        ),
-        pattern = "Pole_1"
-        ))
-        DF_Pole2 <- paste("Pole2",
-          DF[6, 1],
-          sep = "_"
-        )
+        DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
+        
+        DF_Pole2 <- paste("Pole2", DF[6, 1], sep = "_")
 
         KMT_end_1 <- nrow(get(DF_Pole1))
         KMT_end_2 <- nrow(get(DF_Pole2))
@@ -120,14 +100,9 @@ Compare_KMTs_no_for_sister <- function() {
     Inter_Kinetochore_Distance,
     Inter_Kinetochore_Distance
   )
-  KMT <- rbind(
-    KMTs_at_Pole1,
-    KMTs_at_Pole2
-  )
-  DF <- cbind(
-    Dist,
-    KMT
-  )
+  KMT <- rbind(KMTs_at_Pole1, KMTs_at_Pole2)
+  
+  DF <- cbind(Dist, KMT)
   names(DF)[1] <- "Inter-kinetochore distance"
   names(DF)[2] <- "KMTs no."
 
@@ -172,5 +147,6 @@ Compare_KMTs_delta_for_sister <- function() {
   DF <- cbind(Inter_Kinetochore_Distance, Delta)
   names(DF)[1] <- "Inter-kinetochore distance"
   names(DF)[2] <- "Delta of KMTs"
+  
   DF
 }

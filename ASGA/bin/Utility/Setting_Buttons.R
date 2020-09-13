@@ -12,8 +12,8 @@
 # Setting_BUttons_UI  ----------------------------------------------------------
 Setting_Buttons_UI <- function(id) {
   ns <- NS(id)
-  column(
-    4,
+
+  column(4,
     materialSwitch(
       inputId = ns("All_Anaysis"),
       label = "All",
@@ -21,6 +21,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("KMT_number"),
       label = "No of KMTs at a Pole and a K-core",
@@ -28,6 +29,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("IKD"),
       label = "Inter-kinetochore Distance",
@@ -35,6 +37,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("Curvature"),
       label = "KMT curvature",
@@ -42,6 +45,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("End_Morphology"),
       label = "End Morphology",
@@ -49,6 +53,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("KMT_Torque"),
       label = "KMT Torque (Beta)",
@@ -56,6 +61,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("Fiber_Area"),
       label = "Fiber Area & Neighorhood Densit",
@@ -63,6 +69,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("Fiber_Curv_Length"),
       label = "Fiber length & curvature",
@@ -70,6 +77,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("k_core_area"),
       label = "Area and position of the kinetochore",
@@ -77,6 +85,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("KMT_Minus_End_Seeds"),
       label = "KMTs Nucleation of MT",
@@ -84,6 +93,7 @@ Setting_Buttons_UI <- function(id) {
       right = TRUE,
       status = "info"
     ),
+
     materialSwitch(
       inputId = ns("MT_Interaction"),
       label = "MT Interaction (Alpha)",
@@ -101,6 +111,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`KMT_number`, {
     All_Closed()
     Any_One()
+
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -113,9 +124,10 @@ Setting_Buttons_Server <- function(input, output, session) {
 
     if (input$`KMT_number` == TRUE) {
       inputSweetAlert(
-        session = session, 
+        session = session,
         type = "info",
-        inputId = "KMT_no_config", input = "text",
+        inputId = "KMT_no_config",
+        input = "text",
         title = "Set-up analysis parameter",
         text = "Threshold for the microtubule minus-end interaction with the spindle pole. Unit [um]"
       )
@@ -133,6 +145,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`IKD`, {
     All_Closed()
     Any_One()
+
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -144,9 +157,10 @@ Setting_Buttons_Server <- function(input, output, session) {
 
     if (input$`IKD` == TRUE) {
       confirmSweetAlert(
-        session = session, 
+        session = session,
         type = "question",
-        inputId = "IKD_confirmation", input = "text",
+        inputId = "IKD_confirmation",
+        input = "text",
         title = "Want to confirm ?",
         text = "The Inter-Kinetochore distance will be calculated. This analysis relies on corresponding k-fiber labels.
       e.g. sister-kinetochore for Pole1_00 is Pole2_00.",
@@ -154,9 +168,9 @@ Setting_Buttons_Server <- function(input, output, session) {
         btn_colors = c("#C95050", "#a5dc86")
       )
     }
-    
+
     observeEvent(input[["IKD_confirmation"]], {
-      if(input[["IKD_confirmation"]] == FALSE){
+      if (input[["IKD_confirmation"]] == FALSE) {
         updateMaterialSwitch(session, "IKD", FALSE)
       }
     })
@@ -166,6 +180,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`Curvature`, {
     All_Closed()
     Any_One()
+
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -180,6 +195,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`End_Morphology`, {
     All_Closed()
     Any_One()
+
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -194,6 +210,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`KMT_Torque`, {
     All_Closed()
     Any_One()
+
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -208,6 +225,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`Fiber_Area`, {
     All_Closed()
     Any_One()
+
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -220,9 +238,10 @@ Setting_Buttons_Server <- function(input, output, session) {
 
     if (input$`Fiber_Area` == TRUE) {
       inputSweetAlert(
-        session = session, 
+        session = session,
         type = "info",
-        inputId = "Fiber_area_config", input = "text",
+        inputId = "Fiber_area_config",
+        input = "text",
         title = "Set-up analysis parameter",
         text = "Bin size used to calculate fiber area every specified distance on the spindle pole axis. Unit [nm]"
       )
@@ -240,6 +259,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`KMT_Minus_End_Seeds`, {
     All_Closed()
     Any_One()
+
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -252,9 +272,10 @@ Setting_Buttons_Server <- function(input, output, session) {
 
     if (input$`KMT_Minus_End_Seeds` == TRUE) {
       inputSweetAlert(
-        session = session, 
+        session = session,
         type = "info",
-        inputId = "Minus_end_config", input = "text",
+        inputId = "Minus_end_config",
+        input = "text",
         title = "Set-up analysis parameter",
         text = "Interaction distance between kinetochore microtubule and microtubule minus-end. Unit [um]"
       )
@@ -272,6 +293,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`Fiber_Curv_Length`, {
     All_Closed()
     Any_One()
+    
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -288,6 +310,7 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`k_core_area`, {
     All_Closed()
     Any_One()
+    
     Sys.sleep(0.1)
 
     output$`Tool_Info_1` <- renderUI({
@@ -304,19 +327,20 @@ Setting_Buttons_Server <- function(input, output, session) {
     All_Closed()
     Any_One()
     Sys.sleep(0.1)
-    
+
     output$`Tool_Info_1` <- renderUI({
       if (input$`MT_Interaction` == TRUE) {
         "This tool allowas to calculate interaction between every MT in the data set.
         For more information see 'Wiki' page"
       }
     })
-    
+
     if (input$`MT_Interaction` == TRUE) {
       confirmSweetAlert(
-        session = session, 
+        session = session,
         type = "question",
-        inputId = "Interaction_confirmation", input = "text",
+        inputId = "Interaction_confirmation", 
+        input = "text",
         title = "Want to confirm ?",
         text = "These tools will calculate the interaction of every MT. It required long computation time,
         and therefore by standard, this analysis is switched off!
@@ -325,30 +349,31 @@ Setting_Buttons_Server <- function(input, output, session) {
         btn_colors = c("#C95050", "#a5dc86")
       )
     }
-    
+
     observeEvent(input[["Interaction_confirmation"]], {
-      if(input[["Interaction_confirmation"]] == FALSE){
+      if (input[["Interaction_confirmation"]] == FALSE) {
         updateMaterialSwitch(session, "MT_Interaction", FALSE)
-      } else if (input[["Interaction_confirmation"]] == TRUE && 
-                 input$`MT_Interaction` == TRUE){
+      } else if (input[["Interaction_confirmation"]] == TRUE &&
+        input$`MT_Interaction` == TRUE) {
         inputSweetAlert(
-          session = session, 
+          session = session,
           type = "info",
-          inputId = "MT_point_config", input = "text",
+          inputId = "MT_point_config", 
+          input = "text",
           title = "Set-up analysis parameter",
           text = "Interaction distance between microtubule and other microtubule. Unit [um]"
         )
       }
     })
-    
+
     observeEvent(input[["MT_point_config"]], {
       assign("MT_point_config",
-             as.numeric(input[["MT_point_config"]]),
-             envir = .GlobalEnv
+        as.numeric(input[["MT_point_config"]]),
+        envir = .GlobalEnv
       )
     })
   })
-  
+
   # Reactivity for all button --------------------------------------------------
 
   observeEvent(input$`All_Anaysis`, {

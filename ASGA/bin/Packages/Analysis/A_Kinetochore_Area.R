@@ -17,9 +17,11 @@ A_K_Core_Area <- function(input, output, session) {
   K_Core_Area <<- data.frame()
 
   progressSweetAlert(
-    session = session, id = "P_k_core_area1",
+    session = session, 
+    id = "P_k_core_area1",
     title = "Calculating kinetochore area for the Pole1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
@@ -54,10 +56,7 @@ A_K_Core_Area <- function(input, output, session) {
           envir = .GlobalEnv
         )
         assign("K_Core_Area",
-          rbind(
-            K_Core_Area,
-            KCA
-          ),
+          rbind(K_Core_Area, KCA),
           envir = .GlobalEnv
         )
       },
@@ -67,10 +66,7 @@ A_K_Core_Area <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_k_core_area1",
-      value = round(
-        (i - 1) / total * 100,
-        0
-      )
+      value = round((i - 1) / total * 100,0)
     )
     Sys.sleep(0.1)
   }
@@ -84,9 +80,11 @@ A_K_Core_Area <- function(input, output, session) {
   K_Core_Area <<- data.frame()
 
   progressSweetAlert(
-    session = session, id = "P_k_core_area2",
+    session = session, 
+    id = "P_k_core_area2",
     title = "Calculating kinetochore area for the Pole2...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
@@ -121,10 +119,7 @@ A_K_Core_Area <- function(input, output, session) {
           envir = .GlobalEnv
         )
         assign("K_Core_Area",
-          rbind(
-            K_Core_Area,
-            KCA
-          ),
+          rbind(K_Core_Area, KCA),
           envir = .GlobalEnv
         )
       },
@@ -134,10 +129,7 @@ A_K_Core_Area <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_k_core_area2",
-      value = round(
-        (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-        0
-      )
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }

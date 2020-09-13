@@ -21,10 +21,7 @@
 #
 KMTs_torque_in_fiber <- function(x) {
   angle1 <- data.frame()
-  for (j in 1:ncol(select(
-    get(paste(colnames(Segments)[x], "fiber", sep = "_")),
-    starts_with("V")
-  ))) {
+  for (j in 1:ncol(select(get(paste(colnames(Segments)[x], "fiber", sep = "_")), starts_with("V")))) {
     tryCatch(
       {
         angle <- data.frame()

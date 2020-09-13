@@ -24,9 +24,11 @@ A_Curvature <- function(input, output, session) {
   )
 
   progressSweetAlert(
-    session = session, id = "P_TL_Curvature1",
+    session = session, 
+    id = "P_TL_Curvature1",
     title = "Calculating total & local curvature of KMTs for the Pole1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in as.numeric(which(colnames(Segments) == "Pole1_00") + 1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
@@ -38,10 +40,7 @@ A_Curvature <- function(input, output, session) {
         )
         assign(
           "KMTs_total_Curvature_P1",
-          rbind(
-            KMTs_total_Curvature_P1,
-            DF
-          )
+          rbind(KMTs_total_Curvature_P1, DF)
         )
       },
       error = function(e) {}
@@ -55,10 +54,7 @@ A_Curvature <- function(input, output, session) {
         )
         assign(
           "KMTs_local_Curvature_P1",
-          rbind(
-            KMTs_local_Curvature_P1,
-            DF
-          )
+          rbind(KMTs_local_Curvature_P1, DF)
         )
       },
       error = function(e) {}
@@ -67,14 +63,12 @@ A_Curvature <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_TL_Curvature1",
-      value = round(
-        (i - 1) / total * 100,
-        0
-      )
+      value = round((i - 1) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
   closeSweetAlert(session = session)
+  
   KMTs_total_Curvature_P1 <<- KMTs_total_Curvature_P1
   KMTs_local_Curvature_P1 <<- KMTs_local_Curvature_P1
 
@@ -91,9 +85,11 @@ A_Curvature <- function(input, output, session) {
   }
 
   progressSweetAlert(
-    session = session, id = "P_TL_Curvature2",
+    session = session, 
+    id = "P_TL_Curvature2",
     title = "Calculating total & local curvature of KMTs for the Pole2...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00") + 1):as.numeric(ncol(Segments) - 4)) {
@@ -106,10 +102,7 @@ A_Curvature <- function(input, output, session) {
         )
         assign(
           "KMTs_total_Curvature_P2",
-          rbind(
-            KMTs_total_Curvature_P2,
-            DF
-          )
+          rbind(KMTs_total_Curvature_P2, DF)
         )
       },
       error = function(e) {}
@@ -124,10 +117,7 @@ A_Curvature <- function(input, output, session) {
         )
         assign(
           "KMTs_local_Curvature_P2",
-          rbind(
-            KMTs_local_Curvature_P2,
-            DF
-          )
+          rbind(KMTs_local_Curvature_P2, DF)
         )
       },
       error = function(e) {}
@@ -136,14 +126,12 @@ A_Curvature <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_TL_Curvature2",
-      value = round(
-        (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-        0
-      )
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
   closeSweetAlert(session = session)
+  
   KMTs_total_Curvature_P2 <<- KMTs_total_Curvature_P2
   KMTs_local_Curvature_P2 <<- KMTs_local_Curvature_P2
 }

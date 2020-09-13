@@ -31,17 +31,13 @@ Minus_end_seed <- function(x) {
             `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] - as.numeric(Minus_Distance * 2))), ]
           p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] + as.numeric(Minus_Distance * 2)) &
             `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] - as.numeric(Minus_Distance * 2))), ]
+          
           p_to_P[5:7] <- get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2:4]
 
           p_to_P$dist <- apply(
             p_to_P[2:7],
             1,
-            function(y) {
-              dist(matrix(y,
-                nrow = 2,
-                byrow = TRUE
-              ))
-            }
+            function(y) {dist(matrix(y, nrow = 2, byrow = TRUE))}
           )
           DF <- data.frame(
             p_to_P[with(p_to_P, dist <= Minus_Distance & dist >= 0), "Node ID"],
@@ -99,6 +95,7 @@ Minus_end_seed <- function(x) {
               N2_to_pole2 <- sqrt((Pole2[1, 1] - N2[1, 2])^2 +
                 (Pole2[1, 2] - N2[1, 3])^2 +
                 (Pole2[1, 3] - N2[1, 4])^2)
+              
               Node_to_Pole <- rbind(
                 N1_to_pole1,
                 N1_to_pole2,
@@ -131,10 +128,7 @@ Minus_end_seed <- function(x) {
                   (Pole1[1, 2] - Nodes[as.numeric(defin_end[k, 3] + 1), 3])^2 +
                   (Pole1[1, 3] - Nodes[as.numeric(defin_end[k, 3] + 1), 4])^2)
 
-                Node_to_Pole <- rbind(
-                  N1_to_pole1,
-                  N2_to_pole1
-                )
+                Node_to_Pole <- rbind(N1_to_pole1, N2_to_pole1)
 
                 if (which.min(as.matrix(Node_to_Pole)) == 1 && which.max(as.matrix(Node_to_Pole)) == 2) {
                   end_type[k, 1] <- "Minus"
@@ -153,10 +147,7 @@ Minus_end_seed <- function(x) {
                   (Pole2[1, 2] - Nodes[as.numeric(defin_end[k, 3] + 1), 3])^2 +
                   (Pole2[1, 3] - Nodes[as.numeric(defin_end[k, 3] + 1), 4])^2)
 
-                Node_to_Pole <- rbind(
-                  N1_to_pole2,
-                  N2_to_pole2
-                )
+                Node_to_Pole <- rbind(N1_to_pole2, N2_to_pole2)
 
                 if (which.min(as.matrix(Node_to_Pole)) == 1 && which.max(as.matrix(Node_to_Pole)) == 2) {
                   end_type[k, 1] <- "Minus"
@@ -168,10 +159,7 @@ Minus_end_seed <- function(x) {
               }
             }
           }
-          defin_end <- cbind(
-            defin_end,
-            end_type
-          )
+          defin_end <- cbind(defin_end, end_type)
 
           for (k in 1:nrow(DF)) {
             if (is.na(defin_end[k, 5]) || is.na(defin_end[k, 6])) {
@@ -206,10 +194,7 @@ Minus_end_seed <- function(x) {
           names(defin_end)[6] <- "Plus_end_dist"
           names(defin_end)[7] <- "Ellipse"
 
-          Minus_end <- rbind(
-            Minus_end,
-            defin_end
-          )
+          Minus_end <- rbind(Minus_end, defin_end)
         }
       }
     }
@@ -217,12 +202,10 @@ Minus_end_seed <- function(x) {
     list <- unique(Minus_end$Interactor_ID)
     Temp <- data.frame()
     for (k in list) {
-      DF <- Minus_end %>% filter_at(
-        vars("Interactor_ID"),
-        any_vars(. == k)
-      )
+      DF <- Minus_end %>% filter_at(vars("Interactor_ID"), any_vars(. == k))
       Temp[k, 1:7] <- DF[which.min(DF$p_to_P_dist), 1:7]
     }
+    
     Minus_end <- na.omit(Temp)
   }
 

@@ -15,9 +15,11 @@ A_KMT_Torque <- function(input, output, session) {
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 
   progressSweetAlert(
-    session = session, id = "P_Torque1",
+    session = session, 
+    id = "P_Torque1",
     title = "Calculating KMT torque for the Pole1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   bin <<- data.frame()
@@ -67,22 +69,17 @@ A_KMT_Torque <- function(input, output, session) {
           envir = .GlobalEnv
         )
         assign("Torque",
-          rbind(
-            Torque,
-            bin
-          ),
+          rbind(Torque, bin),
           envir = .GlobalEnv
         )
       },
       error = function(e) {}
     )
+    
     updateProgressBar(
       session = session,
       id = "P_Torque1",
-      value = round(
-        (i - 1) / total * 100,
-        0
-      )
+      value = round((i - 1) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
@@ -95,9 +92,11 @@ A_KMT_Torque <- function(input, output, session) {
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
   progressSweetAlert(
-    session = session, id = "P_Torque2",
+    session = session, 
+    id = "P_Torque2",
     title = "Calculating KMT torque for the Pole2...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE,
+    value = 0
   )
 
   bin <<- data.frame()
@@ -147,10 +146,7 @@ A_KMT_Torque <- function(input, output, session) {
           envir = .GlobalEnv
         )
         assign("Torque",
-          rbind(
-            Torque,
-            bin
-          ),
+          rbind(Torque, bin),
           envir = .GlobalEnv
         )
       },
@@ -160,10 +156,7 @@ A_KMT_Torque <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_Torque2",
-      value = round(
-        (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-        0
-      )
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }

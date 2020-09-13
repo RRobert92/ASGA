@@ -12,9 +12,11 @@
 Pre_Analysis <- function(input, output, session) {
   # Sort single KMT --------------------------------------------------------------
   progressSweetAlert(
-    session = session, id = "SingleKMT",
+    session = session, 
+    id = "SingleKMT",
     title = "Sorting data for single KMT",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   total <- as.numeric(ncol(Segments %>% select(starts_with("Pole"))))
@@ -26,33 +28,23 @@ Pre_Analysis <- function(input, output, session) {
     )
 
     j <- 1
+
     while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
-      assign(paste(colnames(Segments)[i],
-        j,
-        sep = "_"
-      ),
-      Select_Points(
-        j,
-        get(colnames(Segments)[i])
-      ),
-      envir = .GlobalEnv
+      assign(paste(colnames(Segments)[i], j, sep = "_"),
+        Select_Points(j, get(colnames(Segments)[i])),
+        envir = .GlobalEnv
       )
+
       j <- j + 1
     }
 
     j <- 1
     while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
-      assign(paste(colnames(Segments)[i],
-        j,
-        sep = "_"
-      ),
-      Find_XYZ(get(paste(
-        colnames(Segments)[i],
-        j,
-        sep = "_"
-      ))),
-      envir = .GlobalEnv
+      assign(paste(colnames(Segments)[i], j, sep = "_"),
+        Find_XYZ(get(paste(colnames(Segments)[i], j, sep = "_"))),
+        envir = .GlobalEnv
       )
+
       j <- j + 1
     }
 
@@ -67,25 +59,24 @@ Pre_Analysis <- function(input, output, session) {
 
   # Sort Points in KMT at a Pole1 ------------------------------------------------
   progressSweetAlert(
-    session = session, id = "Pre_Analysis",
+    session = session, 
+    id = "Pre_Analysis",
     title = "Sorting points based on (+) and (-) ends for the Pole_1...",
-    display_pct = TRUE, value = 1
+    display_pct = TRUE, 
+    value = 1
   )
+
   total <- 6
+
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
     tryCatch(
       {
         j <- 1
+
         while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
-          assign(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ),
-          Sort_by_distance_to_pole1(get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))),
-          envir = .GlobalEnv
+          assign(paste(colnames(Segments)[i], j, sep = "_"),
+            Sort_by_distance_to_pole1(get(paste(colnames(Segments)[i], j, sep = "_"))),
+            envir = .GlobalEnv
           )
 
           j <- j + 1
@@ -97,32 +88,25 @@ Pre_Analysis <- function(input, output, session) {
 
   # Sort Points in KMT at a Pole2 ------------------------------------------------
   z <- 2
+
   updateProgressBar(
     session = session,
     id = "Pre_Analysis",
     title = "Sorting points based on (+) and (-) ends for the Pole_2...",
-    value = round(
-      (z - 1) / total * 100,
-      0
-    )
+    value = round((z - 1) / total * 100, 0)
   )
   Sys.sleep(0.1)
 
 
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
     j <- 1
+
     tryCatch(
       {
         while (j <= as.numeric(nrow(get(colnames(Segments)[i])))) {
-          assign(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ),
-          Sort_by_distance_to_pole2(get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))),
-          envir = .GlobalEnv
+          assign(paste(colnames(Segments)[i], j, sep = "_"),
+            Sort_by_distance_to_pole2(get(paste(colnames(Segments)[i], j, sep = "_"))),
+            envir = .GlobalEnv
           )
 
           j <- j + 1
@@ -143,17 +127,20 @@ Pre_Analysis <- function(input, output, session) {
 
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
     j <- 1
+
     tryCatch(
       {
         while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
           Plus_end[j, 1:3] <<- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 2:4]
           j <- j + 1
         }
+
         Plus_end <<- data.frame(
           X_Median = c(median(as.matrix(na.omit(Plus_end[1])))),
           Y_Median = c(median(as.matrix(na.omit(Plus_end[2])))),
           Z_Median = c(median(as.matrix(na.omit(Plus_end[3]))))
         )
+
         Kinetochore_Avg[i, 1:3] <<- Plus_end
         Plus_end <- data.frame()
       },
@@ -164,12 +151,14 @@ Pre_Analysis <- function(input, output, session) {
   }
 
   Kinetochore_Avg <<- na.omit(Kinetochore_Avg)
+
   Pole_avg <<- rbind(Pole1, Pole2)
   Pole_avg <<- data.frame(
     X_Mean = c(mean(as.matrix(Pole_avg[1]))),
     Y_Mean = c(mean(as.matrix(Pole_avg[2]))),
     Z_Mean = c(mean(as.matrix(Pole_avg[3])))
   )
+
   Rx100 <<- data.frame()
   Rx100[1, 1] <<- max(Kinetochore_Avg[1])
   Rx100[1, 1] <<- abs(Rx100[1, 1] - Pole_avg[1])
@@ -192,14 +181,12 @@ Pre_Analysis <- function(input, output, session) {
 
   # Analyze Length Distribution for Pole1 --------------------------------------------------
   z <- 3
+
   updateProgressBar(
     session = session,
     id = "Pre_Analysis",
     title = "Calcualting legnth and ends positions for Pole_1...",
-    value = round(
-      (z - 1) / total * 100,
-      0
-    )
+    value = round((z - 1) / total * 100, 0)
   )
   Sys.sleep(0.1)
 
@@ -207,10 +194,7 @@ Pre_Analysis <- function(input, output, session) {
     tryCatch(
       {
         assign(paste(colnames(Segments)[i]),
-          Analyse_LD(
-            i,
-            Pole1
-          ),
+          Analyse_LD(i, Pole1),
           envir = .GlobalEnv
         )
       },
@@ -220,26 +204,22 @@ Pre_Analysis <- function(input, output, session) {
 
   # Analyze Length Distribution for Pole2 --------------------------------------------------
   z <- 4
+
   updateProgressBar(
     session = session,
     id = "Pre_Analysis",
     title = "Calcualting legnth and ends positions for Pole_2...",
-    value = round(
-      (z - 1) / total * 100,
-      0
-    )
+    value = round((z - 1) / total * 100, 0)
   )
   Sys.sleep(0.1)
 
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
     j <- 1
+
     tryCatch(
       {
         assign(paste(colnames(Segments)[i]),
-          Analyse_LD(
-            i,
-            Pole2
-          ),
+          Analyse_LD(i, Pole2),
           envir = .GlobalEnv
         )
       },
@@ -273,15 +253,9 @@ Pre_Analysis <- function(input, output, session) {
     get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Fiber_Name"],
     envir = .GlobalEnv
   )
+
   assign("LD_P1",
-    cbind(
-      LD_P1,
-      Plus_end_pos,
-      Dist_pole,
-      Elips,
-      Minus_dist,
-      k_fiber
-    ),
+    cbind(LD_P1, Plus_end_pos, Dist_pole, Elips, Minus_dist, k_fiber),
     envir = .GlobalEnv
   )
 
@@ -312,23 +286,14 @@ Pre_Analysis <- function(input, output, session) {
           get(paste(colnames(Segments)[i]))["Fiber_Name"],
           envir = .GlobalEnv
         )
+
         assign("DF_LD_P1",
-          cbind(
-            DF_LD,
-            DF_Plus_end,
-            DF_Dist_pole,
-            DF_Elips,
-            Minus_dist,
-            k_fiber
-          ),
+          cbind(DF_LD, DF_Plus_end, DF_Dist_pole, DF_Elips, Minus_dist, k_fiber),
           envir = .GlobalEnv
         )
 
         assign("LD_P1",
-          rbind(
-            LD_P1,
-            DF_LD_P1
-          ),
+          rbind(LD_P1, DF_LD_P1),
           envir = .GlobalEnv
         )
       },
@@ -363,15 +328,9 @@ Pre_Analysis <- function(input, output, session) {
         get(paste(colnames(Segments)[which(colnames(Segments) == "Pole2_00")]))["Fiber_Name"],
         envir = .GlobalEnv
       )
+
       assign("LD_P2",
-        cbind(
-          LD_P2,
-          Plus_end_pos,
-          Dist_pole,
-          Elips,
-          Minus_dist,
-          k_fiber
-        ),
+        cbind(LD_P2, Plus_end_pos, Dist_pole, Elips, Minus_dist, k_fiber),
         envir = .GlobalEnv
       )
     },
@@ -405,23 +364,14 @@ Pre_Analysis <- function(input, output, session) {
           get(paste(colnames(Segments)[i]))["Fiber_Name"],
           envir = .GlobalEnv
         )
+
         assign("DF_LD_P2",
-          cbind(
-            DF_LD,
-            DF_Plus_end,
-            DF_Dist_pole,
-            DF_Elips,
-            Minus_dist,
-            k_fiber
-          ),
+          cbind(DF_LD, DF_Plus_end, DF_Dist_pole, DF_Elips, Minus_dist, k_fiber),
           envir = .GlobalEnv
         )
 
         assign("LD_P2",
-          rbind(
-            LD_P2,
-            DF_LD_P2
-          ),
+          rbind(LD_P2, DF_LD_P2),
           envir = .GlobalEnv
         )
       },
@@ -435,10 +385,7 @@ Pre_Analysis <- function(input, output, session) {
     session = session,
     id = "Pre_Analysis",
     title = "Calcualting relative position for Pole_1...",
-    value = round(
-      (z - 1) / total * 100,
-      0
-    )
+    value = round((z - 1) / total * 100, 0)
   )
   Sys.sleep(0.1)
 
@@ -447,56 +394,32 @@ Pre_Analysis <- function(input, output, session) {
       {
         Point_KMT <- data.frame()
         for (j in 1:nrow(get(colnames(Segments)[i]))) {
-          Point_KMT[j, 1] <- get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))[1, 3]
+          Point_KMT[j, 1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 3]
         }
         Point_KMT <- which(Point_KMT[1] == min(Point_KMT))
-        longest <- get(paste(colnames(Segments)[i],
-          Point_KMT,
-          sep = "_"
-        ))
+        longest <- get(paste(colnames(Segments)[i], Point_KMT, sep = "_"))
 
         for (j in 1:nrow(get(paste(colnames(Segments)[i])))) {
-          assign(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ),
-          relativ_pos_1(
-            longest,
-            get(paste(colnames(Segments)[i],
-              j,
-              sep = "_"
-            ))
-          ),
-          envir = .GlobalEnv
+          assign(paste(colnames(Segments)[i], j, sep = "_"),
+            relativ_pos_1(longest, get(paste(colnames(Segments)[i], j, sep = "_"))),
+            envir = .GlobalEnv
           )
         }
+        
         Point_minus <- data.frame()
         for (j in 1:nrow(get(colnames(Segments)[i]))) {
-          Point_minus[j, 1] <- get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))), 5]
+          Point_minus[j, 1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))), 5]
         }
         names(Point_minus)[1] <- "Relative_minus_position"
 
         Point_plus <- data.frame()
         for (j in 1:nrow(get(colnames(Segments)[i]))) {
-          Point_plus[j, 1] <- get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))[1, 5]
+          Point_plus[j, 1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 5]
         }
         names(Point_plus)[1] <- "Relative_plus_position"
 
         assign(paste(colnames(Segments)[i]),
-          cbind(
-            get(paste(colnames(Segments)[i])),
-            Point_plus,
-            Point_minus
-          ),
+          cbind(get(paste(colnames(Segments)[i])), Point_plus, Point_minus),
           envir = .GlobalEnv
         )
       },
@@ -505,73 +428,48 @@ Pre_Analysis <- function(input, output, session) {
   }
 
   #  Analyze Relative Position for Pole2 --------------------------------------------------------
-
   z <- 6
+  
   updateProgressBar(
     session = session,
     id = "Pre_Analysis",
     title = "Calcualting relative position for Pole_2...",
-    value = round(
-      (z - 1) / total * 100,
-      0
-    )
+    value = round((z - 1) / total * 100,0)
   )
   Sys.sleep(0.1)
+  
   for (i in which(colnames(Segments) == "Pole2_00"):as.numeric(ncol(Segments) - 4)) {
     tryCatch(
       {
         Point_KMT <- data.frame()
         for (j in 1:nrow(get(colnames(Segments)[i]))) {
-          Point_KMT[j, 1] <- get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))[1, 3]
+          Point_KMT[j, 1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 3]
         }
+        
         Point_KMT <- which(Point_KMT[1] == max(Point_KMT))
-        longest <- get(paste(colnames(Segments)[i],
-          Point_KMT,
-          sep = "_"
-        ))
+        longest <- get(paste(colnames(Segments)[i], Point_KMT, sep = "_"))
 
         for (j in 1:nrow(get(paste(colnames(Segments)[i])))) {
-          assign(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ),
-          relativ_pos_2(
-            longest,
-            get(paste(colnames(Segments)[i],
-              j,
-              sep = "_"
-            ))
-          ),
+          assign(paste(colnames(Segments)[i], j, sep = "_"),
+          relativ_pos_2(longest, get(paste(colnames(Segments)[i], j, sep = "_"))),
           envir = .GlobalEnv
           )
         }
+        
         Point_minus <- data.frame()
         for (j in 1:nrow(get(colnames(Segments)[i]))) {
-          Point_minus[j, 1] <- get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))), 5]
+          Point_minus[j, 1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[nrow(get(paste(colnames(Segments)[i], j, sep = "_"))), 5]
         }
         names(Point_minus)[1] <- "Relative_minus_position"
 
         Point_plus <- data.frame()
         for (j in 1:nrow(get(colnames(Segments)[i]))) {
-          Point_plus[j, 1] <- get(paste(colnames(Segments)[i],
-            j,
-            sep = "_"
-          ))[1, 5]
+          Point_plus[j, 1] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 5]
         }
         names(Point_plus)[1] <- "Relative_plus_position"
 
         assign(paste(colnames(Segments)[i]),
-          cbind(
-            get(paste(colnames(Segments)[i])),
-            Point_plus,
-            Point_minus
-          ),
+          cbind(get(paste(colnames(Segments)[i])), Point_plus, Point_minus),
           envir = .GlobalEnv
         )
       },
@@ -589,14 +487,8 @@ Pre_Analysis <- function(input, output, session) {
       {
         DF_Minus_end_position <<- get(paste(colnames(Segments)[i]))["minus_dist_to_pole"]
         DF_Relative_position <<- get(paste(colnames(Segments)[i]))["Relative_minus_position"]
-        DF <<- cbind(
-          DF_Minus_end_position,
-          DF_Relative_position
-        )
-        Minus_end_position <<- rbind(
-          Minus_end_position,
-          DF
-        )
+        DF <<- cbind(DF_Minus_end_position, DF_Relative_position)
+        Minus_end_position <<- rbind(Minus_end_position, DF)
       },
       error = function(e) {}
     )

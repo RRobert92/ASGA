@@ -19,16 +19,16 @@
 
 Leadig_Pointsv2 <- function(x) {
   j <- 1
+  
   leading_points <- data.frame(Leading_ID = as.numeric())
 
   while (j <= nrow(get(paste(colnames(Segments)[x], which.max(as.matrix(get(colnames(Segments)[x])["Leading"])), sep = "_")))) {
     leading_points[j, ] <- get(paste(colnames(Segments)[x],
-      which.max(as.matrix(get(colnames(Segments)[x])["Leading"])),
-      sep = "_"
-    ))[j, 1]
+      which.max(as.matrix(get(colnames(Segments)[x])["Leading"])),sep = "_" ))[j, 1]
 
     j <- j + 4
   }
+  
   leading_points <- na.omit(leading_points)
 }
 
@@ -43,14 +43,12 @@ Fiber_Length <- function(x) {
     position[i, 5] <- data.frame(y1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i + 1, 2]))
     position[i, 6] <- data.frame(z1 = c(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i + 1, 3]))
   }
+  
   position$distance <- apply(position, 1, function(z) dist(matrix(z, nrow = 2, byrow = TRUE)))
-  position[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))), ncol(position)] <- sum(na.omit(position[
-    1:as.numeric(nrow(get(paste(colnames(Segments)[x],
-      "fiber",
-      sep = "_"
-    ))) - 1),
-    ncol(position)
-  ]))
+  position[nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))), 
+           ncol(position)] <- sum(na.omit(position[1:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))) - 1), 
+                                                   ncol(position)]))
+  
   DF <- cbind(position[ncol(position)], get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1:3])
   DF[nrow(DF), 1]
 }
@@ -68,12 +66,12 @@ Fiber_Total_Curvature <- function(x) {
 
   output_length <- data.frame()
   KMT <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))
+  
   j <- 1
 
   while (j < nrow(KMT)) {
-    output_length[j, 1] <- sqrt((KMT[j, 1] - KMT[j + 1, 1])^2 +
-      (KMT[j, 2] - KMT[j + 1, 2])^2 +
-      (KMT[j, 3] - KMT[j + 1, 3])^2)
+    output_length[j, 1] <- sqrt((KMT[j, 1] - KMT[j + 1, 1])^2 + (KMT[j, 2] - KMT[j + 1, 2])^2 + (KMT[j, 3] - KMT[j + 1, 3])^2)
+    
     j <- j + 1
   }
   output_length <- sum(na.omit(output_length))
@@ -87,16 +85,11 @@ Fiber_Total_Curvature <- function(x) {
 
 # Function: Get a relative position for pole 1  ---------------------------------------------------------
 relativ_pos_1_curv <- function(x) {
-  Fiber <- get(paste(colnames(Segments)[x],
-    "fiber",
-    sep = "_"
-  ))[1:3]
+  Fiber <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1:3]
 
   relativ_pos_part1 <- lapply(
     Fiber[2],
-    function(y) {
-      Fiber[2] - Pole1[1, 2]
-    }
+    function(y) {Fiber[2] - Pole1[1, 2]}
   )
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
 
@@ -104,12 +97,7 @@ relativ_pos_1_curv <- function(x) {
 
   relativ_positon <- lapply(
     relativ_pos_part1,
-    function(y) {
-      round(
-        relativ_pos_part1[1] / relativ_pos_part2,
-        2
-      )
-    }
+    function(y) {round(relativ_pos_part1[1] / relativ_pos_part2, 2)}
   )
 
   relat_pos <- data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
@@ -124,28 +112,18 @@ relativ_pos_1_curv <- function(x) {
 
 # Function: Get a relative position for pole 2  ---------------------------------------------------------
 relativ_pos_2_curv <- function(x) {
-  Fiber <- get(paste(colnames(Segments)[x],
-    "fiber",
-    sep = "_"
-  ))[1:3]
+  Fiber <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1:3]
 
   relativ_pos_part1 <- lapply(
     Fiber[2],
-    function(y) {
-      Fiber[2] - Pole2[1, 2]
-    }
+    function(y) {Fiber[2] - Pole2[1, 2]}
   )
   relativ_pos_part1 <- data.frame(relativ_pos_part1[["Y_Coord"]][["Y_Coord"]])
 
   relativ_pos_part2 <- Fiber[which.max(Fiber[, 2]), 2] - Pole2[1, 2]
   relativ_positon <- lapply(
     relativ_pos_part1,
-    function(y) {
-      round(
-        relativ_pos_part1[1] / relativ_pos_part2,
-        2
-      )
-    }
+    function(y) {round(relativ_pos_part1[1] / relativ_pos_part2, 2)}
   )
 
   relat_pos <- data.frame(Relative_Position = relativ_positon[["relativ_pos_part1...Y_Coord......Y_Coord..."]])
@@ -159,29 +137,30 @@ relativ_pos_2_curv <- function(x) {
 
 # Function: Get a local curvature  ---------------------------------------------------------
 Fiber_Local_Curvature <- function(x) {
-  Fiber <- get(paste(colnames(Segments)[x],
-    "fiber",
-    sep = "_"
-  ))[1:4]
+  Fiber <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[1:4]
 
   DF <- data.frame()
   i <- 1
+  
   while (i < nrow(Fiber)) {
-    curve_seg <- sqrt((Fiber[i, 1] - Fiber[i + 4, 1])^2 +
-      (Fiber[i, 2] - Fiber[i + 4, 2])^2 +
-      (Fiber[i, 3] - Fiber[i + 4, 3])^2)
+    curve_seg <- sqrt((Fiber[i, 1] - Fiber[i + 4, 1])^2 + (Fiber[i, 2] - Fiber[i + 4, 2])^2 + (Fiber[i, 3] - Fiber[i + 4, 3])^2)
 
     full <- data.frame()
     full_bin <- Fiber[i:as.numeric(i + 4), ]
+    
     for (j in 1:nrow(full_bin)) {
       full[j, 1] <- sqrt((full_bin[j, 1] - full_bin[j + 2, 1])^2 + (full_bin[j, 2] - full_bin[j + 2, 2])^2 + (full_bin[j, 3] - full_bin[j + 2, 3])^2)
     }
+    
     full <- sum(na.omit(full))
+    
     DF[i, 1] <- full / curve_seg
     DF[i, 2] <- full
     DF[i, 3] <- mean(Fiber[i:as.numeric(i + 4), 4])
+    
     i <- i + 4
   }
+  
   DF <- na.omit(DF)
 
   if (nrow(DF) == 0) {
@@ -197,6 +176,7 @@ Fiber_Local_Curvature <- function(x) {
     )
     names(DF)[1] <- "Curvature"
     names(DF)[2] <- "Relative_Position"
+    
     DF
   }
 }

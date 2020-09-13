@@ -16,9 +16,11 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 
   progressSweetAlert(
-    session = session, id = "P_nucleation1",
+    session = session, 
+    id = "P_nucleation1",
     title = "Calculating (-) nucleated from the KMT for the Pole1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   KMTs_minus_seed_P1 <- Minus_end_seed(which(colnames(Segments) == "Pole1_00"))
@@ -30,10 +32,7 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
           "DF",
           Minus_end_seed(i)
         )
-        KMTs_minus_seed_P1 <- rbind(
-          KMTs_minus_seed_P1,
-          DF
-        )
+        KMTs_minus_seed_P1 <- rbind(KMTs_minus_seed_P1, DF)
       },
       error = function(e) {}
     )
@@ -41,13 +40,11 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_nucleation1",
-      value = round(
-        (i - 1) / total * 100,
-        0
-      )
+      value = round((i - 1) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
+  
   KMTs_minus_seed_P1 <<- KMTs_minus_seed_P1
   closeSweetAlert(session = session)
 
@@ -56,9 +53,11 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
   progressSweetAlert(
-    session = session, id = "P_nucleation2",
+    session = session, 
+    id = "P_nucleation2",
     title = "Calculating (-) nucleated from the KMT for the Pole2...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   if (nrow(Pole2_00) == 0) {
@@ -74,23 +73,18 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
           "DF",
           Minus_end_seed(i)
         )
-        KMTs_minus_seed_P2 <- rbind(
-          KMTs_minus_seed_P2,
-          DF
-        )
+        KMTs_minus_seed_P2 <- rbind(KMTs_minus_seed_P2, DF)
       },
       error = function(e) {}
     )
     updateProgressBar(
       session = session,
       id = "P_nucleation2",
-      value = round(
-        (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-        0
-      )
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
+  
   KMTs_minus_seed_P2 <<- KMTs_minus_seed_P2
   closeSweetAlert(session = session)
 }

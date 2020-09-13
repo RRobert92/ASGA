@@ -23,7 +23,8 @@ Getfiles_Server <- function(input, output, session) {
     progressSweetAlert(
       session = session, id = "LoadData",
       title = "Loading your data",
-      display_pct = TRUE, value = 0
+      display_pct = TRUE, 
+      value = 0
     )
 
     for (i in 1:numfiles) {
@@ -84,10 +85,7 @@ Getfiles_Server <- function(input, output, session) {
       sendSweetAlert(
         session = session,
         title = "The data structure looks great!",
-        text = paste("A", numfiles, text, "were successfuly upload!", "
-                     Press Ok to analyze your awesome data!",
-          sep = " "
-        ),
+        text = paste("A", numfiles, text, "were successfuly upload!", "Press Ok to analyze your awesome data!", sep = " "),
         type = "success",
         btn_labels = "OK",
         btn_colors = "#39B855",
@@ -182,7 +180,8 @@ Getfiles_Server <- function(input, output, session) {
     }
 
     progressSweetAlert(
-      session = session, id = "LoadData",
+      session = session, 
+      id = "LoadData",
       title = "Loading your data",
       display_pct = TRUE, value = 0
     )

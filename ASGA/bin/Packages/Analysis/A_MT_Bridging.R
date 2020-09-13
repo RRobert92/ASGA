@@ -13,9 +13,11 @@
 
 A_MT_Bridging <- function(input, output, session) {
   progressSweetAlert(
-    session = session, id = "P_MT_Bridginig",
+    session = session, 
+    id = "P_MT_Bridginig",
     title = "Calculating microtubule interaction...",
-    display_pct = TRUE, value = round(0 / 3 * 100, 0)
+    display_pct = TRUE, 
+    value = round(0 / 3 * 100, 0)
   )
 
   # Calculate all interaction --------------------------------------------------

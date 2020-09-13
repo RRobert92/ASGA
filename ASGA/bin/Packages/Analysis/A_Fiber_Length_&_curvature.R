@@ -19,9 +19,11 @@ A_Fiber_Length_Curv <- function(input, output, session) {
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
 
   progressSweetAlert(
-    session = session, id = "P_Curv&length1",
+    session = session, 
+    id = "P_Curv&length1",
     title = "Calculating fiber length/Curvature for the Pole1...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
@@ -70,24 +72,15 @@ A_Fiber_Length_Curv <- function(input, output, session) {
         )
 
         assign("Fiber_length",
-          rbind(
-            Fiber_length,
-            Length_f
-          ),
+          rbind(Fiber_length, Length_f),
           envir = .GlobalEnv
         )
         assign("Fiber_Total_Curv",
-          rbind(
-            Fiber_Total_Curv,
-            TC
-          ),
+          rbind(Fiber_Total_Curv, TC),
           envir = .GlobalEnv
         )
         assign("Fiber_Local_Curv",
-          rbind(
-            Fiber_Local_Curv,
-            LC
-          ),
+          rbind(Fiber_Local_Curv, LC),
           envir = .GlobalEnv
         )
       },
@@ -97,10 +90,7 @@ A_Fiber_Length_Curv <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_Curv&length1",
-      value = round(
-        (i - 1) / total * 100,
-        0
-      )
+      value = round((i - 1) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }
@@ -119,9 +109,11 @@ A_Fiber_Length_Curv <- function(input, output, session) {
     as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
   progressSweetAlert(
-    session = session, id = "P_Curv&length2",
+    session = session, 
+    id = "P_Curv&length2",
     title = "Calculating fiber length/Curvature for the Pole2...",
-    display_pct = TRUE, value = 0
+    display_pct = TRUE, 
+    value = 0
   )
 
   for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
@@ -174,24 +166,15 @@ A_Fiber_Length_Curv <- function(input, output, session) {
         )
 
         assign("Fiber_length",
-          rbind(
-            Fiber_length,
-            Length_f
-          ),
+          rbind(Fiber_length, Length_f),
           envir = .GlobalEnv
         )
         assign("Fiber_Total_Curv",
-          rbind(
-            Fiber_Total_Curv,
-            TC
-          ),
+          rbind(Fiber_Total_Curv, TC),
           envir = .GlobalEnv
         )
         assign("Fiber_Local_Curv",
-          rbind(
-            Fiber_Local_Curv,
-            LC
-          ),
+          rbind(Fiber_Local_Curv, LC),
           envir = .GlobalEnv
         )
       },
@@ -201,10 +184,7 @@ A_Fiber_Length_Curv <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "P_Curv&length2",
-      value = round(
-        (i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100,
-        0
-      )
+      value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
     )
     Sys.sleep(0.1)
   }

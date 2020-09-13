@@ -19,10 +19,7 @@
 total_curvature <- function(x) {
   curvarture <- data.frame()
   for (i in 1:nrow(get(paste(colnames(Segments)[x])))) {
-    KMT <- get(paste(colnames(Segments)[x],
-      i,
-      sep = "_"
-    ))
+    KMT <- get(paste(colnames(Segments)[x], i, sep = "_"))
 
     curv <- sqrt((KMT[1, 2] - KMT[nrow(KMT), 2])^2 + (KMT[1, 3] - KMT[nrow(KMT), 3])^2 + (KMT[1, 4] - KMT[nrow(KMT), 4])^2)
 
@@ -42,6 +39,7 @@ total_curvature <- function(x) {
     names(curvarture)[5] <- "(+) Dist-to-Pole"
     names(curvarture)[6] <- "Elipse Position"
   }
+  
   curvarture
 }
 
@@ -52,10 +50,7 @@ total_curvature <- function(x) {
 local_curvature <- function(x) {
   full_data <- data.frame()
   for (i in 1:nrow(get(paste(colnames(Segments)[x])))) {
-    KMT <- get(paste(colnames(Segments)[x],
-      i,
-      sep = "_"
-    ))
+    KMT <- get(paste(colnames(Segments)[x], i, sep = "_"))
 
     # Get curve length ------------------------------------------------------------------
     output_curve <- data.frame(Curve = as.numeric())
@@ -63,6 +58,7 @@ local_curvature <- function(x) {
 
     while (j < nrow(KMT)) {
       output_curve[j, 1] <- sqrt((KMT[j, 2] - KMT[j + 24, 2])^2 + (KMT[j, 3] - KMT[j + 24, 3])^2 + (KMT[j, 4] - KMT[j + 24, 4])^2)
+      
       j <- j + 24
     }
     output_curve <- na.omit(output_curve)
@@ -79,6 +75,7 @@ local_curvature <- function(x) {
       local_c <- local_c[j:nrow(local_c), 1]
 
       output_full[j, ] <- sum(local_c[1:24])
+      
       j <- j + 24
     }
     output_full <- na.omit(output_full)
@@ -89,6 +86,7 @@ local_curvature <- function(x) {
 
     while (j < nrow(KMT)) {
       output_mean[j, ] <- (KMT[j, 5] + KMT[j + 24, 5]) / 2
+      
       j <- j + 24
     }
     output_mean <- na.omit(output_mean)
@@ -111,5 +109,6 @@ local_curvature <- function(x) {
       )
     }
   }
+  
   full_data
 }

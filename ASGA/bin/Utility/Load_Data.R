@@ -22,10 +22,7 @@ Load_Data <- function(input, output, session) {
 
   # Load Segments ----------------------------------------------------------------
   NColumn <<- ncol(Segments)
-  Segments_1_KMT <<- Segments %>% filter_at(
-    vars(starts_with(Pole1)),
-    any_vars(. >= 1)
-  )
+  Segments_1_KMT <<- Segments %>% filter_at(vars(starts_with(Pole1)), any_vars(. >= 1))
   Segments_1_KMT <<- Segments_1_KMT %>% select(
     "Segment ID",
     "length",
@@ -34,10 +31,7 @@ Load_Data <- function(input, output, session) {
     "Point IDs"
   )
 
-  Segments_2_KMT <<- Segments %>% filter_at(
-    vars(starts_with(Pole2)),
-    any_vars(. >= 1)
-  )
+  Segments_2_KMT <<- Segments %>% filter_at(vars(starts_with(Pole2)), any_vars(. >= 1))
   Segments_2_KMT <<- Segments_2_KMT %>% select(
     "Segment ID",
     "length",
@@ -46,10 +40,7 @@ Load_Data <- function(input, output, session) {
     "Point IDs"
   )
 
-  Segments_KMT <<- Segments %>% filter_at(
-    vars(starts_with("Pole")),
-    any_vars(. >= 1)
-  )
+  Segments_KMT <<- Segments %>% filter_at(vars(starts_with("Pole")), any_vars(. >= 1))
   Segments_KMT <<- Segments_KMT %>% select(
     "Segment ID",
     "length",
@@ -58,10 +49,7 @@ Load_Data <- function(input, output, session) {
     "Point IDs"
   )
 
-  Segments_SMT <<- Segments %>% filter_at(
-    vars(starts_with("Pole")),
-    all_vars(. < 1)
-  )
+  Segments_SMT <<- Segments %>% filter_at(vars(starts_with("Pole")), all_vars(. < 1))
   Segments_SMT <<- Segments_SMT %>% select(
     "Segment ID",
     "length",
@@ -71,20 +59,14 @@ Load_Data <- function(input, output, session) {
   )
 
   # Load Poles ------------------------------------------------------------------
-  Pole1 <<- Nodes %>% filter_at(
-    vars(Pole1),
-    any_vars(. >= 1)
-  )
+  Pole1 <<- Nodes %>% filter_at(vars(Pole1), any_vars(. >= 1))
   Pole1 <<- data.frame(
     X = c(Pole1 %>% select("X Coord") / 10000),
     Y = c(Pole1 %>% select("Y Coord") / 10000),
     Z = c(Pole1 %>% select("Z Coord") / 10000)
   )
 
-  Pole2 <<- Nodes %>% filter_at(
-    vars(Pole2),
-    any_vars(. >= 1)
-  )
+  Pole2 <<- Nodes %>% filter_at(vars(Pole2), any_vars(. >= 1))
   Pole2 <<- data.frame(
     X = c(Pole2 %>% select("X Coord") / 10000),
     Y = c(Pole2 %>% select("Y Coord") / 10000),
@@ -114,10 +96,9 @@ Load_Data <- function(input, output, session) {
     for (i in 1:nrow(Nodes %>% select(starts_with("EndType")))) {
       Compare_module[i, 1] <- Nodes[i, 5] == Nodes[i, 6]
     }
-    Nodes <<- cbind(
-      Nodes,
-      Compare_module[1]
-    )
+
+    Nodes <<- cbind(Nodes, Compare_module[1])
+
     names(Nodes)[7] <<- "Entype_Different"
     rm(Compare_module)
   } else {
