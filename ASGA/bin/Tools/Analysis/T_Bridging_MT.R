@@ -69,8 +69,7 @@ Segment_to_point <- function(x) {
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
-  Segment_ID <- foreach(i = 1:nrow(MT_Interaction), .combine = rbind, .export = ls(.GlobalEnv)
-  ) %dopar% {
+  Segment_ID <- foreach(i = 1:nrow(MT_Interaction), .combine = rbind, .export = ls(.GlobalEnv)) %dopar% {
     j <- which.min(as.matrix(abs(Length_estiamtion_df[1] - MT_Interaction[i, x]))) - 5
     
     if (j < 1) {
@@ -108,4 +107,32 @@ Segment_to_point <- function(x) {
   }
   
   DF
+}
+
+Remove_interaction_duplicates <- function() {
+  # select for each segments pair unique points and remove duplicates based on shorter distance --------
+  Unique_value <- unique(MT_Interaction[4:5])
+  
+  cores <- detectCores()
+  cl <- makeCluster(cores)
+  registerDoParallel(cl)
+  
+    Unique_value <- foreach(i = 1:nrow(Unique_value), .combine = rbind, .export = c("MT_Interaction", "Unique_value"), .packages = "tidyr") %dopar% {
+      Unique_value_df <- MT_Interaction[with(MT_Interaction, `Segments_ID_1` == as.numeric(Unique_value[i, 1]) &
+                                    `Segments_ID_2` == as.numeric(Unique_value[i, 2])), ]
+      Point_ID_2_df <- tibble(unique(Unique_value_df$Point_ID_2))
+      
+      Unique_value_df <- apply(
+        Point_ID_2_df,
+        1,
+        function(y) {
+          Unique_value_df[with(Unique_value_df, `Point_ID_2` == y), ][which.min(Unique_value_df[with(Unique_value_df, `Point_ID_2` == y), ]$dist), 1:5]
+        }
+      )
+      
+      data.table::rbindlist(Unique_value_df)
+    }
+  stopCluster(cl)
+  
+  Unique_value
 }

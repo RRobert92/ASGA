@@ -25,7 +25,7 @@ A_MT_Bridging <- function(input, output, session) {
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
-  MT_Interaction <<- foreach(i = 1:nrow(Points), .combine = rbind, .export = ls(.GlobalEnv)) %dopar% {
+  MT_Interaction <<- foreach(i = 1:nrow(Points), .combine = rbind, .inorder = FALSE, .export = ls(.GlobalEnv)) %dopar% {
     Point_interaction(i)
   }
   stopCluster(cl)
@@ -42,7 +42,8 @@ A_MT_Bridging <- function(input, output, session) {
     Segment_to_point(1),
     envir = .GlobalEnv
   )
-
+  names(MT_Interaction)[4] <<- "Segments_ID_1"
+  
   updateProgressBar(
     session = session,
     id = "P_MT_Bridginig",
@@ -54,6 +55,20 @@ A_MT_Bridging <- function(input, output, session) {
     Segment_to_point(2),
     envir = .GlobalEnv
   )
-
+  names(MT_Interaction)[5] <<- "Segments_ID_2"
+  
+  updateProgressBar(
+    session = session,
+    title = "Searching for unique interacting points...",
+    id = "P_MT_Bridginig",
+    value = round(3 / 3 * 100, 0)
+  )
+  Sys.sleep(0.1)
+  
+  assign("MT_Interaction",
+         Remove_interaction_duplicates(),
+         envir = .GlobalEnv
+  )
+  
   closeSweetAlert(session = session)
 }
