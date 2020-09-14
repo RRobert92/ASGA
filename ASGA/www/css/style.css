@@ -188,11 +188,9 @@ label {
 }
 
 .splash-input-GS{
-  max-width: 100%;
-  margin: auto;
-  float: none;
-  width: 50%;
-  padding: 10px;
+  width: 63%;
+  padding-left: 31%;
+  margin-left: 3%;
 }
 
 .splash-input-GS-test{
@@ -333,6 +331,11 @@ label {
     z-index: 1;
 }
 
+.shiny-input-container:not(.shiny-input-container-inline) {
+  width: 300px;
+  max-width: 100%;
+  margin: 5px;
+}
  /*
 # CSS MEDIA QUERIES  -------------------------------------------------------------------
 */
@@ -340,9 +343,15 @@ label {
 @media (min-width: 60em) {
 
     body {
-        font-size: 16px;
+        font-size: 13px;
     }
-
+    
+    .shiny-input-container:not(.shiny-input-container-inline) {
+      width: 300px;
+      max-width: 100%;
+      margin: 10px;
+    }
+    
     .home-menu {
         text-align: left;
     }
