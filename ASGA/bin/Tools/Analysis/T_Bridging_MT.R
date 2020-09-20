@@ -149,7 +149,7 @@ Unique_interaction <- function() {
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
-  Unique_value <- foreach(i = 1:nrow(Unique_value), .combine = rbind, .packages = c("tidyr", "dplyr")) %dopar% {
+  Unique_value <- foreach(i = 1:nrow(Unique_value), .combine = rbind, .export = c("MT_Interaction", "Unique_value"), .packages = c("tidyr", "dplyr")) %dopar% {
     Unique_value_df <- MT_Interaction[with(MT_Interaction, `Segments_ID_1` == as.numeric(Unique_value[i, 1])), ]
     Unique_segment <- tibble(unique(Unique_value_df$Segments_ID_2))
 
