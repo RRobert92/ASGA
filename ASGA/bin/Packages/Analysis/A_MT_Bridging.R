@@ -17,7 +17,7 @@ A_MT_Bridging <- function(input, output, session) {
     id = "P_MT_Bridginig",
     title = "Calculating microtubule interaction...",
     display_pct = TRUE, 
-    value = round(0 / 3 * 100, 0)
+    value = round(0 / 4 * 100, 0)
   )
 
   # Calculate all interaction --------------------------------------------------
@@ -34,7 +34,7 @@ A_MT_Bridging <- function(input, output, session) {
     session = session,
     id = "P_MT_Bridginig",
     title = "Pre-sorting data of MT interaction...",
-    value = round(1 / 3 * 100, 0)
+    value = round(1 / 4 * 100, 0)
   )
   Sys.sleep(0.1)
 
@@ -47,7 +47,7 @@ A_MT_Bridging <- function(input, output, session) {
   updateProgressBar(
     session = session,
     id = "P_MT_Bridginig",
-    value = round(2 / 3 * 100, 0)
+    value = round(2 / 4 * 100, 0)
   )
   Sys.sleep(0.1)
 
@@ -61,12 +61,25 @@ A_MT_Bridging <- function(input, output, session) {
     session = session,
     title = "Searching for unique interacting points...",
     id = "P_MT_Bridginig",
-    value = round(3 / 3 * 100, 0)
+    value = round(3 / 4 * 100, 0)
   )
   Sys.sleep(0.1)
   
   assign("MT_Interaction",
          Remove_interaction_duplicates(),
+         envir = .GlobalEnv
+  )
+  
+  updateProgressBar(
+    session = session,
+    title = "Searching for unique interacting points...",
+    id = "P_MT_Bridginig",
+    value = round(4 / 4 * 100, 0)
+  )
+  Sys.sleep(0.1)
+  
+  assign("MT_Interaction",
+         Unique_interaction(),
          envir = .GlobalEnv
   )
   
