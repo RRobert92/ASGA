@@ -95,10 +95,10 @@
     },
     "backports": {
       "Package": "backports",
-      "Version": "1.1.9",
+      "Version": "1.1.10",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "b29e2d989dfb2e71ca3fd7d5bb1c0d58"
+      "Hash": "05ffd2d4acb51aee70f1de68ad7a6aed"
     },
     "base64enc": {
       "Package": "base64enc",
@@ -172,10 +172,10 @@
     },
     "colourpicker": {
       "Package": "colourpicker",
-      "Version": "1.0",
+      "Version": "1.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "98ca919385a634e5d558e6938755e0bf"
+      "Hash": "fe0cb3d8854c168aef827aeab4b3b473"
     },
     "commonmark": {
       "Package": "commonmark",
@@ -211,6 +211,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "2b7d10581cc730804e9ed178c8374bd6"
+    },
+    "data.table": {
+      "Package": "data.table",
+      "Version": "1.13.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "06d5863292e2e8ffbb063ce34e77bb2a"
     },
     "dbplyr": {
       "Package": "dbplyr",
@@ -564,10 +571,10 @@
     },
     "openssl": {
       "Package": "openssl",
-      "Version": "1.4.2",
+      "Version": "1.4.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "b3209c62052922b6c629544d94c8fa8a"
+      "Hash": "a399e4773075fc2375b71f45fca186c4"
     },
     "packrat": {
       "Package": "packrat",
@@ -788,10 +795,10 @@
     },
     "shinyalert": {
       "Package": "shinyalert",
-      "Version": "1.1",
+      "Version": "2.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "9fdadeb9ff341144e7cd4e7d27068eab"
+      "Hash": "a130b62f6d5533fcc1cab6c8161358d9"
     },
     "shinycssloaders": {
       "Package": "shinycssloaders",
@@ -872,10 +879,10 @@
     },
     "tinytex": {
       "Package": "tinytex",
-      "Version": "0.25",
+      "Version": "0.26",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "a4b9662282097d1033c60420dcb83350"
+      "Hash": "db6477efcfbffcd9b3758c3c2882cf58"
     },
     "utf8": {
       "Package": "utf8",
@@ -883,6 +890,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "4a5081acfb7b81a572e4384a7aaf2af1"
+    },
+    "uuid": {
+      "Package": "uuid",
+      "Version": "0.1-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e4169eb989a5d03ccb6b628cad1b1b50"
     },
     "vctrs": {
       "Package": "vctrs",
@@ -921,10 +935,10 @@
     },
     "withr": {
       "Package": "withr",
-      "Version": "2.2.0",
+      "Version": "2.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "ecd17882a0b4419545691e095b74ee89"
+      "Hash": "7307d79f58d1885b38c4f4f1a8cb19dd"
     },
     "xfun": {
       "Package": "xfun",
@@ -935,10 +949,10 @@
     },
     "xlsx": {
       "Package": "xlsx",
-      "Version": "0.6.3",
+      "Version": "0.6.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "eff8564afe8e8f69551729e60c39390d"
+      "Hash": "de18b0753cd6537a486adaca967875c1"
     },
     "xlsxjars": {
       "Package": "xlsxjars",
