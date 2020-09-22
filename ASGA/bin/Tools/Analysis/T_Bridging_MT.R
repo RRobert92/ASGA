@@ -161,7 +161,7 @@ Unique_interaction <- function() {
         list(
           as.numeric(Unique_value_df[1, 4]),
           as.numeric(y),
-          as.numeric(nrow(Unique_value_df[with(Unique_value_df, `Segments_ID_2` == y), ]) * 20),
+          as.numeric(nrow(Unique_value_df[with(Unique_value_df, `Segments_ID_2` == y), ]) * 20), # Length of interaction [um]
           as.numeric(Unique_value_df[with(Unique_value_df, `Segments_ID_2` == y), 1][1]),
           last(as.matrix(Unique_value_df[with(Unique_value_df, `Segments_ID_2` == y), 1])),
           as.numeric(Unique_value_df[with(Unique_value_df, `Segments_ID_2` == y), 2][1]),
@@ -180,7 +180,6 @@ Unique_interaction <- function() {
     names(Unique_value_df)[7] <- "S_2_Stop"
 
     Unique_value_df
-  
   }
   stopCluster(cl)
 
