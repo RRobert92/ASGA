@@ -36,7 +36,7 @@ GetStarted_UI <- function(id) {
           ),
 
           tags$p(class = "splash-subhead-GS",
-            "Upload multiple .xlsx files. For more information see Wiki page."
+            "Upload multiple .xlsx or .am files. For more information see Wiki page."
           ),
 
           tags$div(class = "splash-input-GS-row",
