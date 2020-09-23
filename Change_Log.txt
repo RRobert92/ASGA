@@ -14,7 +14,8 @@
 
 # Mejor changes  ---------------------------------------------------------------
 - New tool for MT interaction
-- Introduced new file format (.am) for readout
+- Introduced new file format (.am) for readout and save analysis to read in
+  Amira ZIB
 
 # Minor changes ----------------------------------------------------------------
 

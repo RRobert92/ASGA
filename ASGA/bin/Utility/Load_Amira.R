@@ -6,7 +6,7 @@
 #
 # Author: Robert Kiewisz
 # Created: 2020-09-22
-# Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
+# Reviewed: Robert Kiewisz 28/08/2020 (v0.32.1)
 ################################################################################
 
 Load_Amira_Nodes <- function() {
