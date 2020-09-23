@@ -28,6 +28,7 @@ Getfiles_Server <- function(input, output, session) {
     )
 
     for (i in 1:numfiles) {
+      if(str_detect(input$file$datapath[i], ".xlsx")){
       tryCatch(
         {
           Data <- read_excel(input$file$datapath[i], sheet = "Nodes")
@@ -60,7 +61,62 @@ Getfiles_Server <- function(input, output, session) {
         },
         error = function(e) {}
       )
-
+      } else if (str_detect(input$file$datapath[i], ".am")){
+        Amira <<- read_csv("Data/Metaphase_1_ALL.resampled.rotated.am", col_names = FALSE)
+        updateProgressBar(
+          session = session,
+          id = "LoadData",
+          value = i * 100 / numfiles,
+          title = paste("Loading your data:", " Amira file no.", i, " loaded", sep = "")
+        )
+        
+        Sys.sleep(0.1)
+        
+        assign(paste("Data", "Nodes", i, sep = "_"),
+               Load_Amira_Nodes(),
+               envir = .GlobalEnv
+        )
+        updateProgressBar(
+          session = session,
+          id = "LoadData",
+          value = i * 100 / numfiles,
+          title = paste("Loading your data:", " Node file no.", i, " loaded", sep = "")
+        )
+        
+        Sys.sleep(0.1)
+        
+        assign(paste("Data", "Points", i, sep = "_"),
+               Load_Amira_Points(),
+               envir = .GlobalEnv
+        )
+        updateProgressBar(
+          session = session,
+          id = "LoadData",
+          value = i * 100 / numfiles,
+          title = paste("Loading your data:", " Point file no.", i, " loaded", sep = "")
+        )
+        
+        Sys.sleep(0.1)
+        
+        assign(paste("Data", "Segments", i, sep = "_"),
+               Load_Amira_Segments(),
+               envir = .GlobalEnv
+        )
+        updateProgressBar(
+          session = session,
+          id = "LoadData",
+          value = i * 100 / numfiles,
+          title = paste("Loading your data:", " Segment file no.", i, " loaded", sep = "")
+        )
+        
+        Sys.sleep(0.1)
+        
+        assign(paste("Amira", "Dataset", i, sep = "_"),
+               Amira,
+               envir = .GlobalEnv
+        )
+        rm(Amira, envir = .GlobalEnv)
+      }
       # Check Data  -------------------------------------------------------------
       Check_Data(i)
       updateProgressBar(
@@ -68,9 +124,10 @@ Getfiles_Server <- function(input, output, session) {
         id = "LoadData",
         value = i * 100 / numfiles
       )
-
+      
       Sys.sleep(0.1)
     }
+    
     closeSweetAlert(session = session)
 
 

@@ -25,6 +25,7 @@ source("bin/Utility/Upload_Data.R")
 source("bin/Utility/Setting_Buttons.R")
 source("bin/Utility/Pre_Analysis.R")
 source("bin/Utility/Load_Data.R")
+source("bin/Utility/Load_Amira.R")
 source("bin/Utility/Save_Data.R")
 
 # Global server settings  ------------------------------------------------------

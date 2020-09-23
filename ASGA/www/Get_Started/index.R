@@ -46,7 +46,7 @@ GetStarted_UI <- function(id) {
               fileInput(ns("file"),
                 label = "", 
                 multiple = TRUE,
-                accept = c(".xlsx", "All")
+                accept = c(".xlsx", ".am")
               )
             ),
 
@@ -56,7 +56,7 @@ GetStarted_UI <- function(id) {
               fileInput(ns("file1"), 
                         label = "", 
                         multiple = TRUE, 
-                        accept = c(".xlsx", "All"))
+                        accept = c(".xlsx"))
             )
           ),
 
