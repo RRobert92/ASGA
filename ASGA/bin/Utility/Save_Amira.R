@@ -40,6 +40,7 @@ Save_amira <- function(x, y, Data_type){
     No_column_name <- paste(Type_data, " { int ", colnames(x)[y], " } ", No_column_name, sep = "")
     
     No_column_data <- paste("@", max(transform(No_column_data, V2 = as.numeric(V2))[2]), sep="")
+    
     Pattern <- as.vector(paste(get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
       filter(str_detect(X1, No_column_data)) %>% 
       filter(str_detect(X1, "POINT"))))
@@ -54,7 +55,9 @@ Save_amira <- function(x, y, Data_type){
    
    # Save data x[y] with the right header e.g. @105
    No_column_data <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
+   
    No_column_name <- paste("@", max(transform(No_column_data, V2 = as.numeric(V2))[2])+1, sep="")
+   
    df_2 <- rbind(No_column_name, x[y])
    names(df_2)[1] <- "X1"
    

@@ -16,18 +16,25 @@ Load_Amira_Nodes <- function() {
     filter(str_detect(X1, "VERTEX")) %>%
     filter(str_detect(X1, "@"))
   No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
+  
   No_column_Node <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
 
-  Nodes <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>% filter(str_detect(X1, "VERTEX")) %>% filter(str_detect(X1, "define")))) - 1))
+  Nodes <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>% 
+                                                 filter(str_detect(X1, "VERTEX")) %>% 
+                                                 filter(str_detect(X1, "define")))) - 1))
+  
   names(Nodes)[1] <- "Node ID"
+  
   for (i in 1:nrow(No_column)) {
     Pattern <- as.vector(paste("@", No_column_Node[i, 2], sep = ""))
+    
     Nodes_number <- which(Amira == Pattern)
 
     df <- Amira[as.numeric(Nodes_number + 1):as.numeric(which(Amira == as.vector(paste("@",
       as.numeric(No_column_Node[i, 2]) + 1,
       sep = ""
     ))) - 1), ]
+    
     id <- as.numeric(gsub("[^[:digit:]]", "", No_column[i, 3]))
 
     if (!is.na(id) && id == 3) {
@@ -37,17 +44,22 @@ Load_Amira_Nodes <- function() {
         `Y Coord` = as.numeric(`Y Coord`),
         `Z Coord` = as.numeric(`Z Coord`)
       )
+      
       names(df)[1:3] <- c("X Coord", "Y Coord", "Z Coord")
     } else {
       df <- as_tibble(df %>% separate(X1, c("V1"), sep = " "))
       df <- transform(df,
         `V1` = as.numeric(`V1`)
       )
+      
       names(df)[1] <- No_column[i, 4]
     }
+    
     Nodes <- cbind(Nodes, df)
   }
+  
   rm(id, Nodes_number, Pattern, No_column, No_column_Node, df)
+  
   Nodes
 }
 
@@ -57,9 +69,13 @@ Load_Amira_Points <- function() {
     filter(str_detect(X1, "POINT")) %>%
     filter(str_detect(X1, "@"))
   No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
+  
   No_column_Points <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
 
-  Points <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>% filter(str_detect(X1, "POINT")) %>% filter(str_detect(X1, "define")))) - 1))
+  Points <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>% 
+                                                  filter(str_detect(X1, "POINT")) %>% 
+                                                  filter(str_detect(X1, "define")))) - 1))
+  
   names(Points)[1] <- "Point ID"
 
   for (i in 1:nrow(No_column)) {
@@ -70,10 +86,13 @@ Load_Amira_Points <- function() {
       as.numeric(No_column_Points[i, 2]) + 1,
       sep = ""
     ))) - 1)
+    
     if (is_empty(last_column)) {
       last_column <- nrow(Amira)
+      
     }
     df <- Amira[as.numeric(Points_number + 1):last_column, ]
+    
     id <- as.numeric(gsub("[^[:digit:]]", "", No_column[i, 3]))
 
     if (!is.na(id) && id == 3) {
@@ -83,17 +102,21 @@ Load_Amira_Points <- function() {
         `Y Coord` = as.numeric(`Y Coord`),
         `Z Coord` = as.numeric(`Z Coord`)
       )
+      
       names(df)[1:3] <- c("X Coord", "Y Coord", "Z Coord")
     } else {
       df <- as_tibble(df %>% separate(X1, c("V1"), sep = " "))
-      df <- transform(df,
-        `V1` = as.numeric(`V1`)
+      df <- transform(df, `V1` = as.numeric(`V1`)
       )
+      
       names(df)[1] <- No_column[i, 4]
     }
+    
     Points <- cbind(Points, df)
   }
+  
   rm(id, Points_number, Pattern, No_column, No_column_Points, df, last_column)
+  
   Points
 }
 
@@ -103,9 +126,13 @@ Load_Amira_Segments <- function() {
     filter(str_detect(X1, "EDGE")) %>%
     filter(str_detect(X1, "@"))
   No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
+  
   No_column_Segments <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
 
-  Segments <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>% filter(str_detect(X1, "EDGE")) %>% filter(str_detect(X1, "define")))) - 1))
+  Segments <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>% 
+                                                    filter(str_detect(X1, "EDGE")) %>% 
+                                                    filter(str_detect(X1, "define")))) - 1))
+  
   names(Segments)[1] <- "Segment ID"
 
   for (i in 1:nrow(No_column)) {
@@ -118,6 +145,7 @@ Load_Amira_Segments <- function() {
     ))) - 1)
 
     df <- Amira[as.numeric(Segments_number + 1):last_column, ]
+    
     id <- as.numeric(gsub("[^[:digit:]]", "", No_column[i, 3]))
 
     if (!is.na(id) && id == 2) {
@@ -126,30 +154,38 @@ Load_Amira_Segments <- function() {
         `V1` = as.numeric(`V1`),
         `V2` = as.numeric(`V2`)
       )
+      
       names(df)[1:2] <- c("Node ID #1", "Node ID #2")
     } else {
       df <- as_tibble(df %>% separate(X1, c("V1"), sep = " "))
       df <- transform(df,
         `V1` = as.numeric(`V1`)
       )
+      
       names(df)[1] <- No_column[i, 4]
     }
+    
     Segments <- cbind(Segments, df)
   }
 
   df <- Segments$NumEdgePoints
+  
   df_points <- tibble()
   j <- 1
   start_id <- 0
+  
   for (end_id in df) {
     df_points[j, 1] <- paste(c(start_id:as.numeric((end_id - 1) + start_id)), collapse = ",")
     start_id <- end_id + start_id
     j <- j + 1
   }
+  
   names(df_points)[1] <- "Point IDs"
+  
   Segments$NumEdgePoints <- df
 
   df <- Segments %>% select(starts_with("Pole"))
+  
   Segments <- cbind(
     "Segment ID" = Segments$`Segment ID`,
     df,
@@ -160,5 +196,6 @@ Load_Amira_Segments <- function() {
   )
 
   rm(id, Segments_number, Pattern, No_column, No_column_Segments, df, last_column, start_id, end_id, df_points)
+  
   Segments
 }
