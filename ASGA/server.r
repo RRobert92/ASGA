@@ -130,7 +130,7 @@ function(input, output, session) {
       })
     })
 
-    callModule(Data_Plot_Settings, "Home")
+    callModule(Report_Plot_Settings, "Home")
     callModule(Report_Plot, "Home")
   })
 
