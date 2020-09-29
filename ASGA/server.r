@@ -149,7 +149,6 @@ function(input, output, session) {
   # Relativity for the Settings button  ----------------------------------------
   callModule(Setting_Buttons_Server, "Home")
 
-
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`, {
     if (Test == FALSE) {
@@ -302,7 +301,6 @@ function(input, output, session) {
       source("global.r")
     }
   })
-
 
   # Report page output ---------------------------------------------------------
   output$`Home-Plot_Settings` <- renderUI({

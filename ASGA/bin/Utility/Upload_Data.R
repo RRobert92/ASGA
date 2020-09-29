@@ -62,7 +62,7 @@ Getfiles_Server <- function(input, output, session) {
         error = function(e) {}
       )
       } else if (str_detect(input$file$datapath[i], ".am")){
-        Amira <<- read_csv("Data/Metaphase_1_ALL.resampled.rotated.am", col_names = FALSE)
+        Amira <<- read_csv(input$file$datapath[i], col_names = FALSE)
         updateProgressBar(
           session = session,
           id = "LoadData",
