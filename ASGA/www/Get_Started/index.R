@@ -74,7 +74,7 @@ GetStarted_UI <- function(id) {
         ),
 
         tags$div(class = "footer l-box is-center",
-          tags$p("The app is under the GPL V3.0 @ 2019 license")
+          tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
         )
       )
     ),
@@ -113,7 +113,7 @@ GetStarted_UI <- function(id) {
         ),
 
         tags$div(class = "footer l-box is-center",
-          tags$p("The app is under the GPL V3.0 @ 2019 license")
+          tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
         )
       )
     ),
@@ -138,7 +138,7 @@ GetStarted_UI <- function(id) {
       ),
 
       tags$div(class = "footer-report l-box is-center",
-        tags$p("The app is under the GPL V3.0 @ 2019 license")
+        tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
       )
     )
   )

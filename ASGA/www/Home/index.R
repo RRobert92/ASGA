@@ -28,7 +28,7 @@ homeUI <- function(id) {
     ),
     
     tags$div(class = "footer l-box is-center",
-      tags$p("The app is under the GPL V3.0 @ 2019 license")
+      tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
     )
   )
 }
@@ -39,6 +39,6 @@ footnoteUI <- function(id) {
   ns <- NS(id)
 
   tags$div(class = "footer l-box is-center",
-    tags$p("The app is under the GPL V3.0 @ 2019 license")
+    tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
   )
 }

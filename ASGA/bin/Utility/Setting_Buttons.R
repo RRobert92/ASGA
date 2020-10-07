@@ -377,6 +377,10 @@ Setting_Buttons_Server <- function(input, output, session) {
   # Reactivity for all button --------------------------------------------------
 
   observeEvent(input$`All_Anaysis`, {
+    All_Closed()
+    Any_One()
+    Sys.sleep(0.1)
+    
     if (input$`All_Anaysis` == TRUE) {
       updateMaterialSwitch(session, "KMT_number", FALSE)
       updateMaterialSwitch(session, "IKD", FALSE)
