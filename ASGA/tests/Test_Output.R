@@ -128,28 +128,6 @@ Run_Test <- function(input, output, session) {
     )
     names(Test_value)[10] <- "K_Core_Area"
 
-    tryCatch(
-      {
-        callModule(A_MT_Bridging, "Home")
-        Test_value[1, 11] <- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 11] <- FALSE
-      }
-    )
-    names(Test_value)[11] <- "MT Interaction"
-
-    tryCatch(
-      {
-        callModule(Save_Data, "Home")
-        Test_value[1, 12] <- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 12] <- FALSE
-      }
-    )
-    names(Test_value)[12] <- "Save"
-
     Test_value <<- Test_value
     File_name <<- as_tibble(ls(pattern = "Data_", envir = .GlobalEnv))
     File_name <<- na.omit(File_name)
@@ -160,7 +138,7 @@ Run_Test <- function(input, output, session) {
 Test_Test <- function(input, output, session) {
   Test_df <<- data.frame()
   
-  Test_df[1, 1] <<- nrow(File_name) == 43
+  Test_df[1, 1] <<- nrow(File_name) == 46
   Test_df[1, 2] <<- ncol(Test_value) == length(Test_value[Test_value == TRUE])
 
   if (ncol(Test_df) == length((Test_df[Test_df == TRUE]))) {
