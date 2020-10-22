@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.0.2",
+    "Version": "4.0.3",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -123,17 +123,17 @@
     },
     "broom": {
       "Package": "broom",
-      "Version": "0.7.1",
+      "Version": "0.7.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "a90dad034a7accd7c1baa603b1455962"
+      "Hash": "b00000a87b8a4a1e8a8fc413c1dbad03"
     },
     "callr": {
       "Package": "callr",
-      "Version": "3.5.0",
+      "Version": "3.5.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "dea3322c701bbb5dd31c353a72a1ebf9"
+      "Hash": "b7d7f1e926dfcd57c74ce93f5c048e80"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -144,10 +144,10 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "2.0.2",
+      "Version": "2.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "ff0becff7bfdfe3f75d29aff8f3172dd"
+      "Hash": "0b316487b21d21f99ebf98abe179b1ea"
     },
     "clipr": {
       "Package": "clipr",
@@ -186,10 +186,10 @@
     },
     "cpp11": {
       "Package": "cpp11",
-      "Version": "0.2.2",
+      "Version": "0.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f28776fbc53c699a788792a89c4465a6"
+      "Hash": "f9df472593124299aef98fba2c96dfd3"
     },
     "crayon": {
       "Package": "crayon",
@@ -214,10 +214,10 @@
     },
     "data.table": {
       "Package": "data.table",
-      "Version": "1.13.0",
+      "Version": "1.13.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "06d5863292e2e8ffbb063ce34e77bb2a"
+      "Hash": "907b184e0fd13bc19154a8f322920015"
     },
     "dbplyr": {
       "Package": "dbplyr",
@@ -235,17 +235,17 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.25",
+      "Version": "0.6.26",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f697db7d92b7028c4b3436e9603fb636"
+      "Hash": "312b822306ececbbf7b9731937d9ec55"
     },
     "doParallel": {
       "Package": "doParallel",
-      "Version": "1.0.15",
+      "Version": "1.0.16",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "1886c5bce3d9c0b4f9d0b113d76f9357"
+      "Hash": "2dc413572eb42475179bfe0afabd2adf"
     },
     "dplyr": {
       "Package": "dplyr",
@@ -305,10 +305,10 @@
     },
     "foreach": {
       "Package": "foreach",
-      "Version": "1.5.0",
+      "Version": "1.5.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "8fb3ff01ee7d85893f56df8d77213381"
+      "Hash": "e32cfc0973caba11b65b1fa691b4d8c9"
     },
     "fs": {
       "Package": "fs",
@@ -424,10 +424,10 @@
     },
     "iterators": {
       "Package": "iterators",
-      "Version": "1.0.12",
+      "Version": "1.0.13",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "117128f48662573ff4c4e72608b9e202"
+      "Hash": "64778782a89480e9a644f69aad9a2877"
     },
     "jsonlite": {
       "Package": "jsonlite",
@@ -445,10 +445,10 @@
     },
     "labeling": {
       "Package": "labeling",
-      "Version": "0.3",
+      "Version": "0.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "73832978c1de350df58108c745ed0e3e"
+      "Hash": "3d5108641f47470611a32d0bdf357a72"
     },
     "later": {
       "Package": "later",
@@ -725,10 +725,10 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "2.4",
+      "Version": "2.5",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "ec8febc2bd653b754d5b03c9d4b996bb"
+      "Hash": "20a0a94af9e8f7040510447763aab3e9"
     },
     "rprojroot": {
       "Package": "rprojroot",
@@ -851,10 +851,10 @@
     },
     "tibble": {
       "Package": "tibble",
-      "Version": "3.0.3",
+      "Version": "3.0.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "08bd36bd34b20d4f7971d49e81deaab0"
+      "Hash": "71dffd8544691c520dd8e41ed2d7e070"
     },
     "tidyr": {
       "Package": "tidyr",

@@ -59,7 +59,7 @@ End_distribution_Plus <- function(x, y) {
           get(colnames(Segments)[x])[i, "Relative_plus_position"]
           )
 
-        Plus[i, 1] <- x
+        Plus[i, 1] <- colnames(Segments)[x]
         Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
       } else {
         Plus[i, 1:8] <- cbind(
@@ -67,7 +67,7 @@ End_distribution_Plus <- function(x, y) {
           get(colnames(Segments)[x])[i, "Relative_plus_position"]
         )
 
-        Plus[i, 1] <- x
+        Plus[i, 1] <- colnames(Segments)[x]
         Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
       }
     }
@@ -113,7 +113,7 @@ End_distribution_Minus <- function(x, y) {
           get(colnames(Segments)[x])[i, "Relative_minus_position"]
         )
 
-        Minus[i, 1] <- x
+        Minus[i, 1] <- colnames(Segments)[x]
         Minus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
       } else {
         Minus[i, 1:8] <- cbind(
@@ -121,7 +121,7 @@ End_distribution_Minus <- function(x, y) {
           get(colnames(Segments)[x])[i, "Relative_minus_position"]
         )
 
-        Minus[i, 1] <- x
+        Minus[i, 1] <- colnames(Segments)[x]
         Minus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
       }
     }

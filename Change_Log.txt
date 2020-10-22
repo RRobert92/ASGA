@@ -9,18 +9,21 @@
 ################################################################################
 
 ################################################################################
-# v0.32.1 - Unpublished
+# v0.33 - Unpublished
 ################################################################################
 
 # Mejor changes  ---------------------------------------------------------------
 - New tool for MT interaction
 - Introduced new file format (.am) for readout and save analysis to read in
   Amira ZIB
+- Update R to 4.0.3 and packages
 
 # Minor changes ----------------------------------------------------------------
+- Change output in the End_morphology to show name of the fiber not column no.
 
 # Bug Fix ----------------------------------------------------------------------
-- bug fix in the button reactivity, repleaced all shinyAlert to sweetAlert
+- Bugfix in the button reactivity, repleaced all shinyAlert to sweetAlert
+- Bugfix in check_Data utility
 
 # Other ------------------------------------------------------------------------
 - Added paraller procesing library

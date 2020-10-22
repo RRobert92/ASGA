@@ -29,12 +29,18 @@ Load_Amira_Nodes <- function() {
     Pattern <- as.vector(paste("@", No_column_Node[i, 2], sep = ""))
     
     Nodes_number <- which(Amira == Pattern)
-
+    test_last <- length(which(Amira == as.vector(paste("@",
+                                                       as.numeric(No_column_Node[i, 2]) + 1,
+                                                       sep = ""
+    ))))
+    if(test_last == 1){
     df <- Amira[as.numeric(Nodes_number + 1):as.numeric(which(Amira == as.vector(paste("@",
       as.numeric(No_column_Node[i, 2]) + 1,
       sep = ""
     ))) - 1), ]
-    
+    } else {
+      df <- Amira[as.numeric(Nodes_number + 1):nrow(Amira), ]
+    }
     id <- as.numeric(gsub("[^[:digit:]]", "", No_column[i, 3]))
 
     if (!is.na(id) && id == 3) {
@@ -58,7 +64,7 @@ Load_Amira_Nodes <- function() {
     Nodes <- cbind(Nodes, df)
   }
   
-  rm(id, Nodes_number, Pattern, No_column, No_column_Node, df)
+  rm(id, Nodes_number, Pattern, No_column, No_column_Node, df, test_last)
   
   Nodes
 }
@@ -182,7 +188,7 @@ Load_Amira_Segments <- function() {
   
   names(df_points)[1] <- "Point IDs"
   
-  Segments$NumEdgePoints <- df
+  Segments$NumEdgePoints <- df_points
 
   df <- Segments %>% select(starts_with("Pole"))
   

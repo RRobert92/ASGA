@@ -22,7 +22,7 @@ Check_Data <- function(i) {
 
   if (!exists("Test_Segments")) {
     Test_Segments <- FALSE
-  } else {}
+  }
 
   tryCatch(
     {
@@ -34,7 +34,7 @@ Check_Data <- function(i) {
 
   if (!exists("Test_Pole1")) {
     Test_Pole1 <- FALSE
-  } else {}
+  }
 
   tryCatch(
     {
@@ -45,23 +45,33 @@ Check_Data <- function(i) {
 
   if (!exists("Test_Pole2")) {
     Test_Pole2 <- FALSE
-  } else {}
-
+  }
+  
+  tryCatch(
+    {
+      Test_Pole1_00 <<- which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") >
+        which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole2_00")
+    },
+    error = function(e) {}
+  )
+  if (length(Test_Pole1_00) == 0) {
+    Test_Pole1_00 <- FALSE
+  }
+  
   # State value of data check  --------------------------------------------------
   if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 1
-  } else if (Test_Segments == TRUE && which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") >
-    which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole2_00")) {
+  } else if (Test_Segments == TRUE && Test_Pole1_00) {
     DataTest <<- 2
   } else if (Test_Segments == FALSE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 3
   } else if (Test_Segments == TRUE && Test_Pole1 == FALSE) {
     DataTest <<- 4
-  } else if (Test_Segments == TRUE && Test_Pole1 == FALSE) {
+  } else if (Test_Segments == TRUE && Test_Pole2 == FALSE) {
     DataTest <<- 5
-  } else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
+  } else if (Test_Segments == TRUE && Test_Pole1 == FALSE && Test_Pole2 == FALSE) {
     DataTest <<- 6
-  } else if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
+  } else if (Test_Segments == FALSE && Test_Pole1 == FALSE && Test_Pole2 == FALSE) {
     DataTest <<- 7
   } else if (!exists(get(paste("Data", "Segments", i, sep = "_")))) {
     DataTest <<- 0
