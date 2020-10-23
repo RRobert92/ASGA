@@ -36,8 +36,10 @@ End_distribution_Plus <- function(x, y) {
   # Function setting ------------------------------------------------------------------
   if (y == 1) {
     y <- Pole1
+    y_df <- 1
   } else {
     y <- Pole2
+    y_df <- 2
   }
 
   Plus <- data.frame()
@@ -52,24 +54,47 @@ End_distribution_Plus <- function(x, y) {
 
       N_ID_2 <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
       Node_2 <- Nodes[as.numeric(N_ID_2 + 1), ]
-
-      if (abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])) {
-        Plus[i, 1:8] <- cbind(
-          Node_1,
-          get(colnames(Segments)[x])[i, "Relative_plus_position"]
+      
+      if(y_df ==1){
+        if (abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])) {
+          Plus[i, 1:8] <- cbind(
+            Node_1,
+            get(colnames(Segments)[x])[i, "Relative_plus_position"]
           )
-
-        Plus[i, 1] <- colnames(Segments)[x]
-        Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
+          
+          Plus[i, 1] <- colnames(Segments)[x]
+          Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
+        } else {
+          Plus[i, 1:8] <- cbind(
+            Node_2,
+            get(colnames(Segments)[x])[i, "Relative_plus_position"]
+          )
+          
+          Plus[i, 1] <- colnames(Segments)[x]
+          Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
+        }
+        
       } else {
-        Plus[i, 1:8] <- cbind(
-          Node_2,
-          get(colnames(Segments)[x])[i, "Relative_plus_position"]
-        )
-
-        Plus[i, 1] <- colnames(Segments)[x]
-        Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
+        if (abs(Node_1["Y Coord"] - y["Y.Coord"]) < abs(Node_2["Y Coord"] - y["Y.Coord"])) {
+          Plus[i, 1:8] <- cbind(
+            Node_1,
+            get(colnames(Segments)[x])[i, "Relative_plus_position"]
+          )
+          
+          Plus[i, 1] <- colnames(Segments)[x]
+          Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
+        } else {
+          Plus[i, 1:8] <- cbind(
+            Node_2,
+            get(colnames(Segments)[x])[i, "Relative_plus_position"]
+          )
+          
+          Plus[i, 1] <- colnames(Segments)[x]
+          Plus[i, 9] <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
+        }
+        
       }
+      
     }
     names(Plus)[1] <- "Fiber"
     names(Plus)[8] <- "Relative_plus_position"
