@@ -186,6 +186,7 @@ Save_Data <- function(input, output, session) {
 
   tryCatch(
     {
+      # Prapare data for saving in Amira ASCI file
       if (Amira == TRUE) {
         End_morpho <- rbind(
           tibble(X1 = Data_1_Minus_end_morphology$Node_ID, X2 = 0),
@@ -254,12 +255,8 @@ Save_Data <- function(input, output, session) {
         # save plus/minus association
         assign(
           paste("Amira", "Dataset", current_data, sep = "_"),
-          Save_amira(End_morpho, 2, "Nodes"),
+          Save_amira(End_morpho, 2, "Nodes", "int"),
           envir = .GlobalEnv)
-        
-        write.csv2(get(paste("Amira", "Dataset", current_data, sep = "_")),
-                   paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
-                   quote = FALSE, row.names = FALSE)
       }
     },
     error = function(e) {}
@@ -606,6 +603,13 @@ Save_Data <- function(input, output, session) {
     },
     error = function(e) {}
   )
+  
+  # Amira output
+  if(Amira == TRUE){
+      write.csv2(get(paste("Amira", "Dataset", current_data, sep = "_")),
+             paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
+             quote = FALSE, row.names = FALSE)
+  }
 
   # Clean Environment ----------------------------------------------------------
   rm(list = ls(pattern = "Pole"))

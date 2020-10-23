@@ -13,52 +13,61 @@
 ################################################################################
 
 # Save segment, point or nodes  file as int variable ---------------------------
-Save_amira <- function(x, y, Data_type) {
+Save_amira <- function(x, y, Elements, Data_type) {
 
-  # Check if needed data x[y] is compatible with Amira file and select data type
-  if (Data_type == "Nodes") {
+  # Check if needed data x[y] is compatible with Amira file and select Elements
+  if (Elements == "Nodes") {
     Rows_need <- as.numeric(gsub("[^[:digit:]]", "", get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
-      filter(str_detect(X1, "VERTEX")) %>% filter(str_detect(X1, "define"))))
+      filter(str_detect(X1, "VERTEX")) %>%
+      filter(str_detect(X1, "define"))))
+
     Type_data <- "VERTEX"
-  } else if (Data_type == "Points") {
+  } else if (Elements == "Points") {
     Rows_need <- as.numeric(gsub("[^[:digit:]]", "", get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
-      filter(str_detect(X1, "POINT")) %>% filter(str_detect(X1, "define"))))
+      filter(str_detect(X1, "POINT")) %>%
+      filter(str_detect(X1, "define"))))
+
     Type_data <- "POINT"
-  } else if (Data_type == "Segments") {
+  } else if (Elements == "Segments") {
     Rows_need <- as.numeric(gsub("[^[:digit:]]", "", get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
-      filter(str_detect(X1, "EDGE")) %>% filter(str_detect(X1, "define"))))
+      filter(str_detect(X1, "EDGE")) %>%
+      filter(str_detect(X1, "define"))))
+
     Type_data <- "EDGE"
   }
 
   if (Rows_need == nrow(x)) {
     No_column <- get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
       filter(str_detect(X1, "@"))
-    No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ", fill = "left")
+    No_column <- No_column %>%
+      separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ", fill = "left")
 
-    No_column_data <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
+    No_column_data <- No_column[6] %>%
+      separate(V6, c("V1", "V2"), sep = "@")
 
     No_column_name <- paste("@", max(transform(No_column_data, V2 = as.numeric(V2))[2]) + 1, sep = "")
-    No_column_name <- paste(Type_data, " { float ", colnames(x)[y], " } ", No_column_name, sep = "")
+    No_column_name <- paste(Type_data, " { ", Data_type, " ", colnames(x)[y], " } ", No_column_name, sep = "")
 
     No_column_data <- paste("@", max(transform(No_column_data, V2 = as.numeric(V2))[2]), sep = "")
 
     Pattern <- as.vector(paste(get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
       filter(str_detect(X1, No_column_data)) %>%
       filter(str_detect(X1, "POINT"))))
-    
-    i = c("VERTEX", "POINT", "EDGE")
-    j = 1
+
+    i <- c("VERTEX", "POINT", "EDGE")
+    j <- 1
     while (Pattern == "character(0)") {
       Pattern <- as.vector(paste(get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
-                                   filter(str_detect(X1, No_column_data)) %>%
-                                   filter(str_detect(X1, i[j]))))
-      j = j + 1
+        filter(str_detect(X1, No_column_data)) %>%
+        filter(str_detect(X1, i[j]))))
+
+      j <- j + 1
       if (j == 3) {
         break
       }
     }
     rm(i, j)
-    
+
     No_column_data <- which(get(paste("Amira", "Dataset", current_data, sep = "_")) ==
       Pattern)
 
@@ -66,10 +75,12 @@ Save_amira <- function(x, y, Data_type) {
     df[No_column_data + 1, 1] <- No_column_name
 
     df_1 <- get(paste("Amira", "Dataset", current_data, sep = "_"))[No_column_data + 1:nrow(get(paste("Amira", "Dataset", current_data, sep = "_"))), 1]
-    
+
     df_1 <- drop_na(df_1)
+
     # Save data x[y] with the right header e.g. @105
-    No_column_data <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
+    No_column_data <- No_column[6] %>%
+      separate(V6, c("V1", "V2"), sep = "@")
 
     No_column_name <- paste("@", max(transform(No_column_data, V2 = as.numeric(V2))[2]) + 1, sep = "")
 
@@ -82,8 +93,13 @@ Save_amira <- function(x, y, Data_type) {
       df_2
     )
 
-    rm(No_column, No_column_data, No_column_name, df, df_1, df_2, Pattern, Rows_need, Type_data)
+    rm(
+      No_column, No_column_data, No_column_name,
+      df, df_1, df_2,
+      Pattern,
+      Rows_need, Type_data
+    )
   }
-  
+
   df_amira
 }
