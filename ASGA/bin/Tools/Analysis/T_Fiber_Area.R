@@ -38,7 +38,7 @@ leading_KMTsv2 <- function(x, y) {
       function(z) {dist(matrix(z,nrow = 2, byrow = TRUE))}
       )
     
-    leading[j, ] <- KMT_lenght[1, 1] / m_end_to_pole$distance[1]
+    leading[j, 1] <- KMT_lenght / m_end_to_pole$distance[1]
     j <- j + 1
   }
   

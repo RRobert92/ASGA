@@ -46,7 +46,7 @@ Check_Data <- function(i) {
   if (!exists("Test_Pole2")) {
     Test_Pole2 <- FALSE
   }
-  
+
   tryCatch(
     {
       Test_Pole1_00 <<- which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") >
@@ -57,7 +57,7 @@ Check_Data <- function(i) {
   if (length(Test_Pole1_00) == 0) {
     Test_Pole1_00 <- FALSE
   }
-  
+
   # State value of data check  --------------------------------------------------
   if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 1

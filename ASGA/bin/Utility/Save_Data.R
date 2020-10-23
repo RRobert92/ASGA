@@ -10,7 +10,7 @@
 ################################################################################
 
 Save_Data <- function(input, output, session) {
-  # Save Data for LA ------------------------------------------------------------
+  # Save Data for LA -----------------------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "LD_P1", sep = "_"),
@@ -41,7 +41,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for KMT No --------------------------------------------------------
+  # Save Data for KMT No -------------------------------------------------------
   tryCatch(
     {
       names(No_of_KMTs_at_kinetochore_P1)[1] <- "KMTs_per_kinetochore"
@@ -77,7 +77,7 @@ Save_Data <- function(input, output, session) {
   )
 
 
-  # Save Data for KMT at the Pole -----------------------------------------------
+  # Save Data for KMT at the Pole ----------------------------------------------
   tryCatch(
     {
       names(KMTs_at_the_Pole1)[1] <- "KMTs_at_the_Pole"
@@ -112,7 +112,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for KMT at the Pole -----------------------------------------------
+  # Save Data for KMT at the Pole ----------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "KMT_Minus_Ends", sep = "_"),
@@ -128,7 +128,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for end morphology Pole -------------------------------------------
+  # Save Data for end morphology Pole ------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "Minus_end_morphology_Pole1", sep = "_"),
@@ -184,7 +184,88 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for KMT torque ----------------------------------------------
+  tryCatch(
+    {
+      if (Amira == TRUE) {
+        End_morpho <- rbind(
+          tibble(X1 = Data_1_Minus_end_morphology$Node_ID, X2 = 0),
+          tibble(X1 = Data_1_Plus_end_morphology$Node_ID, X2 = 1)
+        )
+        End_morpho <- End_morpho[order(End_morpho$X1), ]
+        Poles <- Nodes[2] %>%
+          rowid_to_column() %>%
+          filter(`X Coord` == as.numeric(Pole1$X.Coord))
+        if (length(Poles) != 2) {
+          break
+        }
+
+        if (Poles[which.min(Poles$rowid), 1] == 0) {
+          End_morpho <- rbind(
+            tibble(
+              X1 = Poles[which.min(Poles$rowid), 1] - 1,
+              X2 = -1
+            ),
+            End_morpho[Poles[which.min(Poles$rowid), 1]:as.numeric(Poles[which.max(Poles$rowid), 1] - 2), ],
+            tibble(
+              X1 = Poles[which.max(Poles$rowid), 1] - 1,
+              X2 = -1
+            )
+          )
+        } else if (Poles[which.min(Poles$rowid), 1] == 0 &&
+          abs(Poles[which.min(Poles$rowid), 1] - Poles[which.max(Poles$rowid), 1]) == 0) {
+          End_morpho <- rbind(
+            tibble(
+              X1 = Poles[which.min(Poles$rowid), 1] - 1,
+              X2 = -1
+            ),
+            tibble(
+              X1 = Poles[which.max(Poles$rowid), 1] - 1,
+              X2 = -1
+            ),
+            End_morpho[Poles[which.max(Poles$rowid), 1]:nrow(End_morpho), ]
+          )
+        } else if (abs(Poles[which.min(Poles$rowid), 1] - Poles[which.max(Poles$rowid), 1]) == 0) {
+          End_morpho <- rbind(
+            End_morpho[1:as.numeric(Poles[which.min(Poles$rowid), 1] - 1), ],
+            tibble(
+              X1 = Poles[which.min(Poles$rowid), 1] - 1,
+              X2 = -1
+            ),
+            tibble(
+              X1 = Poles[which.max(Poles$rowid), 1] - 1,
+              X2 = -1
+            )
+          )
+        } else {
+          End_morpho <- rbind(
+            End_morpho[1:as.numeric(Poles[which.min(Poles$rowid), 1] - 1), ],
+            tibble(
+              X1 = Poles[which.min(Poles$rowid), 1] - 1,
+              X2 = -1
+            ),
+            End_morpho[Poles[which.min(Poles$rowid), 1]:as.numeric(Poles[which.max(Poles$rowid), 1] - 2), ],
+            tibble(
+              X1 = Poles[which.max(Poles$rowid), 1] - 1,
+              X2 = -1
+            )
+          )
+        }
+
+        # save plus/minus association
+        assign(
+          paste("Amira", "Dataset", current_data, sep = "_"),
+          Save_amira(End_morpho, 2, "Nodes"),
+          envir = .GlobalEnv)
+        
+        write.csv2(get(paste("Amira", "Dataset", current_data, sep = "_")),
+                   paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
+                   quote = FALSE, row.names = FALSE)
+      }
+    },
+    error = function(e) {}
+  )
+
+  # Save Data for KMT torque ---------------------------------------------------
   tryCatch(
     {
       names(Fiber_Torque_P1)[1] <- "Angle"
@@ -219,7 +300,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for LKD -----------------------------------------------------------
+  # Save Data for LKD ----------------------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "IKD", sep = "_"),
@@ -251,7 +332,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for total curvature -----------------------------------------------
+  # Save Data for total curvature ----------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_"),
@@ -315,7 +396,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for Fiber area ----------------------------------------------------
+  # Save Data for Fiber area ---------------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "Fiber_Area_P1", sep = "_"),
@@ -347,7 +428,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for Density fiber -------------------------------------------------
+  # Save Data for Density fiber ------------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "N_Density_P1", sep = "_"),
@@ -379,7 +460,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for Fiber length and curvature fiber ------------------------------
+  # Save Data for Fiber length and curvature fiber -----------------------------
   tryCatch(
     {
       names(Fiber_Length_P1)[1] <- "Length"
@@ -462,7 +543,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for nucleation ----------------------------------------------------
+  # Save Data for nucleation ---------------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "KMTs_minus_seed_P1", sep = "_"),
@@ -494,7 +575,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for kinetochore area ----------------------------------------------
+  # Save Data for kinetochore area ---------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "K_Core_Area_P1", sep = "_"),
@@ -526,7 +607,7 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Clean Environment -----------------------------------------------------------
+  # Clean Environment ----------------------------------------------------------
   rm(list = ls(pattern = "Pole"))
   rm(list = ls(pattern = "DF"))
 }

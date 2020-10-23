@@ -23,7 +23,10 @@
 
 # Bug Fix ----------------------------------------------------------------------
 - Bugfix in the button reactivity, repleaced all shinyAlert to sweetAlert
-- Bugfix in check_Data utility
+- Bugfix in check_Data utility when displaying error type 
+- Bugfix in fiber_area when using amira file
+- Bugfix for upload_data when using amira file
+- Bugfix for save amira and loading amira files
 
 # Other ------------------------------------------------------------------------
 - Added paraller procesing library
