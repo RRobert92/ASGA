@@ -74,7 +74,7 @@ GetStarted_UI <- function(id) {
         ),
 
         tags$div(class = "footer l-box is-center",
-          tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
+          tags$p(CC)
         )
       )
     ),
@@ -113,7 +113,7 @@ GetStarted_UI <- function(id) {
         ),
 
         tags$div(class = "footer l-box is-center",
-          tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
+          tags$p(CC)
         )
       )
     ),
@@ -138,7 +138,7 @@ GetStarted_UI <- function(id) {
       ),
 
       tags$div(class = "footer-report l-box is-center",
-        tags$p("© Copyright GPL V3.0 2019-2020, Robert Kiewisz")
+        tags$p(CC)
       )
     )
   )
