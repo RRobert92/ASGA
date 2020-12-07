@@ -61,6 +61,8 @@ Getfiles_Server <- function(input, output, session) {
           },
           error = function(e) {}
         )
+        Amira <<- FALSE
+        
       } else if (str_detect(input$file$datapath[i], ".am")) {
         Amira <<- readLines(input$file$datapath[i])
         updateProgressBar(
