@@ -117,67 +117,42 @@ Pre_Analysis <- function(input, output, session) {
   }
 
   # Get ID for the ellipse Rx and Rz for 100%, 50% and 25% -----------------------
-  Plus_end <<- data.frame()
-  Kinetochore_Avg <<- data.frame()
-
   assign("Kinetochore_projected",
     Kinetochore_position(),
     envir = .GlobalEnv
   )
 
-  for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
-    j <- 1
-
-    tryCatch(
-      {
-        while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))))) {
-          Plus_end[j, 1:3] <<- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 2:4]
-          j <- j + 1
-        }
-
-        Plus_end <<- data.frame(
-          X_Median = c(median(as.matrix(na.omit(Plus_end[1])))),
-          Y_Median = c(median(as.matrix(na.omit(Plus_end[2])))),
-          Z_Median = c(median(as.matrix(na.omit(Plus_end[3]))))
-        )
-
-        Kinetochore_Avg[i, 1:3] <<- Plus_end
-        Plus_end <- data.frame()
-      },
-      error = function(e) {
-        Kinetochore_Avg[i, 1:3] <<- NA
-      }
-    )
-  }
-
-  Kinetochore_Avg <<- na.omit(Kinetochore_Avg)
+  assign("Kinetochore_Avg",
+         Kinetochore_ellipse(),
+         envir = .GlobalEnv
+  )
 
   Pole_avg <<- rbind(Pole1, Pole2)
-  Pole_avg <<- data.frame(
+  Pole_avg <<- tibble(
     X_Mean = c(mean(as.matrix(Pole_avg[1]))),
     Y_Mean = c(mean(as.matrix(Pole_avg[2]))),
     Z_Mean = c(mean(as.matrix(Pole_avg[3])))
   )
 
-  Rx100 <<- data.frame()
+  Rx100 <<- tibble()
   Rx100[1, 1] <<- max(Kinetochore_Avg[1])
   Rx100[1, 1] <<- abs(Rx100[1, 1] - Pole_avg[1])
   Rx100[1, 2] <<- min(Kinetochore_Avg[1])
   Rx100[1, 2] <<- abs(Rx100[1, 2] - Pole_avg[1])
 
   Rx100 <<- max(Rx100)
-  Rx50 <<- Rx100 * 0.75
-  Rx25 <<- Rx100 * 0.50
+  Rx50 <<- Rx100 * 0.70
+  Rx25 <<- Rx100 * 0.45
 
-  Rz100 <<- data.frame()
+  Rz100 <<- tibble()
   Rz100[1, 1] <<- max(Kinetochore_Avg[3])
   Rz100[1, 1] <<- abs(Rz100[1, 1] - Pole_avg[3])
   Rz100[1, 2] <<- min(Kinetochore_Avg[3])
   Rz100[1, 2] <<- abs(Rz100[1, 2] - Pole_avg[3])
 
   Rz100 <<- max(Rz100)
-  Rz50 <<- Rz100 * 0.75
-  Rz25 <<- Rz100 * 0.50
+  Rz50 <<- Rz100 * 0.70
+  Rz25 <<- Rz100 * 0.45
 
   # Analyze Length Distribution for Pole1 --------------------------------------------------
   z <- 3

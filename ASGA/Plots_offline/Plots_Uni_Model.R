@@ -24,7 +24,7 @@ Data_3_KMT_No <- cbind(Data_3_KMT_No["KMTs_per_kinetochore"], Fiber_3["Elipse Po
 for (j in 1:numfiles) {
   LD100max <- max(get(paste("Data", j, "KMT_No", sep = "_"))$`(+) Dist-to-Pole`)
   LD100min <- min(get(paste("Data", j, "KMT_No", sep = "_"))$`(+) Dist-to-Pole`)
-  LD80 <- ((75 * (LD100max - LD100min)) + (100 * LD100min)) / 100
+  LD80 <- ((70 * (LD100max - LD100min)) + (100 * LD100min)) / 100
   LD45 <- ((50 * (LD100max - LD100min)) + (100 * LD100min)) / 100
   df <- data.frame()
 
@@ -46,7 +46,7 @@ for (j in 1:numfiles) {
   for (i in 1:nrow(get(paste("Data", j, "KMT_No", sep = "_")))) {
     if (get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] <= 50) {
       test <- "25%"
-    } else if (get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] > 70) {
+    } else if (get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] >= 75) {
       test <- "100%"
     } else {
       test <- "50%"
@@ -55,20 +55,16 @@ for (j in 1:numfiles) {
     if (test == get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"]) {
       df[i, 1] <- get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"]
     } else if (test != get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "25%" &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "25%"&&
+      get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] >= 45) {
       df[i, 1] <- "50%"
     } else if (test != get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "25%" &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] < 75) {
-      df[i, 1] <- "25%"
-    } else if (test != get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "50%" &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "50%"&&
+      get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] >= 65){
       df[i, 1] <- "100%"
-    } else if (test != get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "50%" &&
-      get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] < 45) {
+    }  else if (test != get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] &&
+      get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "50%"&&
+      get(paste("Data", j, "KMT_No", sep = "_"))[i, "PED"] <= 45){
       df[i, 1] <- "25%"
     } else if (test != get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] &&
       get(paste("Data", j, "KMT_No", sep = "_"))[i, "Elipse Position"] == "100%" &&
@@ -93,6 +89,12 @@ rm(Fiber_1, Fiber_2, Fiber_3, df)
 
 
 All_KMT_No <- rbind(Data_1_KMT_No, Data_2_KMT_No, Data_3_KMT_No)
+sd(All_KMT_No[with(All_KMT_No, `Uni_Model` == "25%"), ]$KMTs_per_kinetochore)
+sd(All_KMT_No[with(All_KMT_No, `Uni_Model` == "50%"), ]$KMTs_per_kinetochore)
+sd(All_KMT_No[with(All_KMT_No, `Uni_Model` == "100%"), ]$KMTs_per_kinetochore)
+nrow(All_KMT_No[with(All_KMT_No, `Uni_Model` == "25%"), ])
+nrow(All_KMT_No[with(All_KMT_No, `Uni_Model` == "50%"), ])
+nrow(All_KMT_No[with(All_KMT_No, `Uni_Model` == "100%"), ])
 
 P1 <- ggplot(All_KMT_No[with(All_KMT_No, `Uni_Model` == "100%"), ], aes("Outer", KMTs_per_kinetochore)) +
   geom_quasirandom(color = "violetred4", method = "tukeyDense", size = 1) +
@@ -148,7 +150,12 @@ print(P1.1)
 t <- rbind(All_KMT_Pole[with(All_KMT_Pole, Uni_Model == "100%"), ], All_KMT_Pole[with(All_KMT_Pole, Uni_Model == "25%"), ])
 t_anova <- aov(KMTs_at_the_Pole ~ Uni_Model, t)
 summary(t_anova)
-
+sd(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "25%"), ]$KMTs_at_the_Pole)
+sd(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "50%"), ]$KMTs_at_the_Pole)
+sd(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "100%"), ]$KMTs_at_the_Pole)
+nrow(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "25%"), ])
+nrow(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "50%"), ])
+nrow(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "100%"), ])
 # Length distribution -----------------------------------------------------------------------------------------------------
 
 for (j in 1:numfiles) {
@@ -186,21 +193,17 @@ for (j in 1:numfiles) {
       df[i, 1] <- get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"]
     } else if (test != get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] == "25%" &&
-      get(paste("Data", j, "LD", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "LD", sep = "_"))[i, "PED"] >= 45) {
       df[i, 1] <- "50%"
     } else if (test != get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] &&
-      get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] == "25%" &&
-      get(paste("Data", j, "LD", sep = "_"))[i, "PED"] < 75) {
-      df[i, 1] <- "25%"
-    } else if (test != get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] == "50%" &&
-      get(paste("Data", j, "LD", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "LD", sep = "_"))[i, "PED"] >= 65) {
       df[i, 1] <- "100%"
     } else if (test != get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] == "50%" &&
-      get(paste("Data", j, "LD", sep = "_"))[i, "PED"] < 45) {
+      get(paste("Data", j, "LD", sep = "_"))[i, "PED"] <= 45) {
       df[i, 1] <- "25%"
-    } else if (test != get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] &&
+    }else if (test != get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "LD", sep = "_"))[i, "Elipse_Position"] == "100%" &&
       get(paste("Data", j, "LD", sep = "_"))[i, "PED"] <= 50) {
       df[i, 1] <- "50%"
@@ -238,15 +241,27 @@ P2 <- P2 + geom_quasirandom(
   aes("Inner", length), method = "tukeyDense", size = 1, color = "springgreen4")
 print(P2)
 
-P2.1 <- ggplot(All_LD[with(All_LD, `Uni_Model` == "100%"), ], aes("Outer", length)) +
-  geom_violin(draw_quantiles = c(0.25, 0.5, 0.75), fill = "grey20", color = "black") +
+P2 <- ggplot(All_LD[with(All_LD, `Uni_Model` == "100%"), ], aes(length)) +
+  geom_density(size = 1, color = "violetred4") +
   theme_classic() +
-  ylab("KMT lengths [um]") +
-  ylim(0, 10)
-P2.1 <- P2.1 + geom_violin(data = All_LD[with(All_LD, `Uni_Model` == "50%"), ], aes("Middle", length), draw_quantiles = c(0.25, 0.5, 0.75), fill = "grey30", color = "black")
-P2.1 <- P2.1 + geom_violin(data = All_LD[with(All_LD, `Uni_Model` == "25%"), ], aes("Inner", length), draw_quantiles = c(0.25, 0.5, 0.75), fill = "grey40", color = "black")
+  xlab("KMT lengths") +
+  ylab("KMT density [Gaussian Kernal density]")
 
-print(P2.1)
+P2 <- P2 + geom_density(
+  data = All_LD[with(All_LD, `Uni_Model` == "50%"), ],
+  aes(length), size = 1, color = "royalblue4")
+
+P2 <- P2 + geom_density(
+  data = All_LD[with(All_LD, `Uni_Model` == "25%"), ],
+  aes(length), size = 1, color = "springgreen4")
+print(P2)
+
+sd(All_LD[with(All_LD, `Uni_Model` == "25%"), ]$length)
+sd(All_LD[with(All_LD, `Uni_Model` == "50%"), ]$length)
+sd(All_LD[with(All_LD, `Uni_Model` == "100%"), ]$length)
+nrow(All_LD[with(All_LD, `Uni_Model` == "25%"), ])
+nrow(All_LD[with(All_LD, `Uni_Model` == "50%"), ])
+nrow(All_LD[with(All_LD, `Uni_Model` == "100%"), ])
 
 t <- rbind(All_LD[with(All_LD, Uni_Model == "50%"), ], All_LD[with(All_LD, Uni_Model == "25%"), ])
 t_anova <- aov(length ~ Uni_Model, t)
@@ -290,19 +305,15 @@ for (j in 1:numfiles) {
       df[i, 1] <- get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"]
     } else if (test != get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] &&
       get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] == "25%" &&
-      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] >= 45) {
       df[i, 1] <- "50%"
     } else if (test != get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] &&
-      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] == "25%" &&
-      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] < 75) {
-      df[i, 1] <- "25%"
-    } else if (test != get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] &&
       get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] == "50%" &&
-      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] >= 65) {
       df[i, 1] <- "100%"
     } else if (test != get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] &&
       get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] == "50%" &&
-      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] < 45) {
+      get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "PED"] <= 45) {
       df[i, 1] <- "25%"
     } else if (test != get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] &&
       get(paste("Data", j, "KMT_Total_Curv", sep = "_"))[i, "Elipse Position"] == "100%" &&
@@ -326,44 +337,63 @@ for (j in 1:numfiles) {
 
 All_T_Curv <- rbind(Data_1_KMT_Total_Curv, Data_2_KMT_Total_Curv, Data_3_KMT_Total_Curv)
 
-P3 <- ggplot(All_T_Curv[with(All_T_Curv, `Elipse Position` == "100%"), ], aes("Outer", Curvature)) +
+P3 <- ggplot(All_T_Curv[with(All_T_Curv, `Uni_Model` == "100%"), ], aes("Outer", Curvature)) +
   geom_quasirandom(method = "tukeyDense", size = 1, color = "violetred4") +
   theme_classic() +
   xlab("KMT curvatrure") +
   ylab("KMT density [Gaussian Kernal density]")
 
 P3 <- P3 + geom_quasirandom(
-  data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "50%"), ],
+  data = All_T_Curv[with(All_T_Curv, `Uni_Model` == "50%"), ],
   aes("Middle", Curvature), method = "tukeyDense", size = 1, color = "royalblue4"
 )
 P3 <- P3 + geom_quasirandom(
-  data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "25%"), ],
+  data = All_T_Curv[with(All_T_Curv, `Uni_Model` == "25%"), ],
   aes("Inner", Curvature), method = "tukeyDense", size = 1, color = "springgreen4"
 )
 
 print(P3)
 
-P3.1 <- ggplot(All_T_Curv[with(All_T_Curv, `Elipse Position` == "100%"), ], aes(`KMTs length`, Curvature)) +
-  geom_smooth(size = 1, color = "violetred4", se = T) +
-  theme_classic() +
-  stat_cor()
+P3.1 <- ggplot(All_T_Curv[with(All_T_Curv, `Uni_Model` == "100%"), ], aes(Curvature)) +
+  geom_density(size = 1, color = "violetred4") +
+  theme_classic()
 
-P3.1 <- P3.1 + geom_smooth(
-  data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "50%"), ], aes(`KMTs length`, Curvature),
-  size = 1, color = "royalblue4", se = T
+P3.1 <- P3.1 + geom_density(
+  data = All_T_Curv[with(All_T_Curv, `Uni_Model` == "50%"), ], aes(Curvature),
+  size = 1, color = "royalblue4"
 )
-P3.1 <- P3.1 + geom_smooth(
-  data = All_T_Curv[with(All_T_Curv, `Elipse Position` == "25%"), ], aes(`KMTs length`, Curvature),
-  size = 1, color = "springgreen4", se = T
+P3.1 <- P3.1 + geom_density(
+  data = All_T_Curv[with(All_T_Curv, `Uni_Model` == "25%"), ], aes(Curvature),
+  size = 1, color = "springgreen4"
 )
 
 print(P3.1)
+
+P3.2 <- ggplot(All_T_Curv[with(All_T_Curv, `Uni_Model` == "100%"), ], aes(`KMTs length` ,Curvature)) +
+  geom_smooth(size = 1, color = "violetred4", method = "loess") +
+  theme_classic()
+
+P3.2 <- P3.2 + geom_smooth(
+  data = All_T_Curv[with(All_T_Curv, `Uni_Model` == "50%"), ], aes(`KMTs length`, Curvature),
+  size = 1, color = "royalblue4", method = "loess"
+)
+P3.2 <- P3.2 + geom_smooth(
+  data = All_T_Curv[with(All_T_Curv, `Uni_Model` == "25%" & `KMTs length` < 5), ], aes(`KMTs length`, Curvature),
+  size = 1, color = "springgreen4", method = "loess"
+)
+
+print(P3.2)
 
 t <- rbind(All_T_Curv[with(All_T_Curv, Uni_Model == "50%"), ], All_T_Curv[with(All_T_Curv, Uni_Model == "25%"), ])
 t_anova <- aov(Curvature ~ Uni_Model, t)
 summary(t_anova)
 
-
+sd(All_T_Curv[with(All_T_Curv, `Uni_Model` == "25%"), ]$Curvature)
+sd(All_T_Curv[with(All_T_Curv, `Uni_Model` == "50%"), ]$Curvature)
+sd(All_T_Curv[with(All_T_Curv, `Uni_Model` == "100%"), ]$Curvature)
+nrow(All_T_Curv[with(All_T_Curv, `Uni_Model` == "25%"), ])
+nrow(All_T_Curv[with(All_T_Curv, `Uni_Model` == "50%"), ])
+nrow(All_T_Curv[with(All_T_Curv, `Uni_Model` == "100%"), ])
 
 # Local curvature  -------------------------------------------------------------------------------------------------------
 
@@ -390,9 +420,9 @@ for (j in 1:numfiles) {
   df <- data.frame()
   test <- data.frame()
   for (i in 1:nrow(get(paste("Data", j, "KMT_Local_Curv", sep = "_")))) {
-    if (get(paste("Data", j, "KMT_Local_Curv", sep = "_"))[i, "PED"] < 50) {
+    if (get(paste("Data", j, "KMT_Local_Curv", sep = "_"))[i, "PED"] <= 50) {
       test <- "25%"
-    } else if (get(paste("Data", j, "KMT_Local_Curv", sep = "_"))[i, "PED"] > 75) {
+    } else if (get(paste("Data", j, "KMT_Local_Curv", sep = "_"))[i, "PED"] >= 75) {
       test <- "100%"
     } else {
       test <- "50%"
@@ -567,31 +597,27 @@ for (j in 1:numfiles) {
   df <- data.frame()
   test <- data.frame()
   for (i in 1:nrow(get(paste("Data", j, "Fiber_Area", sep = "_")))) {
-    if (get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] < 50) {
+    if (get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] <= 50) {
       test <- "25%"
-    } else if (get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] > 75) {
+    } else if (get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] >= 75) {
       test <- "100%"
     } else {
       test <- "50%"
     }
-
+    
     if (test == get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"]) {
       df[i, 1] <- get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"]
     } else if (test != get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] == "25%" &&
-      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] >= 45) {
       df[i, 1] <- "50%"
     } else if (test != get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] &&
-      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] == "25%" &&
-      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] < 75) {
-      df[i, 1] <- "25%"
-    } else if (test != get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] == "50%" &&
-      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] >= 75) {
+      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] >= 65) {
       df[i, 1] <- "100%"
     } else if (test != get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] == "50%" &&
-      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] < 45) {
+      get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "PED"] <= 45) {
       df[i, 1] <- "25%"
     } else if (test != get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] &&
       get(paste("Data", j, "Fiber_Area", sep = "_"))[i, "Elipse_Position"] == "100%" &&
@@ -635,6 +661,13 @@ print(PX)
 t <- rbind(All_fiber_area[with(All_fiber_area, Uni_Model == "50%"), ], All_fiber_area[with(All_fiber_area, Uni_Model == "25%"), ])
 t_anova <- aov(Roundness ~ Uni_Model, t)
 summary(t_anova)
+
+sd(All_fiber_area[with(All_fiber_area, Uni_Model == "25%"), ]$Alpha_area)
+sd(All_fiber_area[with(All_fiber_area, Uni_Model == "50%"), ]$Alpha_area)
+sd(All_fiber_area[with(All_fiber_area, Uni_Model == "100%"), ]$Alpha_area)
+nrow(All_fiber_area[with(All_fiber_area, Uni_Model == "25%"), ])
+nrow(All_fiber_area[with(All_fiber_area, Uni_Model == "50%"), ])
+nrow(All_fiber_area[with(All_fiber_area, Uni_Model == "100%"), ])
 
 i <- 1
 j <- 1
@@ -734,6 +767,13 @@ summary(t_anova)
 ND_bin_100 <- data.frame()
 ND_bin_80 <- data.frame()
 ND_bin_45 <- data.frame()
+
+sd(All_fiber_focus[with(All_fiber_focus, Uni_Model == "25%"), ]$`Focused KMTs %`)
+sd(All_fiber_focus[with(All_fiber_focus, Uni_Model == "50%"), ]$`Focused KMTs %`)
+sd(All_fiber_focus[with(All_fiber_focus, Uni_Model == "100%"), ]$`Focused KMTs %`)
+nrow(All_fiber_area[with(All_fiber_area, Uni_Model == "25%"), ])
+nrow(All_fiber_area[with(All_fiber_area, Uni_Model == "50%"), ])
+nrow(All_fiber_area[with(All_fiber_area, Uni_Model == "100%"), ])
 
 i <- 1
 j <- 1
