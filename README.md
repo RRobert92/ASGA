@@ -7,6 +7,7 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/RRobert92/MT_Analysis)
 ![GitHub contributors](https://img.shields.io/github/contributors/RRobert92/MT_Analysis)
 ![Status](https://img.shields.io/badge/lifecycle-maturating-blue.svg)
+[![CodeFactor](https://www.codefactor.io/repository/github/rrobert92/asga/badge)](https://www.codefactor.io/repository/github/rrobert92/asga)
 
 **Spindle analysis tool** is an open-source cluster of tools with its ongoing development for meiotic and mitotic spindle analysis. Key futures:
   
