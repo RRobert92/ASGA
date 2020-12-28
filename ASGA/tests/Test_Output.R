@@ -168,7 +168,7 @@ Test_Result <- function(input, output, session) {
       title = "Test result",
       text = paste("The test result was positive. All work as intended.", " Error no. ", as.character(Bad_funtions), sep = ""),
       type = "success",
-      btn_labels = c("Confirm"),
+      btn_labels = "Confirm",
       btn_colors = "#a5dc86"
     )
   } else {
@@ -179,7 +179,7 @@ Test_Result <- function(input, output, session) {
       text = paste("One of the test went wrong, check more infor in RStudio.
       Test results are included in `Test_value` data.frame.", "Error no. ", as.character(Bad_funtions[, 2]), sep = ""),
       type = "warning",
-      btn_labels = c("Confirm"),
+      btn_labels = "Confirm",
       btn_colors = "#f8bb86"
     )
   }

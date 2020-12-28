@@ -55,7 +55,7 @@ Load_Amira_Nodes <- function() {
 
       names(df)[1:3] <- c("X Coord", "Y Coord", "Z Coord")
     } else {
-      df <- as_tibble(df %>% separate(X1, c("V1"), sep = " ", extra = "drop"))
+      df <- as_tibble(df %>% separate(X1, "V1", sep = " ", extra = "drop"))
       df <- transform(df,
         `V1` = as.numeric(`V1`)
       )
@@ -113,7 +113,7 @@ Load_Amira_Points <- function() {
 
       names(df)[1:3] <- c("X Coord", "Y Coord", "Z Coord")
     } else {
-      df <- as_tibble(df %>% separate(X1, c("V1"), sep = " ", extra = "drop"))
+      df <- as_tibble(df %>% separate(X1, "V1", sep = " ", extra = "drop"))
       df <- transform(df, `V1` = as.numeric(`V1`))
 
       names(df)[1] <- No_column[i, 4]
@@ -168,7 +168,7 @@ Load_Amira_Segments <- function() {
 
       names(df)[1:2] <- c("Node ID #1", "Node ID #2")
     } else {
-      df <- as_tibble(df %>% separate(X1, c("V1"), sep = " ", extra = "drop"))
+      df <- as_tibble(df %>% separate(X1, "V1", sep = " ", extra = "drop"))
       df <- transform(df,
         `V1` = as.numeric(`V1`)
       )

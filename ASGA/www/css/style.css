@@ -11,7 +11,7 @@
 ################################################################################
 */
 
-/* 
+/*
 # Shiny Server  ----------------------------------------------------------------
 */
 body {
@@ -74,8 +74,8 @@ label {
 
 .container-fluid{
   width: 100%;
-  padding-right: 0px;
-  padding-left: 0px;
+  padding-right: 0;
+  padding-left: 0;
   margin-right: auto;
   margin-left: auto
 }
@@ -125,7 +125,7 @@ label {
 }
 
 .splash-content-report{
-    padding-top: 0px;
+    padding-top: 0;
     padding-bottom: 50px;
     padding-left: 5%;
     padding-right: 5%;
@@ -225,7 +225,6 @@ label {
     color: black;
     border: 3px solid black;
     padding: 1em 1.6em;
-    font-weight: 100;
     border-radius: 5px;
     line-height: 1em;
 }
@@ -375,7 +374,7 @@ label {
     }
     .splash-container-report{
     padding-top: 16%;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     padding-left: 250px;
     padding-right: 250px;
     text-align: center;

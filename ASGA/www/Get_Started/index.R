@@ -56,7 +56,7 @@ GetStarted_UI <- function(id) {
               fileInput(ns("file1"), 
                         label = "", 
                         multiple = TRUE, 
-                        accept = c(".xlsx"))
+                        accept = ".xlsx")
             )
           ),
 

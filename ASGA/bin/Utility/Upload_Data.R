@@ -73,7 +73,7 @@ Getfiles_Server <- function(input, output, session) {
         )
 
         Sys.sleep(0.1)
-        Amira <<- as.tibble(Amira)
+        Amira <<- as_tibble(Amira)
         names(Amira)[1] <<- "X1"
         
         assign(paste("Data", "Nodes", i, sep = "_"),

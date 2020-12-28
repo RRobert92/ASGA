@@ -19,18 +19,21 @@
 - Update R to 4.0.3 and packages
 
 # Minor changes ----------------------------------------------------------------
-- Change output in the End_morphology to show name of the fiber not column no.
+- Change output in the End_morphology to show the name of the fiber not column no.
 
 # Bug Fix ----------------------------------------------------------------------
-- Bugfix in the button reactivity, repleaced all shinyAlert to sweetAlert
+- Bugfix in the button reactivity, replaced  all shinyAlert to sweetAlert
 - Bugfix in check_Data utility when displaying error type 
 - Bugfix in fiber_area when using amira file
 - Bugfix for upload_data when using amira file
-- Bugfix for save amira and loading amira files
+- Bugfix for saveing amira and loading amira files
+- Bugfix with missing `Amira` variable shown in Test Unit
 
 # Other ------------------------------------------------------------------------
-- Added paraller procesing library
+- Added parallel processing library
 - Created R Shiny template v1.0
+- Maintenance update and cleaned code
+- Remove deprecated as.tibble() from loading amira files
 
 ################################################################################
 # v0.32 - Published 30/08/2020
