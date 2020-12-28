@@ -605,7 +605,7 @@ Save_Data <- function(input, output, session) {
   )
   
   # Amira output
-  if(Amira == TRUE){
+  if(exists("Amira") && Amira == TRUE){
       write.csv2(get(paste("Amira", "Dataset", current_data, sep = "_")),
              paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
              quote = FALSE, row.names = FALSE)

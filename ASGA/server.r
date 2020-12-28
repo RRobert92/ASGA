@@ -52,6 +52,7 @@ function(input, output, session) {
     numfiles <<- 1
     DataTest <<- 1
     Test <<- TRUE
+    Amira <<- FALSE
   })
 
   # Download zip files ---------------------------------------------------------
