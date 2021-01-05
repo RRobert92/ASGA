@@ -196,24 +196,25 @@ P2.4 <- ggplot(Data_1_KMT_Minus_Ends, aes(Relative_minus_position)) +
   theme_classic() +
   xlab("KMT minus-end distance from the pole") +
   ylab("KMT density [Gaussian Kernel density]") +
-  xlim(-0.2, 1)
+  xlim(-0.2, 1)+ ylim(0, 3)
 P2.4 <- P2.4 + geom_density(data = Data_2_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
 P2.4 <- P2.4 + geom_density(data = Data_3_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "dotdash", color = "black", kernel = "gaussian", size = 1)
-P2.4 <- P2.4 + geom_density(data = All_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "solid", color = "darkred", kernel = "gaussian", size = 1) +
-  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "darkred", linetype = "dashed", size = 1)
+P2.4 <- P2.4 + geom_density(data = All_KMT_Minus_Ends, aes(Relative_minus_position), linetype = "solid", color = "red3", kernel = "gaussian", size = 1) +
+  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "red3", linetype = "dashed", size = 1)
 print(P2.4)
 
 
 P2.5 <- ggplot(All_KMT_Minus_Ends, aes(Relative_minus_position)) +
-  geom_density(kernel = "gaussian", size = 1, color = "darkred", linetype = "solid") +
+  geom_density(kernel = "gaussian", size = 1, color = "red3", linetype = "solid") +
   theme_classic() +
   xlab("KMT minus-end distance from the pole") +
   ylab("KMT density [Gaussian Kernel density]") +
-  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "red", linetype = "dashed", size = 1)
-P2.5 <- P2.5 + geom_density(data = Data_5_KMT_Minus_Ends, aes(Relative_minus_position), kernel = "gaussian", size = 1, color = "darkgreen") +
-  geom_vline(data = Data_5_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "green", linetype = "dashed", size = 1)
-P2.5 <- P2.5 + geom_density(data = Data_7_KMT_Minus_Ends, aes(Relative_minus_position), kernel = "gaussian", size = 1, color = "darkorange") +
-  geom_vline(data = Data_7_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "orange", linetype = "dashed", size = 1)
+  geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(Relative_minus_position)), color = "red3", linetype = "dashed", size = 1) +
+  xlim(-0.2, 1) + ylim(0, 3)
+P2.5 <- P2.5 + geom_density(data = Data_5_KMT_Minus_Ends[1:496,], aes(Relative_minus_position), kernel = "gaussian", size = 1, color = "goldenrod2") +
+  geom_vline(data = Data_5_KMT_Minus_Ends[1:496,], aes(xintercept = median(Relative_minus_position)), color = "goldenrod2", linetype = "dashed", size = 1)
+P2.5 <- P2.5 + geom_density(data = Data_7_KMT_Minus_Ends[1:nrow(Data_7_KMT_Total_Curv_P1),], aes(Relative_minus_position), kernel = "gaussian", size = 1, color = "royalblue2") +
+  geom_vline(data = Data_7_KMT_Minus_Ends[1:nrow(Data_7_KMT_Total_Curv_P1),], aes(xintercept = median(Relative_minus_position)), color = "royalblue2", linetype = "dashed", size = 1)
 print(P2.5)
 
 Data_5_KMT_Minus_Ends <- Data_5_KMT_Minus_Ends[1:496, ]
@@ -226,8 +227,8 @@ P2.5.1 <- ggplot(All_KMT_Minus_Ends, aes(minus_dist_to_pole)) +
   geom_vline(data = All_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "red", linetype = "dashed", size = 1)
 P2.5.1 <- P2.5.1 + geom_density(data = Data_5_KMT_Minus_Ends, aes(minus_dist_to_pole), kernel = "gaussian", size = 1, color = "darkgreen") +
   geom_vline(data = Data_5_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "green", linetype = "dashed", size = 1)
-P2.5.1 <- P2.5.1 + geom_density(data = Data_7_KMT_Minus_Ends, aes(minus_dist_to_pole), kernel = "gaussian", size = 1, color = "darkorange") +
-  geom_vline(data = Data_7_KMT_Minus_Ends, aes(xintercept = median(minus_dist_to_pole)), color = "orange", linetype = "dashed", size = 1)
+P2.5.1 <- P2.5.1 + geom_density(data = Data_7_KMT_Minus_Ends[1:nrow(Data_7_KMT_Total_Curv_P1)], aes(minus_dist_to_pole), kernel = "gaussian", size = 1, color = "darkorange") +
+  geom_vline(data = Data_7_KMT_Minus_Ends[1:nrow(Data_7_KMT_Total_Curv_P1)], aes(xintercept = median(minus_dist_to_pole)), color = "orange", linetype = "dashed", size = 1)
 print(P2.5.1)
 
 All_KMT_Minus_Ends <- as.data.frame(c(All_KMT_Minus_Ends, 1))
@@ -394,8 +395,8 @@ P4 <- ggplot(All_L_Curv, aes(Relative_Position, Curvature)) +
   xlab("KMT Relative Position") +
   ylab("KMT Curvature ratio") +
   xlim(-0.2, 1)
-P4 <- P4 + geom_smooth(data = Data_5_KMT_Local_Curv_P1, aes(Relative_Position, Curvature), color = "blue", se = T, linetype = "solid")
-P4 <- P4 + geom_smooth(data = Data_7_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "orange", se = T, linetype = "solid")
+P4 <- P4 + geom_smooth(data = Data_5_KMT_Local_Curv_P1, aes(Relative_Position, Curvature), color = "blue", se = T, linetype = "solid") 
+P4 <- P4 + geom_smooth(data = Data_7_KMT_Local_Curv, aes(Relative_Position, Curvature), color = "orange", se = T, linetype = "solid")+ stat_cor()
 print(P4)
 
 All_L_Curv <- as.data.frame(c(All_L_Curv, 1))
