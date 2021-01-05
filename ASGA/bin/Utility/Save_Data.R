@@ -184,10 +184,12 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
+  # Save Amira file for end morphology -----------------------------------------
   tryCatch(
     {
-      # Prapare data for saving in Amira ASCI file
-      if (Amira == TRUE) {
+      # Prepare data for saving in Amira ASCI file
+      if (Amira == TRUE && 
+          ncol(Nodes %>% select(starts_with("EndType"))) >= 1) {
         End_morpho <- rbind(
           tibble(X1 = Data_1_Minus_end_morphology$Node_ID, X2 = 0),
           tibble(X1 = Data_1_Plus_end_morphology$Node_ID, X2 = 1)
