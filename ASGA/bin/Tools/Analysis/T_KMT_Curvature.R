@@ -19,11 +19,30 @@
 total_curvature <- function(x) {
   curvarture <- data.frame()
   for (i in 1:nrow(get(paste(colnames(Segments)[x])))) {
+
+    ## Virtuosity
     KMT <- get(paste(colnames(Segments)[x], i, sep = "_"))
 
     curv <- sqrt((KMT[1, 2] - KMT[nrow(KMT), 2])^2 + (KMT[1, 3] - KMT[nrow(KMT), 3])^2 + (KMT[1, 4] - KMT[nrow(KMT), 4])^2)
 
     total_length <- get(paste(colnames(Segments)[x]))[i, 2]
+
+    ## Menger curvature
+    Spline <- as.matrix(get(paste(colnames(Segments)[x], i, sep = "_"))[, 2:4])
+
+    P0 <- Spline[as.numeric(round(nrow(Spline) / 2, 0)), 1:3]
+    P1 <- Spline[1, 1:3]
+    P2 <- Spline[nrow(Spline), 1:3]
+
+    b <- sqrt((P2[1] - P1[1])^2 + (P2[2] - P1[2])^2 + (P2[3] - P1[3])^2)
+    h <- abs((P2[1] - P1[1]) * (P1[2] - P0[2]) * (P1[3] - P0[3]) - (P1[1] - P0[1]) * (P2[2] - P1[2]) * (P2[3] - P1[3])) / b
+    sideLength01 <- sqrt((P0[1] - P1[1])^2 + (P0[2] - P1[2])^2 + (P0[3] - P1[3])^2)
+    sideLength12 <- b
+    sideLength20 <- sqrt((P0[1] - P2[1])^2 + (P0[2] - P2[2])^2 + (P0[3] - P2[3])^2)
+    triangleArea <- (h * b) / 2
+    Menger_Curvature <- 4 * triangleArea / (sideLength01 * sideLength12 * sideLength20)
+
+    ## Output
 
     curvarture[i, 1] <- total_length / curv
     curvarture[i, 2] <- x
@@ -31,6 +50,7 @@ total_curvature <- function(x) {
     curvarture[i, 4] <- get(paste(colnames(Segments)[x]))[i, 4]
     curvarture[i, 5] <- get(paste(colnames(Segments)[x]))[i, 5]
     curvarture[i, 6] <- get(paste(colnames(Segments)[x]))[i, 6]
+    curvarture[i, 7] <- Menger_Curvature
 
     names(curvarture)[1] <- "Curvature"
     names(curvarture)[2] <- "k-fiber no."
@@ -38,8 +58,9 @@ total_curvature <- function(x) {
     names(curvarture)[4] <- "(+) end position"
     names(curvarture)[5] <- "(+) Dist-to-Pole"
     names(curvarture)[6] <- "Elipse Position"
+    names(curvarture)[7] <- "Menger_Curvature"
   }
-  
+
   curvarture
 }
 
@@ -58,7 +79,7 @@ local_curvature <- function(x) {
 
     while (j < nrow(KMT)) {
       output_curve[j, 1] <- sqrt((KMT[j, 2] - KMT[j + 24, 2])^2 + (KMT[j, 3] - KMT[j + 24, 3])^2 + (KMT[j, 4] - KMT[j + 24, 4])^2)
-      
+
       j <- j + 24
     }
     output_curve <- na.omit(output_curve)
@@ -75,7 +96,7 @@ local_curvature <- function(x) {
       local_c <- local_c[j:nrow(local_c), 1]
 
       output_full[j, ] <- sum(local_c[1:24])
-      
+
       j <- j + 24
     }
     output_full <- na.omit(output_full)
@@ -86,7 +107,7 @@ local_curvature <- function(x) {
 
     while (j < nrow(KMT)) {
       output_mean[j, ] <- (KMT[j, 5] + KMT[j + 24, 5]) / 2
-      
+
       j <- j + 24
     }
     output_mean <- na.omit(output_mean)
@@ -109,6 +130,6 @@ local_curvature <- function(x) {
       )
     }
   }
-  
+
   full_data
 }
