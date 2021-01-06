@@ -370,7 +370,7 @@ Save_Data <- function(input, output, session) {
       # save plus/minus association
       assign(
         paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(Data_1_KMT_Total_Curv, 1, "Segments", "flaot"),
+        Save_amira(Data_1_KMT_Total_Curv, 1, "Segments", "float"),
         envir = .GlobalEnv
       )
 
@@ -628,9 +628,9 @@ Save_Data <- function(input, output, session) {
 
   # Amira output
   if (exists("Amira") && Amira == TRUE) {
-    write.csv2(get(paste("Amira", "Dataset", current_data, sep = "_")),
+    write.table(get(paste("Amira", "Dataset", current_data, sep = "_")),
       paste("Data/","Amira_", "Dataset_", current_data, ".am", sep = ""),
-      quote = FALSE , row.names = FALSE
+      quote = FALSE , row.names = FALSE, col.names = FALSE
     )
   }
 

@@ -37,6 +37,10 @@ Save_amira <- function(x, y, Elements, Data_type) {
   }
 
   if (Rows_need == nrow(x)) {
+    if(length(is.na(x[y])[x[y] == TRUE]) > 0){
+      x[y][is.na(x[y])] <- "nan" 
+    }
+
     No_column <- get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
       filter(str_detect(X1, "@"))
     No_column <- No_column %>%
