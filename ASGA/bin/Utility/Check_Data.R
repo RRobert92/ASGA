@@ -13,7 +13,7 @@
 Check_Data <- function(i) {
   tryCatch(
     {
-      Test_Segments <- colnames(get(paste("Data", "Segments", i, sep = "_")))[1] == "Segment ID" &&
+      Test_Segments <<- colnames(get(paste("Data", "Segments", i, sep = "_")))[1] == "Segment ID" &&
         colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_")))] == "Point IDs" &&
         colnames(get(paste("Data", "Segments", i, sep = "_")))[ncol(get(paste("Data", "Segments", i, sep = "_"))) - 3] == "length"
     },
@@ -21,47 +21,61 @@ Check_Data <- function(i) {
   )
 
   if (!exists("Test_Segments")) {
-    Test_Segments <- FALSE
+    Test_Segments <<- FALSE
   }
 
   tryCatch(
     {
-      Test_Pole1 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole1)) == "Pole1"
+      Test_Pole1 <<- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole1)) == "Pole1"
     },
     error = function(e) {}
   )
 
 
   if (!exists("Test_Pole1")) {
-    Test_Pole1 <- FALSE
+    Test_Pole1 <<- FALSE
   }
 
   tryCatch(
     {
-      Test_Pole2 <- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole2)) == "Pole2"
+      Test_Pole2 <<- colnames(get(paste("Data", "Nodes", i, sep = "_")) %>% select(Pole2)) == "Pole2"
     },
     error = function(e) {}
   )
 
   if (!exists("Test_Pole2")) {
-    Test_Pole2 <- FALSE
+    Test_Pole2 <<- FALSE
   }
 
   tryCatch(
     {
-      Test_Pole1_00 <<- which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") >
+      if (Test_Pole1 == FALSE && Test_Pole2 == FALSE){
+        Poles <- peakfinder(get(paste("Data", "Nodes", i, sep = "_")))
+        Pole1 <<- Poles[1,]
+        Pole2 <<- Poles[2,]
+        rm(Poles)
+        Test_Pole1 <<- TRUE
+        Test_Pole2 <<- TRUE
+      }
+    },
+    error = function(e) {}
+  )
+  
+  tryCatch(
+    {
+      Test_Pole1_00 <<- which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") <
         which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole2_00")
     },
     error = function(e) {}
   )
   if (length(Test_Pole1_00) == 0) {
-    Test_Pole1_00 <- FALSE
+    Test_Pole1_00 <<- FALSE
   }
 
   # State value of data check  --------------------------------------------------
-  if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
+  if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE && Test_Pole1_00 == TRUE) {
     DataTest <<- 1
-  } else if (Test_Segments == TRUE && Test_Pole1_00) {
+  } else if (Test_Segments == TRUE && Test_Pole1_00 == FALSE) {
     DataTest <<- 2
   } else if (Test_Segments == FALSE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
     DataTest <<- 3
@@ -73,7 +87,7 @@ Check_Data <- function(i) {
     DataTest <<- 6
   } else if (Test_Segments == FALSE && Test_Pole1 == FALSE && Test_Pole2 == FALSE) {
     DataTest <<- 7
-  } else if (!exists(get(paste("Data", "Segments", i, sep = "_")))) {
+  } else if (!exists(paste("Data", "Segments", i, sep = "_"))) {
     DataTest <<- 0
   }
 }

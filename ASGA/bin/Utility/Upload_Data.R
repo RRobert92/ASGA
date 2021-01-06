@@ -161,18 +161,20 @@ Getfiles_Server <- function(input, output, session) {
     } else if (DataTest == 2) {
       sendSweetAlert(
         session = session,
-        title = "Looks like you there is a proble with your data",
-        text = "The labeling in the 'segments' excel sheet should start with Pole1_00, not Pole2_00.
-                Please check it with the guidelines and try again.",
-        type = "error",
+        title = "Looks like you there is a problem with your data",
+        text = "The labeling in the 'segments' file should start with Pole1_00, not Pole2_00. 
+                Additionally, the 'segments' file may not have any labeling, in that case, consider this massage as a warning.
+                Spindle poles position will be estimated based on MT ends distribution.
+                Please check it with the guidelines for further processing, limited action may be possible.",
+        type = "warning",
         btn_labels = "OK",
-        btn_colors = "#C95050",
+        btn_colors = "#f8bb86",
         closeOnClickOutside = TRUE
       )
     } else if (DataTest == 3) {
       sendSweetAlert(
         session = session,
-        title = "Looks like you there is a proble with your data",
+        title = "Looks like you there is a problem with your data",
         text = "The 'segments' data structure looks strange! 'Segment ID', 'Point IDs', or 'length' are missing or are in the wrong order...
                Please check it with the guidelines and try again.",
         type = "error",
@@ -183,8 +185,8 @@ Getfiles_Server <- function(input, output, session) {
     } else if (DataTest == 4) {
       sendSweetAlert(
         session = session,
-        title = "Looks like you there is a proble with your data",
-        text = "The labeling in the 'Nodes' excel sheet missing information about Pole1...
+        title = "Looks like you there is a problem with your data",
+        text = "The labeling in the 'Nodes' file missing information about Pole1...
                 Please check it with the guidelines and try again.",
         type = "error",
         btn_colors = "#C95050",
@@ -194,8 +196,8 @@ Getfiles_Server <- function(input, output, session) {
     } else if (DataTest == 5) {
       sendSweetAlert(
         session = session,
-        title = "Looks like you there is a proble with your data",
-        text = "The labeling in the 'Nodes' excel sheet missing information about Pole2...
+        title = "Looks like you there is a problem with your data",
+        text = "The labeling in the 'Nodes' file missing information about Pole2...
                 Please check it with the guidelines and try again.",
         type = "error",
         btn_colors = "#C95050",
@@ -205,8 +207,8 @@ Getfiles_Server <- function(input, output, session) {
     } else if (DataTest == 6) {
       sendSweetAlert(
         session = session,
-        title = "Looks like you there is a proble with your data",
-        text = "Could not find any 'Poles' coordinates in the Nodes excel sheet! Please check it with the guidelines and try again.",
+        title = "Looks like you there is a problem with your data",
+        text = "Could not find any 'Poles' coordinates in the Nodes file! Please check it with the guidelines and try again.",
         type = "error",
         btn_colors = "#C95050",
         btn_labels = "OK",
@@ -215,7 +217,7 @@ Getfiles_Server <- function(input, output, session) {
     } else if (DataTest == 7) {
       sendSweetAlert(
         session = session,
-        title = "Looks like you there is a proble with your data",
+        title = "Looks like you there is a problem with your data",
         text = "The data structure is not compatible at all. Did you try to load a wrong file?
         Please check it with the guidelines and try again.",
         type = "error",
@@ -238,6 +240,8 @@ Getfiles_Server <- function(input, output, session) {
     showTab(inputId = "innavbar-GS", target = "Settings")
   })
 
+  ## Upload of analyzed data sets
+  
   observeEvent(input$file1, {
     infile <- input$file1
     if (is.null(infile)) {
