@@ -54,19 +54,16 @@ Save_amira <- function(x, y, Elements, Data_type) {
       filter(str_detect(X1, No_column_data)) %>%
       filter(str_detect(X1, "POINT"))))
 
-    i <- c("VERTEX", "POINT", "EDGE")
-    j <- 1
-    while (Pattern == "character(0)") {
+    if(Pattern == "character(0)"){
       Pattern <- as.vector(paste(get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
-        filter(str_detect(X1, No_column_data)) %>%
-        filter(str_detect(X1, i[j]))))
-
-      j <- j + 1
-      if (j == 3) {
-        break
-      }
+                                   filter(str_detect(X1, No_column_data)) %>%
+                                   filter(str_detect(X1, "VERTEX"))))
     }
-    rm(i, j)
+    if(Pattern == "character(0)"){
+      Pattern <- as.vector(paste(get(paste("Amira", "Dataset", current_data, sep = "_")) %>%
+                                   filter(str_detect(X1, No_column_data)) %>%
+                                   filter(str_detect(X1, "EDGE"))))
+    }
 
     No_column_data <- which(get(paste("Amira", "Dataset", current_data, sep = "_")) ==
       Pattern)

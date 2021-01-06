@@ -188,8 +188,8 @@ Save_Data <- function(input, output, session) {
   tryCatch(
     {
       # Prepare data for saving in Amira ASCI file
-      if (Amira == TRUE && 
-          ncol(Nodes %>% select(starts_with("EndType"))) >= 1) {
+      if (Amira == TRUE &&
+        ncol(Nodes %>% select(starts_with("EndType"))) >= 1) {
         End_morpho <- rbind(
           tibble(X1 = Data_1_Minus_end_morphology$Node_ID, X2 = 0),
           tibble(X1 = Data_1_Plus_end_morphology$Node_ID, X2 = 1)
@@ -258,7 +258,8 @@ Save_Data <- function(input, output, session) {
         assign(
           paste("Amira", "Dataset", current_data, sep = "_"),
           Save_amira(End_morpho, 2, "Nodes", "int"),
-          envir = .GlobalEnv)
+          envir = .GlobalEnv
+        )
       }
     },
     error = function(e) {}
@@ -358,6 +359,25 @@ Save_Data <- function(input, output, session) {
       write.xlsx(
         get(paste("Data", current_data, "KMT_Total_Curv", sep = "_")),
         paste("Data/", "Data_", current_data, "_KMT_Total_Curv.xlsx", sep = "")
+      )
+    },
+    error = function(e) {}
+  )
+
+  # Save Amira file for curvature ------------------------------------------------
+  tryCatch(
+    {
+      # save plus/minus association
+      assign(
+        paste("Amira", "Dataset", current_data, sep = "_"),
+        Save_amira(Data_1_KMT_Total_Curv, 1, "Segments", "flaot"),
+        envir = .GlobalEnv
+      )
+
+      assign(
+        paste("Amira", "Dataset", current_data, sep = "_"),
+        Save_amira(Data_1_KMT_Total_Curv, 7, "Segments", "float"),
+        envir = .GlobalEnv
       )
     },
     error = function(e) {}
@@ -605,12 +625,13 @@ Save_Data <- function(input, output, session) {
     },
     error = function(e) {}
   )
-  
+
   # Amira output
-  if(exists("Amira") && Amira == TRUE){
-      write.csv2(get(paste("Amira", "Dataset", current_data, sep = "_")),
-             paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
-             quote = FALSE, row.names = FALSE)
+  if (exists("Amira") && Amira == TRUE) {
+    write.csv2(get(paste("Amira", "Dataset", current_data, sep = "_")),
+      paste("Data/","Amira_", "Dataset_", current_data, ".am", sep = ""),
+      quote = FALSE , row.names = FALSE
+    )
   }
 
   # Clean Environment ----------------------------------------------------------

@@ -64,7 +64,9 @@ function(input, output, session) {
       setwd("Data/")
       on.exit(setwd("../"))
       
-      Zip_Files <- list.files(path = getwd(), pattern = ".xlsx$")
+      Zip_Files_xlsl <- list.files(path = getwd(), pattern = ".xlsx$")
+      Zip_Files_am <- list.files(path = getwd(), pattern = ".am$")
+      Zip_Files <- c(Zip_Files_am, Zip_Files_xlsl)
       zipr(zipfile = fname, files = Zip_Files)
 
       file.remove(Zip_Files)
