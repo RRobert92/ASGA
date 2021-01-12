@@ -336,11 +336,11 @@ Save_Data <- function(input, output, session) {
   tryCatch(
     {
       assign(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_"),
-        KMTs_total_Curvature_P1,
+        KMTs_total_Curvature_P1[order(KMTs_total_Curvature_P1$Segment_ID),],
         envir = .GlobalEnv
       )
       assign(paste("Data", current_data, "KMT_Total_Curv_P2", sep = "_"),
-        KMTs_total_Curvature_P2,
+        KMTs_total_Curvature_P2[order(KMTs_total_Curvature_P2$Segment_ID),],
         envir = .GlobalEnv
       )
       assign(paste("Data", current_data, "KMT_Total_Curv", sep = "_"),

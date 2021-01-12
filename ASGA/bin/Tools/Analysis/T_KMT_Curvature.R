@@ -51,7 +51,8 @@ total_curvature <- function(x) {
     curvarture[i, 5] <- get(paste(colnames(Segments)[x]))[i, 5]
     curvarture[i, 6] <- get(paste(colnames(Segments)[x]))[i, 6]
     curvarture[i, 7] <- Menger_Curvature
-
+    curvarture[i, 8] <- get(paste(colnames(Segments)[x]))[i, 1]
+    
     names(curvarture)[1] <- "Curvature"
     names(curvarture)[2] <- "k-fiber no."
     names(curvarture)[3] <- "KMTs length"
@@ -59,6 +60,7 @@ total_curvature <- function(x) {
     names(curvarture)[5] <- "(+) Dist-to-Pole"
     names(curvarture)[6] <- "Elipse Position"
     names(curvarture)[7] <- "Menger_Curvature"
+    names(curvarture)[8] <- "Segment_ID"
   }
 
   curvarture
