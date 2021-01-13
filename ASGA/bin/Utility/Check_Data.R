@@ -31,7 +31,6 @@ Check_Data <- function(i) {
     error = function(e) {}
   )
 
-
   if (!exists("Test_Pole1")) {
     Test_Pole1 <<- FALSE
   }
@@ -66,7 +65,9 @@ Check_Data <- function(i) {
       Test_Pole1_00 <<- which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") <
         which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole2_00")
     },
-    error = function(e) {}
+    error = function(e) {
+      Test_Pole1_00 <<- tibble()
+    }
   )
   if (length(Test_Pole1_00) == 0) {
     Test_Pole1_00 <<- FALSE

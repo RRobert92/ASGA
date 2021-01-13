@@ -62,7 +62,6 @@ Getfiles_Server <- function(input, output, session) {
           error = function(e) {}
         )
         Amira <<- FALSE
-        
       } else if (str_detect(input$file$datapath[i], ".am")) {
         Amira <<- readLines(input$file$datapath[i])
         updateProgressBar(
@@ -75,51 +74,57 @@ Getfiles_Server <- function(input, output, session) {
         Sys.sleep(0.1)
         Amira <<- as_tibble(Amira)
         names(Amira)[1] <<- "X1"
-        
-        assign(paste("Data", "Nodes", i, sep = "_"),
-          Load_Amira_Nodes(),
-          envir = .GlobalEnv
-        )
-        updateProgressBar(
-          session = session,
-          id = "LoadData",
-          value = i * 100 / numfiles,
-          title = paste("Loading your data:", " Node file no.", i, " loaded", sep = "")
-        )
 
-        Sys.sleep(0.1)
+        tryCatch(
+          {
+            assign(paste("Data", "Nodes", i, sep = "_"),
+              Load_Amira_Nodes(),
+              envir = .GlobalEnv
+            )
+            updateProgressBar(
+              session = session,
+              id = "LoadData",
+              value = i * 100 / numfiles,
+              title = paste("Loading your data:", " Node file no.", i, " loaded", sep = "")
+            )
 
-        assign(paste("Data", "Points", i, sep = "_"),
-          Load_Amira_Points(),
-          envir = .GlobalEnv
-        )
-        updateProgressBar(
-          session = session,
-          id = "LoadData",
-          value = i * 100 / numfiles,
-          title = paste("Loading your data:", " Point file no.", i, " loaded", sep = "")
-        )
+            Sys.sleep(0.1)
 
-        Sys.sleep(0.1)
+            assign(paste("Data", "Points", i, sep = "_"),
+              Load_Amira_Points(),
+              envir = .GlobalEnv
+            )
+            updateProgressBar(
+              session = session,
+              id = "LoadData",
+              value = i * 100 / numfiles,
+              title = paste("Loading your data:", " Point file no.", i, " loaded", sep = "")
+            )
 
-        assign(paste("Data", "Segments", i, sep = "_"),
-          Load_Amira_Segments(),
-          envir = .GlobalEnv
-        )
-        updateProgressBar(
-          session = session,
-          id = "LoadData",
-          value = i * 100 / numfiles,
-          title = paste("Loading your data:", " Segment file no.", i, " loaded", sep = "")
-        )
+            Sys.sleep(0.1)
 
-        Sys.sleep(0.1)
+            assign(paste("Data", "Segments", i, sep = "_"),
+              Load_Amira_Segments(),
+              envir = .GlobalEnv
+            )
+            updateProgressBar(
+              session = session,
+              id = "LoadData",
+              value = i * 100 / numfiles,
+              title = paste("Loading your data:", " Segment file no.", i, " loaded", sep = "")
+            )
 
-        assign(paste("Amira", "Dataset", i, sep = "_"),
-          Amira,
-          envir = .GlobalEnv
+            Sys.sleep(0.1)
+
+            assign(paste("Amira", "Dataset", i, sep = "_"),
+              Amira,
+              envir = .GlobalEnv
+            )
+
+            Amira <<- TRUE
+          },
+          error = function(e) {}
         )
-        Amira <<- TRUE
       }
       # Check Data  -------------------------------------------------------------
       Check_Data(i)
@@ -133,7 +138,6 @@ Getfiles_Server <- function(input, output, session) {
     }
 
     closeSweetAlert(session = session)
-
 
     if (numfiles == 1) {
       text <- "dataset was"
@@ -241,7 +245,7 @@ Getfiles_Server <- function(input, output, session) {
   })
 
   ## Upload of analyzed data sets
-  
+
   observeEvent(input$file1, {
     infile <- input$file1
     if (is.null(infile)) {
