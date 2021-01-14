@@ -21,11 +21,11 @@ GetStarted_UI <- function(id) {
     id = "innavbar-GS",
     selected = "UploadData",
 
-    # UI-GetStarted-Home  ----------------------------------------------------------
+    # UI-GetStarted-Home  ------------------------------------------------------
 
     tabPanel("Home", "Home"),
 
-    # UI-GetStarted-UploadData  ----------------------------------------------------
+    # UI-GetStarted-UploadData  ------------------------------------------------
 
     tabPanel("Upload Data", value = "UploadData",
              
@@ -79,7 +79,7 @@ GetStarted_UI <- function(id) {
       )
     ),
 
-    # UI-GetStarted-Settings  -----------------------------------------------------
+    # UI-GetStarted-Settings  --------------------------------------------------
 
     tabPanel("Settings", value = "Settings",
              
@@ -118,7 +118,7 @@ GetStarted_UI <- function(id) {
       )
     ),
 
-    # UI-GetStarted-Settings  -----------------------------------------------------
+    # UI-GetStarted-Settings  --------------------------------------------------
 
     tabPanel("Report",value = "Report",
              

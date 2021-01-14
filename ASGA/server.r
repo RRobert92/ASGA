@@ -34,6 +34,7 @@ function(input, output, session) {
   observeEvent(input$Wiki, {
     updateTabsetPanel(session, "innavbar", selected = "Wiki")
     hideTab(inputId = "innavbar", target = "GetStarted")
+    hideTab(inputId = "innavbar", target = "innavbar-GS")
   })
 
   # Get file and Load data  ----------------------------------------------------
