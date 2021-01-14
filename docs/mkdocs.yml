@@ -8,5 +8,6 @@ nav:
       - 'Release Note': Change_Log.md
       - Citation: Cit.md
 
+theme: readthedocs
 repo_url: https://github.com/RRobert92/ASGA
 site_url: https://github.com/RRobert92/ASGA
