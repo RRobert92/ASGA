@@ -48,10 +48,10 @@ Check_Data <- function(i) {
 
   tryCatch(
     {
-      if (Test_Pole1 == FALSE && Test_Pole2 == FALSE){
+      if (Test_Pole1 == FALSE && Test_Pole2 == FALSE) {
         Poles <- peakfinder(get(paste("Data", "Nodes", i, sep = "_")))
-        Pole1 <<- Poles[1,]
-        Pole2 <<- Poles[2,]
+        Pole1 <<- Poles[1, ]
+        Pole2 <<- Poles[2, ]
         rm(Poles)
         Test_Pole1 <<- TRUE
         Test_Pole2 <<- TRUE
@@ -59,7 +59,7 @@ Check_Data <- function(i) {
     },
     error = function(e) {}
   )
-  
+
   tryCatch(
     {
       Test_Pole1_00 <<- which(colnames(get(paste("Data", "Segments", i, sep = "_"))) == "Pole1_00") <
@@ -90,5 +90,26 @@ Check_Data <- function(i) {
     DataTest <<- 7
   } else if (!exists(paste("Data", "Segments", i, sep = "_"))) {
     DataTest <<- 0
+  }
+}
+
+Check_Analysis <- function(i) {
+  tryCatch(
+    {
+      AnalysisTest <<- as.list(str_split(i, paste("Data_", "[:digit:]", "_", sep = ""))[[1]])
+      if (length(AnalysisTest) == 2 &&
+        AnalysisTest[1] == "") {
+        AnalysisTest <<- 1
+      } else {
+        AnalysisTest <<- 0
+      }
+    },
+    error = function(e) {
+      AnalysisTest <<- 0
+    }
+  )
+
+  if (!exists("AnalysisTest")) {
+    AnalysisTest <<- 0
   }
 }
