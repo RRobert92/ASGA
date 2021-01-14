@@ -63,7 +63,7 @@ function(input, output, session) {
     content = function(fname) {
       setwd("Data/")
       on.exit(setwd("../"))
-      
+
       Zip_Files_xlsl <- list.files(path = getwd(), pattern = ".xlsx$")
       Zip_Files_am <- list.files(path = getwd(), pattern = ".am$")
       Zip_Files <- c(Zip_Files_am, Zip_Files_xlsl)
@@ -73,7 +73,7 @@ function(input, output, session) {
     }
   )
 
-  # Page responsiveness after loading data  --------------------------------------
+  # Page responsiveness after loading data  ------------------------------------
   observeEvent(input$`Home-file`, {
     Test <<- FALSE
 
@@ -82,59 +82,69 @@ function(input, output, session) {
       updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
     } else {
       updateTabsetPanel(session, "innavbar", selected = "Home")
+      hideTab(inputId = "innavbar-GS", target = "Settings")
+      hideTab(inputId = "innavbar", target = "GetStarted")
+      numfiles <<- 0
     }
   })
 
-  # Page responsiveness after loading data  ----------------------------------------
+  # Page responsiveness after loading data  ------------------------------------
   observeEvent(input$`Home-file1`, {
     Test <<- FALSE
 
-    showTab(inputId = "innavbar-GS", target = "Report")
-    updateTabsetPanel(session, "innavbar-GS", selected = "Report")
+    if (AnalysisTest == 1) {
+      showTab(inputId = "innavbar-GS", target = "Report")
+      updateTabsetPanel(session, "innavbar-GS", selected = "Report")
 
-    File_name <<- as.data.frame(File_name)
-    numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
+      File_name <<- as.data.frame(File_name)
+      numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
 
-    df <- data.frame()
+      df <- data.frame()
 
-    for (i in 1:nrow(File_name)) {
-      name <- as.data.frame(str_split(File_name[i, 1], "_"))
-      df[i, 1] <- as.numeric(name[2, 1])
-      name <- as.data.frame(str_split(File_name[i, 1], paste("Data_", df[i, 1], "_", sep = "")))
-      df[i, 2] <- as.character(name[2, 1])
+      for (i in 1:nrow(File_name)) {
+        name <- as.data.frame(str_split(File_name[i, 1], "_"))
+        df[i, 1] <- as.numeric(name[2, 1])
+        name <- as.data.frame(str_split(
+          File_name[i, 1],
+          paste("Data_", df[i, 1], "_", sep = "")
+        ))
+        df[i, 2] <- as.character(name[2, 1])
+      }
+
+      File_name <<- df
+
+      rm(df, name)
+
+      # Collect information to start a plot after analysis ---------------------
+      lapply(1:numfiles, function(i) {
+        observeEvent(input[[paste("Data_label", i, sep = "_")]], {
+          assign(paste("Data_label", i, sep = "_"),
+            input[[paste("Data_label", i, sep = "_")]],
+            envir = .GlobalEnv
+          )
+        })
+
+        observeEvent(input[[paste("Data_color", i, sep = "_")]], {
+          assign(paste("Data_color", i, sep = "_"),
+            input[[paste("Data_color", i, sep = "_")]],
+            envir = .GlobalEnv
+          )
+        })
+
+        observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
+          assign(paste("Data_bin", i, sep = "_"),
+            input[[paste("Data_bin", i, sep = "_")]],
+            envir = .GlobalEnv
+          )
+        })
+      })
+
+      callModule(Report_Plot_Settings, "Home")
+      callModule(Report_Plot, "Home")
+    } else {
+      updateTabsetPanel(session, "innavbar", selected = "Home")
+      callModule(Error_Handler, "Home")
     }
-
-    File_name <<- df
-
-    rm(df, name)
-
-    # Collect information to start a plot after analysis ------------------------
-
-    lapply(1:numfiles, function(i) {
-      observeEvent(input[[paste("Data_label", i, sep = "_")]], {
-        assign(paste("Data_label", i, sep = "_"),
-          input[[paste("Data_label", i, sep = "_")]],
-          envir = .GlobalEnv
-        )
-      })
-
-      observeEvent(input[[paste("Data_color", i, sep = "_")]], {
-        assign(paste("Data_color", i, sep = "_"),
-          input[[paste("Data_color", i, sep = "_")]],
-          envir = .GlobalEnv
-        )
-      })
-
-      observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
-        assign(paste("Data_bin", i, sep = "_"),
-          input[[paste("Data_bin", i, sep = "_")]],
-          envir = .GlobalEnv
-        )
-      })
-    })
-
-    callModule(Report_Plot_Settings, "Home")
-    callModule(Report_Plot, "Home")
   })
 
   # Relativity for the Home and GS button  -------------------------------------
@@ -158,7 +168,8 @@ function(input, output, session) {
       withProgress(message = "Analyzing:", value = 1, {
         for (y in 1:numfiles) {
           current_data <<- y
-          incProgress(1 / numfiles, detail = paste("Data set no.", y, sep = " "))
+          incProgress(1 / numfiles, 
+                      detail = paste("Data set no.", y, sep = " "))
           Sys.sleep(0.1)
 
           callModule(Load_Data, "Home")
@@ -229,7 +240,8 @@ function(input, output, session) {
         for (i in 1:nrow(File_name)) {
           name <- as.data.frame(str_split(File_name[i, 1], "_"))
           df[i, 1] <- as.numeric(name[2, 1])
-          name <- as.data.frame(str_split(File_name[i, 1], paste("Data_", df[i, 1], "_", sep = "")))
+          name <- as.data.frame(str_split(File_name[i, 1], 
+                                          paste("Data_", df[i, 1], "_", sep = "")))
           df[i, 2] <- as.character(name[2, 1])
         }
 
@@ -238,12 +250,13 @@ function(input, output, session) {
         rm(df, name)
       })
 
-      # Download data-set ----------------------------------------------------------
+      # Download data-set ------------------------------------------------------
       output$`Home-Download_Button` <- renderUI({
-        downloadBttn("downloadData", label = "Download", style = "material-flat", color = "success")
+        downloadBttn("downloadData", label = "Download", 
+                     style = "material-flat", color = "success")
       })
 
-      # Collect information to start a plot after analysis ------------------------
+      # Collect information to start a plot after analysis ---------------------
       lapply(1:numfiles, function(i) {
         observeEvent(input[[paste("Data_label", i, sep = "_")]], {
           assign(paste("Data_label", i, sep = "_"),
@@ -339,7 +352,7 @@ function(input, output, session) {
     )
   })
 
-  # Refresh for the Report page -------------------------------------------------
+  # Refresh for the Report page ------------------------------------------------
   observeEvent(input$Refresh, {
     callModule(Report_Plot, "Home")
   })
