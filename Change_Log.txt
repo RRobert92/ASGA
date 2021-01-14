@@ -17,12 +17,15 @@
 
 # Minor changes ----------------------------------------------------------------
 - Added Menger curvature
+- Error handler for analyzed data when uploaded 
 
 # Bug Fix ----------------------------------------------------------------------
 - Bugfixes for Amira output
 
 # Other ------------------------------------------------------------------------
 - Update library
+- small responsiveness improvement of the main page when user upload 
+  the wrong file
 
 ################################################################################
 # v0.33 - Published 28/12/2020
