@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://github.com/RRobert92/ASGA/Change_Log/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Release Note - ASGA</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">ASGA</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../doc/" class="nav-link">Documentation</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../license/" class="dropdown-item">License</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Release Note</a>
+</li>
+                                    
+<li>
+    <a href="../Cit/" class="dropdown-item">Citation</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../license/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Cit/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/RRobert92/ASGA/edit/master/docs/Change_Log.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#change-log" class="nav-link"> Change Log </a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#v034-unpublished" class="nav-link">v0.34 - Unpublished</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#v033-published-28122020" class="nav-link">v0.33 - Published 28/12/2020</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#v032-published-30082020" class="nav-link">v0.32 - Published 30/08/2020</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#v0311-published-17072020" class="nav-link">v0.31.1 - Published 17/07/2020</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#v031-published-09072020" class="nav-link">v0.31 - Published 09/07/2020</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#v0301-published-24052020" class="nav-link">v0.30.1 - Published 24/05/2020</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#v030-published-18052020" class="nav-link">v0.30 - Published 18/05/2020</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="change-log"><h1 align="center"> Change Log </h1></h1>
+<h2 id="v034-unpublished">v0.34 - Unpublished</h2>
+<hr />
+<p><code>Major changes</code></p>
+<ul>
+<li>Added export of curvature data into Amira file</li>
+</ul>
+<p><code>Minor changes</code></p>
+<ul>
+<li>Added Menger curvature</li>
+<li>Error handler for analyzed data when uploaded </li>
+</ul>
+<p><code>Bug Fix</code></p>
+<ul>
+<li>Bugfixes for Amira output</li>
+</ul>
+<p><code>Other</code></p>
+<ul>
+<li>Update library</li>
+<li>small responsiveness improvement of the main page when user upload 
+  the wrong file</li>
+</ul>
+<hr />
+<h2 id="v033-published-28122020">v0.33 - Published 28/12/2020</h2>
+<hr />
+<p><code>Major changes</code></p>
+<ul>
+<li>New tool for MT interaction</li>
+<li>Introduced new file format (.am) for readout and save analysis to read in
+  <a href="https://amira.zib.de/">Amira ZIB</a></li>
+<li>Update <code>R</code> to 4.0.3 and packages</li>
+</ul>
+<p><code>Minor changes</code></p>
+<ul>
+<li>Change output in the <code>End_morphology</code> to show the name of the fiber not column no.</li>
+</ul>
+<p><code>Bug Fix</code></p>
+<ul>
+<li>Bugfix in the button reactivity, replaced  all <code>shinyAlert</code> to <code>sweetAlert</code></li>
+<li>Bugfix in <code>check_Data</code> utility when displaying error type </li>
+<li>Bugfix in <code>fiber_area</code> when using amira file</li>
+<li>Bugfix for <code>upload_data</code> when using amira file</li>
+<li>Bugfix for <code>saving_amira</code> and loading amira files</li>
+<li>Bugfix with missing Amira variable shown in <code>Test_Unit</code></li>
+</ul>
+<p><code>Other</code></p>
+<ul>
+<li>Added parallel processing library (<code>parallel</code>)</li>
+<li>Created R Shiny template v1.0</li>
+<li>Maintenance update and cleaned code</li>
+<li>Remove deprecated <code>as.tibble()</code> from loading amira files</li>
+</ul>
+<hr />
+<h2 id="v032-published-30082020">v0.32 - Published 30/08/2020</h2>
+<hr />
+<p><code>Major changes</code></p>
+<ul>
+<li>Code reviewed and standardized according to the tidyverse guidelines</li>
+<li>Added <code>renv</code> library management </li>
+<li>Added custom test unit</li>
+</ul>
+<p><code>Minor changes</code></p>
+<ul>
+<li>Added node_id as an output of <code>end_morpology</code></li>
+</ul>
+<p><code>Bug Fix</code></p>
+<ul>
+<li>Review entire code (v0.31.1)</li>
+</ul>
+<p><code>Other</code></p>
+<ul>
+<li>added ASGA logo</li>
+</ul>
+<hr />
+<h2 id="v0311-published-17072020">v0.31.1 - Published 17/07/2020</h2>
+<hr />
+<p><code>Major changes</code></p>
+<ul>
+<li>Added Torque and helicity tools</li>
+</ul>
+<p><code>Bug Fix</code></p>
+<ul>
+<li>Fixed issue with end morphology</li>
+<li>Hot Fixes in a pre analysis </li>
+</ul>
+<hr />
+<h2 id="v031-published-09072020">v0.31 - Published 09/07/2020</h2>
+<hr />
+<p><code>Mejor changes</code></p>
+<ul>
+<li>Added upload for the analyzed data for plotting</li>
+<li>Added analysis report page and its responsiveness </li>
+<li>Allows to change names and color of a graphs</li>
+<li>Added tool for length and curvature of a fiber</li>
+<li>Added tool for calculation of a kinetochore area and it's position</li>
+</ul>
+<p><code>Minor changes</code></p>
+<ul>
+<li>Changed style of the Download button</li>
+</ul>
+<p><code>Bug Fix</code></p>
+<ul>
+<li>Adjustment in a CSS style for different screen resolutions</li>
+</ul>
+<p><code>Other</code></p>
+<ul>
+<li>Created ASGA_dev for console based ASGA used for testing new tools</li>
+<li>Change threshold for the ellipse model</li>
+<li>Added plotting for the Ellipse, plus end and unified model</li>
+</ul>
+<hr />
+<h2 id="v0301-published-24052020">v0.30.1 - Published 24/05/2020</h2>
+<hr />
+<p><code>Major changes</code></p>
+<ul>
+<li>Moved loading of a data from Upload to separate function</li>
+<li>Upload and analysis of multiple data is now supported</li>
+<li>Added module for saving data</li>
+<li>Added module for exporting and downloading data</li>
+</ul>
+<p><code>Minor changes</code></p>
+<ul>
+<li>Title of an app is now a variable</li>
+<li>Added small progress bar if more then one data set was upload to indicate which 
+  data set is currently analyzed</li>
+</ul>
+<p><code>Bug Fix</code></p>
+<ul>
+<li>Fixed analysis of the end morphology </li>
+</ul>
+<p><code>Other</code></p>
+<ul>
+<li>Started documentation of changes (a.k.a. Change Log)</li>
+</ul>
+<hr />
+<h2 id="v030-published-18052020">v0.30 - Published 18/05/2020</h2>
+<hr />
+<p><code>Major changes</code></p>
+<ul>
+<li>Added all tools from the local module</li>
+<li>Cleaned CSS</li>
+<li>Added fully functional button to the set-up settings</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
