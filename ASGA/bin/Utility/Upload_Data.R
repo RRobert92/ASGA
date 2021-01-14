@@ -62,6 +62,7 @@ Getfiles_Server <- function(input, output, session) {
           error = function(e) {}
         )
         Amira <<- FALSE
+        
       } else if (str_detect(input$file$datapath[i], ".am")) {
         Amira <<- readLines(input$file$datapath[i])
         updateProgressBar(
@@ -140,106 +141,19 @@ Getfiles_Server <- function(input, output, session) {
     closeSweetAlert(session = session)
 
     if (numfiles == 1) {
-      text <- "dataset was"
+      text_dataset <<- "dataset was"
     } else {
-      text <- "dataset's were"
+      text_dataset <<- "dataset's were"
     }
 
     if (Amira == TRUE) {
-      datatype <- "Amira ASCII"
+      datatype <<- "Amira ASCII"
     } else {
-      datatype <- "Excel ASCII"
+      datatype <<- "Excel ASCII"
     }
 
     # Pop-UP windows with Completion/Errors  ----------------------------------------
-    if (DataTest == 1) {
-      sendSweetAlert(
-        session = session,
-        title = "The data structure looks great!",
-        text = paste(numfiles, datatype, text, "successfuly uploaded!", "Press Ok to analyze your awesome data!", sep = " "),
-        type = "success",
-        btn_labels = "OK",
-        btn_colors = "#39B855",
-        closeOnClickOutside = TRUE
-      )
-    } else if (DataTest == 2) {
-      sendSweetAlert(
-        session = session,
-        title = "Looks like you there is a problem with your data",
-        text = "The labeling in the 'segments' file should start with Pole1_00, not Pole2_00. 
-                Additionally, the 'segments' file may not have any labeling, in that case, consider this massage as a warning.
-                Spindle poles position will be estimated based on MT ends distribution.
-                Please check it with the guidelines for further processing, limited action may be possible.",
-        type = "warning",
-        btn_labels = "OK",
-        btn_colors = "#f8bb86",
-        closeOnClickOutside = TRUE
-      )
-    } else if (DataTest == 3) {
-      sendSweetAlert(
-        session = session,
-        title = "Looks like you there is a problem with your data",
-        text = "The 'segments' data structure looks strange! 'Segment ID', 'Point IDs', or 'length' are missing or are in the wrong order...
-               Please check it with the guidelines and try again.",
-        type = "error",
-        btn_colors = "#C95050",
-        btn_labels = "OK",
-        closeOnClickOutside = TRUE
-      )
-    } else if (DataTest == 4) {
-      sendSweetAlert(
-        session = session,
-        title = "Looks like you there is a problem with your data",
-        text = "The labeling in the 'Nodes' file missing information about Pole1...
-                Please check it with the guidelines and try again.",
-        type = "error",
-        btn_colors = "#C95050",
-        btn_labels = "OK",
-        closeOnClickOutside = TRUE
-      )
-    } else if (DataTest == 5) {
-      sendSweetAlert(
-        session = session,
-        title = "Looks like you there is a problem with your data",
-        text = "The labeling in the 'Nodes' file missing information about Pole2...
-                Please check it with the guidelines and try again.",
-        type = "error",
-        btn_colors = "#C95050",
-        btn_labels = "OK",
-        closeOnClickOutside = TRUE
-      )
-    } else if (DataTest == 6) {
-      sendSweetAlert(
-        session = session,
-        title = "Looks like you there is a problem with your data",
-        text = "Could not find any 'Poles' coordinates in the Nodes file! Please check it with the guidelines and try again.",
-        type = "error",
-        btn_colors = "#C95050",
-        btn_labels = "OK",
-        closeOnClickOutside = TRUE
-      )
-    } else if (DataTest == 7) {
-      sendSweetAlert(
-        session = session,
-        title = "Looks like you there is a problem with your data",
-        text = "The data structure is not compatible at all. Did you try to load a wrong file?
-        Please check it with the guidelines and try again.",
-        type = "error",
-        btn_colors = "#C95050",
-        btn_labels = "OK",
-        closeOnClickOutside = TRUE
-      )
-    } else if (DataTest == 0) {
-      sendSweetAlert(
-        session = session,
-        title = "Looks like you try to upload a wrong file",
-        text = "Please check it with the guidelines and try again.",
-        type = "error",
-        btn_colors = "#C95050",
-        btn_labels = "OK",
-        closeOnClickOutside = TRUE
-      )
-    }
+    callModule(Error_Handler, "Home")
 
     showTab(inputId = "innavbar-GS", target = "Settings")
   })
@@ -278,17 +192,19 @@ Getfiles_Server <- function(input, output, session) {
         },
         error = function(e) {}
       )
+      
+      Check_Analysis(File_name)
 
       updateProgressBar(
         session = session,
         id = "LoadData",
         value = i * 100 / numfiles
       )
-
       Sys.sleep(0.1)
+      
+      if(AnalysisTest != 1) break
     }
     closeSweetAlert(session = session)
-
-    showTab(inputId = "innavbar-GS", target = "Settings")
+    hideTab(inputId = "innavbar-GS", target = "Settings")
   })
 }
