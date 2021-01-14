@@ -15,6 +15,12 @@ CC <- "© Copyright GPL V3.0 2019-2020, Robert Kiewisz"
 # Global CSS  ------------------------------------------------------------------
 includeCSS("www/css/style.css")
 
+js_code <- "
+shinyjs.browseURL = function(url) {
+  window.open(url,'_blank');
+}
+"
+
 # Global HTML  -----------------------------------------------------------------
 source("www/Home/index.R")
 source("www/Get_Started/index.R")

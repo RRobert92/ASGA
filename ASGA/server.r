@@ -34,9 +34,14 @@ function(input, output, session) {
   observeEvent(input$Wiki, {
     updateTabsetPanel(session, "innavbar", selected = "Wiki")
     hideTab(inputId = "innavbar", target = "GetStarted")
-    hideTab(inputId = "innavbar", target = "innavbar-GS")
   })
 
+  observeEvent(input$innavbar, {
+    if(input$innavbar == "Wiki"){
+      js$browseURL("https://rrobert92.github.io/ASGA/")
+      updateTabsetPanel(session, "innavbar", selected = "Home")
+    }
+  })
   # Get file and Load data  ----------------------------------------------------
   callModule(Getfiles_Server, "Home")
 

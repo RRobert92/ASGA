@@ -14,7 +14,9 @@ fluidPage(
   includeCSS("www/css/style.css"),
 
   useShinyalert(),
-
+  useShinyjs(),
+  extendShinyjs(text = js_code, functions = 'browseURL'),
+  
   navbarPage(
     title = App_title,
     collapsible = TRUE,
@@ -36,8 +38,7 @@ fluidPage(
     ),
 
     tabPanel(
-      "Wiki",
-      fluidRow()
+      "Wiki"
     ),
 
     tabPanel(
