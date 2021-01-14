@@ -1,4 +1,4 @@
-<img src="https://github.com/RRobert92/ASGA/blob/master/ASGA_dev/img/asga%20baner.png">
+<img src="https://github.com/RRobert92/ASGA/blob/main/ASGA_dev/img/asga%20baner.png?raw=true">
 
 # Open-Source Spindle analysis tool
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/RRobert92/MT_Analysis)
