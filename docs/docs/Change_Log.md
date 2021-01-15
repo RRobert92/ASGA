@@ -26,6 +26,7 @@ date: 2021-01-14
 - Update library
 - small responsiveness improvement of the main page when user upload 
   the wrong file
+- Added ASGA documentation 
   
 ---
 ## v0.33 - Published 28/12/2020

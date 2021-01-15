@@ -370,13 +370,15 @@ Save_Data <- function(input, output, session) {
       # save plus/minus association
       assign(
         paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(Data_1_KMT_Total_Curv, 1, "Segments", "float"),
+        Save_amira(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))
+                   , 1, "Segments", "float"),
         envir = .GlobalEnv
       )
 
       assign(
         paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(Data_1_KMT_Total_Curv, 7, "Segments", "float"),
+        Save_amira(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))
+                   , 7, "Segments", "float"),
         envir = .GlobalEnv
       )
     },
