@@ -1,5 +1,5 @@
 ---
-title: Wiki Page
+title: License Page
 authors: Robert Kiewisz
 date: 2021-01-14
 ---

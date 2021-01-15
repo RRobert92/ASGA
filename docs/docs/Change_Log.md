@@ -1,3 +1,8 @@
+---
+title: ChangLog Page
+authors: Robert Kiewisz
+date: 2021-01-14
+---
 # <h1 align="center"> Change Log </h1>
 
 ## v0.34 - Unpublished

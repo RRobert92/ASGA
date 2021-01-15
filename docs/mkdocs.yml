@@ -2,12 +2,24 @@ site_name: ASGA
 
 nav:
   - Home: index.md
-  - Documentation: doc.md
+  
+  - Documentation:
+    - Global Use Funcitons: Global_Fun.md
+    - Pre Analysis Functions: Pre_anal.md
+    - KMTs Analysis Functions: KMT_anal.md
+    - MTs Analysis Functions: MT_anal.md
+    - Test Unit: Test.md
+    
   - About: 
       - License: license.md
-      - 'Release Note': Change_Log.md
+      - Release Note: Change_Log.md
       - Citation: Cit.md
 
 theme: readthedocs
 repo_url: https://github.com/RRobert92/ASGA
-site_url: https://github.com/RRobert92/ASGA
+site_url: https://kiewisz.shinyapps.io/ASGA/
+edit_uri: /RRobert92/ASGA/blob/main/docs/docs/
+plugins:
+  - search:
+      lang: en
+      prebuild_index: python

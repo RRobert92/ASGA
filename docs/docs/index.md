@@ -1,5 +1,5 @@
 ---
-title: Wiki Page
+title: Main Page
 authors: Robert Kiewisz
 date: 2021-01-14
 ---
@@ -104,4 +104,4 @@ Contributions, collaborators and/or constructive criticism are welcome! Please s
 <a href="https://github.com/gunar-f"><img src="https://avatars0.githubusercontent.com/u/70518136?s=400&v=4" height="50px" width="50px" alt=""/></a>
 <a name="Copyright"></a>
 ## Copyright
-This project is distributed under the General Public License (GPL) version 3.0 - see the [LICENSE.md](LICENSE.md) file for details.
+This project is distributed under the General Public License (GPL) version 3.0 - see the [license.md](license.md) file for details.
