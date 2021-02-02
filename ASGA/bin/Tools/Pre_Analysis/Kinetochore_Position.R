@@ -65,29 +65,28 @@ Kinetochore_position <- function() {
 Kinetochore_ellipse <- function() {
   Plus_end <- tibble()
   Kinetochore_Avg <- tibble()
-     Kinetochore_Avg[1,1:3] <- 0
-     
+  Kinetochore_Avg[1, 1:3] <- 0
+  counter <- 1
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
     j <- 1
- 
-        while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i])))-1)) {
-          Plus_end[j, 1:3] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 2:4]
-          j <- j + 1
-        }
-        
-        if(nrow(Plus_end) > 0){
-         Plus_end <- tibble(
-          X_Median = median(as.matrix(na.omit(Plus_end[1]))),
-          Y_Median = median(as.matrix(na.omit(Plus_end[2]))),
-          Z_Median = median(as.matrix(na.omit(Plus_end[3])))
-        )
-        
-        Kinetochore_Avg[i, 1:3] <- Plus_end
-        } else {
-          Kinetochore_Avg[i, 1:3] <- 0
-        }
-        Plus_end <- tibble() 
+
+    while (j <= as.numeric(nrow(get(paste(colnames(Segments)[i]))) - 1)) {
+      Plus_end[j, 1:3] <- get(paste(colnames(Segments)[i], j, sep = "_"))[1, 2:4]
+      j <- j + 1
+    }
+
+    if (nrow(Plus_end) > 0) {
+      Plus_end <- tibble(
+        X_Median = median(as.matrix(na.omit(Plus_end[1]))),
+        Y_Median = median(as.matrix(na.omit(Plus_end[2]))),
+        Z_Median = median(as.matrix(na.omit(Plus_end[3])))
+      )
+
+      Kinetochore_Avg[counter, 1:3] <- Plus_end
+    }
+    Plus_end <- tibble()
+    counter <- counter + 1
   }
-  
+
   Kinetochore_Avg
 }
