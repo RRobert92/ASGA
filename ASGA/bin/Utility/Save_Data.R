@@ -347,7 +347,11 @@ Save_Data <- function(input, output, session) {
         rbind(KMTs_total_Curvature_P1, KMTs_total_Curvature_P2),
         envir = .GlobalEnv
       )
-
+      assign(paste("Data", current_data, "KMT_Total_Curv", sep = "_"),
+             get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[order(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID),],
+             envir = .GlobalEnv
+      )
+      
       write.xlsx(
         get(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_")),
         paste("Data/", "Data_", current_data, "_KMT_Total_Curv_P1.xlsx", sep = "")
