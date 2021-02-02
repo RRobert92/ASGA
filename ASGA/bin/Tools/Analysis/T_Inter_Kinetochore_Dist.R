@@ -22,35 +22,39 @@ Inter_Kinetochore_Dist <- function() {
       {
         DF_Pole1 <- colnames(Segments)[i]
         DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
-        
+
         DF_Pole2 <- paste("Pole2", DF[6, 1], sep = "_")
 
-        Plus_end_1 <- data.frame()
-        for (j in 1:nrow(get(DF_Pole1))) {
-          Plus_end_1[j, 1:3] <- get(paste(DF_Pole1, j, sep = "_"))[1, 2:4]
+        if (!exists("DF_Pole1") || !exists("DF_Pole2")) {
+          Inter_Kinetochore_Distance[i, 1] <- NA
+          break
         }
-        
-        Plus_end_1 <- data.frame(
-          X_Median = c(median(as.matrix(Plus_end_1[1]))),
-          Y_Median = c(median(as.matrix(Plus_end_1[2]))),
-          Z_Median = c(median(as.matrix(Plus_end_1[3])))
-        )
+        else {
+          Plus_end_1 <- data.frame()
+          for (j in 1:nrow(get(DF_Pole1))) {
+            Plus_end_1[j, 1:3] <- get(paste(DF_Pole1, j, sep = "_"))[1, 2:4]
+          }
 
-        Plus_end_2 <- data.frame()
-        for (j in 1:nrow(get(DF_Pole2))) {
-          Plus_end_2[j, 1:3] <- get(paste(DF_Pole2, j, sep = "_"))[1, 2:4]
+          Plus_end_1 <- data.frame(
+            X_Median = c(median(as.matrix(Plus_end_1[1]))),
+            Y_Median = c(median(as.matrix(Plus_end_1[2]))),
+            Z_Median = c(median(as.matrix(Plus_end_1[3])))
+          )
+
+          Plus_end_2 <- data.frame()
+          for (j in 1:nrow(get(DF_Pole2))) {
+            Plus_end_2[j, 1:3] <- get(paste(DF_Pole2, j, sep = "_"))[1, 2:4]
+          }
+          Plus_end_2 <- data.frame(
+            X_Median = c(median(as.matrix(Plus_end_2[1]))),
+            Y_Median = c(median(as.matrix(Plus_end_2[2]))),
+            Z_Median = c(median(as.matrix(Plus_end_2[3])))
+          )
+
+          # Calculate distance to each posit kinetochore and save smalls distance ------------------------------
+          positions <- sqrt((Plus_end_1[1, 1] - Plus_end_2[1, 1])^2 + (Plus_end_1[1, 2] - Plus_end_2[1, 2])^2 + (Plus_end_1[1, 3] - Plus_end_2[1, 3])^2)
+          Inter_Kinetochore_Distance[i, 1] <- round(positions, 5)
         }
-        Plus_end_2 <- data.frame(
-          X_Median = c(median(as.matrix(Plus_end_2[1]))),
-          Y_Median = c(median(as.matrix(Plus_end_2[2]))),
-          Z_Median = c(median(as.matrix(Plus_end_2[3])))
-        )
-
-
-
-        # Calculate distance to each posit kinetochore and save smalls distance ------------------------------
-        positions <- sqrt((Plus_end_1[1, 1] - Plus_end_2[1, 1])^2 + (Plus_end_1[1, 2] - Plus_end_2[1, 2])^2 + (Plus_end_1[1, 3] - Plus_end_2[1, 3])^2)
-        Inter_Kinetochore_Distance[i, 1] <- round(positions, 5)
       },
       error = function(e) {}
     )
@@ -58,8 +62,8 @@ Inter_Kinetochore_Dist <- function() {
 
   DF <- Inter_Kinetochore_Distance
   names(DF)[1] <- "Inter-kinetochore distance"
-  
-  na.omit(DF)
+
+  return(na.omit(DF))
 }
 
 # Count no of KMTs between sister kinetochores -------------------------------------------------------
@@ -73,7 +77,7 @@ Compare_KMTs_no_for_sister <- function() {
       {
         DF_Pole1 <- colnames(Segments)[i]
         DF <- data.frame(str_split(gsub("[^[:digit:]]", "Pole_1", DF_Pole1), pattern = "Pole_1"))
-        
+
         DF_Pole2 <- paste("Pole2", DF[6, 1], sep = "_")
 
         KMT_end_1 <- nrow(get(DF_Pole1))
@@ -101,7 +105,7 @@ Compare_KMTs_no_for_sister <- function() {
     Inter_Kinetochore_Distance
   )
   KMT <- rbind(KMTs_at_Pole1, KMTs_at_Pole2)
-  
+
   DF <- cbind(Dist, KMT)
   names(DF)[1] <- "Inter-kinetochore distance"
   names(DF)[2] <- "KMTs no."
@@ -147,6 +151,6 @@ Compare_KMTs_delta_for_sister <- function() {
   DF <- cbind(Inter_Kinetochore_Distance, Delta)
   names(DF)[1] <- "Inter-kinetochore distance"
   names(DF)[2] <- "Delta of KMTs"
-  
+
   DF
 }
