@@ -133,7 +133,8 @@ Load_Amira_Segments <- function() {
     filter(str_detect(X1, "EDGE")) %>%
     filter(str_detect(X1, "@"))
   No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
-
+  No_column <- No_column[order(No_column$V4),]
+  
   No_column_Segments <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
 
   Segments <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>%
