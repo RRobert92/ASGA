@@ -22,7 +22,10 @@ PTP$distance <- apply(PTP, 1,
 Pole_to_Pole <- ggplot(PTP[1,], aes("Metaphase #1", distance)) + geom_col(fill = "brown1") + theme_classic()
 Pole_to_Pole <- Pole_to_Pole + geom_col(data = PTP[2,], aes("Metaphase #2", distance), fill = "brown2")
 Pole_to_Pole <- Pole_to_Pole + geom_col(data = PTP[3,], aes("Metaphase #3", distance), fill = "brown3")
-Pole_to_Pole <- Pole_to_Pole + geom_col(data = data.frame(distance = mean(PTP[,7])), aes("Avg.", distance), fill = "darkred")
+Pole_to_Pole <- Pole_to_Pole + geom_col(data = data.frame(distance = mean(PTP[,7])), aes("Avg.", distance), fill = "darkred") + 
+  stat_summary(data = data.frame(distance =PTP[,7]), 
+               aes("Avg.", distance),
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
 print(Pole_to_Pole)
 
 # 3D Euclidean distance between sister-kinetochore (IKD)
@@ -48,4 +51,41 @@ IKD <- IKD +
                    aes("Avg.", `Inter-kinetochore distance`), 
                    fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
 print(IKD)
+
+# No. of KMTs per k-fiber
+No_KMTs_avg <- rbind(Data_1_KMT_No, Data_2_KMT_No, Data_3_KMT_No)
+
+No_KMTs <- ggplot(Data_1_KMT_No, aes("Metaphase #1", KMTs_per_kinetochore)) + 
+           geom_quasirandom(method = "tukeyDense", color = "brown1") + theme_classic() + 
+           stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+No_KMTs <- No_KMTs + 
+           geom_quasirandom(data = Data_2_KMT_No, aes("Metaphase #2", KMTs_per_kinetochore), 
+                            method = "tukeyDense", color = "brown2") + 
+           stat_summary(data = Data_2_KMT_No,
+                        aes("Metaphase #2", KMTs_per_kinetochore), 
+                        fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+No_KMTs <- No_KMTs + 
+  geom_quasirandom(data = Data_3_KMT_No, aes("Metaphase #3", KMTs_per_kinetochore), 
+                   method = "tukeyDense", color = "brown3") + 
+  stat_summary(data = Data_3_KMT_No,
+               aes("Metaphase #3", KMTs_per_kinetochore), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+No_KMTs <- No_KMTs + 
+  geom_quasirandom(data = No_KMTs_avg, aes("Avg.", KMTs_per_kinetochore), 
+                   method = "tukeyDense", color = "darkred") + 
+  stat_summary(data = No_KMTs_avg,
+               aes("Avg.", KMTs_per_kinetochore), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+print(No_KMTs)
+
+IKD_KMT_NO <- ggplot(Data_1_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`)) + 
+              geom_jitter(color = "brown1", shape = 15) + theme_classic() + 
+              geom_smooth(method = "lm", color = "brown1", se = F)
+IKD_KMT_NO <- IKD_KMT_NO +
+              geom_jitter(data = Data_2_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown2", shape = 16) +
+              geom_smooth(data = Data_2_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), method = "lm", color = "brown2", se = F)
+IKD_KMT_NO <- IKD_KMT_NO +
+  geom_jitter(data = Data_2_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown3", shape = 17) +
+  geom_smooth(data = Data_3_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), method = "lm", color = "brown3", se = F)
+print(IKD_KMT_NO)
 
