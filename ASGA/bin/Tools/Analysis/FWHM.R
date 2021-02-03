@@ -78,5 +78,3 @@ FWHM <- function(x, y, Output_ID) {
     return(as.data.frame(Fit1000))
   }
 }
-
-FWHM(x$x, x$y, 1)

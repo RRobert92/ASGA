@@ -51,13 +51,14 @@ MT_point_config <<- 0.035 # Distance of any MT to the MT [um]
 Fiber_area_config <<- 24
 
 # Global Functions  ------------------------------------------------------------
+  # Pre_Analysis 
 source("bin/Tools/Pre_Analysis/Sort_by_Fiber.R")
 source("bin/Tools/Pre_Analysis/Select_Points.R")
 source("bin/Tools/Pre_Analysis/Find_XYZ.R")
 source("bin/Tools/Pre_Analysis/Kinetochore_Position.R")
 source("bin/Tools/Pre_Analysis/Sort_All_Points_to_Start_From_the_Kinetochore.R")
 source("bin/Tools/Pre_Analysis/T_Relative_Position.R")
-
+  # Analysis 
 source("bin/Tools/Analysis/Length_Distiribution.R")
 source("bin/Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
 source("bin/Tools/Analysis/No_of_KMTs.R")
@@ -69,10 +70,11 @@ source("bin/Tools/Analysis/T_KMT_Minus_End_Seeds.R")
 source("bin/Tools/Analysis/T_Fiber_Length_Curvature.R")
 source("bin/Tools/Analysis/T_Kinetochore_Area.R")
 source("bin/Tools/Analysis/T_KMT_Torque.R")
-
 source("bin/Tools/Analysis/T_Bridging_MT.R")
-
+  # Output report plots
 source("bin/Utility/Report.R")
+  # Statistic analysis tools
+source("bin/Tools/Analysis/FWHM.R")
 
 # Global Packages  -------------------------------------------------------------
 source("bin/Packages/Analysis/A_KMT_number.R")
@@ -86,5 +88,5 @@ source("bin/Packages/Analysis/A_Kinetochore_Area.R")
 source("bin/Packages/Analysis/A_KMT_Torque.R")
 source("bin/Packages/Analysis/A_MT_Bridging.R")
 
-# Test Unit ---------------------------------------------------------------------
+# Test Unit --------------------------------------------------------------------
 source("tests/Test_Output.R")

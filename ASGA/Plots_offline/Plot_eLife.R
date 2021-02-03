@@ -89,3 +89,89 @@ IKD_KMT_NO <- IKD_KMT_NO +
   geom_smooth(data = Data_3_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), method = "lm", color = "brown3", se = F)
 print(IKD_KMT_NO)
 
+# Length distribution
+LD_avg <- rbind(Data_1_LD, Data_2_LD, Data_3_LD)
+
+LD <- ggplot(Data_1_LD, aes("Metaphase #1", length)) + 
+      geom_quasirandom(method = "tukeyDense", color = "brown1") + 
+      stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange") + theme_classic()
+LD <- LD + 
+      geom_quasirandom(data = Data_2_LD, aes("Metaphase #2", length), 
+                       method = "tukeyDense", color = "brown2") + 
+      stat_summary(data = Data_2_LD,
+                   aes("Metaphase #2", length), 
+                   fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+LD <- LD + 
+      geom_quasirandom(data = Data_3_LD, aes("Metaphase #3", length), 
+                   method = "tukeyDense", color = "brown3") + 
+      stat_summary(data = Data_3_LD,
+               aes("Metaphase #3", length), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+LD <- LD + 
+      geom_quasirandom(data = LD_avg, aes("Avg.", length), 
+                   method = "tukeyDense", color = "darkred") + 
+      stat_summary(data = LD_avg,
+               aes("Avg.", length), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+print(LD)
+
+# Minus ends distance and distribution
+
+Data_1 <- ggplot_build(ggplot(Data_1_KMT_Minus_Ends, aes(minus_dist_to_pole)) + geom_density())$data[[1]]
+Data_1 <- as.numeric(FWHM(Data_1$x, Data_1$y, 2)[2])
+
+Data_2 <- ggplot_build(ggplot(Data_2_KMT_Minus_Ends, aes(minus_dist_to_pole)) + geom_density())$data[[1]]
+y_max <- Data_2[which.max(Data_2$y),1]/1.2   # Data show double pick to account for that FWHM is taken only for the first peak
+Data_2 <- Data_2[as.numeric(which.max(Data_2$y)+1):nrow(Data_2),]
+Data_2 <- as.numeric(Data_2[which(abs(Data_2$y - y_max) == min(abs(Data_2$y - y_max))),]$x)
+
+Data_3 <- Data_3[as.numeric(which.max(Data_3$y)+1):nrow(Data_3),]
+Data_3 <- as.numeric(Data_3[which(abs(Data_3$y - y_max) == min(abs(Data_3$y - y_max))),]$x)
+
+Minus_Ends_avg <- rbind(Data_1_KMT_Minus_Ends, Data_2_KMT_Minus_Ends, Data_3_KMT_Minus_Ends)
+
+MInus_Ends <- ggplot(Data_1_KMT_Minus_Ends, aes("Metaphase #1", minus_dist_to_pole))+ 
+              geom_quasirandom(method = "tukeyDense", color = "brown1") + 
+              stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange") + theme_classic()
+MInus_Ends <- MInus_Ends + 
+              geom_quasirandom(data = Data_2_KMT_Minus_Ends, aes("Metaphase #2", minus_dist_to_pole), 
+                               method = "tukeyDense", color = "brown2") + 
+              stat_summary(data = Data_2_KMT_Minus_Ends,
+                           aes("Metaphase #2", minus_dist_to_pole), 
+                           fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+MInus_Ends <- MInus_Ends + 
+              geom_quasirandom(data = Data_3_KMT_Minus_Ends, aes("Metaphase #3", minus_dist_to_pole), 
+                               method = "tukeyDense", color = "brown3") + 
+              stat_summary(data = Data_3_KMT_Minus_Ends,
+                          aes("Metaphase #3", minus_dist_to_pole), 
+                          fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+MInus_Ends <- MInus_Ends + 
+              geom_quasirandom(data = Minus_Ends_avg, aes("Avg.", minus_dist_to_pole), 
+                               method = "tukeyDense", color = "darkred") + 
+              stat_summary(data = Minus_Ends_avg,
+                           aes("Avg.", minus_dist_to_pole), 
+                           fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+print(MInus_Ends)
+
+Minus_Position <- ggplot(Data_1_KMT_Minus_Ends, aes("Metaphase #1", Relative_minus_position))+ 
+                  geom_quasirandom(method = "tukeyDense", color = "brown1") + 
+                  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange") + theme_classic()
+Minus_Position <- Minus_Position + 
+                  geom_quasirandom(data = Data_2_KMT_Minus_Ends, aes("Metaphase #2", Relative_minus_position), 
+                                   method = "tukeyDense", color = "brown2") + 
+                  stat_summary(data = Data_2_KMT_Minus_Ends,
+                               aes("Metaphase #2", Relative_minus_position), 
+                               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+Minus_Position <- Minus_Position + 
+                  geom_quasirandom(data = Data_3_KMT_Minus_Ends, aes("Metaphase #3", Relative_minus_position), 
+                                   method = "tukeyDense", color = "brown3") + 
+                  stat_summary(data = Data_3_KMT_Minus_Ends,
+                               aes("Metaphase #3", Relative_minus_position), 
+                               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+Minus_Position <- Minus_Position + 
+                  geom_quasirandom(data = Minus_Ends_avg, aes("Avg.", Relative_minus_position), 
+                                   method = "tukeyDense", color = "darkred") + 
+                  stat_summary(data = Minus_Ends_avg,
+                               aes("Avg.", Relative_minus_position), 
+                               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+print(Minus_Position)
