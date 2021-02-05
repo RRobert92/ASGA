@@ -80,9 +80,11 @@ local_curvature <- function(x) {
     j <- 1
 
     while (j < nrow(KMT)) {
-      output_curve[j, 1] <- sqrt((KMT[j, 2] - KMT[j + 24, 2])^2 + (KMT[j, 3] - KMT[j + 24, 3])^2 + (KMT[j, 4] - KMT[j + 24, 4])^2)
+      output_curve[j, 1] <- sqrt((KMT[j, 2] - KMT[j + Curvature_config, 2])^2 + 
+                                   (KMT[j, 3] - KMT[j + Curvature_config, 3])^2 + 
+                                   (KMT[j, 4] - KMT[j + Curvature_config, 4])^2)
 
-      j <- j + 24
+      j <- j + Curvature_config
     }
     output_curve <- na.omit(output_curve)
 
@@ -92,14 +94,14 @@ local_curvature <- function(x) {
 
     while (j < nrow(KMT)) {
       local_c <- data.frame()
-      for (k in j:as.numeric(j + 24)) {
+      for (k in j:as.numeric(j + Curvature_config)) {
         local_c[k, 1] <- sqrt((KMT[k, 2] - KMT[k + 1, 2])^2 + (KMT[k, 3] - KMT[k + 1, 3])^2 + (KMT[k, 4] - KMT[k + 1, 4])^2)
       }
       local_c <- local_c[j:nrow(local_c), 1]
 
-      output_full[j, ] <- sum(local_c[1:24])
+      output_full[j, ] <- sum(local_c[1:Curvature_config])
 
-      j <- j + 24
+      j <- j + Curvature_config
     }
     output_full <- na.omit(output_full)
 
@@ -108,9 +110,9 @@ local_curvature <- function(x) {
     j <- 1
 
     while (j < nrow(KMT)) {
-      output_mean[j, ] <- (KMT[j, 5] + KMT[j + 24, 5]) / 2
+      output_mean[j, ] <- (KMT[j, 5] + KMT[j + Curvature_config, 5]) / 2
 
-      j <- j + 24
+      j <- j + Curvature_config
     }
     output_mean <- na.omit(output_mean)
 

@@ -48,7 +48,8 @@ numfiles <<- 0
 Minus_Threshold <<- 1.68 # Minus end distance to the pole [um]
 Minus_Distance <<- 0.035 # Minus end distance of any MT to the KMT [um]
 MT_point_config <<- 0.035 # Distance of any MT to the MT [um]
-Fiber_area_config <<- 24
+Fiber_area_config <<- 24 # 500 nm bin length 
+Curvature_config <<- 24 # 500 nm bin length 
 
 # Global Functions  ------------------------------------------------------------
   # Pre_Analysis 

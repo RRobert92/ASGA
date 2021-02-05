@@ -189,6 +189,24 @@ Setting_Buttons_Server <- function(input, output, session) {
         For more information see 'Wiki' page"
       }
     })
+    
+    if (input$`Curvature` == TRUE) {
+      inputSweetAlert(
+        session = session,
+        type = "info",
+        inputId = "Curvature_config",
+        input = "text",
+        title = "Set-up analysis parameter",
+        text = "Bin size used to calculate local curvature every specified distance on the spindle pole axis. Unit [nm]"
+      )
+    }
+    
+    observeEvent(input[["Curvature_config"]], {
+      assign("Curvature_config",
+             round(as.numeric(input[["Curvature_config"]]) / 20, 0) - 1,
+             envir = .GlobalEnv
+      )
+    })
   })
 
   # Reactivity for End_morphology -------------------------------------------------
