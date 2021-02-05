@@ -336,11 +336,11 @@ Save_Data <- function(input, output, session) {
   tryCatch(
     {
       assign(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_"),
-        KMTs_total_Curvature_P1[order(KMTs_total_Curvature_P1$Segment_ID),],
+        KMTs_total_Curvature_P1[order(KMTs_total_Curvature_P1$Segment_ID), ],
         envir = .GlobalEnv
       )
       assign(paste("Data", current_data, "KMT_Total_Curv_P2", sep = "_"),
-        KMTs_total_Curvature_P2[order(KMTs_total_Curvature_P2$Segment_ID),],
+        KMTs_total_Curvature_P2[order(KMTs_total_Curvature_P2$Segment_ID), ],
         envir = .GlobalEnv
       )
       assign(paste("Data", current_data, "KMT_Total_Curv", sep = "_"),
@@ -348,10 +348,10 @@ Save_Data <- function(input, output, session) {
         envir = .GlobalEnv
       )
       assign(paste("Data", current_data, "KMT_Total_Curv", sep = "_"),
-             get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[order(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID),],
-             envir = .GlobalEnv
+        get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[order(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID), ],
+        envir = .GlobalEnv
       )
-      
+
       write.xlsx(
         get(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_")),
         paste("Data/", "Data_", current_data, "_KMT_Total_Curv_P1.xlsx", sep = "")
@@ -368,23 +368,59 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Amira file for curvature ------------------------------------------------
+  # Save Amira file for curvature ----------------------------------------------
   tryCatch(
     {
+      DF <- tibble(
+        Tortuosity = as.character(),
+        Menger_Curvature = as.character(),
+        Segment_ID = as.numeric()
+      )
+
+      for (i in 1:nrow(Segments)) {
+        if (i %in% get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID) {
+          Curv_data_colector <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
+            which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
+            "Curvature"
+          ]
+          Menger_data_colector <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
+            which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
+            "Menger_Curvature"
+          ]
+
+          DF[i, ] <- tibble(
+            Tortuosity = as.character(Curv_data_colector),
+            Menger_Curvature = as.character(Menger_data_colector),
+            Segment_ID = i
+          )
+        } else {
+          DF[i, ] <- tibble(
+            Tortuosity = as.character("nan"),
+            Menger_Curvature = as.character("nan"),
+            Segment_ID = i
+          )
+        }
+      }
+
       # save plus/minus association
       assign(
         paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))
-                   , 1, "Segments", "float"),
+        Save_amira(
+          DF,
+          1, "Segments", "float"
+        ),
         envir = .GlobalEnv
       )
 
       assign(
         paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))
-                   , 7, "Segments", "float"),
+        Save_amira(
+          DF,
+          2, "Segments", "float"
+        ),
         envir = .GlobalEnv
       )
+      rm(DF, Curv_data_colector, Menger_data_colector)
     },
     error = function(e) {}
   )
@@ -635,8 +671,8 @@ Save_Data <- function(input, output, session) {
   # Amira output
   if (exists("Amira") && Amira == TRUE) {
     write.table(get(paste("Amira", "Dataset", current_data, sep = "_")),
-      paste("Data/","Amira_", "Dataset_", current_data, ".am", sep = ""),
-      quote = FALSE , row.names = FALSE, col.names = FALSE
+      paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
+      quote = FALSE, row.names = FALSE, col.names = FALSE
     )
   }
 
