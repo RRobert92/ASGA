@@ -157,7 +157,19 @@ Load_Amira_Segments <- function() {
     }
 
     df <- Amira[as.numeric(Segments_number + 1):last_column, ]
-
+    
+    if(nrow(df) != nrow(Segments)){
+      df <- Amira[as.numeric(Segments_number + 1):nrow(Amira), ]
+    }
+    
+    if(nrow(df) != nrow(Segments)){
+      if(Amira[as.numeric(last_column + 2),1] == as.vector(paste("@", as.numeric(No_column_Segments[i, 2]) + 1, sep = ""))){
+        df <- Amira[as.numeric(Segments_number + 1):as.numeric(last_column + 1), ]
+      }
+    }
+    
+    if(nrow(df) != nrow(Segments)) next
+    
     id <- as.numeric(gsub("[^[:digit:]]", "", No_column[i, 3]))
 
     if (!is.na(id) && id == 2) {
