@@ -66,7 +66,7 @@ Pre_Analysis <- function(input, output, session) {
     value = 1
   )
 
-  total <- 6
+  total <- 7
 
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
     tryCatch(
@@ -451,8 +451,19 @@ Pre_Analysis <- function(input, output, session) {
       error = function(e) {}
     )
   }
-  closeSweetAlert(session = session)
 
+# SMTs minus ends 
+  z <- 7
+  
+  updateProgressBar(
+    session = session,
+    id = "Pre_Analysis",
+    title = "Calcualting SMTs minus end position and saving data...",
+    value = round((z - 1) / total * 100,0)
+  )
+  Sys.sleep(0.1)
+  
+  SMT_Ends <<- SMT_Minus_Ends()
   Minus_end_position <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["minus_dist_to_pole"]
   Relative_position <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Relative_minus_position"]
   Minus_end_position <<- cbind(Minus_end_position, Relative_position)
@@ -468,4 +479,5 @@ Pre_Analysis <- function(input, output, session) {
       error = function(e) {}
     )
   }
+  closeSweetAlert(session = session)
 }

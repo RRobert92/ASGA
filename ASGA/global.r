@@ -59,23 +59,26 @@ source("bin/Tools/Pre_Analysis/Find_XYZ.R")
 source("bin/Tools/Pre_Analysis/Kinetochore_Position.R")
 source("bin/Tools/Pre_Analysis/Sort_All_Points_to_Start_From_the_Kinetochore.R")
 source("bin/Tools/Pre_Analysis/T_Relative_Position.R")
-  # Analysis 
-source("bin/Tools/Analysis/Length_Distiribution.R")
-source("bin/Tools/Analysis/No_of_KMTs_connected_to_the_Pole.R")
-source("bin/Tools/Analysis/No_of_KMTs.R")
-source("bin/Tools/Analysis/T_Inter_Kinetochore_Dist.R")
-source("bin/Tools/Analysis/T_KMT_Curvature.R")
-source("bin/Tools/Analysis/T_End_Morphology.R")
-source("bin/Tools/Analysis/T_Fiber_Area.R")
-source("bin/Tools/Analysis/T_KMT_Minus_End_Seeds.R")
-source("bin/Tools/Analysis/T_Fiber_Length_Curvature.R")
-source("bin/Tools/Analysis/T_Kinetochore_Area.R")
-source("bin/Tools/Analysis/T_KMT_Torque.R")
-source("bin/Tools/Analysis/T_Bridging_MT.R")
+  # Analysis for KMTs
+source("bin/Tools/Analysis/KMTs/Length_Distiribution.R")
+source("bin/Tools/Analysis/KMTs/No_of_KMTs_connected_to_the_Pole.R")
+source("bin/Tools/Analysis/KMTs/No_of_KMTs.R")
+source("bin/Tools/Analysis/KMTs/T_Inter_Kinetochore_Dist.R")
+source("bin/Tools/Analysis/KMTs/T_KMT_Curvature.R")
+source("bin/Tools/Analysis/KMTs/T_End_Morphology.R")
+source("bin/Tools/Analysis/KMTs/T_Fiber_Area.R")
+source("bin/Tools/Analysis/KMTs/T_KMT_Minus_End_Seeds.R")
+source("bin/Tools/Analysis/KMTs/T_Fiber_Length_Curvature.R")
+source("bin/Tools/Analysis/KMTs/T_Kinetochore_Area.R")
+source("bin/Tools/Analysis/KMTs/T_KMT_Torque.R")
+
+  # Analysis for KMTs
+source("bin/Tools/Analysis/SMTs/T_Bridging_MT.R")
+source("bin/Tools/Analysis/SMTs/T_SMTs_Minus_Ends.R")
   # Output report plots
 source("bin/Utility/Report.R")
   # Statistic analysis tools
-source("bin/Tools/Analysis/FWHM.R")
+source("bin/Tools/Analysis/Stat/FWHM.R")
 
 # Global Packages  -------------------------------------------------------------
 source("bin/Packages/Analysis/A_KMT_number.R")
