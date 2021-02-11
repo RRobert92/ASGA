@@ -40,7 +40,22 @@ Save_Data <- function(input, output, session) {
     },
     error = function(e) {}
   )
-
+  
+  # Save Data for SMT ends -----------------------------------------------------
+  tryCatch(
+    {
+      assign(paste("Data", current_data, "SMT_Ends", sep = "_"),
+             LD_P1,
+             envir = .GlobalEnv
+      )
+      write.xlsx(
+        get(paste("Data", current_data, "SMT_Ends", sep = "_")),
+        paste("Data/", "Data_", current_data, "_SMT_Ends.xlsx", sep = "")
+      )
+    },
+    error = function(e) {}
+  )
+  
   # Save Data for KMT No -------------------------------------------------------
   tryCatch(
     {
@@ -376,8 +391,9 @@ Save_Data <- function(input, output, session) {
         Menger_Curvature = as.character(),
         Segment_ID = as.numeric()
       )
-
-      for (i in 1:nrow(Segments)) {
+      counter <- 1
+      
+      for (i in Segments$`Segment ID`) {
         if (i %in% get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID) {
           Curv_data_colector <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
             which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
@@ -388,18 +404,19 @@ Save_Data <- function(input, output, session) {
             "Menger_Curvature"
           ]
 
-          DF[i, ] <- tibble(
+          DF[counter, ] <- tibble(
             Tortuosity = as.character(Curv_data_colector),
             Menger_Curvature = as.character(Menger_data_colector),
             Segment_ID = i
           )
         } else {
-          DF[i, ] <- tibble(
+          DF[counter, ] <- tibble(
             Tortuosity = as.character("nan"),
             Menger_Curvature = as.character("nan"),
             Segment_ID = i
           )
         }
+        counter <- counter + 1
       }
 
       # save plus/minus association
