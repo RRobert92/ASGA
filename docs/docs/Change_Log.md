@@ -11,11 +11,15 @@ date: 2021-01-14
 `Major changes`
 
 - Added export of curvature data into Amira file
+- Added function to calculate SMTs minus-end distance
+- Restructured Analysis folder and split function for KMTs/SMTs and Stat
+
 
 `Minor changes`
 
 - Added Menger curvature
-- Error handler for analyzed data when uploaded 
+- Error handler for analyzed data when uploaded
+- Added selection for local curvature by user
 
 `Bug Fix`
 
@@ -27,6 +31,7 @@ date: 2021-01-14
 - small responsiveness improvement of the main page when user upload 
   the wrong file
 - Added ASGA documentation 
+- Added a script generating plots for eLife paper
   
 ---
 ## v0.33 - Published 28/12/2020

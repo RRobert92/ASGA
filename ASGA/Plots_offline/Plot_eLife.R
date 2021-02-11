@@ -98,6 +98,13 @@ IKD_KMT_NO <- IKD_KMT_NO +
               geom_jitter(data = Data_2_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown4", shape = 17) +
               geom_smooth(data = Data_3_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), method = "lm", color = "brown4", se = F)
 
+Correlation <- tibble(
+  Data_1 = cor(Data_1_IKD_KMT_No$`Inter-kinetochore distance`, Data_1_IKD_KMT_No$`KMTs no.`),
+  Data_2 = cor(Data_2_IKD_KMT_No$`Inter-kinetochore distance`, Data_2_IKD_KMT_No$`KMTs no.`),
+  Data_3 = cor(Data_3_IKD_KMT_No$`Inter-kinetochore distance`, Data_3_IKD_KMT_No$`KMTs no.`)
+)
+Correlation
+
 print(IKD_KMT_NO)
 
 # Length distribution
@@ -221,15 +228,15 @@ print(Tortuosity)
 
 # Tortuosity vs length
 
- Tortuosity_length <- ggplot(Data_1_KMT_Total_Curv, aes(Curvature,`KMTs length`)) + 
+ Tortuosity_length <- ggplot(Data_1_KMT_Total_Curv, aes(`KMTs length`, Curvature)) + 
                       geom_jitter(shape = 15, color = "brown1") + 
                       theme_classic()
  Tortuosity_length <- Tortuosity_length +
-                      geom_point(data = Data_2_KMT_Total_Curv, aes(Curvature,`KMTs length`), shape = 16, color = "brown3") 
+                      geom_point(data = Data_2_KMT_Total_Curv, aes(`KMTs length`, Curvature), shape = 16, color = "brown3") 
  Tortuosity_length <- Tortuosity_length +
-                      geom_point(data = Data_3_KMT_Total_Curv, aes(Curvature,`KMTs length`), shape = 17, color = "brown4")
+                      geom_point(data = Data_3_KMT_Total_Curv, aes(`KMTs length`, Curvature), shape = 17, color = "brown4")
  Tortuosity_length <- Tortuosity_length +
-                      geom_smooth(data = Tortuosity_avg, aes(Curvature,`KMTs length`), se = F, color = "grey20", size = 2) 
+                      geom_smooth(data = Tortuosity_avg, aes(`KMTs length`, Curvature), se = F, color = "grey20", size = 2, method = "loess") 
  
  print(Tortuosity_length)
  
@@ -238,14 +245,56 @@ print(Tortuosity)
  
  Tortuosity_local <- ggplot(Data_1_KMT_Local_Curv, aes(Relative_Position, Curvature)) + 
                      geom_jitter(shape = 15, color = "brown1") +
-                     ylim(1,1.1) + 
-                     theme_classic()
+                     theme_classic() + ylim(1,1.1)
  Tortuosity_local <- Tortuosity_local +
                      geom_point(data = Data_2_KMT_Local_Curv, aes(Relative_Position, Curvature), shape = 16, color = "brown3") 
  Tortuosity_local <- Tortuosity_local +
                      geom_point(data = Data_3_KMT_Local_Curv, aes(Relative_Position, Curvature), shape = 17, color = "brown4")
  Tortuosity_local <- Tortuosity_local +
-                     geom_smooth(data = Tortuosity_local_avg, aes(Relative_Position, Curvature), se = F, color = "grey20", size = 2) 
+                     geom_smooth(data = Tortuosity_local_avg, aes(Relative_Position, Curvature), se = F, color = "grey20", size = 2, method = "loess") 
  
  print(Tortuosity_local)
+ 
+
+ cor(Tortuosity_local_avg$Curvature, Tortuosity_local_avg$Relative_Position)
+ 
+ # Fiber area
+ Area_avg <- rbind(Data_1_Fiber_Area,Data_2_Fiber_Area,Data_3_Fiber_Area)
+
+ Fiber_area <- ggplot(Data_1_Fiber_Area, aes(Relative_position, Alpha_area)) + 
+               geom_smooth(color = "brown1",se=F, method = "loess", formula = "y~x") + 
+               theme_classic()
+ 
+ Fiber_area <- Fiber_area + 
+               geom_smooth(data = Data_2_Fiber_Area, aes(Relative_position, Alpha_area),
+                           color = "brown3",se=F, method = "loess", formula = "y~x")
+ 
+ Fiber_area <- Fiber_area + 
+               geom_smooth(data = Data_3_Fiber_Area, aes(Relative_position, Alpha_area),
+                           color = "brown4",se=F, method = "loess", formula = "y~x")
+ 
+ Fiber_area <- Fiber_area + 
+               geom_smooth(data = Area_avg, aes(Relative_position, Alpha_area),
+                           color = "grey20",se=T, method = "loess", formula = "y~x")
+ print(Fiber_area)
+ 
+ # Fiber density
+ Density_avg <- rbind(Data_1_N_Density,Data_2_N_Density,Data_3_N_Density)
+ 
+ Fiber_denisty <- ggplot(Data_1_N_Density, aes(Relative_position, `Focused KMTs %`)) + 
+   geom_smooth(color = "brown1",se=F, method = "loess", formula = "y~x") + 
+   theme_classic()
+ 
+ Fiber_denisty <- Fiber_denisty + 
+   geom_smooth(data = Data_2_N_Density, aes(Relative_position, `Focused KMTs %`),
+               color = "brown3",se=F, method = "loess", formula = "y~x")
+ 
+ Fiber_denisty <- Fiber_denisty + 
+   geom_smooth(data = Data_3_N_Density, aes(Relative_position, `Focused KMTs %`),
+               color = "brown4",se=F, method = "loess", formula = "y~x")
+ 
+ Fiber_denisty <- Fiber_denisty + 
+   geom_smooth(data = Density_avg, aes(Relative_position, `Focused KMTs %`),
+               color = "grey20",se=T, method = "loess", formula = "y~x")
+ print(Fiber_denisty)
  
