@@ -45,7 +45,7 @@ Save_Data <- function(input, output, session) {
   tryCatch(
     {
       assign(paste("Data", current_data, "SMT_Ends", sep = "_"),
-             LD_P1,
+             SMT_Ends,
              envir = .GlobalEnv
       )
       write.xlsx(
