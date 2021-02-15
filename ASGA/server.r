@@ -304,8 +304,8 @@ function(input, output, session) {
       )
 
       callModule(Load_Data, "Home")
-      callModule(Run_Test, "Home")
-      callModule(Test_Test, "Home")
+      callModule(Test_Functions, "Home")
+      callModule(Test_Output, "Home")
 
       updateTabsetPanel(session, "innavbar-GS", selected = "UploadData")
       callModule(Test_Result, "Home")

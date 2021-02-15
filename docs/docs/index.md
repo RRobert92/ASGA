@@ -32,7 +32,6 @@ date: 2021-01-14
 * [Quick start](#Quick_start)
   * [Data Preparation](#Quick_start_DP)
   * [Dependency](#Dependency)
-  * [Installation](#Quick_start_IN)
 * [Contributing](#Contributing)
 * [Copyright](#Copyright)
 
@@ -87,15 +86,6 @@ Java SE 11 (LTS)
  zip
 ```
 
-<a name="Quick_start_IN"></a>
-### Installation
-```
-install.packages("remotes")
-remotes::install_github("RRobert92/ASGA")
-renv::restore()
-runApp()
-```
-
 <a name="Contributing"></a>
 # Contributing
 Contributions, collaborators and/or constructive criticism are welcome! Please see our Contributing Guide "Soon available" for more details.
@@ -103,5 +93,6 @@ Contributions, collaborators and/or constructive criticism are welcome! Please s
 <a href="https://sourcerer.io/rrobert92"><img src="https://avatars0.githubusercontent.com/u/56911280?v=4" height="50px" width="50px" alt=""/></a>
 <a href="https://github.com/gunar-f"><img src="https://avatars0.githubusercontent.com/u/70518136?s=400&v=4" height="50px" width="50px" alt=""/></a>
 <a name="Copyright"></a>
+
 ## Copyright
 This project is distributed under the General Public License (GPL) version 3.0 - see the [license.md](license.md) file for details.

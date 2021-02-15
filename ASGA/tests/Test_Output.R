@@ -10,7 +10,7 @@
 ################################################################################
 
 # Run analysis -----------------------------------------------------------------
-Run_Test <- function(input, output, session) {
+Test_Functions <- function(input, output, session) {
   withProgress(message = "Analyzing:", value = 1, {
     incProgress(1, detail = "Test in progress...")
     Sys.sleep(0.1)

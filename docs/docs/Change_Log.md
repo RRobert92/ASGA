@@ -20,6 +20,7 @@ date: 2021-01-14
 - Added Menger curvature
 - Error handler for analyzed data when uploaded
 - Added selection for local curvature by user
+- Added unified test protocol for all tools
 
 `Bug Fix`
 

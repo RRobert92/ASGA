@@ -11,7 +11,7 @@
 # Reviewed:
 ################################################################################
 
-Test_Test <- function(input, output, session) {
+Test_Output <- function(input, output, session) {
   Test_df <<- data.frame()
   PRE_ANALYSIS_TEST <<- c(
     "Segment ID", "length", "minus_dist_to_pole", "plus_dist_to_kinetochore_core",
