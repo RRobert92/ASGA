@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="canonical" href="https://kiewisz.shinyapps.io/ASGA/Cit/">
+  <link rel="canonical" href="https://kiewisz.shinyapps.io/ASGA/Test/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Citation - ASGA</title>
+  <title>Test Unit - ASGA</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Citation";
-    var mkdocs_page_input_path = "Cit.md";
-    var mkdocs_page_url = "/ASGA/Cit/";
+    var mkdocs_page_name = "Test Unit";
+    var mkdocs_page_input_path = "Test.md";
+    var mkdocs_page_url = "/ASGA/Test/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -52,7 +52,7 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Documentation</span></p>
-                <ul>
+                <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../Install/">Installation</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../Global_Fun/">Global & GUI Use Funcitons</a>
@@ -63,18 +63,24 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../SMT_anal/">SMTs Analysis Functions</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../Test/">Test Unit</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Test Unit</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#test_functions">Test_Functions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#test_output">Test_Output</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#test_result">Test_Result</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">About</span></p>
-                <ul class="current">
+                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../Change_Log/">Release Note</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Citation</a>
-    <ul class="current">
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../Cit/">Citation</a>
                     </li>
                 </ul>
       </div>
@@ -98,14 +104,14 @@
     
       
         
-          <li>About &raquo;</li>
+          <li>Documentation &raquo;</li>
         
       
     
-    <li>Citation</li>
+    <li>Test Unit</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/RRobert92/ASGA/blob/main/docs/docs/Cit.md"
+        <a href="https://github.com/RRobert92/ASGA/blob/main/docs/docs/Test.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -116,11 +122,55 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="citaion"><h1 align="center"> Citaion </h1></h1>
-<p><a align="center">
-Kiewisz R., Müller-Reichert T. (2020) <em>Spindle analysis tool</em>. Zenodo. <a href="https://doi.org/10.5281/zenodo.3732108">DOI: 10.5281/zenodo.3732108</a>
-</a>
-<a href="https://doi.org/10.5281/zenodo.3732108"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.3732108.svg" /></a></p>
+                <h1 id="test_unit"><strong>Test_Unit</strong></h1>
+<p>Test set-up for testing each function/tools in the ASGA software</p>
+<p>The <strong>Test_Unit</strong> is composed of two-part (<code>Test_Functions</code>, <code>Test_Output</code>) and GUI part for display error messages (<code>Test_Result</code>)</p>
+<h3 id="test_functions"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Functions</code></a></h3>
+<p>The part of the <code>Test_Unit</code> is designed for quick and straightforward testing if the tool is passing the test data set</p>
+<p>Usage of <code>Test_Functions</code>:</p>
+<pre><code> tryCatch(
+      {
+        callModule(`Testing function class name`, &quot;Home&quot;)
+        Test_value[1, `Continue number in data_frame`] &lt;&lt;- TRUE
+      },
+      error = function(e) {
+        Test_value[1, `Continue number in data_frame`] &lt;&lt;- FALSE
+      }
+    )
+    names(Test_value)[`Continue number in data_frame`] &lt;&lt;- `Name of the tested tool`
+
+#Example:
+    tryCatch(
+      {
+        callModule(Pre_Analysis, &quot;Home&quot;)
+        Test_value[1, 1] &lt;&lt;- TRUE
+      },
+      error = function(e) {
+        Test_value[1, 1] &lt;&lt;- FALSE
+      }
+    )
+    names(Test_value)[1] &lt;&lt;- &quot;Pre_Analsis&quot;
+</code></pre>
+<h3 id="test_output"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Tests.R"><code>Test_Output</code></a></h3>
+<p>The part of the <code>Test_Unit</code> is designed for testing of the core functionality of the ASGA as well as testing tools output</p>
+<p>Usage of <code>Test_Output</code>:</p>
+<pre><code>Test_df[1, 'Continue number in data_frame'] &lt;&lt;- Test_anaysis('Data frame tool output names', 
+                                                             'TRUE/FASLE value if P1 and P2 data exist', 
+                                                             'Expected number of columns', 
+                                                             'List of expected number of row')
+#Example:
+Test_df[1, 10] &lt;&lt;- Test_anaysis(&quot;Data_1_LD&quot;, 
+                                TRUE, 
+                                6, 
+                                c(4,2,2))
+
+</code></pre>
+<h3 id="test_result"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Result</code></a></h3>
+<p>The part of the <code>Test_Unit</code> that gave two types of GUI message to the user:</p>
+<ul>
+<li>Pass all test correctly &lt;- Green</li>
+<li>Error occurred &lt;- Yellow and error number indicating <code>Continue number in data_frame</code></li>
+</ul>
               
             </div>
           </div>
@@ -128,8 +178,10 @@ Kiewisz R., Müller-Reichert T. (2020) <em>Spindle analysis tool</em>. Zenodo. <
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../license/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-        <a href="../Change_Log/" class="btn btn-neutral" title="Release Note"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+        <a href="../SMT_anal/" class="btn btn-neutral" title="SMTs Analysis Functions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -157,8 +209,10 @@ Kiewisz R., Müller-Reichert T. (2020) <em>Spindle analysis tool</em>. Zenodo. <
           <a href="https://github.com/RRobert92/ASGA/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../Change_Log/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../SMT_anal/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../license/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
