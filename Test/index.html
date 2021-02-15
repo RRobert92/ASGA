@@ -124,7 +124,8 @@
               
                 <h1 id="test_unit"><strong>Test_Unit</strong></h1>
 <p>Test set-up for testing each function/tools in the ASGA software</p>
-<p>The <strong>Test_Unit</strong> is composed of two-part (<code>Test_Functions</code>, <code>Test_Output</code>) and GUI part for display error messages (<code>Test_Result</code>)</p>
+<p>The <strong>Test_Unit</strong> is composed of two-part (<a href="#Test_Functions"><code>Test_Functions</code></a>, <a href="#Test_Output"><code>Test_Output</code></a>) and GUI part for display error messages <a href="#Test_Result"><code>Test_Result</code></a></p>
+<p><a name="Test_Functions"></a></p>
 <h3 id="test_functions"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Functions</code></a></h3>
 <p>The part of the <code>Test_Unit</code> is designed for quick and straightforward testing if the tool is passing the test data set</p>
 <p>Usage of <code>Test_Functions</code>:</p>
@@ -151,6 +152,7 @@
     )
     names(Test_value)[1] &lt;&lt;- &quot;Pre_Analsis&quot;
 </code></pre>
+<p><a name="Test_Output"></a></p>
 <h3 id="test_output"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Tests.R"><code>Test_Output</code></a></h3>
 <p>The part of the <code>Test_Unit</code> is designed for testing of the core functionality of the ASGA as well as testing tools output</p>
 <p>Usage of <code>Test_Output</code>:</p>
@@ -165,6 +167,7 @@ Test_df[1, 10] &lt;&lt;- Test_anaysis(&quot;Data_1_LD&quot;,
                                 c(4,2,2))
 
 </code></pre>
+<p><a name="Test_Result"></a></p>
 <h3 id="test_result"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Result</code></a></h3>
 <p>The part of the <code>Test_Unit</code> that gave two types of GUI message to the user:</p>
 <ul>
