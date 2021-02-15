@@ -142,7 +142,7 @@ P2.3 <- P2.3 + geom_violin(data = Data_5_LD_P1, aes("RPE-1 wt #5", length), draw
 P2.3 <- P2.3 + geom_violin(data = Data_7_LD, aes("U2OS wt #7", length), draw_quantiles = c(0.25, 0.5, 0.75), fill = "darkorange", color = "black")
 print(P2.3)
 
-for (i in 1:numfiles) {
+for (i in 1:NUM_FILES) {
   assign(
     paste("Data_", i, "_LD", sep = ""),
     data.frame(

@@ -75,21 +75,21 @@ Check_Data <- function(i) {
 
   # State value of data check  --------------------------------------------------
   if (Test_Segments == TRUE && Test_Pole1 == TRUE && Test_Pole2 == TRUE && Test_Pole1_00 == TRUE) {
-    DataTest <<- 1
+    DATA_TEST <<- 1
   } else if (Test_Segments == TRUE && Test_Pole1_00 == FALSE) {
-    DataTest <<- 2
+    DATA_TEST <<- 2
   } else if (Test_Segments == FALSE && Test_Pole1 == TRUE && Test_Pole2 == TRUE) {
-    DataTest <<- 3
+    DATA_TEST <<- 3
   } else if (Test_Segments == TRUE && Test_Pole1 == FALSE) {
-    DataTest <<- 4
+    DATA_TEST <<- 4
   } else if (Test_Segments == TRUE && Test_Pole2 == FALSE) {
-    DataTest <<- 5
+    DATA_TEST <<- 5
   } else if (Test_Segments == TRUE && Test_Pole1 == FALSE && Test_Pole2 == FALSE) {
-    DataTest <<- 6
+    DATA_TEST <<- 6
   } else if (Test_Segments == FALSE && Test_Pole1 == FALSE && Test_Pole2 == FALSE) {
-    DataTest <<- 7
+    DATA_TEST <<- 7
   } else if (!exists(paste("Data", "Segments", i, sep = "_"))) {
-    DataTest <<- 0
+    DATA_TEST <<- 0
   }
 }
 

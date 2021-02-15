@@ -19,7 +19,7 @@ function(input, output, session) {
 
   # Get_Started button  --------------------------------------------------------
   observeEvent(input$GetStarted, {
-    if (numfiles == 0) {
+    if (NUM_FILES == 0) {
       updateTabsetPanel(session, "innavbar", selected = "GetStarted")
       showTab(inputId = "innavbar", target = "GetStarted")
       updateTabsetPanel(session, "innavbar-GS", selected = "UploadData")
@@ -55,10 +55,10 @@ function(input, output, session) {
     showTab(inputId = "innavbar-GS", target = "Settings")
     updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
 
-    numfiles <<- 1
-    DataTest <<- 1
-    Test <<- TRUE
-    Amira <<- FALSE
+    NUM_FILES <<- 1
+    DATA_TEST <<- 1
+    TEST <<- TRUE
+    AMIRA <<- FALSE
   })
 
   # Download zip files ---------------------------------------------------------
@@ -81,29 +81,29 @@ function(input, output, session) {
 
   # Page responsiveness after loading data  ------------------------------------
   observeEvent(input$`Home-file`, {
-    Test <<- FALSE
+    TEST <<- FALSE
 
     showTab(inputId = "innavbar-GS", target = "Settings")
-    if (DataTest == 1) {
+    if (DATA_TEST == 1) {
       updateTabsetPanel(session, "innavbar-GS", selected = "Settings")
     } else {
       updateTabsetPanel(session, "innavbar", selected = "Home")
       hideTab(inputId = "innavbar-GS", target = "Settings")
       hideTab(inputId = "innavbar", target = "GetStarted")
-      numfiles <<- 0
+      NUM_FILES <<- 0
     }
   })
 
   # Page responsiveness after loading data  ------------------------------------
   observeEvent(input$`Home-file1`, {
-    Test <<- FALSE
+    TEST <<- FALSE
 
     if (AnalysisTest == 1) {
       showTab(inputId = "innavbar-GS", target = "Report")
       updateTabsetPanel(session, "innavbar-GS", selected = "Report")
 
       File_name <<- as.data.frame(File_name)
-      numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
+      NUM_FILES <<- readr::parse_number(File_name[nrow(File_name), 1])
 
       df <- data.frame()
 
@@ -122,7 +122,7 @@ function(input, output, session) {
       rm(df, name)
 
       # Collect information to start a plot after analysis ---------------------
-      lapply(1:numfiles, function(i) {
+      lapply(1:NUM_FILES, function(i) {
         observeEvent(input[[paste("Data_label", i, sep = "_")]], {
           assign(paste("Data_label", i, sep = "_"),
             input[[paste("Data_label", i, sep = "_")]],
@@ -170,11 +170,11 @@ function(input, output, session) {
 
   # Relativity for Pre-Analysis  -----------------------------------------------
   observeEvent(input$`Submit`, {
-    if (Test == FALSE) {
+    if (TEST == FALSE) {
       withProgress(message = "Analyzing:", value = 1, {
-        for (y in 1:numfiles) {
+        for (y in 1:NUM_FILES) {
           current_data <<- y
-          incProgress(1 / numfiles, 
+          incProgress(1 / NUM_FILES, 
                       detail = paste("Data set no.", y, sep = " "))
           Sys.sleep(0.1)
 
@@ -239,7 +239,7 @@ function(input, output, session) {
         updateTabsetPanel(session, "innavbar", selected = "Report")
 
         File_name <<- as.data.frame(ls(pattern = "Data_", envir = .GlobalEnv))
-        numfiles <<- readr::parse_number(File_name[nrow(File_name), 1])
+        NUM_FILES <<- readr::parse_number(File_name[nrow(File_name), 1])
 
         df <- data.frame()
 
@@ -263,7 +263,7 @@ function(input, output, session) {
       })
 
       # Collect information to start a plot after analysis ---------------------
-      lapply(1:numfiles, function(i) {
+      lapply(1:NUM_FILES, function(i) {
         observeEvent(input[[paste("Data_label", i, sep = "_")]], {
           assign(paste("Data_label", i, sep = "_"),
             input[[paste("Data_label", i, sep = "_")]],
@@ -319,7 +319,7 @@ function(input, output, session) {
         rm(list = ls(envir = .GlobalEnv), envir = .GlobalEnv)
       }
 
-      Test <<- FALSE
+      TEST <<- FALSE
       source("global.r")
     }
   })

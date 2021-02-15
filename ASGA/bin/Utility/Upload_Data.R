@@ -16,7 +16,7 @@ Getfiles_Server <- function(input, output, session) {
     if (is.null(infile)) {
       return(NULL)
     } else {
-      numfiles <<- nrow(infile)
+      NUM_FILES <<- nrow(infile)
     }
 
     # Load Data  ---------------------------------------------------------------
@@ -27,7 +27,7 @@ Getfiles_Server <- function(input, output, session) {
       value = 0
     )
 
-    for (i in 1:numfiles) {
+    for (i in 1:NUM_FILES) {
       if (str_detect(input$file$datapath[i], ".xlsx")) {
         tryCatch(
           {
@@ -61,20 +61,20 @@ Getfiles_Server <- function(input, output, session) {
           },
           error = function(e) {}
         )
-        Amira <<- FALSE
+        AMIRA <<- FALSE
         
       } else if (str_detect(input$file$datapath[i], ".am")) {
-        Amira <<- readLines(input$file$datapath[i])
+        Amira_df <<- readLines(input$file$datapath[i])
         updateProgressBar(
           session = session,
           id = "LoadData",
-          value = i * 100 / numfiles,
+          value = i * 100 / NUM_FILES,
           title = paste("Loading your data:", " Amira file no.", i, " loaded", sep = "")
         )
 
         Sys.sleep(0.1)
-        Amira <<- as_tibble(Amira)
-        names(Amira)[1] <<- "X1"
+        Amira_df <<- as_tibble(Amira_df)
+        names(Amira_df)[1] <<- "X1"
 
         tryCatch(
           {
@@ -85,7 +85,7 @@ Getfiles_Server <- function(input, output, session) {
             updateProgressBar(
               session = session,
               id = "LoadData",
-              value = i * 100 / numfiles,
+              value = i * 100 / NUM_FILES,
               title = paste("Loading your data:", " Node file no.", i, " loaded", sep = "")
             )
 
@@ -98,7 +98,7 @@ Getfiles_Server <- function(input, output, session) {
             updateProgressBar(
               session = session,
               id = "LoadData",
-              value = i * 100 / numfiles,
+              value = i * 100 / NUM_FILES,
               title = paste("Loading your data:", " Point file no.", i, " loaded", sep = "")
             )
 
@@ -111,18 +111,18 @@ Getfiles_Server <- function(input, output, session) {
             updateProgressBar(
               session = session,
               id = "LoadData",
-              value = i * 100 / numfiles,
+              value = i * 100 / NUM_FILES,
               title = paste("Loading your data:", " Segment file no.", i, " loaded", sep = "")
             )
 
             Sys.sleep(0.1)
 
             assign(paste("Amira", "Dataset", i, sep = "_"),
-              Amira,
+                   Amira_df,
               envir = .GlobalEnv
             )
 
-            Amira <<- TRUE
+            AMIRA <<- TRUE
           },
           error = function(e) {}
         )
@@ -132,7 +132,7 @@ Getfiles_Server <- function(input, output, session) {
       updateProgressBar(
         session = session,
         id = "LoadData",
-        value = i * 100 / numfiles
+        value = i * 100 / NUM_FILES
       )
 
       Sys.sleep(0.1)
@@ -140,13 +140,13 @@ Getfiles_Server <- function(input, output, session) {
 
     closeSweetAlert(session = session)
 
-    if (numfiles == 1) {
+    if (NUM_FILES == 1) {
       text_dataset <<- "dataset was"
     } else {
       text_dataset <<- "dataset's were"
     }
 
-    if (Amira == TRUE) {
+    if (AMIRA == TRUE) {
       datatype <<- "Amira ASCII"
     } else {
       datatype <<- "Excel ASCII"
@@ -165,7 +165,7 @@ Getfiles_Server <- function(input, output, session) {
     if (is.null(infile)) {
       return(NULL)
     } else {
-      numfiles <<- nrow(infile)
+      NUM_FILES <<- nrow(infile)
     }
 
     progressSweetAlert(
@@ -176,7 +176,7 @@ Getfiles_Server <- function(input, output, session) {
     )
 
 
-    for (i in 1:numfiles) {
+    for (i in 1:NUM_FILES) {
       tryCatch(
         {
           File_name <<- stringi::stri_extract_first(str = infile$name, regex = ".*(?=\\.)")
@@ -198,7 +198,7 @@ Getfiles_Server <- function(input, output, session) {
       updateProgressBar(
         session = session,
         id = "LoadData",
-        value = i * 100 / numfiles
+        value = i * 100 / NUM_FILES
       )
       Sys.sleep(0.1)
       

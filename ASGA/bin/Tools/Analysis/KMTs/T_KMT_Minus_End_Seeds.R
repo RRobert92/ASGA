@@ -25,12 +25,12 @@ Minus_end_seed <- function(x) {
     for (j in 1:nrow(get(paste(colnames(Segments)[x], i, sep = "_")))) {
       tryCatch(
         {
-          p_to_P <- Nodes[with(Nodes, `X Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2] + as.numeric(Minus_Distance * 2)) &
-            `X Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2] - as.numeric(Minus_Distance * 2))), ]
-          p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] + as.numeric(Minus_Distance * 2)) &
-            `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] - as.numeric(Minus_Distance * 2))), ]
-          p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] + as.numeric(Minus_Distance * 2)) &
-            `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] - as.numeric(Minus_Distance * 2))), ]
+          p_to_P <- Nodes[with(Nodes, `X Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2] + as.numeric(MINUS_DISTANCE * 2)) &
+            `X Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2] - as.numeric(MINUS_DISTANCE * 2))), ]
+          p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] + as.numeric(MINUS_DISTANCE * 2)) &
+            `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] - as.numeric(MINUS_DISTANCE * 2))), ]
+          p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] + as.numeric(MINUS_DISTANCE * 2)) &
+            `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] - as.numeric(MINUS_DISTANCE * 2))), ]
           
           p_to_P[5:7] <- get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2:4]
 
@@ -40,8 +40,8 @@ Minus_end_seed <- function(x) {
             function(y) {dist(matrix(y, nrow = 2, byrow = TRUE))}
           )
           DF <- data.frame(
-            p_to_P[with(p_to_P, dist <= Minus_Distance & dist >= 0), "Node ID"],
-            p_to_P[with(p_to_P, dist <= Minus_Distance & dist >= 0), "dist"]
+            p_to_P[with(p_to_P, dist <= MINUS_DISTANCE & dist >= 0), "Node ID"],
+            p_to_P[with(p_to_P, dist <= MINUS_DISTANCE & dist >= 0), "dist"]
           )
         },
         warning = function(w) {}

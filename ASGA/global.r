@@ -9,13 +9,13 @@
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 # Title of the app -------------------------------------------------------------
-App_title <- "ASGA v0.33"
-CC <- "© Copyright GPL V3.0 2019-2020, Robert Kiewisz"
+APP_TITLE <- "ASGA v0.33"
+CC <- "© Copyright GPL V3.0 2019-2021, Robert Kiewisz"
 
 # Global CSS  ------------------------------------------------------------------
 includeCSS("www/css/style.css")
 
-js_code <- "
+JS_CODE <- "
 shinyjs.browseURL = function(url) {
   window.open(url,'_blank');
 }
@@ -30,7 +30,6 @@ source("bin/Utility/Library.R")
 source("bin/Utility/Check_Data.R")
 source("bin/Utility/Upload_Data.R")
 source("bin/Utility/Setting_Buttons.R")
-source("bin/Utility/Pre_Analysis.R")
 source("bin/Utility/Load_Data.R")
 source("bin/Utility/Load_Amira.R")
 source("bin/Utility/Save_Data.R")
@@ -42,14 +41,14 @@ options(shiny.maxRequestSize = 1024 * 1024^2)
 options(shiny.host = "127.0.0.1")
 options(shiny.port = 7878)
 
-# Global tool settings  --------------------------------------------------------
-DataTest <<- 0
-numfiles <<- 0
-Minus_Threshold <<- 1.68 # Minus end distance to the pole [um]
-Minus_Distance <<- 0.035 # Minus end distance of any MT to the KMT [um]
-MT_point_config <<- 0.035 # Distance of any MT to the MT [um]
-Fiber_area_config <<- 24 # 500 nm bin length 
-Curvature_config <<- 24 # 500 nm bin length 
+# Global constant settings  ----------------------------------------------------
+DATA_TEST <<- 0
+NUM_FILES <<- 0
+MINUS_THRESHOLD <<- 1.68 # Minus end distance to the pole [um]
+MINUS_DISTANCE <<- 0.035 # Minus end distance of any MT to the KMT [um]
+MT_POINT_CONFIG <<- 0.035 # Distance of any MT to the MT [um]
+FIBER_AREA_CONFIG <<- 24 # 500 nm bin length 
+CURVATURE_CONFIG <<- 24 # 500 nm bin length 
 
 # Global Functions  ------------------------------------------------------------
   # Pre_Analysis 
@@ -59,6 +58,7 @@ source("bin/Tools/Pre_Analysis/Find_XYZ.R")
 source("bin/Tools/Pre_Analysis/Kinetochore_Position.R")
 source("bin/Tools/Pre_Analysis/Sort_All_Points_to_Start_From_the_Kinetochore.R")
 source("bin/Tools/Pre_Analysis/T_Relative_Position.R")
+source("bin/Tools/Pre_Analysis//Pre_Analysis.R")
   # Analysis for KMTs
 source("bin/Tools/Analysis/KMTs/Length_Distiribution.R")
 source("bin/Tools/Analysis/KMTs/No_of_KMTs_connected_to_the_Pole.R")
@@ -94,3 +94,4 @@ source("bin/Packages/Analysis/A_MT_Bridging.R")
 
 # Test Unit --------------------------------------------------------------------
 source("tests/Test_Output.R")
+source("tests/Tests.R")

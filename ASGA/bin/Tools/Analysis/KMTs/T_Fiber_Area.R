@@ -56,7 +56,7 @@ Leadig_Points <- function(x) {
   while (j <= nrow(get(paste(colnames(Segments)[x], which.max(as.matrix(get(colnames(Segments)[x])["Leading"])), sep = "_")))) {
     leading_points[j, ] <- get(paste(colnames(Segments)[x], which.max(as.matrix(get(colnames(Segments)[x])["Leading"])), sep = "_"))[j, 1]
 
-    j <- j + Fiber_area_config
+    j <- j + FIBER_AREA_CONFIG
   }
   leading_points <- na.omit(leading_points)
 }

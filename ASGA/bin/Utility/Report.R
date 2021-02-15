@@ -15,7 +15,7 @@ Report_Plot_Settings <- function(input, output, session) {
     fluidRow(
       column(
         4,
-        lapply(1:numfiles, function(i) {
+        lapply(1:NUM_FILES, function(i) {
           textInput(
             inputId = paste("Data_label", i, sep = "_"),
             label = paste("Data", i, sep = "_"),
@@ -26,7 +26,7 @@ Report_Plot_Settings <- function(input, output, session) {
 
       column(
         4,
-        lapply(1:numfiles, function(i) {
+        lapply(1:NUM_FILES, function(i) {
           colourInput(
             inputId = paste("Data_color", i, sep = "_"),
             label = paste("Select Colour for Data_", i, sep = ""),
@@ -37,7 +37,7 @@ Report_Plot_Settings <- function(input, output, session) {
 
       column(
         4,
-        lapply(1:numfiles, function(i) {
+        lapply(1:NUM_FILES, function(i) {
           selectInput(
             inputId = paste("Data_bin", i, sep = "_"),
             label = paste("Which data to plot Data_", i, sep = ""),

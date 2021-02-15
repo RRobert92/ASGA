@@ -21,7 +21,7 @@ Data_1_KMT_No <- cbind(Data_1_KMT_No["KMTs_per_kinetochore"], Fiber_1["Elipse Po
 Data_2_KMT_No <- cbind(Data_2_KMT_No["KMTs_per_kinetochore"], Fiber_2["Elipse Position"], Fiber_2["(+) Dist-to-Pole"])
 Data_3_KMT_No <- cbind(Data_3_KMT_No["KMTs_per_kinetochore"], Fiber_3["Elipse Position"], Fiber_3["(+) Dist-to-Pole"])
 
-for (j in 1:numfiles) {
+for (j in 1:NUM_FILES) {
   LD100max <- max(get(paste("Data", j, "KMT_No", sep = "_"))$`(+) Dist-to-Pole`)
   LD100min <- min(get(paste("Data", j, "KMT_No", sep = "_"))$`(+) Dist-to-Pole`)
   LD80 <- ((70 * (LD100max - LD100min)) + (100 * LD100min)) / 100
@@ -116,7 +116,7 @@ t <- rbind(All_KMT_No[with(All_KMT_No, Uni_Model == "100%"), ], All_KMT_No[with(
 t_anova <- aov(KMTs_per_kinetochore ~ Uni_Model, t)
 summary(t_anova)
 
-for (i in 1:numfiles) {
+for (i in 1:NUM_FILES) {
   assign(
     "df",
     cbind(
@@ -158,7 +158,7 @@ nrow(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "50%"), ])
 nrow(All_KMT_Pole[with(All_KMT_Pole, `Uni_Model` == "100%"), ])
 # Length distribution -----------------------------------------------------------------------------------------------------
 
-for (j in 1:numfiles) {
+for (j in 1:NUM_FILES) {
   LD100max <- max(get(paste("Data", j, "LD", sep = "_"))$`plus_dist_to_pole`)
   LD100min <- min(get(paste("Data", j, "LD", sep = "_"))$`plus_dist_to_pole`)
   LD80 <- ((70 * (LD100max - LD100min)) + (100 * LD100min)) / 100
@@ -270,7 +270,7 @@ summary(t_anova)
 # Total curvature  -------------------------------------------------------------------------------------------------------
 
 
-for (j in 1:numfiles) {
+for (j in 1:NUM_FILES) {
   LD100max <- max(get(paste("Data", j, "KMT_Total_Curv", sep = "_"))$`(+) Dist-to-Pole`)
   LD100min <- min(get(paste("Data", j, "KMT_Total_Curv", sep = "_"))$`(+) Dist-to-Pole`)
   LD80 <- ((70 * (LD100max - LD100min)) + (100 * LD100min)) / 100
@@ -397,7 +397,7 @@ nrow(All_T_Curv[with(All_T_Curv, `Uni_Model` == "100%"), ])
 
 # Local curvature  -------------------------------------------------------------------------------------------------------
 
-for (j in 1:numfiles) {
+for (j in 1:NUM_FILES) {
   LD100max <- max(get(paste("Data", j, "KMT_Local_Curv", sep = "_"))$`End_to_Pole`)
   LD100min <- min(get(paste("Data", j, "KMT_Local_Curv", sep = "_"))$`End_to_Pole`)
   LD80 <- ((70 * (LD100max - LD100min)) + (100 * LD100min)) / 100
@@ -574,7 +574,7 @@ Data_1_Fiber_Area <- cbind(Data_1_Fiber_Area, Data_1_N_Density["Elipse_Position"
 Data_2_Fiber_Area <- cbind(Data_2_Fiber_Area, Data_2_N_Density["Elipse_Position"], Data_2_N_Density["plus_dist_to_pole"])
 Data_3_Fiber_Area <- cbind(Data_3_Fiber_Area, Data_3_N_Density["Elipse_Position"], Data_3_N_Density["plus_dist_to_pole"])
 
-for (j in 1:numfiles) {
+for (j in 1:NUM_FILES) {
   LD100max <- max(get(paste("Data", j, "Fiber_Area", sep = "_"))$`plus_dist_to_pole`)
   LD100min <- min(get(paste("Data", j, "Fiber_Area", sep = "_"))$`plus_dist_to_pole`)
   LD80 <- ((70 * (LD100max - LD100min)) + (100 * LD100min)) / 100
@@ -863,8 +863,7 @@ print(P7)
 
 # Nucleation  -------------------------------------------------------------------------------------------------------
 
-
-for (j in 1:numfiles) {
+for (j in 1:NUM_FILES) {
   LD100max <- max(get(paste("Data", j, "KMTs_minus_seed", sep = "_"))$`Plus_end_dist`)
   LD100min <- min(get(paste("Data", j, "KMTs_minus_seed", sep = "_"))$`Plus_end_dist`)
   LD80 <- ((70 * (LD100max - LD100min)) + (100 * LD100min)) / 100

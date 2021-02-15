@@ -1,15 +1,15 @@
 Error_Handler <- function(input, output, session) {
-  if (DataTest == 1) {
+  if (DATA_TEST == 1) {
     sendSweetAlert(
       session = session,
       title = "The data structure looks great!",
-      text = paste(numfiles, datatype, text_dataset, "successfuly uploaded!", "Press Ok to analyze your awesome data!", sep = " "),
+      text = paste(NUM_FILES, datatype, text_dataset, "successfuly uploaded!", "Press Ok to analyze your awesome data!", sep = " "),
       type = "success",
       btn_labels = "OK",
       btn_colors = "#39B855",
       closeOnClickOutside = TRUE
     )
-  } else if (DataTest == 2) {
+  } else if (DATA_TEST == 2) {
     sendSweetAlert(
       session = session,
       title = "Looks like you there is a problem with your data",
@@ -22,7 +22,7 @@ Error_Handler <- function(input, output, session) {
       btn_colors = "#f8bb86",
       closeOnClickOutside = TRUE
     )
-  } else if (DataTest == 3) {
+  } else if (DATA_TEST == 3) {
     sendSweetAlert(
       session = session,
       title = "Looks like you there is a problem with your data",
@@ -33,7 +33,7 @@ Error_Handler <- function(input, output, session) {
       btn_labels = "OK",
       closeOnClickOutside = TRUE
     )
-  } else if (DataTest == 4) {
+  } else if (DATA_TEST == 4) {
     sendSweetAlert(
       session = session,
       title = "Looks like you there is a problem with your data",
@@ -44,7 +44,7 @@ Error_Handler <- function(input, output, session) {
       btn_labels = "OK",
       closeOnClickOutside = TRUE
     )
-  } else if (DataTest == 5) {
+  } else if (DATA_TEST == 5) {
     sendSweetAlert(
       session = session,
       title = "Looks like you there is a problem with your data",
@@ -55,7 +55,7 @@ Error_Handler <- function(input, output, session) {
       btn_labels = "OK",
       closeOnClickOutside = TRUE
     )
-  } else if (DataTest == 6) {
+  } else if (DATA_TEST == 6) {
     sendSweetAlert(
       session = session,
       title = "Looks like you there is a problem with your data",
@@ -65,7 +65,7 @@ Error_Handler <- function(input, output, session) {
       btn_labels = "OK",
       closeOnClickOutside = TRUE
     )
-  } else if (DataTest == 7) {
+  } else if (DATA_TEST == 7) {
     sendSweetAlert(
       session = session,
       title = "Looks like you there is a problem with your data",
@@ -76,7 +76,7 @@ Error_Handler <- function(input, output, session) {
       btn_labels = "OK",
       closeOnClickOutside = TRUE
     )
-  } else if (DataTest == 0) {
+  } else if (DATA_TEST == 0) {
     sendSweetAlert(
       session = session,
       title = "Looks like you try to upload a wrong file",

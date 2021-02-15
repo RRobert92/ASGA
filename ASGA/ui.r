@@ -15,10 +15,10 @@ fluidPage(
 
   useShinyalert(),
   useShinyjs(),
-  extendShinyjs(text = js_code, functions = 'browseURL'),
+  extendShinyjs(text = JS_CODE, functions = 'browseURL'),
   
   navbarPage(
-    title = App_title,
+    title = APP_TITLE,
     collapsible = TRUE,
     inverse = TRUE,
     position = "fixed-top",

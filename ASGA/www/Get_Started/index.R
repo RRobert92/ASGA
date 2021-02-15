@@ -14,7 +14,7 @@
 GetStarted_UI <- function(id) {
   ns <- NS(id)
   navbarPage(
-    title = App_title,
+    title = APP_TITLE,
     collapsible = TRUE,
     inverse = TRUE,
     position = "fixed-top",

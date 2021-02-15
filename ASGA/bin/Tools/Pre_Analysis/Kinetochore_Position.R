@@ -67,6 +67,7 @@ Kinetochore_ellipse <- function() {
   Kinetochore_Avg <- tibble()
   Kinetochore_Avg[1, 1:3] <- 0
   counter <- 1
+  
   for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(ncol(Segments) - 4)) {
     j <- 1
 
