@@ -143,22 +143,6 @@ Run_Test <- function(input, output, session) {
   })
 }
 
-# Test analysis results --------------------------------------------------------
-Test_Test <- function(input, output, session) {
-  Test_df <<- data.frame()
-  
-  Test_df[1, 1] <<- nrow(File_name) == 43
-  Test_df[1, 2] <<- ncol(Test_value) == length(Test_value[Test_value == TRUE])
-
-  if (ncol(Test_df) == length((Test_df[Test_df == TRUE]))) {
-    Test_df <<- TRUE
-    Bad_funtions <<- 0
-  } else {
-    Test_df <<- FALSE
-    Bad_funtions <<- which(Test_value[1, ] == FALSE, TRUE)
-  }
-}
-
 # Show results  ----------------------------------------------------------------
 Test_Result <- function(input, output, session) {
   if (Test_df == TRUE) {
