@@ -10,7 +10,11 @@
 ################################################################################
 # Title of the app -------------------------------------------------------------
 APP_TITLE <- "ASGA v0.33"
-CC <- "© Copyright GPL V3.0 2019-2021, Robert Kiewisz"
+CC <- paste("© Copyright GPL V3.0 2019-",
+  str_split(date(), pattern = " ")[[1]][5],
+  ", Robert Kiewisz",
+  sep = ""
+)
 
 # Global CSS  ------------------------------------------------------------------
 includeCSS("www/css/style.css")
@@ -47,11 +51,11 @@ NUM_FILES <<- 0
 MINUS_THRESHOLD <<- 1.68 # Minus end distance to the pole [um]
 MINUS_DISTANCE <<- 0.035 # Minus end distance of any MT to the KMT [um]
 MT_POINT_CONFIG <<- 0.035 # Distance of any MT to the MT [um]
-FIBER_AREA_CONFIG <<- 24 # 500 nm bin length 
-CURVATURE_CONFIG <<- 24 # 500 nm bin length 
+FIBER_AREA_CONFIG <<- 24 # 500 nm bin length
+CURVATURE_CONFIG <<- 24 # 500 nm bin length
 
 # Global Functions  ------------------------------------------------------------
-  # Pre_Analysis 
+# Pre_Analysis
 source("bin/Tools/Pre_Analysis/Sort_by_Fiber.R")
 source("bin/Tools/Pre_Analysis/Select_Points.R")
 source("bin/Tools/Pre_Analysis/Find_XYZ.R")
@@ -59,7 +63,7 @@ source("bin/Tools/Pre_Analysis/Kinetochore_Position.R")
 source("bin/Tools/Pre_Analysis/Sort_All_Points_to_Start_From_the_Kinetochore.R")
 source("bin/Tools/Pre_Analysis/T_Relative_Position.R")
 source("bin/Tools/Pre_Analysis//Pre_Analysis.R")
-  # Analysis for KMTs
+# Analysis for KMTs
 source("bin/Tools/Analysis/KMTs/Length_Distiribution.R")
 source("bin/Tools/Analysis/KMTs/No_of_KMTs_connected_to_the_Pole.R")
 source("bin/Tools/Analysis/KMTs/No_of_KMTs.R")
@@ -72,12 +76,12 @@ source("bin/Tools/Analysis/KMTs/T_Fiber_Length_Curvature.R")
 source("bin/Tools/Analysis/KMTs/T_Kinetochore_Area.R")
 source("bin/Tools/Analysis/KMTs/T_KMT_Torque.R")
 
-  # Analysis for KMTs
+# Analysis for KMTs
 source("bin/Tools/Analysis/SMTs/T_Bridging_MT.R")
 source("bin/Tools/Analysis/SMTs/T_SMTs_Minus_Ends.R")
-  # Output report plots
+# Output report plots
 source("bin/Utility/Report.R")
-  # Statistic analysis tools
+# Statistic analysis tools
 source("bin/Tools/Analysis/Stat/FWHM.R")
 
 # Global Packages  -------------------------------------------------------------

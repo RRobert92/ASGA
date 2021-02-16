@@ -12,14 +12,14 @@
 Load_Amira_Nodes <- function() {
 
   # Build Nodes data.table (ID, X,Y,Z) -------------------------------------------
-  No_column <- Amira %>%
+  No_column <- Amira_df %>%
     filter(str_detect(X1, "VERTEX")) %>%
     filter(str_detect(X1, "@"))
   No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
 
   No_column_Node <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
 
-  Nodes <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>%
+  Nodes <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira_df %>%
     filter(str_detect(X1, "VERTEX")) %>%
     filter(str_detect(X1, "define")))) - 1))
 
@@ -28,19 +28,19 @@ Load_Amira_Nodes <- function() {
   for (i in 1:nrow(No_column)) {
     Pattern <- as.vector(paste("@", No_column_Node[i, 2], sep = ""))
 
-    Nodes_number <- which(Amira == Pattern)
-    test_last <- length(which(Amira == as.vector(paste("@",
+    Nodes_number <- which(Amira_df == Pattern)
+    test_last <- length(which(Amira_df == as.vector(paste("@",
       as.numeric(No_column_Node[i, 2]) + 1,
       sep = ""
     ))))
 
     if (test_last == 1) {
-      df <- Amira[as.numeric(Nodes_number + 1):as.numeric(which(Amira == as.vector(paste("@",
+      df <- Amira_df[as.numeric(Nodes_number + 1):as.numeric(which(Amira_df == as.vector(paste("@",
         as.numeric(No_column_Node[i, 2]) + 1,
         sep = ""
       ))) - 2), ]
     } else {
-      df <- Amira[as.numeric(Nodes_number + 1):nrow(Amira), ]
+      df <- Amira_df[as.numeric(Nodes_number + 1):nrow(Amira_df), ]
     }
 
     id <- as.numeric(gsub("[^[:digit:]]", "", No_column[i, 3]))
@@ -73,14 +73,14 @@ Load_Amira_Nodes <- function() {
 
 Load_Amira_Points <- function() {
   # Build Points data.table (ID, X,Y,Z) -----------------------------------------
-  No_column <- Amira %>%
+  No_column <- Amira_df %>%
     filter(str_detect(X1, "POINT")) %>%
     filter(str_detect(X1, "@"))
   No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
 
   No_column_Points <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
 
-  Points <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>%
+  Points <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira_df %>%
     filter(str_detect(X1, "POINT")) %>%
     filter(str_detect(X1, "define")))) - 1))
 
@@ -88,18 +88,18 @@ Load_Amira_Points <- function() {
 
   for (i in 1:nrow(No_column)) {
     Pattern <- as.vector(paste("@", No_column_Points[i, 2], sep = ""))
-    Points_number <- which(Amira == Pattern)
+    Points_number <- which(Amira_df == Pattern)
 
-    last_column <- as.numeric(which(Amira == as.vector(paste("@",
+    last_column <- as.numeric(which(Amira_df == as.vector(paste("@",
       as.numeric(No_column_Points[i, 2]) + 1,
       sep = ""
     ))) - 2)
 
-    if (last_column == nrow(Amira) || length(last_column) == 0) {
-      last_column <- nrow(Amira) - 1
+    if (last_column == nrow(Amira_df) || length(last_column) == 0) {
+      last_column <- nrow(Amira_df) - 1
     }
     
-    df <- Amira[as.numeric(Points_number + 1):last_column, ]
+    df <- Amira_df[as.numeric(Points_number + 1):last_column, ]
 
     id <- as.numeric(gsub("[^[:digit:]]", "", No_column[i, 3]))
 
@@ -129,7 +129,7 @@ Load_Amira_Points <- function() {
 
 Load_Amira_Segments <- function() {
   # Build Segment data.table (ID, length, node #1, node #2, points) -----------------------------------------
-  No_column <- Amira %>%
+  No_column <- Amira_df %>%
     filter(str_detect(X1, "EDGE")) %>%
     filter(str_detect(X1, "@"))
   No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
@@ -137,7 +137,7 @@ Load_Amira_Segments <- function() {
   
   No_column_Segments <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
 
-  Segments <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira %>%
+  Segments <- tibble(0:as.numeric(as.numeric(gsub("[^[:digit:]]", "", Amira_df %>%
     filter(str_detect(X1, "EDGE")) %>%
     filter(str_detect(X1, "define")))) - 1))
 
@@ -145,26 +145,26 @@ Load_Amira_Segments <- function() {
 
   for (i in 1:nrow(No_column)) {
     Pattern <- as.vector(paste("@", No_column_Segments[i, 2], sep = ""))
-    Segments_number <- which(Amira == Pattern)
+    Segments_number <- which(Amira_df == Pattern)
 
-    last_column <- as.numeric(which(Amira == as.vector(paste("@",
+    last_column <- as.numeric(which(Amira_df == as.vector(paste("@",
       as.numeric(No_column_Segments[i, 2]) + 1,
       sep = ""
     ))) - 2)
 
-    if (last_column == nrow(Amira) || length(last_column) == 0) {
-      last_column <- nrow(Amira) - 1
+    if (last_column == nrow(Amira_df) || length(last_column) == 0) {
+      last_column <- nrow(Amira_df) - 1
     }
 
-    df <- Amira[as.numeric(Segments_number + 1):last_column, ]
+    df <- Amira_df[as.numeric(Segments_number + 1):last_column, ]
     
     if(nrow(df) != nrow(Segments)){
-      df <- Amira[as.numeric(Segments_number + 1):nrow(Amira), ]
+      df <- Amira_df[as.numeric(Segments_number + 1):nrow(Amira_df), ]
     }
     
     if(nrow(df) != nrow(Segments)){
-      if(Amira[as.numeric(last_column + 2),1] == as.vector(paste("@", as.numeric(No_column_Segments[i, 2]) + 1, sep = ""))){
-        df <- Amira[as.numeric(Segments_number + 1):as.numeric(last_column + 1), ]
+      if(Amira_df[as.numeric(last_column + 2),1] == as.vector(paste("@", as.numeric(No_column_Segments[i, 2]) + 1, sep = ""))){
+        df <- Amira_df[as.numeric(Segments_number + 1):as.numeric(last_column + 1), ]
       }
     }
     

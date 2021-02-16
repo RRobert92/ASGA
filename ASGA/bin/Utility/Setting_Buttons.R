@@ -134,7 +134,7 @@ Setting_Buttons_Server <- function(input, output, session) {
     }
 
     observeEvent(input[["KMT_no_config"]], {
-      assign("Minus_Threshold",
+      assign("MINUS_THRESHOLD",
         as.numeric(input[["KMT_no_config"]]),
         envir = .GlobalEnv
       )
@@ -202,7 +202,7 @@ Setting_Buttons_Server <- function(input, output, session) {
     }
     
     observeEvent(input[["Curvature_config"]], {
-      assign("Curvature_config",
+      assign("CURVATURE_CONFIG",
              round(as.numeric(input[["Curvature_config"]]) / 20, 0) - 1,
              envir = .GlobalEnv
       )
@@ -266,7 +266,7 @@ Setting_Buttons_Server <- function(input, output, session) {
     }
 
     observeEvent(input[["Fiber_area_config"]], {
-      assign("Fiber_area_config",
+      assign("FIBER_AREA_CONFIG",
         round(as.numeric(input[["Fiber_area_config"]]) / 20, 0) - 1,
         envir = .GlobalEnv
       )
@@ -300,7 +300,7 @@ Setting_Buttons_Server <- function(input, output, session) {
     }
 
     observeEvent(input[["Minus_end_config"]], {
-      assign("Minus_Distance",
+      assign("MINUS_DISTANCE",
         as.numeric(input[["Minus_end_config"]]),
         envir = .GlobalEnv
       )
@@ -385,7 +385,7 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
 
     observeEvent(input[["MT_point_config"]], {
-      assign("MT_point_config",
+      assign("MT_POINT_CONFIG",
         as.numeric(input[["MT_point_config"]]),
         envir = .GlobalEnv
       )

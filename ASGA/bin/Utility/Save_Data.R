@@ -203,7 +203,7 @@ Save_Data <- function(input, output, session) {
   tryCatch(
     {
       # Prepare data for saving in Amira ASCI file
-      if (Amira == TRUE &&
+      if (AMIRA == TRUE &&
         ncol(Nodes %>% select(starts_with("EndType"))) >= 1) {
         End_morpho <- rbind(
           tibble(X1 = Data_1_Minus_end_morphology$Node_ID, X2 = 0),
@@ -384,6 +384,7 @@ Save_Data <- function(input, output, session) {
   )
 
   # Save Amira file for curvature ----------------------------------------------
+  if(AMIRA == TRUE){
   tryCatch(
     {
       DF <- tibble(
@@ -409,6 +410,13 @@ Save_Data <- function(input, output, session) {
             Menger_Curvature = as.character(Menger_data_colector),
             Segment_ID = i
           )
+          
+          if(DF[counter,1] == "NaN"){
+            DF[counter, 1] <- tibble(Tortuosity = as.character("nan"))
+          }
+          if(DF[counter,2] == "NaN"){
+            DF[counter, 2] <- tibble(Menger_Curvature = as.character("nan"))
+          }
         } else {
           DF[counter, ] <- tibble(
             Tortuosity = as.character("nan"),
@@ -441,7 +449,7 @@ Save_Data <- function(input, output, session) {
     },
     error = function(e) {}
   )
-
+  }
   # Save Data for local curvature ----------------------------------------------
   tryCatch(
     {
@@ -686,7 +694,7 @@ Save_Data <- function(input, output, session) {
   )
 
   # Amira output
-  if (exists("Amira") && Amira == TRUE) {
+  if (exists("Amira_df") && AMIRA == TRUE) {
     write.table(get(paste("Amira", "Dataset", current_data, sep = "_")),
       paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
       quote = FALSE, row.names = FALSE, col.names = FALSE
