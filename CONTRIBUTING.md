@@ -31,11 +31,9 @@ Install `ASGA` for development:
 # install.packages("devtools")
 library(devtools)
 install_github("ropensci/git2r")
-
 git clone https://github.com/RRobert92/ASGA.git
 cd ASGA
 make install
-
 renv::restore()
 ```
 
@@ -44,5 +42,4 @@ Run code style checks:
 ```bash
 # install.packages("styler")
 library("styler")
-
 ```
