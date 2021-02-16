@@ -9,7 +9,7 @@
   
   <link rel="canonical" href="https://kiewisz.shinyapps.io/ASGA/Global_Fun/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Global & GUI Use Funcitons - ASGA</title>
+  <title>Global Use Funcitons - ASGA</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Global & GUI Use Funcitons";
+    var mkdocs_page_name = "Global Use Funcitons";
     var mkdocs_page_input_path = "Global_Fun.md";
     var mkdocs_page_url = "/ASGA/Global_Fun/";
   </script>
@@ -55,7 +55,93 @@
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../Install/">Installation</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Global & GUI Use Funcitons</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Global Use Funcitons</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#check_data">Check_Data</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#value">Value</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#upload_data">Upload_Data</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_1">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage_1">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#value_1">Value</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#details">Details</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#load_amira">Load_Amira</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_2">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage_2">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#load_data">Load_Data</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_3">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage_3">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#value_2">Value</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#save_data">Save_Data</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_4">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_1">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#arguments_1">Arguments</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#details_1">Details</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#save_amira">Save_Amira</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_5">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage_4">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#arguments_2">Arguments</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#details_2">Details</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_2">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#export_data">Export_Data</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_6">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage_5">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#arguments_3">Arguments</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#details_3">Details</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../GUI_Fun/">GUI Use Functions</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../Pre_anal/">Pre Analysis Functions</a>
                     </li>
@@ -100,7 +186,7 @@
         
       
     
-    <li>Global & GUI Use Funcitons</li>
+    <li>Global Use Funcitons</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/RRobert92/ASGA/blob/main/docs/docs/Global_Fun.md"
@@ -114,11 +200,372 @@
           <div role="main">
             <div class="section">
               
-                <hr />
-<p>title: Test_Unit page
-authors: Robert Kiewisz
-date: 2021-02-15</p>
+                <style>
+    th {
+        display: none;
+    }
+</style>
+
+<h1 id="asga-global"><strong>ASGA Global</strong></h1>
+<p>Test set-up for testing each function/tools in the ASGA software</p>
+<p><strong><em>Version</em></strong>&nbsp;&nbsp;                      0.33 <br/>
+  <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2021-02-15 <br/>
+  <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert Kiewisz <br/>
+  <strong><em>Depends</em></strong>                                  <br/>
+  <strong><em>License</em></strong>&nbsp;&nbsp;&nbsp;                GPL V3.0<br/><br/></p>
+<p><strong><em>Description</em></strong> The test unit is composed of two-part (<a href="#Test_Functions"><code>Test_Functions</code></a>, 
+  <a href="#Test_Output"><code>Test_Output</code></a>) and GUI part for display error messages <a href="#Test_Result"><code>Test_Result</code></a><br/><br/></p>
+<p><br/><br/> 
+<a name="Check_Data"></a></p>
 <hr />
+<p><center></p>
+<h3 id="check_data"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Check_Data.R"><code>Check_Data</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description"><strong><em>Description</em></strong> <br/></h4>
+<p>The ASGA test module to check each uploaded data set before analysis. The test modul validates if the uploaded data fitting expected standardized structure.</p>
+<h4 id="usage"><strong><em>Usage</em></strong><br/></h4>
+<pre><code>&lt;Upload_Data.R&gt;
+
+Check_Data(i) # Check data routine for raw data 
+Check_Analysis(File_name) # Check data routine for analyzed data
+
+</code></pre>
+<h4 id="arguments"><strong><em>Arguments</em></strong><br/></h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>i</code></td>
+<td>single digit number of uploaded file</td>
+</tr>
+<tr>
+<td><code>File_name</code></td>
+<td>name of uploaded file</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h4 id="value"><strong><em>Value</em></strong><br/></h4>
+<p>Check_Data object create the following components:</p>
+<table>
+<thead>
+<tr>
+<th>Data_frame</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATA_TEST</code></td>
+<td>Test output with numeric value interpreted in <code>Error_Handler</code> GUI ASGA module</td>
+</tr>
+<tr>
+<td><code>AnalysisTest</code></td>
+<td>Test output with numeric value interpreted in <code>Upload_Data</code> Global ASGA modules</td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/>
+<a name="Upload_Data"></a></p>
+<hr />
+<p><center></p>
+<h3 id="upload_data"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Upload_Data.R"><code>Upload_Data</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_1"><strong><em>Description</em></strong> <br/></h4>
+<p>The ASGA module to handle uploaded files. There are two routine, one for handling raw data set in <code>.xlsx</code>  or <code>.am</code> file format. Second one to handl <code>.xlsx</code> files download after analysis by ASGA.</p>
+<h4 id="usage_1"><strong><em>Usage</em></strong><br/></h4>
+<pre><code>&lt;server.R&gt;
+
+callModule(Getfiles_Server, &quot;Home&quot;)
+</code></pre>
+<p><br/></p>
+<h4 id="value_1"><strong><em>Value</em></strong><br/></h4>
+<p>Upload_Data object create the following components:</p>
+<table>
+<thead>
+<tr>
+<th>Data_frame</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NUM_FILES</code></td>
+<td>Constant storing the value of number uploaded data sets</td>
+</tr>
+<tr>
+<td><code>Amira_df</code></td>
+<td>Temp file of raw <code>.am</code> files</td>
+</tr>
+<tr>
+<td><code>AMIRA</code></td>
+<td>Constant value if = TURE the Amira filed are used</td>
+</tr>
+<tr>
+<td><code>text_dataset</code></td>
+<td>Variable used in <code>Error_Handler</code> GUI ASGA module for displaying messages</td>
+</tr>
+<tr>
+<td><code>datatype</code></td>
+<td>Variable used in <code>Error_Handler</code> GUI ASGA module for displaying messages</td>
+</tr>
+<tr>
+<td><code>AnalysisTest</code></td>
+<td>Test result variable from <code>Check_Data</code> Global ASGA modules used to break upload if data are not correct</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h4 id="details"><strong><em>Details</em></strong><br/></h4>
+<p>This module works in tandem with <code>Check_Data</code>, <code>Load_Amira</code> Global ASGA modules and <code>Error_Handler</code> GUI ASGA module</p>
+<p><br/><br/>
+<a name="Load_Amira"></a></p>
+<hr />
+<p><center></p>
+<h3 id="load_amira"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Load_Amira.R"><code>Load_Amira</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_2"><strong><em>Description</em></strong> <br/></h4>
+<p>The ASGA module called when the <code>.am</code> file is uploaded by the user. The module is calling three functions (<code>Load_Amira_Nodes</code>, <code>Load_Amira_Points</code>, <code>Load_Amira_Segments</code>) to extract from .am files nodes, points and segments information.</p>
+<h4 id="usage_2"><strong><em>Usage</em></strong><br/></h4>
+<pre><code>Load_Amira_Nodes()
+Load_Amira_Points()
+Load_Amira_Segments()
+
+</code></pre>
+<p><br/></p>
+<h4 id="example"><strong><em>Example</em></strong><br/></h4>
+<pre><code>&lt;Upload_Data.R&gt;
+
+assign(paste(&quot;Data&quot;, &quot;Node&quot;, i, sep = &quot;_&quot;),
+              Load_Amira_Nodes(),
+              envir = .GlobalEnv
+            )
+
+assign(paste(&quot;Data&quot;, &quot;Points&quot;, i, sep = &quot;_&quot;),
+              Load_Amira_Points(),
+              envir = .GlobalEnv
+            )
+
+assign(paste(&quot;Data&quot;, &quot;Segments&quot;, i, sep = &quot;_&quot;),
+              Load_Amira_Segments(),
+              envir = .GlobalEnv
+            )
+</code></pre>
+<p><br/><br/>
+<a name="Load_Data"></a></p>
+<hr />
+<p><center></p>
+<h3 id="load_data"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Load_Data.R"><code>Load_Data</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_3"><strong><em>Description</em></strong> <br/></h4>
+<p>The ASGA module called for each data set before analysis to the standardized spatial graph for analysis.</p>
+<h4 id="usage_3"><strong><em>Usage</em></strong><br/></h4>
+<pre><code>&lt;server.R&gt;
+
+callModule(Load_Data, &quot;Home&quot;)
+</code></pre>
+<p><br/></p>
+<h4 id="value_2"><strong><em>Value</em></strong><br/></h4>
+<p>Load_Data object create the following components:</p>
+<table>
+<thead>
+<tr>
+<th>Data_frame</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Node</code></td>
+<td>Data frame containing columns (<code>Node ID</code>, <code>X Coord</code>, <code>Y Coord</code>, <code>Z Coord</code>) for each node/MT end</td>
+</tr>
+<tr>
+<td><code>Points</code></td>
+<td>Data frame containing columns (<code>Point ID</code>, <code>X Coord</code>, <code>Y Coord</code>, <code>Z Coord</code>) for each point in the point cloud</td>
+</tr>
+<tr>
+<td><code>Segments</code></td>
+<td>Data frame containing columns (<code>Segment ID</code>,<code>Pole1_00</code>,... ,<code>length</code>, <code>Node ID #1</code>, <code>Node ID #2</code>, <code>Point IDs</code>)</td>
+</tr>
+<tr>
+<td><code>Segments_1_KMT</code></td>
+<td>Data frame containing columns (<code>Segment ID</code>, <code>length</code>, <code>Node ID #1</code>, <code>Node ID #2</code>, <code>Point IDs</code>) for k-fiber in Pole_1</td>
+</tr>
+<tr>
+<td><code>Segments_2_KMT</code></td>
+<td>Data frame containing columns (<code>Segment ID</code>, <code>length</code>, <code>Node ID #1</code>, <code>Node ID #2</code>, <code>Point IDs</code>) for k-fiber in Pole_2</td>
+</tr>
+<tr>
+<td><code>Segments_KMT</code></td>
+<td>Data frame containing columns (<code>Segment ID</code>, <code>length</code>, <code>Node ID #1</code>, <code>Node ID #2</code>, <code>Point IDs</code>) for k-fiber in both poles</td>
+</tr>
+<tr>
+<td><code>Segments_SMT</code></td>
+<td>Data frame containing columns (<code>Segment ID</code>, <code>length</code>, <code>Node ID #1</code>, <code>Node ID #2</code>, <code>Point IDs</code>) for SMTs in Pole_1</td>
+</tr>
+<tr>
+<td><code>Pole1</code></td>
+<td>Data frame containing columns (<code>X</code>, <code>Y</code>, <code>Z</code>) for Pole1 coordinates</td>
+</tr>
+<tr>
+<td><code>Pole2</code></td>
+<td>Data frame containing columns (<code>X</code>, <code>Y</code>, <code>Z</code>) for Pole2 coordinates</td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/>
+<a name="Save_Data"></a></p>
+<hr />
+<p><center></p>
+<h3 id="save_data"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Save_Data.R"><code>Save_Data</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_4"><strong><em>Description</em></strong> <br/></h4>
+<p>The ASGA module called at the end of the analysis to save all indicated data sets.
+<br/></p>
+<h4 id="example_1"><strong><em>Example</em></strong><br/></h4>
+<pre><code>&lt;Save_Data.R&gt;
+
+  # Save Data for SMT ends -----------------------------------------------------
+  tryCatch(
+    {
+      assign(paste(&quot;Data&quot;, current_data, &quot;Name&quot;, sep = &quot;_&quot;),
+             Name_df,
+             envir = .GlobalEnv
+      )
+      write.xlsx(
+        get(paste(&quot;Data&quot;, current_data, &quot;Name&quot;, sep = &quot;_&quot;)),
+        paste(&quot;Data/&quot;, &quot;Data_&quot;, current_data, &quot;_Name.xlsx&quot;, sep = &quot;&quot;)
+      )
+    },
+    error = function(e) {}
+  )
+
+</code></pre>
+<p><br/></p>
+<h4 id="arguments_1"><strong><em>Arguments</em></strong><br/></h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Name</code></td>
+<td>Name of the file in <code>.GlobalEnv</code> to be saved</td>
+</tr>
+<tr>
+<td><code>Name_df</code></td>
+<td>Name of the data_frame in <code>.GlobalEnv</code></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h4 id="details_1"><strong><em>Details</em></strong><br/></h4>
+<p>Only <code>.xlsx</code> are saved if Amira files were used for analysis then also an overwrite by Save_Amira <code>.am</code> files are saved. </p>
+<p><br/><br/>
+<a name="Save_Amira"></a></p>
+<hr />
+<p><center></p>
+<h3 id="save_amira"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Save_Amira.R"><code>Save_Amira</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_5"><strong><em>Description</em></strong> <br/></h4>
+<p>The function overwrites  the uploaded by user Amira files by supplying additional analysis for visualization in ZiB Amira software.
+<br/></p>
+<h4 id="usage_4"><strong><em>Usage</em></strong><br/></h4>
+<pre><code>Save_amira(x, y, Elements, Data_type)
+
+</code></pre>
+<p><br/></p>
+<h4 id="arguments_2"><strong><em>Arguments</em></strong><br/></h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>Data_frame name which should be saved in Amira file</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>Data_frame column number which should be saved in Amira file</td>
+</tr>
+<tr>
+<td><code>Elements</code></td>
+<td>Type of saved data e.g ("Nodes", "Points", "Segments")</td>
+</tr>
+<tr>
+<td><code>Data_type</code></td>
+<td>Type of input e.g. ("int", "float", "float[3]")</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h4 id="details_2"><strong><em>Details</em></strong><br/></h4>
+<p>Data set that are indicated by the user in <strong>x[y]</strong> need to be sorted accordingly to the segment number. </p>
+<p>Before the <code>.am</code> file is overwrite the <strong>x[y]</strong> object is checked if the defined element number is the same as in the Amira file.</p>
+<h4 id="example_2"><strong><em>Example</em></strong><br/></h4>
+<pre><code>&lt;Save_Data.R&gt;
+
+tryCatch({
+    assign(paste(&quot;Amira&quot;, &quot;Dataset&quot;, current_data, sep = &quot;_&quot;),
+        Save_amira(DF, 2, &quot;Segments&quot;, &quot;float&quot;),
+        envir = .GlobalEnv)
+}, error = function(e) {}
+)
+
+</code></pre>
+<p><br/><br/>
+<a name="Export_Data"></a></p>
+<hr />
+<p><center></p>
+<h3 id="export_data"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Export_Data.R"><code>Export_Data</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_6"><strong><em>Description</em></strong> <br/></h4>
+<p>Small unit designed to collect a list of all saved data, zip them and send to download by the user. After the user download data, all files are deleted.</p>
+<h4 id="usage_5"><strong><em>Usage</em></strong><br/></h4>
+<pre><code>&lt;server.R&gt;
+
+# to intoduce new formar for downloadHandler
+Zip_Files_Format &lt;- list.files(path = getwd(), pattern = Pattern)
+
+</code></pre>
+<p><br/></p>
+<h4 id="arguments_3"><strong><em>Arguments</em></strong><br/></h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Pattern</code></td>
+<td>Example: ".am$"</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h4 id="details_3"><strong><em>Details</em></strong><br/></h4>
+<p>Only <code>.xlsx</code> and <code>.am</code> files are collected</p>
               
             </div>
           </div>
@@ -126,7 +573,7 @@ date: 2021-02-15</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Pre_anal/" class="btn btn-neutral float-right" title="Pre Analysis Functions">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../GUI_Fun/" class="btn btn-neutral float-right" title="GUI Use Functions">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../Install/" class="btn btn-neutral" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -160,7 +607,7 @@ date: 2021-02-15</p>
         <span><a href="../Install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Pre_anal/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../GUI_Fun/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

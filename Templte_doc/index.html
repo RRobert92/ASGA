@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="canonical" href="https://kiewisz.shinyapps.io/ASGA/Test/">
+  <link rel="canonical" href="https://kiewisz.shinyapps.io/ASGA/Templte_doc/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Test Unit - ASGA</title>
+  <title>Template - ASGA</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Test Unit";
-    var mkdocs_page_input_path = "Test.md";
-    var mkdocs_page_url = "/ASGA/Test/";
+    var mkdocs_page_name = "Template";
+    var mkdocs_page_input_path = "Templte_doc.md";
+    var mkdocs_page_url = "/ASGA/Templte_doc/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -52,7 +52,7 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Documentation</span></p>
-                <ul class="current">
+                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../Install/">Installation</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../Global_Fun/">Global Use Funcitons</a>
@@ -65,39 +65,7 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../SMT_anal/">SMTs Analysis Functions</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Test Unit</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#test_functions">Test_Functions</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#description">Description </a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#arguments">Arguments</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#test_output">Test_Output</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#description_1">Description </a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#usage_1">Usage</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#arguments_1">Arguments</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#example_1">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#test_result">Test_Result</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#description_2">Description </a>
-    </li>
-        </ul>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../Test/">Test Unit</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">About</span></p>
@@ -129,15 +97,11 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Documentation &raquo;</li>
-        
-      
     
-    <li>Test Unit</li>
+    <li>Template</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/RRobert92/ASGA/blob/main/docs/docs/Test.md"
+        <a href="https://github.com/RRobert92/ASGA/blob/main/docs/docs/Templte_doc.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -154,8 +118,8 @@
     }
 </style>
 
-<h1 id="test_unit"><strong>Test_Unit</strong></h1>
-<p>ASGA module for testing each function/tools in the ASGA software</p>
+<h1 id="template-for-documentation"><strong>Template for documentation</strong></h1>
+<p>Test set-up for testing each function/tools in the ASGA software</p>
 <p><strong><em>Version</em></strong>&nbsp;&nbsp;                      1.1 <br/>
   <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2021-02-15 <br/>
   <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert Kiewisz <br/>
@@ -169,9 +133,9 @@
 <h3 id="test_functions"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Functions</code></a></h3>
 <hr />
 <p></center></p>
-<h4 id="description"><strong><em>Description</em></strong> <br/></h4>
-<p>The part of the test unit is designed for quick and straightforward testing if the tool is passing the test data set</p>
-<h4 id="usage"><strong><em>Usage</em></strong><br/></h4>
+<p><strong><em>Description</em></strong> <br/>
+The part of the <code>Test_Unit</code> is designed for quick and straightforward testing if the tool is passing the test data set</p>
+<p><strong><em>Usage</em></strong><br/></p>
 <pre><code> tryCatch(
       {
         callModule(`Name`, &quot;Home&quot;)
@@ -182,13 +146,8 @@
       }
     )
     names(Test_value)[`ID`] &lt;&lt;- `Name`
-
-&lt;server.R&gt;
-      callModule(Load_Data, &quot;Home&quot;)
-      callModule(Test_Functions, &quot;Home&quot;)
-      callModule(Test_Output, &quot;Home&quot;)
 </code></pre>
-<h4 id="arguments"><strong><em>Arguments</em></strong><br/></h4>
+<p><strong><em>Arguments</em></strong><br/></p>
 <table>
 <thead>
 <tr>
@@ -207,8 +166,17 @@
 </tr>
 </tbody>
 </table>
-<p><br/></p>
-<h4 id="example"><strong><em>Example</em></strong><br/></h4>
+<p><br/> </p>
+<p><strong><em>Details</em></strong><br/> 
+If needed more comments about arguments</p>
+<p><strong><em>Value</em></strong><br/>
+Stored values objects</p>
+<ul>
+<li><code>Name</code>&nbsp;&nbsp;&nbsp;&nbsp; Testing function class name</li>
+<li><code>ID</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Continue number in data_frame</li>
+</ul>
+<p><strong><em>References</em></strong><br/></p>
+<p><strong><em>Example</em></strong><br/></p>
 <pre><code>    tryCatch(
       {
         callModule(Pre_Analysis, &quot;Home&quot;)
@@ -219,110 +187,11 @@
       }
     )
     names(Test_value)[1] &lt;&lt;- &quot;Pre_Analsis&quot;
-
-&lt;server.R&gt;
-      callModule(Load_Data, &quot;Home&quot;)
-      callModule(Test_Functions, &quot;Home&quot;)
-      callModule(Test_Output, &quot;Home&quot;)
 </code></pre>
-<p><br/><br/>
-<a name="Test_Output"></a></p>
-<hr />
-<p><center></p>
-<h3 id="test_output"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Tests.R"><code>Test_Output</code></a></h3>
-<hr />
-<p></center></p>
-<h4 id="description_1"><strong><em>Description</em></strong> <br/></h4>
-<p>The part of the test unit is designed for testing of the core functionality of the ASGA as well as testing tools output</p>
-<h4 id="usage_1"><strong><em>Usage</em></strong><br/></h4>
-<pre><code>Test_df[1, `ID`] &lt;&lt;- Test_anaysis(`Name`, 
-                                  P1_P2 = TRUE, 
-                                  EXP_ncol = 6, 
-                                  EXP_ncol = c(4,2,2))
-</code></pre>
-<h4 id="arguments_1"><strong><em>Arguments</em></strong><br/></h4>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Name</code></td>
-<td>Testing function class name</td>
-</tr>
-<tr>
-<td><code>ID</code></td>
-<td>Continue number in data_frame</td>
-</tr>
-<tr>
-<td><code>P1_P2</code></td>
-<td><code>TRUE</code> <code>FALSE</code> value if P1 and P2 tools spited data for pole1 and pole2</td>
-</tr>
-<tr>
-<td><code>EXP_ncol</code></td>
-<td>Expected number of columns from standard test data set</td>
-</tr>
-<tr>
-<td><code>EXP_ncol</code></td>
-<td>Expected number of rows from standard test data set</td>
-</tr>
-</tbody>
-</table>
-<p><br/></p>
-<h4 id="example_1"><strong><em>Example</em></strong><br/></h4>
-<pre><code>Test_df[1, 10] &lt;&lt;- Test_anaysis(&quot;Data_1_LD&quot;, 
-                                TRUE, 
-                                6, 
-                                c(4,2,2))
-
-&lt;server.R&gt;
-      callModule(Load_Data, &quot;Home&quot;)
-      callModule(Test_Functions, &quot;Home&quot;)
-      callModule(Test_Output, &quot;Home&quot;)
-</code></pre>
-<p><br/><br/>
-<a name="Test_Result"></a></p>
-<hr />
-<p><center></p>
-<h3 id="test_result"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Result</code></a></h3>
-<hr />
-<p></center></p>
-<h4 id="description_2"><strong><em>Description</em></strong> <br/></h4>
-<p>The part of the test unit that gave two types of GUI message to the user:</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Pass all test correctly</strong></td>
-<td>Green</td>
-</tr>
-<tr>
-<td><strong>Error occurred</strong></td>
-<td>Yellow and error number indicating <code>ID</code> corresponding to testing function class name</td>
-</tr>
-</tbody>
-</table>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../license/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../SMT_anal/" class="btn btn-neutral" title="SMTs Analysis Functions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -348,10 +217,6 @@
           <a href="https://github.com/RRobert92/ASGA/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../SMT_anal/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../license/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
