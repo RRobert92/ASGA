@@ -15,7 +15,7 @@ date: 2021-02-15
   ***Version***&nbsp;&nbsp;                      {{ version }} <br/>
   ***Data***&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ Data }} <br/>
   ***Author***&nbsp;&nbsp;&nbsp;                 {{ Author }} <br/>
-  ***Depends***                                  `shiny` `shinyjs` `shinycssloaders` `shinyWidgets` `shinyBS` `shinyalert` `colourpicker`<br/>
+  ***Depends***                                  `shiny` `shinyjs` `shinycssloaders` `shinyWidgets` `shinyBS` `shinyalert` `colourpicker` `ggplot2` `ggbeeswarm` `Hmisc` `egg`<br/>
   ***License***&nbsp;&nbsp;&nbsp;                {{ License }}<br/><br/>
   
   ***Description*** Collection of GUI modules responsible for button and messaging handling

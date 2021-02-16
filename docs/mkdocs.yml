@@ -2,16 +2,17 @@ site_name: ASGA
 
 nav:
   - Home: index.md
-  
-  - Documentation:
+  - User Guid:
     - Installation: Install.md
+    - Contributing: CONTRIBUTING.md
+  - Documentation:
     - Global Use Modules: Global_Fun.md
     - GUI Use Modules: GUI_Fun.md
     - Pre Analysis Modules: Pre_anal.md
     - KMTs Analysis Modules: KMT_anal.md
     - SMTs Analysis Modules: SMT_anal.md
     - Test Module: Test.md
-    
+   
   - About: 
       - License: license.md
       - Release Note: Change_Log.md

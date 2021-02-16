@@ -16,14 +16,14 @@ date: 2021-01-14
 [![CodeFactor](https://www.codefactor.io/repository/github/rrobert92/asga/badge)](https://www.codefactor.io/repository/github/rrobert92/asga)
 
 **Spindle analysis tool** is an open-source cluster of tools with its ongoing development for meiotic and mitotic spindle analysis. Key futures:
-
+  
 1. Online access
 
 2. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
 
 3. It is designed from the ground up to incrementally scale up this tool based on evolving use cases. 
 
-4. Allows working on projects reproducible and compare data.
+4. Allows working on projects reproducibly and compare data.
 
 **Spindle analysis tool** aims to replace huge and complicated to work with a spreadsheet that is frequently used for Spatial Graph analysis, but also it allows to uniform and completely automate analysis.
 
@@ -38,7 +38,7 @@ date: 2021-01-14
 <a name="Quick_start"></a>
 # Quick start
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-You can run the software in an online-version under the [Shinyapp.io](https://kiewisz.shinyapps.io/ASGA/) or locally.
+You can run the software in an online-version under the [Shinyapp.io](https://kiewisz.shinyapps.io/ASGA/) or localy.
 
 <a name="Quick_start_DP"></a>
 ### Data preparation befor you start
@@ -69,21 +69,21 @@ Java SE 11 (LTS)
 ```
 ### Dependency R library
 ```
- shiny
- shinycssloaders
- shinyWidgets
- shinyBS
- shinyalert
- colourpicker
- readxl
- plyr
- tidyverse
- ggplot2
- egg
- base
- alphashape3d
- xlsx
- zip
+- shiny
+- shinycssloaders
+- shinyWidgets
+- shinyBS
+- shinyalert
+- colourpicker
+- readxl
+- plyr
+- tidyverse
+- ggplot2
+- egg
+- base
+- alphashape3d
+- xlsx
+- zip
 ```
 
 <a name="Contributing"></a>

@@ -3,8 +3,12 @@ title: ChangLog Page
 authors: Robert Kiewisz
 date: 2021-01-14
 ---
-# <h1 align="center"> Change Log </h1>
+<a name="Change_Log"></a>
+<center>
+#Change Log
+</center>
 
+---
 ## v0.34 - Unpublished
 ---
 
@@ -33,7 +37,8 @@ date: 2021-01-14
   the wrong file
 - Added ASGA documentation 
 - Added a script generating plots for eLife paper
-  
+- Finished ASGA documentation
+
 ---
 ## v0.33 - Published 28/12/2020
 ---
