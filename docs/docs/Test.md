@@ -15,7 +15,7 @@ ASGA module for testing each function/tools in the ASGA software
   ***Version***&nbsp;&nbsp;                      {{ version }} <br/>
   ***Data***&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ Data }} <br/>
   ***Author***&nbsp;&nbsp;&nbsp;                 {{ Author }} <br/>
-  ***Depends***                                  `Shiny` `shinyWidgets` `tidyverse` <br/><br/>
+  ***Depends***                                  `Shiny` `shinyWidgets` `tidyverse`<br/>
   ***License***&nbsp;&nbsp;&nbsp;                {{ License }}<br/><br/>
   
   ***Description*** The test unit is composed of two-part ([`Test_Functions`](#Test_Functions), 
