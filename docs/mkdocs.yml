@@ -5,12 +5,12 @@ nav:
   
   - Documentation:
     - Installation: Install.md
-    - Global Use Funcitons: Global_Fun.md
-    - GUI Use Functions: GUI_Fun.md
-    - Pre Analysis Functions: Pre_anal.md
-    - KMTs Analysis Functions: KMT_anal.md
-    - SMTs Analysis Functions: SMT_anal.md
-    - Test Unit: Test.md
+    - Global Use Modules: Global_Fun.md
+    - GUI Use Modules: GUI_Fun.md
+    - Pre Analysis Modules: Pre_anal.md
+    - KMTs Analysis Modules: KMT_anal.md
+    - SMTs Analysis Modules: SMT_anal.md
+    - Test Module: Test.md
     
   - About: 
       - License: license.md
