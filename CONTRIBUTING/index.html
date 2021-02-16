@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="canonical" href="https://kiewisz.shinyapps.io/ASGA/Templte_doc/">
+  <link rel="canonical" href="https://kiewisz.shinyapps.io/ASGA/CONTRIBUTING/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Template - ASGA</title>
+  <title>Contributing - ASGA</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Template";
-    var mkdocs_page_input_path = "Templte_doc.md";
-    var mkdocs_page_url = "/ASGA/Templte_doc/";
+    var mkdocs_page_name = "Contributing";
+    var mkdocs_page_input_path = "CONTRIBUTING.md";
+    var mkdocs_page_url = "/ASGA/CONTRIBUTING/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -52,10 +52,12 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">User Guid</span></p>
-                <ul>
+                <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../Install/">Installation</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">Contributing</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Contributing</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Documentation</span></p>
@@ -102,11 +104,15 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>User Guid &raquo;</li>
+        
+      
     
-    <li>Template</li>
+    <li>Contributing</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/RRobert92/ASGA/blob/main/docs/docs/Templte_doc.md"
+        <a href="https://github.com/RRobert92/ASGA/blob/main/docs/docs/CONTRIBUTING.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -123,80 +129,52 @@
     }
 </style>
 
-<h1 id="template-for-documentation"><strong>Template for documentation</strong></h1>
-<p>Test set-up for testing each function/tools in the ASGA software</p>
-<p><strong><em>Version</em></strong>&nbsp;&nbsp;                      0.33 <br/>
-  <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 28.12.2020 <br/>
-  <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert kiewisz <br/>
-  <strong><em>Depends</em></strong>                                  <br/>
-  <strong><em>License</em></strong>&nbsp;&nbsp;&nbsp;                GPL V3.0<br/><br/></p>
-<p><strong><em>Description</em></strong> The test unit is composed of two-part (<a href="#Test_Functions"><code>Test_Functions</code></a>, 
-  <a href="#Test_Output"><code>Test_Output</code></a>) and GUI part for display error messages <a href="#Test_Result"><code>Test_Result</code></a><br/><br/></p>
-<p><a name="Test_Functions"></a></p>
-<hr />
-<p><center></p>
-<h3 id="test_functions"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Functions</code></a></h3>
-<hr />
-<p></center></p>
-<h4 id="description"><strong><em>Description</em></strong> <br/></h4>
-<p>The part of the <code>Test_Unit</code> is designed for quick and straightforward testing if the tool is passing the test data set</p>
-<h4 id="usage"><strong><em>Usage</em></strong><br/></h4>
-<pre><code> tryCatch(
-      {
-        callModule(`Name`, &quot;Home&quot;)
-        Test_value[1, `ID`] &lt;&lt;- TRUE
-      },
-      error = function(e) {
-        Test_value[1, `ID`] &lt;&lt;- FALSE
-      }
-    )
-    names(Test_value)[`ID`] &lt;&lt;- `Name`
+<h1 id="report-issues">Report issues</h1>
+<p>If you have any issue with The ASGA, sorry about that, I will do what I
+can to fix that ASAP. Actually, it may already be fixed, so the first thing to do is to use the ASGA running on the shinyapp.io, or update the ASGA and see if the bug is still there.</p>
+<p>If it is (sorry again :)), have a look if the problem has not already been reported 
+and if not, just open an issue on <a href="https://github.com/RRobert92/ASGA">GitHub</a> with
+the following basic information:
+  - the output of <code>ASGA --version</code> (something like <code>ASGA 0.69</code>);
+  - your system (Debian 7, ArchLinux, Windows, etc.);
+  - how to reproduce the bug and if possible which data you used;
+  - if relevant what was the error message or when ASGA crashed;
+  - anything else you think is relevant.</p>
+<p>It's only with enough information that I can do something to fix the problem.</p>
+<h1 id="make-a-pull-request">Make a pull request</h1>
+<p>We gladly accept pull request on the <a href="https://github.com/RRobert92/ASGA">official
+repository</a> for new tools, new features, bug
+fixes, etc.</p>
+<h1 id="developing">Developing</h1>
+<p><a href="https://docs.python.org/3/tutorial/venv.html">Create and activate a Python 3 virtual environment.</a></p>
+<p>Install <code>ASGA</code> for development:</p>
+<pre><code class="language-bash"># install.packages(&quot;devtools&quot;)
+library(devtools)
+install_github(&quot;ropensci/git2r&quot;)
+git clone https://github.com/RRobert92/ASGA.git
+cd ASGA
+make install
+renv::restore()
 </code></pre>
-<h4 id="arguments"><strong><em>Arguments</em></strong><br/></h4>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Name</code></td>
-<td>Testing function class name</td>
-</tr>
-<tr>
-<td><code>ID</code></td>
-<td>Continue number in data_frame</td>
-</tr>
-</tbody>
-</table>
-<p><br/> </p>
-<h4 id="details"><strong><em>Details</em></strong><br/></h4>
-<p>If needed more comments about arguments</p>
-<h4 id="value"><strong><em>Value</em></strong><br/></h4>
-<p>Stored values objects</p>
-<ul>
-<li><code>Name</code>&nbsp;&nbsp;&nbsp;&nbsp; Testing function class name</li>
-<li><code>ID</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Continue number in data_frame</li>
-</ul>
-<h4 id="references"><strong><em>References</em></strong><br/></h4>
-<h4 id="example"><strong><em>Example</em></strong><br/></h4>
-<pre><code>    tryCatch(
-      {
-        callModule(Pre_Analysis, &quot;Home&quot;)
-        Test_value[1, 1] &lt;&lt;- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 1] &lt;&lt;- FALSE
-      }
-    )
-    names(Test_value)[1] &lt;&lt;- &quot;Pre_Analsis&quot;
+<p>Run code style checks:</p>
+<pre><code class="language-bash"># install.packages(&quot;styler&quot;)
+library(&quot;styler&quot;)
 </code></pre>
+<h1 id="short-tool-development-instruction">Short tool development instruction</h1>
+<p><center><h4>More Detail Soon</h4></center></p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Global_Fun/" class="btn btn-neutral float-right" title="Global Use Modules">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Install/" class="btn btn-neutral" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -222,6 +200,10 @@
           <a href="https://github.com/RRobert92/ASGA/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
+        <span><a href="../Install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Global_Fun/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
