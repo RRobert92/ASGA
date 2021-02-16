@@ -5,7 +5,8 @@ nav:
   
   - Documentation:
     - Installation: Install.md
-    - Global & GUI Use Funcitons: Global_Fun.md
+    - Global Use Funcitons: Global_Fun.md
+    - GUI Use Functions: GUI_Fun.md
     - Pre Analysis Functions: Pre_anal.md
     - KMTs Analysis Functions: KMT_anal.md
     - SMTs Analysis Functions: SMT_anal.md
@@ -24,3 +25,10 @@ plugins:
   - search:
       lang: en
       prebuild_index: python
+  - macros
+
+extra:
+  version: 0.33
+  Data: 28.12.2020
+  Author: Robert kiewisz
+  License: GPL V3.0
