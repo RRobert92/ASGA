@@ -140,6 +140,15 @@ GetStarted_UI <- function(id) {
       tags$div(class = "footer-report l-box is-center",
         tags$p(CC)
       )
+    ),
+    tabPanel(
+      "Wiki",
+      value = "Wiki"
+    ),
+    
+    tabPanel(
+      "About",
+      value = "About"
     )
   )
 }

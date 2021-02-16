@@ -30,16 +30,24 @@ function(input, output, session) {
     }
   })
 
-  # Wiki button  ---------------------------------------------------------------
-  observeEvent(input$Wiki, {
-    updateTabsetPanel(session, "innavbar", selected = "Wiki")
-    hideTab(inputId = "innavbar", target = "GetStarted")
-  })
-
+  # Wiki & about button  -------------------------------------------------------
   observeEvent(input$innavbar, {
     if(input$innavbar == "Wiki"){
       js$browseURL("https://rrobert92.github.io/ASGA/")
       updateTabsetPanel(session, "innavbar", selected = "Home")
+    }
+    if(input$innavbar == "About"){
+      js$browseURL("https://rrobert92.github.io/ASGA/Cit/")
+      updateTabsetPanel(session, "innavbar", selected = "Home")
+    }
+  })
+  
+  observeEvent(input$"innavbar-GS", {
+    if(input$"innavbar-GS" == "Wiki"){
+      js$browseURL("https://rrobert92.github.io/ASGA/")
+    }
+    if(input$"innavbar-GS" == "About"){
+      js$browseURL("https://rrobert92.github.io/ASGA/Cit/")
     }
   })
   # Get file and Load data  ----------------------------------------------------

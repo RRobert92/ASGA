@@ -42,8 +42,7 @@ fluidPage(
     ),
 
     tabPanel(
-      "About",
-      fluidRow()
+      "About"
     )
   )
 )
