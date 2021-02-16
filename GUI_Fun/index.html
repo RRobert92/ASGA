@@ -58,6 +58,36 @@
                     <li class="toctree-l1"><a class="reference internal" href="../Global_Fun/">Global Use Funcitons</a>
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">GUI Use Functions</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#error_handler">Error_Handler</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description">Description</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#details">Details</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#value">Value</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setting_buttons">Setting_Buttons</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_1">Description </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usage_1">Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#report">Report</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#description_2">Description </a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../Pre_anal/">Pre Analysis Functions</a>
                     </li>
@@ -116,16 +146,129 @@
           <div role="main">
             <div class="section">
               
-                <hr />
-<p>title: GUI
-authors: Robert Kiewisz
-date: 2021-02-15</p>
-<hr />
-<style>
+                <style>
   th {
     display: none;
   }
 </style>
+
+<h1 id="asga-gui"><strong>ASGA GUI</strong></h1>
+<p><strong><em>Version</em></strong>&nbsp;&nbsp;                      0.33 <br/>
+  <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 28.12.2020 <br/>
+  <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert kiewisz <br/>
+  <strong><em>Depends</em></strong>                                  <code>shiny</code> <code>shinyjs</code> <code>shinycssloaders</code> <code>shinyWidgets</code> <code>shinyBS</code> <code>shinyalert</code> <code>colourpicker</code><br/>
+  <strong><em>License</em></strong>&nbsp;&nbsp;&nbsp;                GPL V3.0<br/><br/></p>
+<p><strong><em>Description</em></strong> Collection of GUI modules responsible for button and messaging handling</p>
+<p><br/>
+<a name="Error_Handler"></a></p>
+<hr />
+<p><center></p>
+<h3 id="error_handler"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Error_Messages.R"><code>Error_Handler</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description"><strong><em>Description</em></strong><br/></h4>
+<p>ASGA GUI module utilizing <code>sendSweetAlert</code> library for sending error messages. <br/></p>
+<h4 id="usage"><strong><em>Usage</em></strong><br/></h4>
+<pre><code>callModule(Error_Handler, &quot;Home&quot;)
+</code></pre>
+<h4 id="details"><strong><em>Details</em></strong><br/></h4>
+<p>The <code>Error_Handler</code> module read out the <code>DATA_TEST</code> test output value from <code>Check_Data</code> module.</p>
+<h4 id="value"><strong><em>Value</em></strong><br/></h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATA_TEST</code> == 1</td>
+<td>Data set are valid and comply with ASGA standard</td>
+</tr>
+<tr>
+<td><code>DATA_TEST</code> &gt; 1</td>
+<td>Data set does not comply with ASGA standard. The number indicates error type.</td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/>
+<a name="Setting_Buttons"></a></p>
+<hr />
+<p><center></p>
+<h3 id="setting_buttons"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Setting_Buttons.R"><code>Setting_Buttons</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_1"><strong><em>Description</em></strong> <br/></h4>
+<p>The ASGA GUI module containing a set of buttons used for selection by a user which analysis should be run.</p>
+<h4 id="usage_1"><strong><em>Usage</em></strong><br/></h4>
+<pre><code># Setting_Buttons_UI()
+&lt;ASGA/www/Get_Started/index.R&gt;
+
+          fluidRow(
+            Setting_Buttons_UI(&quot;Home&quot;),
+            column(8, uiOutput(ns(&quot;Tool_Info_1&quot;)))
+          )
+
+# Setting_Buttons_Server()
+&lt;server.R&gt;
+
+callModule(Setting_Buttons_Server, &quot;Home&quot;)
+</code></pre>
+<p><br/></p>
+<h4 id="example"><strong><em>Example</em></strong><br/></h4>
+<pre><code># Setting_Buttons_UI()
+
+materialSwitch(
+      inputId = ns(&quot;Curvature&quot;),      # Button ID
+      label = &quot;KMT curvature&quot;,        # Button text visible in GUI
+      value = FALSE,                  # Is active from start
+      right = TRUE,                   # Button label on the right side
+      status = &quot;info&quot;                 # Button color &quot;info&quot; - Blue
+    )
+</code></pre>
+<pre><code># Setting_Buttons_Server()
+
+  observeEvent(input$`Curvature`, {    # Button action
+    All_Closed()                        # Button behavior when all buttons are off
+    Any_One()                           # Button behavior at least one is on
+
+    Sys.sleep(0.1)                      # Wait 0.1s for more smooth action
+
+    output$`Tool_Info_1` &lt;- renderUI({ # Button description
+      if (input$`Curvature` == TRUE) {
+        &quot;Tool description&quot;              # Desctiption of a tool shown when button is activated
+      }
+    })
+
+    if (input$`Curvature` == TRUE) {    # Messege shown when the button is press (not obligatory)
+      inputSweetAlert(
+        session = session,
+        type = &quot;info&quot;,
+        inputId = &quot;Curvature_config&quot;,
+        input = &quot;text&quot;,
+        title = &quot;Set-up analysis parameter&quot;,
+        text = &quot;Bin size used to calculate local curvature every specified distance on the spindle pole axis. Unit [nm]&quot;
+      )
+    }
+
+    observeEvent(input[[&quot;Curvature_config&quot;]], { # Collect user input if new constant was specified
+      assign(&quot;CURVATURE_CONFIG&quot;,                # Constant name
+             round(as.numeric(input[[&quot;Curvature_config&quot;]]) / 20, 0) - 1, # The value to be saves
+             envir = .GlobalEnv
+      )
+    })
+  })
+</code></pre>
+<p><br/><br/>
+<a name="Report"></a></p>
+<hr />
+<p><center></p>
+<h3 id="report"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Report.R"><code>Report</code></a></h3>
+<hr />
+<p></center></p>
+<h4 id="description_2"><strong><em>Description</em></strong> <br/></h4>
+<p>The ASGA GUI module to display after analysis set of standard plots for data validation.</p>
               
             </div>
           </div>

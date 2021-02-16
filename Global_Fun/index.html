@@ -207,15 +207,13 @@
 </style>
 
 <h1 id="asga-global"><strong>ASGA Global</strong></h1>
-<p>Test set-up for testing each function/tools in the ASGA software</p>
 <p><strong><em>Version</em></strong>&nbsp;&nbsp;                      0.33 <br/>
-  <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2021-02-15 <br/>
-  <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert Kiewisz <br/>
-  <strong><em>Depends</em></strong>                                  <br/>
+  <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 28.12.2020 <br/>
+  <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert kiewisz <br/>
+  <strong><em>Depends</em></strong>                                  <code>Shiny</code> <code>tidyverse</code> <code>base</code> <code>readxl</code> <code>xlsx</code> <code>zip</code> <br/>
   <strong><em>License</em></strong>&nbsp;&nbsp;&nbsp;                GPL V3.0<br/><br/></p>
-<p><strong><em>Description</em></strong> The test unit is composed of two-part (<a href="#Test_Functions"><code>Test_Functions</code></a>, 
-  <a href="#Test_Output"><code>Test_Output</code></a>) and GUI part for display error messages <a href="#Test_Result"><code>Test_Result</code></a><br/><br/></p>
-<p><br/><br/> 
+<p><strong><em>Description</em></strong> Global modules and functions used in ASGA</p>
+<p><br/>
 <a name="Check_Data"></a></p>
 <hr />
 <p><center></p>
@@ -223,7 +221,7 @@
 <hr />
 <p></center></p>
 <h4 id="description"><strong><em>Description</em></strong> <br/></h4>
-<p>The ASGA test module to check each uploaded data set before analysis. The test modul validates if the uploaded data fitting expected standardized structure.</p>
+<p>The ASGA test module to check each uploaded data set before analysis. The test module validates if the uploaded data fitting the expected standardized structure.</p>
 <h4 id="usage"><strong><em>Usage</em></strong><br/></h4>
 <pre><code>&lt;Upload_Data.R&gt;
 
@@ -242,11 +240,11 @@ Check_Analysis(File_name) # Check data routine for analyzed data
 <tbody>
 <tr>
 <td><code>i</code></td>
-<td>single digit number of uploaded file</td>
+<td>single-digit number of the uploaded file</td>
 </tr>
 <tr>
 <td><code>File_name</code></td>
-<td>name of uploaded file</td>
+<td>name of the uploaded file</td>
 </tr>
 </tbody>
 </table>
@@ -279,7 +277,7 @@ Check_Analysis(File_name) # Check data routine for analyzed data
 <hr />
 <p></center></p>
 <h4 id="description_1"><strong><em>Description</em></strong> <br/></h4>
-<p>The ASGA module to handle uploaded files. There are two routine, one for handling raw data set in <code>.xlsx</code>  or <code>.am</code> file format. Second one to handl <code>.xlsx</code> files download after analysis by ASGA.</p>
+<p>The ASGA module to handle uploaded files. There are two routines, one for handling raw data set in <code>.xlsx</code>  or <code>.am</code> file format. The second one to handle <code>.xlsx</code> files download after analysis by ASGA.</p>
 <h4 id="usage_1"><strong><em>Usage</em></strong><br/></h4>
 <pre><code>&lt;server.R&gt;
 
@@ -287,7 +285,7 @@ callModule(Getfiles_Server, &quot;Home&quot;)
 </code></pre>
 <p><br/></p>
 <h4 id="value_1"><strong><em>Value</em></strong><br/></h4>
-<p>Upload_Data object create the following components:</p>
+<p>Upload_Data object creates the following components:</p>
 <table>
 <thead>
 <tr>

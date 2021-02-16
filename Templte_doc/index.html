@@ -120,10 +120,10 @@
 
 <h1 id="template-for-documentation"><strong>Template for documentation</strong></h1>
 <p>Test set-up for testing each function/tools in the ASGA software</p>
-<p><strong><em>Version</em></strong>&nbsp;&nbsp;                      1.1 <br/>
-  <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2021-02-15 <br/>
-  <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert Kiewisz <br/>
-  <strong><em>Depends</em></strong>                                  <code>Shiny</code>, <code>shinyWidgets</code>, <code>tidyverse</code> <br/>
+<p><strong><em>Version</em></strong>&nbsp;&nbsp;                      0.33 <br/>
+  <strong><em>Data</em></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 28.12.2020 <br/>
+  <strong><em>Author</em></strong>&nbsp;&nbsp;&nbsp;                 Robert kiewisz <br/>
+  <strong><em>Depends</em></strong>                                  <br/>
   <strong><em>License</em></strong>&nbsp;&nbsp;&nbsp;                GPL V3.0<br/><br/></p>
 <p><strong><em>Description</em></strong> The test unit is composed of two-part (<a href="#Test_Functions"><code>Test_Functions</code></a>, 
   <a href="#Test_Output"><code>Test_Output</code></a>) and GUI part for display error messages <a href="#Test_Result"><code>Test_Result</code></a><br/><br/></p>
@@ -133,9 +133,9 @@
 <h3 id="test_functions"><a href="https://github.com/RRobert92/ASGA/blob/main/ASGA/tests/Test_Output.R"><code>Test_Functions</code></a></h3>
 <hr />
 <p></center></p>
-<p><strong><em>Description</em></strong> <br/>
-The part of the <code>Test_Unit</code> is designed for quick and straightforward testing if the tool is passing the test data set</p>
-<p><strong><em>Usage</em></strong><br/></p>
+<h4 id="description"><strong><em>Description</em></strong> <br/></h4>
+<p>The part of the <code>Test_Unit</code> is designed for quick and straightforward testing if the tool is passing the test data set</p>
+<h4 id="usage"><strong><em>Usage</em></strong><br/></h4>
 <pre><code> tryCatch(
       {
         callModule(`Name`, &quot;Home&quot;)
@@ -147,7 +147,7 @@ The part of the <code>Test_Unit</code> is designed for quick and straightforward
     )
     names(Test_value)[`ID`] &lt;&lt;- `Name`
 </code></pre>
-<p><strong><em>Arguments</em></strong><br/></p>
+<h4 id="arguments"><strong><em>Arguments</em></strong><br/></h4>
 <table>
 <thead>
 <tr>
@@ -167,16 +167,16 @@ The part of the <code>Test_Unit</code> is designed for quick and straightforward
 </tbody>
 </table>
 <p><br/> </p>
-<p><strong><em>Details</em></strong><br/> 
-If needed more comments about arguments</p>
-<p><strong><em>Value</em></strong><br/>
-Stored values objects</p>
+<h4 id="details"><strong><em>Details</em></strong><br/></h4>
+<p>If needed more comments about arguments</p>
+<h4 id="value"><strong><em>Value</em></strong><br/></h4>
+<p>Stored values objects</p>
 <ul>
 <li><code>Name</code>&nbsp;&nbsp;&nbsp;&nbsp; Testing function class name</li>
 <li><code>ID</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Continue number in data_frame</li>
 </ul>
-<p><strong><em>References</em></strong><br/></p>
-<p><strong><em>Example</em></strong><br/></p>
+<h4 id="references"><strong><em>References</em></strong><br/></h4>
+<h4 id="example"><strong><em>Example</em></strong><br/></h4>
 <pre><code>    tryCatch(
       {
         callModule(Pre_Analysis, &quot;Home&quot;)
