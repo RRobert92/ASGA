@@ -30,20 +30,20 @@ SMT_Minus_Ends <- function() {
 
     # Calculate distance to both poles for each Node_1 and _2
     DF[1, 1] <- as.numeric(dist(rbind(Node_1, Pole1), method = "euclidean")) # Pole1 Node1
-    DF[2, 1] <- as.numeric(dist(rbind(Node_2, Pole1), method = "euclidean")) # Pole1 Node2
+    DF[2, 1] <- as.numeric(dist(rbind(Node_1, Pole2), method = "euclidean")) # Pole1 Node2
 
-    DF[3, 1] <- as.numeric(dist(rbind(Node_1, Pole2), method = "euclidean")) # Pole2 Node1
+    DF[3, 1] <- as.numeric(dist(rbind(Node_2, Pole1), method = "euclidean")) # Pole2 Node1
     DF[4, 1] <- as.numeric(dist(rbind(Node_2, Pole2), method = "euclidean")) # Pole2 Node2
     Minus_end <- which.min(DF$...1)
     Dist <- DF[Minus_end, 1]
 
     # select closest as minus-end
-    if (Minus_end == 1 || Minus_end == 3) {
-      Minus_end <- tibble(Node_2,
+    if (Minus_end == 1 || Minus_end == 2) {
+      Minus_end <- tibble(Node_1,
                           Segments_SMT[i, "Node ID #1"]
       )
     }
-    if (Minus_end == 2 || Minus_end == 4) {
+    if (Minus_end == 3 || Minus_end == 4) {
       Minus_end <- tibble(Node_2,
                           Segments_SMT[i, "Node ID #2"]
       )

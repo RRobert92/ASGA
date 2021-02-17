@@ -661,6 +661,20 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
+  tryCatch(
+    {
+      assign(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"),
+             KMT_Minus_End,
+             envir = .GlobalEnv
+      )
+      
+      write.xlsx(
+        get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_")),
+        paste("Data/", "Data_", current_data, "_KMT_Minus_End_Interaction.xlsx", sep = "")
+      )
+    },
+    error = function(e) {}
+  )
   # Save Data for kinetochore area ---------------------------------------------
   tryCatch(
     {
@@ -693,6 +707,22 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
+  # Save Data for MT interaction -----------------------------------------------
+  tryCatch(
+    {
+      assign(paste("Data", current_data, "MT_Interaction", sep = "_"),
+             MT_Interaction,
+             envir = .GlobalEnv
+      )
+      
+      write.xlsx(
+        get(paste("Data", current_data, "MT_Interaction", sep = "_")),
+        paste("Data/", "Data_", current_data, "_MT_Interaction.xlsx", sep = "")
+      )
+    },
+    error = function(e) {}
+  )
+  
   # Amira output
   if (exists("Amira_df") && AMIRA == TRUE) {
     write.table(get(paste("Amira", "Dataset", current_data, sep = "_")),

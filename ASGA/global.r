@@ -9,6 +9,8 @@
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 # Title of the app -------------------------------------------------------------
+source("bin/Utility/Library.R")
+
 APP_TITLE <- "ASGA v0.33"
 CC <- paste("© Copyright GPL V3.0 2019-",
   str_split(date(), pattern = " ")[[1]][5],
@@ -30,7 +32,6 @@ source("www/Home/index.R")
 source("www/Get_Started/index.R")
 
 # Global Utility  --------------------------------------------------------------
-source("bin/Utility/Library.R")
 source("bin/Utility/Check_Data.R")
 source("bin/Utility/Upload_Data.R")
 source("bin/Utility/Setting_Buttons.R")
@@ -46,6 +47,7 @@ options(shiny.host = "127.0.0.1")
 options(shiny.port = 7878)
 
 # Global constant settings  ----------------------------------------------------
+SHINY_IO <<- TRUE # Constant defining if app is running localy or online
 DATA_TEST <<- 0
 NUM_FILES <<- 0
 MINUS_THRESHOLD <<- 1.68 # Minus end distance to the pole [um]

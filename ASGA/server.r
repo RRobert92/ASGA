@@ -197,8 +197,11 @@ function(input, output, session) {
             callModule(A_KMT_Torque, "Home")
             callModule(A_Fiber_Area, "Home")
             callModule(A_Fiber_Length_Curv, "Home")
-            callModule(A_KMT_Minus_End_Seeds, "Home")
             callModule(A_K_Core_Area, "Home")
+            if(SHINY_IO == FALSE){
+              callModule(A_KMT_Minus_End_Seeds, "Home")
+              callModule(A_MT_Bridging, "Home")
+            }
           }
 
           if (input$`Home-KMT_number` == TRUE) {

@@ -16,6 +16,7 @@ library("shinyWidgets")
 library("shinyBS")
 library("shinyalert")
 library("colourpicker")
+library("stringr")
 
 # Function Library  ------------------------------------------------------------
 library("plyr")

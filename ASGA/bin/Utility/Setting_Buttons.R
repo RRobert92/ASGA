@@ -289,15 +289,38 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
 
     if (input$`KMT_Minus_End_Seeds` == TRUE) {
-      inputSweetAlert(
+      confirmSweetAlert(
         session = session,
-        type = "info",
-        inputId = "Minus_end_config",
+        type = "question",
+        inputId = "Minus_End_Seeds_confirmation", 
         input = "text",
-        title = "Set-up analysis parameter",
-        text = "Interaction distance between kinetochore microtubule and microtubule minus-end. Unit [um]"
+        title = "Want to confirm ?",
+        text = "These tools will calculate the interaction of every MT. It required long computation time,
+        and therefore by standard, this analysis is switched off at shinyapp.io server!
+        This tool can and is strongly suggested to be used with a computer cluster.",
+        btn_labels = c("Cancel", "Confirm"),
+        btn_colors = c("#C95050", "#a5dc86")
       )
     }
+    
+    observeEvent(input[["Minus_End_Seeds_confirmation"]], {
+      if (input[["Minus_End_Seeds_confirmation"]] == FALSE) {
+        updateMaterialSwitch(session, "MT_Interaction", FALSE)
+        SHINY_IO <<- TRUE
+      } else if (input[["Minus_End_Seeds_confirmation"]] == TRUE &&
+                 input$`KMT_Minus_End_Seeds` == TRUE) {
+        SHINY_IO <<- FALSE
+        inputSweetAlert(
+          session = session,
+          type = "info",
+          inputId = "Minus_end_config", 
+          input = "text",
+          title = "Set-up analysis parameter",
+          text = "Interaction distance between kinetochore microtubule and microtubule minus-end. Unit [um"
+        )
+      }
+    })
+    
 
     observeEvent(input[["Minus_end_config"]], {
       assign("MINUS_DISTANCE",
@@ -361,8 +384,8 @@ Setting_Buttons_Server <- function(input, output, session) {
         input = "text",
         title = "Want to confirm ?",
         text = "These tools will calculate the interaction of every MT. It required long computation time,
-        and therefore by standard, this analysis is switched off!
-        It is strongly suggested to run this analysis using a computer cluster.",
+        and therefore by standard, this analysis is switched off at shinyapp.io server!
+        This tool can and is strongly suggested to be used with a computer cluster.",
         btn_labels = c("Cancel", "Confirm"),
         btn_colors = c("#C95050", "#a5dc86")
       )
@@ -371,8 +394,10 @@ Setting_Buttons_Server <- function(input, output, session) {
     observeEvent(input[["Interaction_confirmation"]], {
       if (input[["Interaction_confirmation"]] == FALSE) {
         updateMaterialSwitch(session, "MT_Interaction", FALSE)
+        SHINY_IO <<- TRUE
       } else if (input[["Interaction_confirmation"]] == TRUE &&
         input$`MT_Interaction` == TRUE) {
+        SHINY_IO <<- FALSE
         inputSweetAlert(
           session = session,
           type = "info",

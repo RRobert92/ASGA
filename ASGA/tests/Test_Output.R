@@ -17,7 +17,8 @@ Test_Functions <- function(input, output, session) {
 
     Test_value <<- tibble()
     current_data <<- 1
-
+    SHINY_IO <<- FALSE
+    
     tryCatch(
       {
         callModule(Pre_Analysis, "Home")

@@ -19,7 +19,7 @@ Point_interaction <- function(x) {
 
   # Calculate distant of the point to other point in the boundary box ~15 min --------------------------
 
-  p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x, 2] + (MT_POINT_CONFIG)) &
+  p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Points[x, 2] + (MT_POINT_CONFIG * 2)) &
     `X Coord` >= as.numeric(Points[x, 2] - (MT_POINT_CONFIG))), ]
 
   p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Points[x, 3] + (MT_POINT_CONFIG * 2)) &

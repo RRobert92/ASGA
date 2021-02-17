@@ -31,13 +31,15 @@ Minus_end_seed <- function(x) {
             `Y Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 3] - as.numeric(MINUS_DISTANCE * 2))), ]
           p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] + as.numeric(MINUS_DISTANCE * 2)) &
             `Z Coord` >= as.numeric(get(paste(colnames(Segments)[x], i, sep = "_"))[j, 4] - as.numeric(MINUS_DISTANCE * 2))), ]
-          
+
           p_to_P[5:7] <- get(paste(colnames(Segments)[x], i, sep = "_"))[j, 2:4]
 
           p_to_P$dist <- apply(
             p_to_P[2:7],
             1,
-            function(y) {dist(matrix(y, nrow = 2, byrow = TRUE))}
+            function(y) {
+              dist(matrix(y, nrow = 2, byrow = TRUE))
+            }
           )
           DF <- data.frame(
             p_to_P[with(p_to_P, dist <= MINUS_DISTANCE & dist >= 0), "Node ID"],
@@ -95,7 +97,7 @@ Minus_end_seed <- function(x) {
               N2_to_pole2 <- sqrt((Pole2[1, 1] - N2[1, 2])^2 +
                 (Pole2[1, 2] - N2[1, 3])^2 +
                 (Pole2[1, 3] - N2[1, 4])^2)
-              
+
               Node_to_Pole <- rbind(
                 N1_to_pole1,
                 N1_to_pole2,
@@ -205,9 +207,123 @@ Minus_end_seed <- function(x) {
       DF <- Minus_end %>% filter_at(vars("Interactor_ID"), any_vars(. == k))
       Temp[k, 1:7] <- DF[which.min(DF$p_to_P_dist), 1:7]
     }
-    
+
     Minus_end <- na.omit(Temp)
   }
 
   Minus_end
+}
+
+KMT_Minus_End_Interaction <- function(x) {
+  DF <- tibble(
+    KMT_ID = as.numeric(),
+    KMT_Minus_Distance = as.numeric(),
+    MT_type = as.character(),
+    MT_distance = as.numeric()
+  )
+
+  Node_1 <- as.numeric(Segments_KMT[x, "Node ID #1"])
+  Node_1 <- dplyr::filter(Nodes, `Node ID` == Node_1)[2:4]
+  names(Node_1)[1:3] <- c("X.Coord", "Y.Coord", "Z.Coord")
+
+  Node_2 <- as.numeric(Segments_KMT[x, "Node ID #2"])
+  Node_2 <- dplyr::filter(Nodes, `Node ID` == Node_2)[2:4]
+  names(Node_2)[1:3] <- c("X.Coord", "Y.Coord", "Z.Coord")
+  End_Type <- tibble()
+
+  # Calculate distance to both poles for each Node_1 and _2
+  End_Type[1, 1] <- as.numeric(dist(rbind(Node_1, Pole1), method = "euclidean")) # Pole1 Node1
+  End_Type[2, 1] <- as.numeric(dist(rbind(Node_1, Pole2), method = "euclidean")) # Pole1 Node2
+
+  End_Type[3, 1] <- as.numeric(dist(rbind(Node_2, Pole1), method = "euclidean")) # Pole2 Node1
+  End_Type[4, 1] <- as.numeric(dist(rbind(Node_2, Pole2), method = "euclidean")) # Pole2 Node2
+  Minus_end <- which.min(End_Type$...1)
+  Dist <- End_Type[Minus_end, 1]
+
+  # select closest as minus-end
+  if (Minus_end == 1 || Minus_end == 2) {
+    Minus_end <- tibble(Node_1,
+      KMT_ID = Segments_KMT[x, "Segment ID"],
+      ID = Segments_KMT[x, "Node ID #1"],
+      Distance = Dist[1]
+    )
+  }
+  if (Minus_end == 3 || Minus_end == 4) {
+      Minus_end <- tibble(Node_2,
+      KMT_ID = Segments_KMT[x, "Segment ID"],
+      ID = Segments_KMT[x, "Node ID #2"],
+      Distance = Dist[1]
+    )
+  }
+
+  # Check it there are MT around the KMT minus end
+  p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Minus_end[1, 1] + ((MT_POINT_CONFIG * 2))) &
+    `X Coord` >= as.numeric(Minus_end[1, 1] - ((MT_POINT_CONFIG * 2)))), ]
+  p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Minus_end[1, 2] + ((MT_POINT_CONFIG * 2))) &
+    `Y Coord` >= as.numeric(Minus_end[1, 2] - ((MT_POINT_CONFIG * 2)))), ]
+  p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(Minus_end[1, 3] + ((MT_POINT_CONFIG * 2))) &
+    `Z Coord` >= as.numeric(Minus_end[1, 3] - ((MT_POINT_CONFIG * 2)))), ]
+
+  p_to_P[5:7] <- Minus_end[1, 1:3]
+
+  p_to_P$dist <- apply(
+    p_to_P[2:7],
+    1,
+    function(y) {
+      dist(matrix(y, nrow = 2, byrow = TRUE))
+    }
+  )
+
+  p_to_P <- data.frame(
+    p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "Point_ID"],
+    p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "dist"]
+  )
+  
+  #Find type of MT e.g SMT or KMT
+  for (i in 1:nrow(p_to_P)) {
+    if_KMTs <- TRUE
+    counter <- 1
+
+    while (if_KMTs) {
+      df <- stringr::str_split(Segments_KMT[counter, "Point IDs"], pattern = ",")
+      if_KMTs <- as.numeric(table(as.numeric(df[[1]]) == as.numeric(p_to_P[i, 1]))[TRUE][2])
+
+      if (!is.na(if_KMTs) ) {
+        if_KMTs <- FALSE
+        p_to_P[i, 3] <- "KMT"
+        p_to_P[i, 4] <- Segments_KMT[counter, "Segment ID"]
+        
+      } else {
+        if_KMTs <- TRUE
+        p_to_P[i, 3] <- "SMT"
+        p_to_P[i, 4] <- 99999
+        counter <- counter + 1
+      }
+      
+      if(counter == nrow(Segments_KMT)){
+        if_KMTs <- FALSE
+        p_to_P[i, 3] <- "SMT"
+        p_to_P[i, 4] <- 99999
+      }
+    }
+  }
+  
+  for (i in 1:nrow(p_to_P)) {
+    if(Minus_end$KMT_ID == if(is.na(p_to_P[i, 4])){FALSE}else{p_to_P[i, 4]}){
+      p_to_P[i, 1:4] <- NA 
+    }
+  }
+  p_to_P <- na.omit(p_to_P)
+  
+  if(nrow(p_to_P) > 0){
+    p_to_P <- p_to_P[which.min(as.matrix(p_to_P[2])), 1:4]
+    
+    DF <- tibble(
+    KMT_ID = as.numeric(Segments_KMT[x, "Segment ID"]),
+    KMT_Minus_Distance = as.numeric(Minus_end$Distance),
+    MT_type = as.character(p_to_P[3]),
+    MT_distance = as.numeric(p_to_P[2])
+  ) 
+    return(DF)
+  }
 }

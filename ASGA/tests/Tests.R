@@ -66,7 +66,7 @@ Test_Output <- function(input, output, session) {
   RANDOM_TABLE <<- as.numeric(Random_Generator()[2])
 
 
-  Test_df[1, 1] <<- nrow(File_name) == 44 # Check if all data are properly saved and exported
+  Test_df[1, 1] <<- nrow(File_name) == 45 # Check if all data are properly saved and exported
 
   Test_df[1, 2] <<- ncol(Test_value) == length(Test_value[Test_value == TRUE]) # check if all analysis passed
 
