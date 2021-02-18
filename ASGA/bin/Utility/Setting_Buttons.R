@@ -282,8 +282,9 @@ Setting_Buttons_Server <- function(input, output, session) {
 
     output$`Tool_Info_1` <- renderUI({
       if (input$`KMT_Minus_End_Seeds` == TRUE) {
-        "This tool will analyze the position of all (-) ends with respect to the KMT, and 
-        determining the position of MT which nucleated from KMT.
+        "This tool will analyze the position of all (-) ends with respect to the KMT, 
+        and determining the position of MT which nucleated from KMT. 
+        In addition, this tool also analyze KMTs (-) ends position in proximity to MT lattice.
         For more information see 'Wiki' page"
       }
     })
@@ -316,7 +317,7 @@ Setting_Buttons_Server <- function(input, output, session) {
           inputId = "Minus_end_config", 
           input = "text",
           title = "Set-up analysis parameter",
-          text = "Interaction distance between kinetochore microtubule and microtubule minus-end. Unit [um"
+          text = "Interaction distance between kinetochore microtubule and microtubule minus-end. Unit [um]"
         )
       }
     })

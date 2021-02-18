@@ -21,8 +21,8 @@ A_MT_Bridging <- function(input, output, session) {
   )
 
   # Calculate all interaction --------------------------------------------------
-  cores <- detectCores()
-  cl <- makeCluster(cores)
+  cores <<- detectCores()
+  cl <<- makeCluster(cores)
   registerDoParallel(cl)
 
   MT_Interaction <<- foreach(i = 1:nrow(Points), .combine = rbind, .inorder = FALSE, .export = ls(.GlobalEnv)) %dopar% {

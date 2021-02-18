@@ -89,7 +89,6 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
   closeSweetAlert(session = session)
   
   # Analyze (-) ends KMTs interaction with MT spline -----------------------------
-  if(SHINY_IO == FALSE){
     progressSweetAlert(
       session = session, 
       id = "KMT_ends",
@@ -98,25 +97,22 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
       value = 0
     )
     
-    cores <- detectCores()
-    cl <- makeCluster(cores)
+    cores <<- detectCores()
+    cl <<- makeCluster(cores)
     registerDoParallel(cl)
     
-    KMT_Minus_End <- foreach(i = 1:nrow(Segments_KMT), .combine = rbind, .inorder = TRUE, .export = ls(.GlobalEnv), .packages = "tibble") %dopar% {
+    KMT_Minus_End <<- foreach(i = 1:nrow(Segments_KMT), .combine = rbind, .inorder = TRUE, .export = ls(.GlobalEnv), .packages = "tibble") %dopar% {
       KMT_Minus_End_Interaction(i)
     }
-    
-    KMT_Minus_End <<- KMT_Minus_End
     
     stopCluster(cl)
     
     updateProgressBar(
       session = session,
       id = "KMT_ends",
-      value = 1
+      value = 100
     )
     
     Sys.sleep(1)
     closeSweetAlert(session = session)
-  }
 }

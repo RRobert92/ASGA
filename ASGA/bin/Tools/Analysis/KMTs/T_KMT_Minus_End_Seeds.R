@@ -242,17 +242,31 @@ KMT_Minus_End_Interaction <- function(x) {
 
   # select closest as minus-end
   if (Minus_end == 1 || Minus_end == 2) {
+    if(Minus_end == 1){
+      Relative_Position = (Node_1[2] - Pole1[2]) / (Node_2[2] - Pole1[2])
+    }
+    if(Minus_end == 2){
+      Relative_Position = (Node_1[2] - Pole2[2]) / (Node_2[2] - Pole2[2])
+    }
     Minus_end <- tibble(Node_1,
       KMT_ID = Segments_KMT[x, "Segment ID"],
       ID = Segments_KMT[x, "Node ID #1"],
-      Distance = Dist[1]
+      Distance = Dist[1, "...1"],
+      Relative_Position = Relative_Position[1, "Y.Coord"]
     )
   }
   if (Minus_end == 3 || Minus_end == 4) {
+    if(Minus_end == 3){
+      Relative_Position = (Node_2[2] - Pole1[2]) / (Node_1[2] - Pole1[2])
+    }
+    if(Minus_end == 4){
+      Relative_Position = (Node_2[2] - Pole2[2]) / (Node_1[2] - Pole2[2])
+    }
       Minus_end <- tibble(Node_2,
       KMT_ID = Segments_KMT[x, "Segment ID"],
       ID = Segments_KMT[x, "Node ID #2"],
-      Distance = Dist[1]
+      Distance = Dist[1, "...1"],
+      Relative_Position = Relative_Position[1, "Y.Coord"]
     )
   }
 
@@ -309,7 +323,7 @@ KMT_Minus_End_Interaction <- function(x) {
   }
   
   for (i in 1:nrow(p_to_P)) {
-    if(Minus_end$KMT_ID == if(is.na(p_to_P[i, 4])){FALSE}else{p_to_P[i, 4]}){
+    if(Minus_end$KMT_ID == if(p_to_P[i, 4] == 99999){FALSE}else{p_to_P[i, 4]}){
       p_to_P[i, 1:4] <- NA 
     }
   }
@@ -322,7 +336,8 @@ KMT_Minus_End_Interaction <- function(x) {
     KMT_ID = as.numeric(Segments_KMT[x, "Segment ID"]),
     KMT_Minus_Distance = as.numeric(Minus_end$Distance),
     MT_type = as.character(p_to_P[3]),
-    MT_distance = as.numeric(p_to_P[2])
+    MT_distance = as.numeric(p_to_P[2]),
+    Relative_position = as.numeric(Minus_end$Relative_Position)
   ) 
     return(DF)
   }
