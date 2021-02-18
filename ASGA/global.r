@@ -64,7 +64,7 @@ source("bin/Tools/Pre_Analysis/Find_XYZ.R")
 source("bin/Tools/Pre_Analysis/Kinetochore_Position.R")
 source("bin/Tools/Pre_Analysis/Sort_All_Points_to_Start_From_the_Kinetochore.R")
 source("bin/Tools/Pre_Analysis/T_Relative_Position.R")
-source("bin/Tools/Pre_Analysis//Pre_Analysis.R")
+
 # Analysis for KMTs
 source("bin/Tools/Analysis/KMTs/Length_Distiribution.R")
 source("bin/Tools/Analysis/KMTs/No_of_KMTs_connected_to_the_Pole.R")
@@ -87,6 +87,7 @@ source("bin/Utility/Report.R")
 source("bin/Tools/Analysis/Stat/FWHM.R")
 
 # Global Packages  -------------------------------------------------------------
+source("bin/Packages/Analysis/Pre_Analysis.R")
 source("bin/Packages/Analysis/A_KMT_number.R")
 source("bin/Packages/Analysis/A_IKD.R")
 source("bin/Packages/Analysis/A_Curvature.R")
