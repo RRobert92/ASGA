@@ -17,7 +17,7 @@ date: 2021-01-14
 - Added export of curvature data into Amira file
 - Added function to calculate SMTs minus-end distance
 - Restructured Analysis folder and split function for KMTs/SMTs and Stat
-
+- New tool to calculate position and interaction of KMT minus-ends with other MTs
 
 `Minor changes`
 

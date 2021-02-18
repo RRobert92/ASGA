@@ -344,4 +344,20 @@ SMTs <- SMTs +
 SMTs <- SMTs +
         geom_quasirandom(data = Data_3_SMT_Ends, aes("#3", Dist), color = "brown4", size = 1.5) +
         stat_summary(data = Data_3_SMT_Ends, aes("#3", Dist), fun.data="mean_sdl", fun.args = list(mult=1), geom ="pointrange")
-SMTs
+print(SMTs)
+
+# MT-MT interaction
+
+Minus_seed_avg <- rbind(Data_1_KMTs_minus_seed, Data_2_KMTs_minus_seed, Data_3_KMTs_minus_seed)
+
+Minus_Seed <- ggplot(filter(Data_1_KMTs_minus_seed, I_class == "KMT"), aes(Relative_pos)) + geom_freqpoly(color = "tomato1") + theme_classic() + ylim(0,100)
+Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Data_2_KMTs_minus_seed, I_class == "KMT"), aes(Relative_pos), color = "red1")
+Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Data_3_KMTs_minus_seed, I_class == "KMT"), aes(Relative_pos), color = "salmon1")
+Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Minus_seed_avg, I_class == "KMT"), aes(Relative_pos), color = "grey20")
+print(Minus_Seed)
+Minus_Seed <- ggplot(filter(Data_1_KMTs_minus_seed, I_class == "SMT"), aes(Relative_pos)) + geom_freqpoly(color = "darkorange1") + theme_classic() + ylim(0,100)
+Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Data_2_KMTs_minus_seed, I_class == "SMT"), aes(Relative_pos), color = "tan1")
+Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Data_3_KMTs_minus_seed, I_class == "SMT"), aes(Relative_pos), color = "gold3")
+Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Minus_seed_avg, I_class == "SMT"), aes(Relative_pos), color = "grey50")
+
+print(Minus_Seed)
