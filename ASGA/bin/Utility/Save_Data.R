@@ -1034,9 +1034,18 @@ Save_Data <- function(input, output, session) {
       paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
       quote = FALSE, row.names = FALSE, col.names = FALSE
     )
+  } else {
+    updateProgressBar(
+      session = session,
+      id = "Saving_Data",
+      title = "All Done!"
+    )
+    Sys.sleep(0.1)
   }
 
   # Clean Environment ----------------------------------------------------------
   rm(list = ls(pattern = "Pole"))
   rm(list = ls(pattern = "DF"))
+  closeSweetAlert(session = session)
+  
 }
