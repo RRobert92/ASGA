@@ -361,3 +361,72 @@ Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Data_3_KMTs_minus_seed, I
 Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Minus_seed_avg, I_class == "SMT"), aes(Relative_pos), color = "grey50")
 
 print(Minus_Seed)
+
+# KMTs minus end interaction
+KMT_Minus_End_Interaction <- rbind(Data_1_KMT_Minus_End_Interaction, Data_2_KMT_Minus_End_Interaction, Data_3_KMT_Minus_End_Interaction)
+
+KMT_Minus_End_Data <- tibble(ALL_KMT = nrow(filter(KMT_Minus_End_Interaction, MT_type == "KMT"))/ 2689,
+                             ALL_SMT = nrow(filter(KMT_Minus_End_Interaction, MT_type == "SMT"))/ 2689,
+                             ALL_KMT_1 = nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "KMT"))/ 792,
+                             ALL_KMT_2 = nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "KMT") / 1147),
+                             ALL_KMT_3 = nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "KMT") / 750),
+                             ALL_SMT_1 = nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "SMT"))/ 792,
+                             ALL_SMT_2 = nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "SMT") / 1147),
+                             ALL_SMT_3 = nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "SMT") / 750),
+                             
+)
+KMT_Minus_End_Data <- tibble(
+  Data = c( 
+    nrow(filter(KMT_Minus_End_Interaction, MT_type == "KMT")) / 2689,
+    nrow(filter(KMT_Minus_End_Interaction, MT_type == "SMT")) / 2689,
+    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "KMT"))/ 792,
+    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "KMT")) / 1147,
+    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "KMT")) / 750,
+    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "SMT")) / 792,
+    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "SMT")) / 1147,
+    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "SMT")) / 750,
+    nrow(filter(KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 1322,
+    nrow(filter(KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 1322,
+    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53))/ 295,
+    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 726,
+    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 301,
+    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 295,
+    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 726,
+    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 301
+  ),
+  Label = c(
+    "ALL_KMT",
+    "ALL_SMT",
+    "ALL_KMT_1",
+    "ALL_KMT_2",
+    "ALL_KMT_3",
+    "ALL_SMT_1",
+    "ALL_SMT_2",
+    "ALL_SMT_3",
+    "Pole_KMT",
+    "Pole_SMT",
+    "Pole_KMT_1",
+    "Pole_KMT_2",
+    "Pole_KMT_3",
+    "Pole_SMT_1",
+    "Pole_SMT_2",
+    "Pole_SMT_3"
+  ))
+
+ggplot(KMT_Minus_End_Data, aes(Label, weight = Data)) + geom_bar() + theme_classic()
+
+p1 <- ggplot(KMT_Minus_End_Interaction, aes(Relative_position)) + geom_freqpoly(color="grey20") + theme_classic() + ylim(0,80)
+p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "KMT"), aes(Relative_position),
+                        color = "red")
+p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "SMT"), aes(Relative_position),
+                        color = "orange")
+p1
+
+p1 <- ggplot(filter(KMT_Minus_End_Interaction, KMT_Minus_Distance >= 1.53), aes(Relative_position)) + 
+  geom_freqpoly(color="grey20") + theme_classic()  + ylim(0,80)
+p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53), aes(Relative_position),
+                         color = "red")
+p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53), aes(Relative_position),
+                         color = "orange")
+p1
+
