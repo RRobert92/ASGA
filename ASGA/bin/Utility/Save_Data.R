@@ -10,6 +10,13 @@
 ################################################################################
 
 Save_Data <- function(input, output, session) {
+  progressSweetAlert(
+    session = session,
+    id = "Saving_Data",
+    title = "Saving analysed data...",
+    display_pct = TRUE,
+    value = 0
+  )
   # Save Data for LA -----------------------------------------------------------
   tryCatch(
     {
@@ -44,6 +51,14 @@ Save_Data <- function(input, output, session) {
   # Save Data for SMT ends -----------------------------------------------------
   tryCatch(
     {
+      updateProgressBar(
+        session = session,
+        id = "Saving_Data",
+        title = "Saving SMT ends data...",
+        value = 10
+      )
+      Sys.sleep(0.1)
+
       assign(paste("Data", current_data, "SMT_Ends", sep = "_"),
         SMT_Ends,
         envir = .GlobalEnv
@@ -59,6 +74,14 @@ Save_Data <- function(input, output, session) {
   # Save Data for KMT No -------------------------------------------------------
   tryCatch(
     {
+      updateProgressBar(
+        session = session,
+        id = "Saving_Data",
+        title = "Saving KMT number data...",
+        value = 20
+      )
+      Sys.sleep(0.1)
+
       names(No_of_KMTs_at_kinetochore_P1)[1] <- "KMTs_per_kinetochore"
       names(No_of_KMTs_at_kinetochore_P2)[1] <- "KMTs_per_kinetochore"
 
@@ -95,6 +118,14 @@ Save_Data <- function(input, output, session) {
   # Save Data for KMT at the Pole ----------------------------------------------
   tryCatch(
     {
+      updateProgressBar(
+        session = session,
+        id = "Saving_Data",
+        title = "Saving KMT position data...",
+        value = 30
+      )
+      Sys.sleep(0.1)
+
       names(KMTs_at_the_Pole1)[1] <- "KMTs_at_the_Pole"
       names(KMTs_at_the_Pole2)[1] <- "KMTs_at_the_Pole"
 
@@ -146,6 +177,16 @@ Save_Data <- function(input, output, session) {
   # Save Data for end morphology Pole ------------------------------------------
   tryCatch(
     {
+      if (exists("Minus_end_morphology_Pole1")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT ends morphology data...",
+          value = 30
+        )
+        Sys.sleep(0.1)
+      }
+
       assign(paste("Data", current_data, "Minus_end_morphology_Pole1", sep = "_"),
         Minus_end_morphology_Pole1,
         envir = .GlobalEnv
@@ -202,6 +243,7 @@ Save_Data <- function(input, output, session) {
   # Save Amira file for end morphology -----------------------------------------
   tryCatch(
     {
+
       # Prepare data for saving in Amira ASCI file
       if (AMIRA == TRUE &&
         ncol(Nodes %>% select(starts_with("EndType"))) >= 1) {
@@ -283,6 +325,16 @@ Save_Data <- function(input, output, session) {
   # Save Data for KMT torque ---------------------------------------------------
   tryCatch(
     {
+      if (exists("Fiber_Torque_P1")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT torque data...",
+          value = 30
+        )
+        Sys.sleep(0.1)
+      }
+
       names(Fiber_Torque_P1)[1] <- "Angle"
       names(Fiber_Torque_P2)[1] <- "Angle"
 
@@ -315,9 +367,17 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for LKD ----------------------------------------------------------
+  # Save Data for IKD ----------------------------------------------------------
   tryCatch(
     {
+      updateProgressBar(
+        session = session,
+        id = "Saving_Data",
+        title = "Saving IKD data...",
+        value = 35
+      )
+      Sys.sleep(0.1)
+
       assign(paste("Data", current_data, "IKD", sep = "_"),
         Inter_Kinetochore_Distance,
         envir = .GlobalEnv
@@ -350,6 +410,16 @@ Save_Data <- function(input, output, session) {
   # Save Data for total curvature ----------------------------------------------
   tryCatch(
     {
+      if (exists("KMTs_total_Curvature_P1")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT curvature data...",
+          value = 40
+        )
+        Sys.sleep(0.1)
+      }
+
       assign(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_"),
         KMTs_total_Curvature_P1[order(KMTs_total_Curvature_P1$Segment_ID), ],
         envir = .GlobalEnv
@@ -385,6 +455,16 @@ Save_Data <- function(input, output, session) {
 
   # Save Amira file for curvature ----------------------------------------------
   if (AMIRA == TRUE) {
+    if (exists("KMTs_total_Curvature_P1")) {
+      updateProgressBar(
+        session = session,
+        id = "Saving_Data",
+        title = "Saving KMT curvature Amira data...",
+        value = 40
+      )
+      Sys.sleep(0.1)
+    }
+
     tryCatch(
       {
         DF <- tibble(
@@ -485,6 +565,16 @@ Save_Data <- function(input, output, session) {
   # Save Data for Fiber area ---------------------------------------------------
   tryCatch(
     {
+      if (exists("Fiber_area_P1")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT fiber area data...",
+          value = 55
+        )
+        Sys.sleep(0.1)
+      }
+
       assign(paste("Data", current_data, "Fiber_Area_P1", sep = "_"),
         Fiber_area_P1,
         envir = .GlobalEnv
@@ -632,6 +722,16 @@ Save_Data <- function(input, output, session) {
   # Save Data for nucleation ---------------------------------------------------
   tryCatch(
     {
+      if (exists("KMTs_minus_seed_P1")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving MT and KMT nucleation data...",
+          value = 70
+        )
+        Sys.sleep(0.1)
+      }
+
       assign(paste("Data", current_data, "KMTs_minus_seed_P1", sep = "_"),
         KMTs_minus_seed_P1,
         envir = .GlobalEnv
@@ -664,6 +764,16 @@ Save_Data <- function(input, output, session) {
   # Save Amira for KMT minus end interaction -----------------------------------
   tryCatch(
     {
+      if (exists("KMT_Minus_End")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT minus end interaction data...",
+          value = 75
+        )
+        Sys.sleep(0.1)
+      }
+
       assign(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"),
         KMT_Minus_End,
         envir = .GlobalEnv
@@ -674,8 +784,18 @@ Save_Data <- function(input, output, session) {
         paste("Data/", "Data_", current_data, "_KMT_Minus_End_Interaction.xlsx", sep = "")
       )
 
+      if (AMIRA == TRUE) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT minus end interaction data...",
+          value = 85
+        )
+        Sys.sleep(0.1)
+      }
+
       DF <- tibble(
-        Interaction_Type = as.character(),
+        Interaction_Type = as.numeric(),
         Minus_Distance = as.character(),
         Segment_ID = as.numeric()
       )
@@ -688,18 +808,18 @@ Save_Data <- function(input, output, session) {
             "MT_type"
           ]
 
-          if (nrow(Minus_Interaction) == 0) {
+          if (Minus_Interaction == NaN) { # KMT with no interaction
             Minus_Interaction <- 0
-          } else if (Minus_Interaction == "KMT") {
+          } else if (Minus_Interaction == "KMT") { # KMT with KMT interaction
             Minus_Interaction <- 1
-          } else if (Minus_Interaction == "SMT") {
+          } else if (Minus_Interaction == "SMT") { # KMT with SMT interaction
             Minus_Interaction <- 2
           }
 
           tryCatch(
             {
-              Minus_distance <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
-                which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
+              Minus_distance <- get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))[
+                which(get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))$KMT_ID == i),
                 "KMT_Minus_Distance"
               ]
             },
@@ -709,7 +829,7 @@ Save_Data <- function(input, output, session) {
           )
 
           DF[counter, ] <- tibble(
-            Interaction_Type = as.character(Minus_Interaction),
+            Interaction_Type = as.numeric(Minus_Interaction),
             Minus_Distance = as.character(Minus_distance),
             Segment_ID = i
           )
@@ -718,33 +838,50 @@ Save_Data <- function(input, output, session) {
             DF[counter, 2] <- tibble(Minus_distance = as.character("nan"))
           }
           counter <- counter + 1
+        } else {
+          DF[counter, ] <- tibble(
+            Interaction_Type = as.numeric(0),
+            Minus_Distance = as.character("nan"),
+            Segment_ID = i
+          )
+          counter <- counter + 1
         }
-
-        assign(
-          paste("Amira", "Dataset", current_data, sep = "_"),
-          Save_amira(
-            DF,
-            1, "Segments", "int"
-          ),
-          envir = .GlobalEnv
-        )
-
-        assign(
-          paste("Amira", "Dataset", current_data, sep = "_"),
-          Save_amira(
-            DF,
-            2, "Segments", "float"
-          ),
-          envir = .GlobalEnv
-        )
-        rm(DF, Minus_Interaction, Minus_distance)
       }
+
+      assign(
+        paste("Amira", "Dataset", current_data, sep = "_"),
+        Save_amira(
+          DF,
+          1, "Segments", "int"
+        ),
+        envir = .GlobalEnv
+      )
+
+      assign(
+        paste("Amira", "Dataset", current_data, sep = "_"),
+        Save_amira(
+          DF,
+          2, "Segments", "float"
+        ),
+        envir = .GlobalEnv
+      )
+      rm(DF, Minus_Interaction, Minus_distance)
     },
     error = function(e) {}
   )
   # Save Data for kinetochore area ---------------------------------------------
   tryCatch(
     {
+      if (exists("K_Core_Area_P1")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving kinetochore area data...",
+          value = 90
+        )
+        Sys.sleep(0.1)
+      }
+
       assign(paste("Data", current_data, "K_Core_Area_P1", sep = "_"),
         K_Core_Area_P1,
         envir = .GlobalEnv
@@ -777,6 +914,16 @@ Save_Data <- function(input, output, session) {
   # Save Data for MT interaction -----------------------------------------------
   tryCatch(
     {
+      if (exists("MT_Interaction")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT interaction data...",
+          value = 95
+        )
+        Sys.sleep(0.1)
+      }
+
       assign(paste("Data", current_data, "MT_Interaction", sep = "_"),
         MT_Interaction,
         envir = .GlobalEnv
@@ -790,8 +937,99 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Amira output
+  # Save Amira for MT interaction -----------------------------------------------
+  tryCatch(
+    {
+      if (exists("MT_Interaction")) {
+        updateProgressBar(
+          session = session,
+          id = "Saving_Data",
+          title = "Saving KMT interaction Amira data...",
+          value = 98
+        )
+        Sys.sleep(0.1)
+      }
+
+      Segment_DF <- tibble(
+        Segment_ID = as.numeric(),
+        Interaction_No = as.numeric()
+      )
+      counter <- 1
+
+      for (i in Segments$`Segment ID`) {
+        if (i %in% get(paste("Data", current_data, "MT_Interaction", sep = "_"))$Segments_ID_1) {
+          Interaction_No <- get(paste("Data", current_data, "MT_Interaction", sep = "_"))[
+            which(get(paste("Data", current_data, "MT_Interaction", sep = "_"))$Segments_ID_1 == i),
+            1:2
+          ]
+
+          Interaction_No <- nrow(unique(Interaction_No[1:2]))
+          Segment_DF[counter, 1] <- as.numeric(i)
+          Segment_DF[counter, 2] <- as.numeric(Interaction_No)
+
+          counter <- counter + 1
+        } else {
+          Segment_DF[counter, 1] <- as.numeric(i)
+          Segment_DF[counter, 2] <- as.numeric(0)
+
+          counter <- counter + 1
+        }
+      }
+
+      Point_DF <- tibble(
+        Point_ID = as.numeric(),
+        Interaction_No_Point = as.numeric()
+      )
+
+      Point_DF[1:nrow(Points), ] <- tibble(
+        Point_ID = as.numeric(0:as.numeric(nrow(Points) - 1)),
+        Interaction_No_Point = as.numeric(0)
+      )
+
+      for (i in 1:nrow(get(paste("Data", current_data, "MT_Interaction", sep = "_")))) {
+        S_1 <- as.numeric(get(paste("Data", current_data, "MT_Interaction", sep = "_"))[i, 4] + 1)
+        S_2 <- as.numeric(get(paste("Data", current_data, "MT_Interaction", sep = "_"))[i, 5] + 1)
+
+        if (S_1 < S_2) {
+          Point_DF[S_1:S_2, 2] <- Point_DF[S_1:S_2, 2] + 1
+        } else if (S_1 > S_2) {
+          Point_DF[S_2:S_1, 2] <- Point_DF[S_2:S_1, 2] + 1
+        }
+      }
+
+      assign(
+        paste("Amira", "Dataset", current_data, sep = "_"),
+        Save_amira(
+          Segment_DF,
+          2, "Segments", "int"
+        ),
+        envir = .GlobalEnv
+      )
+
+      assign(
+        paste("Amira", "Dataset", current_data, sep = "_"),
+        Save_amira(
+          Point_DF,
+          2, "Points", "int"
+        ),
+        envir = .GlobalEnv
+      )
+      rm(S_1, S_2, Point_DF, Segment_DF, Interaction_No)
+    },
+    error = function(e) {}
+  )
+
+  # Amira output ---------------------------------------------------------------
   if (exists("Amira_df") && AMIRA == TRUE) {
+    updateProgressBar(
+      session = session,
+      id = "Saving_Data",
+      title = "Saving finall Amira file...",
+      value = 100
+    )
+    Sys.sleep(0.1)
+
+
     write.table(get(paste("Amira", "Dataset", current_data, sep = "_")),
       paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
       quote = FALSE, row.names = FALSE, col.names = FALSE
