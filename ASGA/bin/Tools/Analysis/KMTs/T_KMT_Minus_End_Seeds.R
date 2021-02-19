@@ -242,11 +242,11 @@ KMT_Minus_End_Interaction <- function(x) {
 
   # select closest as minus-end
   if (Minus_end == 1 || Minus_end == 2) {
-    if(Minus_end == 1){
-      Relative_Position = (Node_1[2] - Pole1[2]) / (Node_2[2] - Pole1[2])
+    if (Minus_end == 1) {
+      Relative_Position <- (Node_1[2] - Pole1[2]) / (Node_2[2] - Pole1[2])
     }
-    if(Minus_end == 2){
-      Relative_Position = (Node_1[2] - Pole2[2]) / (Node_2[2] - Pole2[2])
+    if (Minus_end == 2) {
+      Relative_Position <- (Node_1[2] - Pole2[2]) / (Node_2[2] - Pole2[2])
     }
     Minus_end <- tibble(Node_1,
       KMT_ID = Segments_KMT[x, "Segment ID"],
@@ -256,13 +256,13 @@ KMT_Minus_End_Interaction <- function(x) {
     )
   }
   if (Minus_end == 3 || Minus_end == 4) {
-    if(Minus_end == 3){
-      Relative_Position = (Node_2[2] - Pole1[2]) / (Node_1[2] - Pole1[2])
+    if (Minus_end == 3) {
+      Relative_Position <- (Node_2[2] - Pole1[2]) / (Node_1[2] - Pole1[2])
     }
-    if(Minus_end == 4){
-      Relative_Position = (Node_2[2] - Pole2[2]) / (Node_1[2] - Pole2[2])
+    if (Minus_end == 4) {
+      Relative_Position <- (Node_2[2] - Pole2[2]) / (Node_1[2] - Pole2[2])
     }
-      Minus_end <- tibble(Node_2,
+    Minus_end <- tibble(Node_2,
       KMT_ID = Segments_KMT[x, "Segment ID"],
       ID = Segments_KMT[x, "Node ID #2"],
       Distance = Dist[1, "...1"],
@@ -292,8 +292,8 @@ KMT_Minus_End_Interaction <- function(x) {
     p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "Point_ID"],
     p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "dist"]
   )
-  
-  #Find type of MT e.g SMT or KMT
+
+  # Find type of MT e.g SMT or KMT
   for (i in 1:nrow(p_to_P)) {
     if_KMTs <- TRUE
     counter <- 1
@@ -302,43 +302,54 @@ KMT_Minus_End_Interaction <- function(x) {
       df <- stringr::str_split(Segments_KMT[counter, "Point IDs"], pattern = ",")
       if_KMTs <- as.numeric(table(as.numeric(df[[1]]) == as.numeric(p_to_P[i, 1]))[TRUE][2])
 
-      if (!is.na(if_KMTs) ) {
+      if (!is.na(if_KMTs)) {
         if_KMTs <- FALSE
         p_to_P[i, 3] <- "KMT"
         p_to_P[i, 4] <- Segments_KMT[counter, "Segment ID"]
-        
       } else {
         if_KMTs <- TRUE
         p_to_P[i, 3] <- "SMT"
         p_to_P[i, 4] <- 99999
         counter <- counter + 1
       }
-      
-      if(counter == nrow(Segments_KMT)){
+
+      if (counter == nrow(Segments_KMT)) {
         if_KMTs <- FALSE
         p_to_P[i, 3] <- "SMT"
         p_to_P[i, 4] <- 99999
       }
     }
   }
-  
+
   for (i in 1:nrow(p_to_P)) {
-    if(Minus_end$KMT_ID == if(p_to_P[i, 4] == 99999){FALSE}else{p_to_P[i, 4]}){
-      p_to_P[i, 1:4] <- NA 
+    if (Minus_end$KMT_ID == if (p_to_P[i, 4] == 99999) {
+      FALSE
+    } else {
+      p_to_P[i, 4]
+    }) {
+      p_to_P[i, 1:4] <- NA
     }
   }
   p_to_P <- na.omit(p_to_P)
-  
-  if(nrow(p_to_P) > 0){
+
+  if (nrow(p_to_P) > 0) {
     p_to_P <- p_to_P[which.min(as.matrix(p_to_P[2])), 1:4]
-    
+
     DF <- tibble(
-    KMT_ID = as.numeric(Segments_KMT[x, "Segment ID"]),
-    KMT_Minus_Distance = as.numeric(Minus_end$Distance),
-    MT_type = as.character(p_to_P[3]),
-    MT_distance = as.numeric(p_to_P[2]),
-    Relative_position = as.numeric(Minus_end$Relative_Position)
-  ) 
+      KMT_ID = as.numeric(Segments_KMT[x, "Segment ID"]),
+      KMT_Minus_Distance = as.numeric(Minus_end$Distance),
+      MT_type = as.character(p_to_P[3]),
+      MT_distance = as.numeric(p_to_P[2]),
+      Relative_position = as.numeric(Minus_end$Relative_Position)
+    )
     return(DF)
+  } else {
+    DF <- tibble(
+      KMT_ID = as.numeric(Segments_KMT[x, "Segment ID"]),
+      KMT_Minus_Distance = as.numeric(Minus_end$Distance),
+      MT_type = as.character(NaN),
+      MT_distance = as.numeric(NaN),
+      Relative_position = as.numeric(Minus_end$Relative_Position)
+    )
   }
 }

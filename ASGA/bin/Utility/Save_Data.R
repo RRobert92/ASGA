@@ -40,13 +40,13 @@ Save_Data <- function(input, output, session) {
     },
     error = function(e) {}
   )
-  
+
   # Save Data for SMT ends -----------------------------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "SMT_Ends", sep = "_"),
-             SMT_Ends,
-             envir = .GlobalEnv
+        SMT_Ends,
+        envir = .GlobalEnv
       )
       write.xlsx(
         get(paste("Data", current_data, "SMT_Ends", sep = "_")),
@@ -55,7 +55,7 @@ Save_Data <- function(input, output, session) {
     },
     error = function(e) {}
   )
-  
+
   # Save Data for KMT No -------------------------------------------------------
   tryCatch(
     {
@@ -384,71 +384,71 @@ Save_Data <- function(input, output, session) {
   )
 
   # Save Amira file for curvature ----------------------------------------------
-  if(AMIRA == TRUE){
-  tryCatch(
-    {
-      DF <- tibble(
-        Tortuosity = as.character(),
-        Menger_Curvature = as.character(),
-        Segment_ID = as.numeric()
-      )
-      counter <- 1
-      
-      for (i in Segments$`Segment ID`) {
-        if (i %in% get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID) {
-          Curv_data_colector <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
-            which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
-            "Curvature"
-          ]
-          Menger_data_colector <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
-            which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
-            "Menger_Curvature"
-          ]
+  if (AMIRA == TRUE) {
+    tryCatch(
+      {
+        DF <- tibble(
+          Tortuosity = as.character(),
+          Menger_Curvature = as.character(),
+          Segment_ID = as.numeric()
+        )
+        counter <- 1
 
-          DF[counter, ] <- tibble(
-            Tortuosity = as.character(Curv_data_colector),
-            Menger_Curvature = as.character(Menger_data_colector),
-            Segment_ID = i
-          )
-          
-          if(DF[counter,1] == "NaN"){
-            DF[counter, 1] <- tibble(Tortuosity = as.character("nan"))
+        for (i in Segments$`Segment ID`) {
+          if (i %in% get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID) {
+            Curv_data_colector <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
+              which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
+              "Curvature"
+            ]
+            Menger_data_colector <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
+              which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
+              "Menger_Curvature"
+            ]
+
+            DF[counter, ] <- tibble(
+              Tortuosity = as.character(Curv_data_colector),
+              Menger_Curvature = as.character(Menger_data_colector),
+              Segment_ID = i
+            )
+
+            if (DF[counter, 1] == "NaN") {
+              DF[counter, 1] <- tibble(Tortuosity = as.character("nan"))
+            }
+            if (DF[counter, 2] == "NaN") {
+              DF[counter, 2] <- tibble(Menger_Curvature = as.character("nan"))
+            }
+          } else {
+            DF[counter, ] <- tibble(
+              Tortuosity = as.character("nan"),
+              Menger_Curvature = as.character("nan"),
+              Segment_ID = i
+            )
           }
-          if(DF[counter,2] == "NaN"){
-            DF[counter, 2] <- tibble(Menger_Curvature = as.character("nan"))
-          }
-        } else {
-          DF[counter, ] <- tibble(
-            Tortuosity = as.character("nan"),
-            Menger_Curvature = as.character("nan"),
-            Segment_ID = i
-          )
+          counter <- counter + 1
         }
-        counter <- counter + 1
-      }
 
-      # save plus/minus association
-      assign(
-        paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(
-          DF,
-          1, "Segments", "float"
-        ),
-        envir = .GlobalEnv
-      )
+        # save plus/minus association
+        assign(
+          paste("Amira", "Dataset", current_data, sep = "_"),
+          Save_amira(
+            DF,
+            1, "Segments", "float"
+          ),
+          envir = .GlobalEnv
+        )
 
-      assign(
-        paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(
-          DF,
-          2, "Segments", "float"
-        ),
-        envir = .GlobalEnv
-      )
-      rm(DF, Curv_data_colector, Menger_data_colector)
-    },
-    error = function(e) {}
-  )
+        assign(
+          paste("Amira", "Dataset", current_data, sep = "_"),
+          Save_amira(
+            DF,
+            2, "Segments", "float"
+          ),
+          envir = .GlobalEnv
+        )
+        rm(DF, Curv_data_colector, Menger_data_colector)
+      },
+      error = function(e) {}
+    )
   }
   # Save Data for local curvature ----------------------------------------------
   tryCatch(
@@ -661,17 +661,84 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
+  # Save Amira for KMT minus end interaction -----------------------------------
   tryCatch(
     {
       assign(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"),
-             KMT_Minus_End,
-             envir = .GlobalEnv
+        KMT_Minus_End,
+        envir = .GlobalEnv
       )
-      
+
       write.xlsx(
         get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_")),
         paste("Data/", "Data_", current_data, "_KMT_Minus_End_Interaction.xlsx", sep = "")
       )
+
+      DF <- tibble(
+        Interaction_Type = as.character(),
+        Minus_Distance = as.character(),
+        Segment_ID = as.numeric()
+      )
+      counter <- 1
+
+      for (i in Segments$`Segment ID`) {
+        if (i %in% get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))$KMT_ID) {
+          Minus_Interaction <- get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))[
+            which(get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))$KMT_ID == i),
+            "MT_type"
+          ]
+
+          if (nrow(Minus_Interaction) == 0) {
+            Minus_Interaction <- 0
+          } else if (Minus_Interaction == "KMT") {
+            Minus_Interaction <- 1
+          } else if (Minus_Interaction == "SMT") {
+            Minus_Interaction <- 2
+          }
+
+          tryCatch(
+            {
+              Minus_distance <- get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))[
+                which(get(paste("Data", current_data, "KMT_Total_Curv", sep = "_"))$Segment_ID == i),
+                "KMT_Minus_Distance"
+              ]
+            },
+            error = function(e) {
+              Minus_distance <<- NaN
+            }
+          )
+
+          DF[counter, ] <- tibble(
+            Interaction_Type = as.character(Minus_Interaction),
+            Minus_Distance = as.character(Minus_distance),
+            Segment_ID = i
+          )
+
+          if (DF[counter, 2] == "NaN") {
+            DF[counter, 2] <- tibble(Minus_distance = as.character("nan"))
+          }
+          counter <- counter + 1
+        }
+
+        assign(
+          paste("Amira", "Dataset", current_data, sep = "_"),
+          Save_amira(
+            DF,
+            1, "Segments", "int"
+          ),
+          envir = .GlobalEnv
+        )
+
+        assign(
+          paste("Amira", "Dataset", current_data, sep = "_"),
+          Save_amira(
+            DF,
+            2, "Segments", "float"
+          ),
+          envir = .GlobalEnv
+        )
+        rm(DF, Minus_Interaction, Minus_distance)
+      }
     },
     error = function(e) {}
   )
@@ -711,10 +778,10 @@ Save_Data <- function(input, output, session) {
   tryCatch(
     {
       assign(paste("Data", current_data, "MT_Interaction", sep = "_"),
-             MT_Interaction,
-             envir = .GlobalEnv
+        MT_Interaction,
+        envir = .GlobalEnv
       )
-      
+
       write.xlsx(
         get(paste("Data", current_data, "MT_Interaction", sep = "_")),
         paste("Data/", "Data_", current_data, "_MT_Interaction.xlsx", sep = "")
@@ -722,7 +789,7 @@ Save_Data <- function(input, output, session) {
     },
     error = function(e) {}
   )
-  
+
   # Amira output
   if (exists("Amira_df") && AMIRA == TRUE) {
     write.table(get(paste("Amira", "Dataset", current_data, sep = "_")),
