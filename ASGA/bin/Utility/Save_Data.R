@@ -1038,7 +1038,8 @@ Save_Data <- function(input, output, session) {
     updateProgressBar(
       session = session,
       id = "Saving_Data",
-      title = "All Done!"
+      title = "All Done!",
+      value = 100
     )
     Sys.sleep(0.1)
   }
