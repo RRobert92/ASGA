@@ -960,10 +960,9 @@ Save_Data <- function(input, output, session) {
         if (i %in% get(paste("Data", current_data, "MT_Interaction", sep = "_"))$Segments_ID_1) {
           Interaction_No <- get(paste("Data", current_data, "MT_Interaction", sep = "_"))[
             which(get(paste("Data", current_data, "MT_Interaction", sep = "_"))$Segments_ID_1 == i),
-            1:2
-          ]
+            1:2]
 
-          Interaction_No <- nrow(unique(Interaction_No[1:2]))
+          Interaction_No <- nrow(Interaction_No)
           Segment_DF[counter, 1] <- as.numeric(i)
           Segment_DF[counter, 2] <- as.numeric(Interaction_No)
 
