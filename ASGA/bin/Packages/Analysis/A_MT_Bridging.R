@@ -22,7 +22,7 @@ A_MT_Bridging <- function(input, output, session) {
   
   #Define if analysis should be run as a function of distance or to run only for specified distance length
   if(MT_INT_AS_FUNCTION == TRUE){
-    Function_scale <<- list(0.025, 0.035, 0.050, 0.075, 0.1)
+    Function_scale <<- list(0.025, 0.030, 0.035, 0.045, 0.050, 0.075, 0.1)
   } else {
     Function_scale <<- list(MT_POINT_CONFIG)
   }
