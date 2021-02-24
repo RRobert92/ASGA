@@ -399,6 +399,33 @@ Setting_Buttons_Server <- function(input, output, session) {
       } else if (input[["Interaction_confirmation"]] == TRUE &&
         input$`MT_Interaction` == TRUE) {
         SHINY_IO <<- FALSE
+        confirmSweetAlert(
+          session = session,
+          type = "question",
+          inputId = "Run_as_Function",
+          input = "text",
+          title = "Want to confirm ?",
+          text = "Would you like to run MT interaction analysis as a function of interaction distance?
+          If yes the interaction distance will be vary between 25, 35, 50, 75 and 100 nm.
+          Keep in mind it will also take substancial longer amount of time. Preferable run over night :)",
+          btn_labels = c("Cancel", "Confirm"),
+          btn_colors = c("#C95050", "#a5dc86")
+        )
+      }
+    })
+    
+    observeEvent(input[["Run_as_Function"]], {
+      if (input[["Run_as_Function"]] == TRUE) {
+        assign("MT_INT_AS_FUNCTION",
+               TRUE,
+               envir = .GlobalEnv
+        )
+      } else {
+        assign("MT_INT_AS_FUNCTION",
+               FALSE,
+               envir = .GlobalEnv
+        )
+        
         inputSweetAlert(
           session = session,
           type = "info",
@@ -409,13 +436,14 @@ Setting_Buttons_Server <- function(input, output, session) {
         )
       }
     })
-
+    
     observeEvent(input[["MT_point_config"]], {
       assign("MT_POINT_CONFIG",
         as.numeric(input[["MT_point_config"]]),
         envir = .GlobalEnv
       )
     })
+
   })
 
   # Reactivity for all button --------------------------------------------------

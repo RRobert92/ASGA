@@ -2,8 +2,8 @@
 # Tool MT_bridging
 #
 # Function to calculate interaction length for all MT
-# The tool is calculating interaction for all points and searching for continues interaction on MT of
-# 500 nm (modifiable). Sorted interactions are then fed to the network analysis to determine no. of
+# The tool is calculating interaction for all points and searching for continues interaction on MT. 
+# Sorted interactions are then fed to the network analysis to determine no. of
 # first-degree interaction, and no. of bundled MT.
 #
 # (c) 2019 Kiewisz
@@ -38,23 +38,26 @@ Point_interaction <- function(x) {
     }
   )
 
+tryCatch({
   DF_1 <- data.frame(
     p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "Point_ID"],
     p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "dist"]
   )
   names(DF_1)[1] <- "Point_ID_2"
-
+  
   DF_1 <- data.frame(
     Points[x, 1],
     DF_1
   )
   names(DF_1)[1] <- "Point_ID_1"
   names(DF_1)[3] <- "dist"
-
+  
   DF_1 <- cbind(DF_1, c(DF_1[1] - DF_1[2]))
   names(DF_1)[4] <- "V1"
-
+  
   DF_1[with(DF_1, `V1` < -1 | `V1` > 1), 1:3]
+},
+error = function(e){})
 }
 
 Segment_to_point <- function(x) {

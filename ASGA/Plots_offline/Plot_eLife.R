@@ -97,7 +97,7 @@ IKD_KMT_NO <- ggplot(Data_1_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore dista
 IKD_KMT_NO <- IKD_KMT_NO +
               geom_jitter(data = Data_2_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown3", shape = 16)
 IKD_KMT_NO <- IKD_KMT_NO +
-              geom_jitter(data = Data_2_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown4", shape = 17)
+              geom_jitter(data = Data_3_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown4", shape = 17)
 IKD_KMT_NO <- IKD_KMT_NO +
               geom_smooth(data = IKD_KMT_avg, aes(`KMTs no.`, `Inter-kinetochore distance`), method = "lm", color = "grey20", se = F)
 
@@ -110,6 +110,26 @@ Correlation <- tibble(
 Correlation
 
 print(IKD_KMT_NO) 
+
+IKD_dekta_avg <- rbind(Data_1_IKD_KMT_Delta, Data_2_IKD_KMT_Delta, Data_3_IKD_KMT_Delta)
+IKD_delta_NO <- ggplot(Data_1_IKD_KMT_Delta, aes(`Delta of KMTs`, `Inter-kinetochore distance`)) + 
+  geom_jitter(color = "brown1", shape = 15) + theme_classic() + ylim(0.5, 1.75)
+IKD_delta_NO <- IKD_delta_NO +
+  geom_jitter(data = Data_2_IKD_KMT_Delta, aes(`Delta of KMTs`, `Inter-kinetochore distance`), color = "brown3", shape = 16)
+IKD_delta_NO <- IKD_delta_NO +
+  geom_jitter(data = Data_3_IKD_KMT_Delta, aes(`Delta of KMTs`, `Inter-kinetochore distance`), color = "brown4", shape = 17)
+IKD_delta_NO <- IKD_delta_NO +
+  geom_smooth(data = IKD_dekta_avg, aes(`Delta of KMTs`, `Inter-kinetochore distance`), method = "lm", color = "grey20", se = F)
+
+Correlation <- tibble(
+  Data_1 = cor(Data_1_IKD_KMT_Delta$`Inter-kinetochore distance`, Data_1_IKD_KMT_Delta$`Delta of KMTs`),
+  Data_2 = cor(Data_2_IKD_KMT_Delta$`Inter-kinetochore distance`, Data_2_IKD_KMT_Delta$`Delta of KMTs`),
+  Data_3 = cor(Data_3_IKD_KMT_Delta$`Inter-kinetochore distance`, Data_3_IKD_KMT_Delta$`Delta of KMTs`),
+  AVG = cor(IKD_dekta_avg$`Inter-kinetochore distance`, IKD_dekta_avg$`Delta of KMTs`)
+)
+Correlation
+
+print(IKD_delta_NO)
 
 # Fig 3: Length distribution
 LD_avg <- rbind(Data_1_LD, Data_2_LD, Data_3_LD)
@@ -291,7 +311,7 @@ print(Tortuosity)
  
  Fiber_denisty <- ggplot(Data_1_N_Density, aes(Relative_position, `Focused KMTs %`)) + 
    geom_smooth(color = "brown1",se=F, method = "loess", formula = "y~x") + 
-   theme_classic()
+   theme_classic() + ylim(0,100)
  
  Fiber_denisty <- Fiber_denisty + 
    geom_smooth(data = Data_2_N_Density, aes(Relative_position, `Focused KMTs %`),
@@ -331,18 +351,18 @@ Data_avg <- ggplot_build(ggplot(SMTs_avg, aes(Dist)) +
 Data_FHWM <- as.numeric(FWHM(Data_avg$x, Data_avg$y, 1))
 Data_FHWM <- (Data_FHWM[1] * 2) - Data_avg[1,2] #Double a distance of the peak to the pole - initial gap of not interaction (centrioles itself)
 
-SMTs <- ggplot(SMTs_avg, aes("Avg", Dist)) + geom_quasirandom(color = "grey20") +
+SMTs <- ggplot(SMTs_avg, aes("Avg", Dist)) + geom_quasirandom(size = 1.5, color = "grey20") +
         theme_classic() +
         stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom ="pointrange") +
         geom_hline(yintercept = Data_FHWM)
 SMTs <- SMTs +
-        geom_quasirandom(data = Data_1_SMT_Ends, aes("#1", Dist), color = "brown1") +
+        geom_quasirandom(data = Data_1_SMT_Ends, aes("#1", Dist), color = "brown1", size = 1.5, shape = 15) +
         stat_summary(data = Data_1_SMT_Ends, aes("#1", Dist), fun.data="mean_sdl", fun.args = list(mult=1), geom ="pointrange")
 SMTs <- SMTs +
-        geom_quasirandom(data = Data_2_SMT_Ends, aes("#2", Dist), color = "brown3") +
+        geom_quasirandom(data = Data_2_SMT_Ends, aes("#2", Dist), color = "brown3", size = 1.5, shape = 16) +
         stat_summary(data = Data_2_SMT_Ends, aes("#2", Dist), fun.data="mean_sdl", fun.args = list(mult=1), geom ="pointrange")
 SMTs <- SMTs +
-        geom_quasirandom(data = Data_3_SMT_Ends, aes("#3", Dist), color = "brown4", size = 1.5) +
+        geom_quasirandom(data = Data_3_SMT_Ends, aes("#3", Dist), color = "brown4", size = 1.5, shape = 17) +
         stat_summary(data = Data_3_SMT_Ends, aes("#3", Dist), fun.data="mean_sdl", fun.args = list(mult=1), geom ="pointrange")
 print(SMTs)
 
@@ -430,3 +450,181 @@ p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "SM
                          color = "orange")
 p1
 
+# MT-MT interactions
+
+for(i in 1:nrow(Data_1_MT_Interaction)){
+  if(Data_1_MT_Interaction$Segments_ID_1[i] %in% Segments_KMT$`Segment ID`){
+    Data_1_MT_Interaction[i,8] <- "KMT"
+  } else {
+    Data_1_MT_Interaction[i,8] <- "SMT"
+  }
+}
+
+for(i in 1:nrow(Data_2_MT_Interaction)){
+  if(Data_2_MT_Interaction$Segments_ID_1[i] %in% Segments_KMT$`Segment ID`){
+    Data_2_MT_Interaction[i,8] <- "KMT"
+  } else {
+    Data_2_MT_Interaction[i,8] <- "SMT"
+  }
+}
+
+for(i in 1:nrow(Data_3_MT_Interaction)){
+  if(Data_3_MT_Interaction$Segments_ID_1[i] %in% Segments_KMT$`Segment ID`){
+    Data_3_MT_Interaction[i,8] <- "KMT"
+  } else {
+    Data_3_MT_Interaction[i,8] <- "SMT"
+  }
+}
+
+AVG_MT_Interaction <- tibble()
+coutnter <- 1
+for(i in unique(Data_1_MT_Interaction$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,1] <- sum(filter(Data_1_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,2] <- nrow(filter(Data_1_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+
+coutnter <- 1
+for(i in unique(Data_2_MT_Interaction$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,3] <- sum(filter(Data_2_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,4] <- nrow(filter(Data_2_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+coutnter <- 1
+for(i in unique(Data_3_MT_Interaction$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,5] <- sum(filter(Data_3_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,6] <- nrow(filter(Data_3_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+
+AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...1`)) + geom_quasirandom(shape = 15, size = 1.5, color = "grey10") + theme_classic() + 
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...3`), shape = 16, size = 1.5, color = "grey20") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#2", `...3`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...5`), shape = 17, size = 1.5, color = "grey30") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#3", `...5`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+
+AVG_Inter_length
+
+AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...2`)) + geom_quasirandom(shape = 15, size = 1.5, color = "grey10") + theme_classic() + 
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...4`), shape = 16, size = 1.5, color = "grey20") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#2", `...4`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...6`), shape = 17, size = 1.5, color = "grey30") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#3", `...6`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+
+AVG_Inter_length
+
+AVG_MT_Interaction <- tibble()
+coutnter <- 1
+for(i in unique(filter(Data_1_MT_Interaction, `...8` == "SMT")$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,1] <- sum(filter(Data_1_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,2] <- nrow(filter(Data_1_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+
+coutnter <- 1
+for(i in unique(filter(Data_2_MT_Interaction, `...8` == "SMT")$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,3] <- sum(filter(Data_2_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,4] <- nrow(filter(Data_2_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+coutnter <- 1
+for(i in unique(filter(Data_3_MT_Interaction, `...8` == "SMT")$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,5] <- sum(filter(Data_3_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,6] <- nrow(filter(Data_3_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+
+AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...1`)) + geom_quasirandom(shape = 15, size = 1.5, color = "orange1") + theme_classic() + 
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...3`), shape = 16, size = 1.5, color = "orange2") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#2", `...3`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...5`), shape = 17, size = 1.5, color = "orange3") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#3", `...5`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+
+AVG_Inter_length
+
+AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...2`)) + geom_quasirandom(shape = 15, size = 1.5, color = "orange1") + theme_classic() + 
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...4`), shape = 16, size = 1.5, color = "orange2") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#2", `...4`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...6`), shape = 17, size = 1.5, color = "orange3") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#3", `...6`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+
+AVG_Inter_length
+
+AVG_MT_Interaction <- tibble()
+coutnter <- 1
+for(i in unique(filter(Data_1_MT_Interaction, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,1] <- sum(filter(Data_1_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,2] <- nrow(filter(Data_1_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+
+coutnter <- 1
+for(i in unique(filter(Data_2_MT_Interaction, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,3] <- sum(filter(Data_2_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,4] <- nrow(filter(Data_2_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+coutnter <- 1
+for(i in unique(filter(Data_3_MT_Interaction, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction[coutnter,5] <- sum(filter(Data_3_MT_Interaction, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction[coutnter,6] <- nrow(filter(Data_3_MT_Interaction, `Segments_ID_1` == i))
+  coutnter <- coutnter+1
+}
+
+AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...1`)) + geom_quasirandom(shape = 15, size = 1.5, color = "red1") + theme_classic() + 
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...3`), shape = 16, size = 1.5, color = "red2") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#2", `...3`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...5`), shape = 17, size = 1.5, color = "red3") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#3", `...5`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+
+AVG_Inter_length
+
+AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...2`)) + geom_quasirandom(shape = 15, size = 1.5, color = "red1") + theme_classic() + 
+  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange") + ylim(0,32)
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...4`), shape = 16, size = 1.5, color = "red2") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#2", `...4`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+AVG_Inter_length <- AVG_Inter_length + 
+  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...6`), shape = 17, size = 1.5, color = "red3") +
+  stat_summary(data = na.omit(AVG_MT_Interaction),
+               aes("#3", `...6`), 
+               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+
+AVG_Inter_length
