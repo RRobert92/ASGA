@@ -277,18 +277,18 @@ Setting_Buttons_Server <- function(input, output, session) {
   observeEvent(input$`KMT_Minus_End_Seeds`, {
     All_Closed()
     Any_One()
-
+    
     Sys.sleep(0.1)
-
+    
     output$`Tool_Info_1` <- renderUI({
       if (input$`KMT_Minus_End_Seeds` == TRUE) {
         "This tool will analyze the position of all (-) ends with respect to the KMT, 
-        and determining the position of MT which nucleated from KMT. 
-        In addition, this tool also analyze KMTs (-) ends position in proximity to MT lattice.
-        For more information see 'Wiki' page"
+      and determining the position of MT which nucleated from KMT. 
+      In addition, this tool also analyze KMTs (-) ends position in proximity to MT lattice.
+      For more information see 'Wiki' page"
       }
     })
-
+    
     if (input$`KMT_Minus_End_Seeds` == TRUE) {
       confirmSweetAlert(
         session = session,
@@ -296,40 +296,67 @@ Setting_Buttons_Server <- function(input, output, session) {
         inputId = "Minus_End_Seeds_confirmation", 
         input = "text",
         title = "Want to confirm ?",
-        text = "These tools will calculate the interaction of every MT. It required long computation time,
-        and therefore by standard, this analysis is switched off at shinyapp.io server!
-        This tool can and is strongly suggested to be used with a computer cluster.",
-        btn_labels = c("Cancel", "Confirm"),
-        btn_colors = c("#C95050", "#a5dc86")
+        text = "These tools will calculate the interaction of KMT lattice and minus ends with other MT. It required long computation time,
+      and therefore by standard, this analysis is switched off at shinyapp.io server!
+      This tool can and is strongly suggested to be used with a computer cluster.",
+      btn_labels = c("Cancel", "Confirm"),
+      btn_colors = c("#C95050", "#a5dc86")
       )
     }
     
     observeEvent(input[["Minus_End_Seeds_confirmation"]], {
       if (input[["Minus_End_Seeds_confirmation"]] == FALSE) {
-        updateMaterialSwitch(session, "MT_Interaction", FALSE)
+        updateMaterialSwitch(session, "KMT_Minus_End_Seeds", FALSE)
         SHINY_IO <<- TRUE
       } else if (input[["Minus_End_Seeds_confirmation"]] == TRUE &&
                  input$`KMT_Minus_End_Seeds` == TRUE) {
         SHINY_IO <<- FALSE
+        confirmSweetAlert(
+          session = session,
+          type = "question",
+          inputId = "Run_as_Function_Seed",
+          input = "text",
+          title = "Want to confirm ?",
+          text = "Would you like to run KMT interaction analysis as a function of interaction distance?
+        If yes the interaction distance will be vary between 25, 35, 50, 75 and 100 nm.
+        Keep in mind it will also take substancial longer amount of time. Preferable run over night :)",
+        btn_labels = c("Cancel", "Confirm"),
+        btn_colors = c("#C95050", "#a5dc86")
+        )
+      }
+    })  
+    
+    observeEvent(input[["Run_as_Function_Seed"]], {
+      if (input[["Run_as_Function_Seed"]] == TRUE) {
+        assign("SEED_INT_AS_FUNCTION",
+               TRUE,
+               envir = .GlobalEnv
+        )
+      } else {
+        assign("SEED_INT_AS_FUNCTION",
+               FALSE,
+               envir = .GlobalEnv
+        )
+        
         inputSweetAlert(
           session = session,
           type = "info",
-          inputId = "Minus_end_config", 
+          inputId = "Seed_config", 
           input = "text",
           title = "Set-up analysis parameter",
-          text = "Interaction distance between kinetochore microtubule and microtubule minus-end. Unit [um]"
+          text = "Interaction distance between microtubule and other microtubule. Unit [um]"
         )
       }
     })
     
-
-    observeEvent(input[["Minus_end_config"]], {
+    observeEvent(input[["Seed_config"]], {
       assign("MINUS_DISTANCE",
-        as.numeric(input[["Minus_end_config"]]),
-        envir = .GlobalEnv
+             as.numeric(input[["Seed_config"]]),
+             envir = .GlobalEnv
       )
     })
   })
+  
 
   # Reactivity for Fiber curve and length button --------------------------------
   observeEvent(input$`Fiber_Curv_Length`, {

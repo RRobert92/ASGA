@@ -271,12 +271,12 @@ KMT_Minus_End_Interaction <- function(x) {
   }
 
   # Check it there are MT around the KMT minus end
-  p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Minus_end[1, 1] + ((MT_POINT_CONFIG * 2))) &
-    `X Coord` >= as.numeric(Minus_end[1, 1] - ((MT_POINT_CONFIG * 2)))), ]
-  p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Minus_end[1, 2] + ((MT_POINT_CONFIG * 2))) &
-    `Y Coord` >= as.numeric(Minus_end[1, 2] - ((MT_POINT_CONFIG * 2)))), ]
-  p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(Minus_end[1, 3] + ((MT_POINT_CONFIG * 2))) &
-    `Z Coord` >= as.numeric(Minus_end[1, 3] - ((MT_POINT_CONFIG * 2)))), ]
+  p_to_P <- Points[with(Points, `X Coord` <= as.numeric(Minus_end[1, 1] + ((MINUS_DISTANCE * 2))) &
+    `X Coord` >= as.numeric(Minus_end[1, 1] - ((MINUS_DISTANCE * 2)))), ]
+  p_to_P <- p_to_P[with(p_to_P, `Y Coord` <= as.numeric(Minus_end[1, 2] + ((MINUS_DISTANCE * 2))) &
+    `Y Coord` >= as.numeric(Minus_end[1, 2] - ((MINUS_DISTANCE * 2)))), ]
+  p_to_P <- p_to_P[with(p_to_P, `Z Coord` <= as.numeric(Minus_end[1, 3] + ((MINUS_DISTANCE * 2))) &
+    `Z Coord` >= as.numeric(Minus_end[1, 3] - ((MINUS_DISTANCE * 2)))), ]
 
   p_to_P[5:7] <- Minus_end[1, 1:3]
 
@@ -289,8 +289,8 @@ KMT_Minus_End_Interaction <- function(x) {
   )
 
   p_to_P <- data.frame(
-    p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "Point_ID"],
-    p_to_P[with(p_to_P, dist <= MT_POINT_CONFIG & dist > 0), "dist"]
+    p_to_P[with(p_to_P, dist <= MINUS_DISTANCE & dist > 0), "Point_ID"],
+    p_to_P[with(p_to_P, dist <= MINUS_DISTANCE & dist > 0), "dist"]
   )
 
   # Find type of MT e.g SMT or KMT

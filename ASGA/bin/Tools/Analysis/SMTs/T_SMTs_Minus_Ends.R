@@ -52,7 +52,7 @@ SMT_Minus_Ends <- function() {
     # Calculate position on the spindle pole axis between two poles 0 (Pole1) 1 (Pole2)
     Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / Pole1[1, 2]
     SMT_Ends[i, 1:3] <- tibble(Segment_ID = as.numeric(Minus_end[4]),
-                               Dist = as.numeric(Dist[1]),
+                               Distance_to_Pole = as.numeric(Dist[1]),
                                Relativ_Position = as.numeric(Relative_position))
   }
   

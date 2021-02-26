@@ -92,14 +92,12 @@ No_KMTs <- No_KMTs +
 print(No_KMTs)
 
 IKD_KMT_avg <- rbind(Data_1_IKD_KMT_No, Data_2_IKD_KMT_No, Data_3_IKD_KMT_No)
-IKD_KMT_NO <- ggplot(Data_1_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`)) + 
-              geom_jitter(color = "brown1", shape = 15) + theme_classic() + ylim(0.5, 1.75)
+IKD_KMT_NO <- ggplot(Data_1_IKD_KMT_No, aes(`Inter-kinetochore distance`, `KMTs no.`)) + 
+              geom_point(color = "brown1", shape = 15, size = 2) + theme_classic() + xlim(0.5, 1.75)
 IKD_KMT_NO <- IKD_KMT_NO +
-              geom_jitter(data = Data_2_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown3", shape = 16)
+  geom_point(data = Data_2_IKD_KMT_No, aes(`Inter-kinetochore distance`, `KMTs no.`), color = "brown3", shape = 16, size = 2)
 IKD_KMT_NO <- IKD_KMT_NO +
-              geom_jitter(data = Data_3_IKD_KMT_No, aes(`KMTs no.`, `Inter-kinetochore distance`), color = "brown4", shape = 17)
-IKD_KMT_NO <- IKD_KMT_NO +
-              geom_smooth(data = IKD_KMT_avg, aes(`KMTs no.`, `Inter-kinetochore distance`), method = "lm", color = "grey20", se = F)
+  geom_point(data = Data_3_IKD_KMT_No, aes(`Inter-kinetochore distance`, `KMTs no.`), color = "brown4", shape = 17, size = 2)
 
 Correlation <- tibble(
   Data_1 = cor(Data_1_IKD_KMT_No$`Inter-kinetochore distance`, Data_1_IKD_KMT_No$`KMTs no.`),
@@ -109,17 +107,15 @@ Correlation <- tibble(
 )
 Correlation
 
-print(IKD_KMT_NO) 
+print(IKD_KMT_NO)
 
 IKD_dekta_avg <- rbind(Data_1_IKD_KMT_Delta, Data_2_IKD_KMT_Delta, Data_3_IKD_KMT_Delta)
-IKD_delta_NO <- ggplot(Data_1_IKD_KMT_Delta, aes(`Delta of KMTs`, `Inter-kinetochore distance`)) + 
-  geom_jitter(color = "brown1", shape = 15) + theme_classic() + ylim(0.5, 1.75)
+IKD_delta_NO <- ggplot(Data_1_IKD_KMT_Delta, aes(`Inter-kinetochore distance`, `Delta of KMTs`)) + 
+  geom_point(color = "brown1", shape = 15, size = 2) + theme_classic() + xlim(0.5, 1.75)
 IKD_delta_NO <- IKD_delta_NO +
-  geom_jitter(data = Data_2_IKD_KMT_Delta, aes(`Delta of KMTs`, `Inter-kinetochore distance`), color = "brown3", shape = 16)
+  geom_point(data = Data_2_IKD_KMT_Delta, aes(`Inter-kinetochore distance`, `Delta of KMTs`), color = "brown3", shape = 16, size = 2)
 IKD_delta_NO <- IKD_delta_NO +
-  geom_jitter(data = Data_3_IKD_KMT_Delta, aes(`Delta of KMTs`, `Inter-kinetochore distance`), color = "brown4", shape = 17)
-IKD_delta_NO <- IKD_delta_NO +
-  geom_smooth(data = IKD_dekta_avg, aes(`Delta of KMTs`, `Inter-kinetochore distance`), method = "lm", color = "grey20", se = F)
+  geom_point(data = Data_3_IKD_KMT_Delta, aes(`Inter-kinetochore distance`, `Delta of KMTs`), color = "brown4", shape = 17, size = 2)
 
 Correlation <- tibble(
   Data_1 = cor(Data_1_IKD_KMT_Delta$`Inter-kinetochore distance`, Data_1_IKD_KMT_Delta$`Delta of KMTs`),
@@ -328,7 +324,7 @@ print(Tortuosity)
  
  
 # Supplementary 5: Kinetochore size
- 
+
  Kinetochores_size_avg <- rbind(Data_1_K_Core_Area, Data_2_K_Core_Area, Data_3_K_Core_Area)
  K_Core_size <- ggplot(Kinetochores_size_avg, aes(Kinetochore_area, KMT_no)) +
                 stat_ellipse(color = "grey20", size = 1, level = 0.95) + 
@@ -442,11 +438,12 @@ p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "SM
                         color = "orange")
 p1
 
-p1 <- ggplot(filter(KMT_Minus_End_Interaction, KMT_Minus_Distance >= 1.53), aes(Relative_position)) + 
-  geom_freqpoly(color="grey20") + theme_classic()  + ylim(0,80)
-p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53), aes(Relative_position),
+p1 <- ggplot(filter(KMT_Minus_End_0.1, KMT_Minus_Distance >= 1.53 & MT_type == "KMT" | KMT_Minus_Distance >= 1.53 & MT_type == "SMT"), 
+             aes(Relative_position)) + 
+  geom_freqpoly(color="grey20") + theme_classic()  + ylim(0,30)
+p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= 1.53), aes(Relative_position),
                          color = "red")
-p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53), aes(Relative_position),
+p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_0.1, MT_type == "SMT" & KMT_Minus_Distance >= 1.53), aes(Relative_position),
                          color = "orange")
 p1
 

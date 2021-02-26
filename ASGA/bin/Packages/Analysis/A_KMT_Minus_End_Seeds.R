@@ -97,6 +97,24 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
       value = 0
     )
     
+  #Define if analysis should be run as a function of distance or to run only for specified distance length
+  if(SEED_INT_AS_FUNCTION == TRUE){
+    Function_Scale_Seed <<- list(0.025, 0.030, 0.035, 0.045, 0.050, 0.075, 0.1)
+  } else {
+    Function_Scale_Seed <<- list(MINUS_DISTANCE)
+  }
+  
+  for (i in 1:length(Function_Scale_Seed)) {
+    updateProgressBar(
+      session = session,
+      id = "KMT_ends",
+      title = paste("Calculating KMTs (-) end position around other MTs for ", Function_Scale_Seed[i], "um...", sep = " "),
+      value = round(as.numeric(i/length(Function_Scale_Seed)) * 100, 0)
+    )
+    Sys.sleep(0.1)
+    
+    MINUS_DISTANCE <<- as.numeric(Function_Scale_Seed[i])
+    
     cores <<- detectCores()
     cl <<- makeCluster(cores)
     registerDoParallel(cl)
@@ -104,15 +122,12 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
     KMT_Minus_End <<- foreach(i = 1:nrow(Segments_KMT), .combine = rbind, .inorder = TRUE, .export = ls(.GlobalEnv), .packages = "tibble") %dopar% {
       KMT_Minus_End_Interaction(i)
     }
-    
     stopCluster(cl)
     
-    updateProgressBar(
-      session = session,
-      id = "KMT_ends",
-      value = 100
-    )
-    
-    Sys.sleep(1)
+    assign(paste("KMT_Minus_End", MINUS_DISTANCE, sep = "_"),
+           KMT_Minus_End,
+           envir = .GlobalEnv)
+  }
+
     closeSweetAlert(session = session)
 }

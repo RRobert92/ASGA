@@ -158,21 +158,41 @@ Save_Data <- function(input, output, session) {
     error = function(e) {}
   )
 
-  # Save Data for KMT at the Pole ----------------------------------------------
+  # Save Data for KMT minus end interaction ------------------------------------
   tryCatch(
     {
-      assign(paste("Data", current_data, "KMT_Minus_Ends", sep = "_"),
-        Minus_end_position,
-        envir = .GlobalEnv
-      )
-
-      write.xlsx(
-        get(paste("Data", current_data, "KMT_Minus_Ends", sep = "_")),
-        paste("Data/", "Data_", current_data, "_KMT_Minus_Ends.xlsx", sep = "")
-      )
+      for (i in 1:length(Function_Scale_Seed)) {
+        DF_Name <<- paste("KMT_Minus_End", Function_Scale_Seed[i], sep = "_")
+        
+        tryCatch(
+          {
+            if (exists(paste(DF_Name))) {
+              updateProgressBar(
+                session = session,
+                id = "Saving_Data",
+                title = "Saving KMT minus- ends interaction...",
+                value = 32
+              )
+              Sys.sleep(0.1)
+            }
+            
+            assign(paste("Data", current_data, paste(DF_Name), sep = "_"),
+                   get(paste(DF_Name)),
+                   envir = .GlobalEnv
+            )
+            
+            write.xlsx(
+              get(paste("Data", current_data, paste(DF_Name), sep = "_")),
+              paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
+            )
+          },
+          error = function(e) {}
+        )
+      }
     },
     error = function(e) {}
   )
+
 
   # Save Data for end morphology Pole ------------------------------------------
   tryCatch(
@@ -182,7 +202,7 @@ Save_Data <- function(input, output, session) {
           session = session,
           id = "Saving_Data",
           title = "Saving KMT ends morphology data...",
-          value = 30
+          value = 35
         )
         Sys.sleep(0.1)
       }
@@ -330,7 +350,7 @@ Save_Data <- function(input, output, session) {
           session = session,
           id = "Saving_Data",
           title = "Saving KMT torque data...",
-          value = 30
+          value = 38
         )
         Sys.sleep(0.1)
       }
@@ -374,7 +394,7 @@ Save_Data <- function(input, output, session) {
         session = session,
         id = "Saving_Data",
         title = "Saving IKD data...",
-        value = 35
+        value = 40
       )
       Sys.sleep(0.1)
 
@@ -415,7 +435,7 @@ Save_Data <- function(input, output, session) {
           session = session,
           id = "Saving_Data",
           title = "Saving KMT curvature data...",
-          value = 40
+          value = 42
         )
         Sys.sleep(0.1)
       }
@@ -460,7 +480,7 @@ Save_Data <- function(input, output, session) {
         session = session,
         id = "Saving_Data",
         title = "Saving KMT curvature Amira data...",
-        value = 40
+        value = 45
       )
       Sys.sleep(0.1)
     }
@@ -774,78 +794,67 @@ Save_Data <- function(input, output, session) {
         Sys.sleep(0.1)
       }
 
-      assign(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"),
-        KMT_Minus_End,
-        envir = .GlobalEnv
-      )
-
-      write.xlsx(
-        get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_")),
-        paste("Data/", "Data_", current_data, "_KMT_Minus_End_Interaction.xlsx", sep = "")
-      )
-
-      if (AMIRA == TRUE) {
-        updateProgressBar(
-          session = session,
-          id = "Saving_Data",
-          title = "Saving KMT minus end interaction data...",
-          value = 85
-        )
-        Sys.sleep(0.1)
-      }
-
-      DF <- tibble(
-        Interaction_Type = as.numeric(),
-        Minus_Distance = as.character(),
-        Segment_ID = as.numeric()
-      )
-      counter <- 1
-
-      for (i in Segments$`Segment ID`) {
-        if (i %in% get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))$KMT_ID) {
-          Minus_Interaction <- get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))[
-            which(get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))$KMT_ID == i),
-            "MT_type"
-          ]
-
-          if (Minus_Interaction == NaN) { # KMT with no interaction
-            Minus_Interaction <- 0
-          } else if (Minus_Interaction == "KMT") { # KMT with KMT interaction
-            Minus_Interaction <- 1
-          } else if (Minus_Interaction == "SMT") { # KMT with SMT interaction
-            Minus_Interaction <- 2
-          }
-
-          tryCatch(
-            {
-              Minus_distance <- get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))[
-                which(get(paste("Data", current_data, "KMT_Minus_End_Interaction", sep = "_"))$KMT_ID == i),
-                "KMT_Minus_Distance"
-              ]
-            },
-            error = function(e) {
-              Minus_distance <<- NaN
+      for (i in 1:length(Function_Scale_Seed)) {
+        DF_Name <<- paste("KMT_Minus_End", Function_Scale_Seed[i], sep = "_")
+        
+        tryCatch(
+          {
+            DF <- tibble(
+              Interaction_Type = as.numeric(),
+              Minus_Distance = as.character(),
+              Segment_ID = as.numeric()
+            )
+            counter <- 1
+            
+            for (i in Segments$`Segment ID`) {
+              if (i %in% get(paste("Data", current_data, DF_Name, sep = "_"))$KMT_ID) {
+                Minus_Interaction <- get(paste("Data", current_data, DF_Name, sep = "_"))[
+                  which(get(paste("Data", current_data, DF_Name, sep = "_"))$KMT_ID == i),
+                  "MT_type"
+                ]
+                
+                if (Minus_Interaction == NaN) { # KMT with no interaction
+                  Minus_Interaction <- 0
+                } else if (Minus_Interaction == "KMT") { # KMT with KMT interaction
+                  Minus_Interaction <- 1
+                } else if (Minus_Interaction == "SMT") { # KMT with SMT interaction
+                  Minus_Interaction <- 2
+                }
+                
+                tryCatch(
+                  {
+                    Minus_distance <- get(paste("Data", current_data, DF_Name, sep = "_"))[
+                      which(get(paste("Data", current_data, DF_Name, sep = "_"))$KMT_ID == i),
+                      "KMT_Minus_Distance"
+                    ]
+                  },
+                  error = function(e) {
+                    Minus_distance <<- NaN
+                  }
+                )
+                
+                DF[counter, ] <- tibble(
+                  Interaction_Type = as.numeric(Minus_Interaction),
+                  Minus_Distance = as.character(Minus_distance),
+                  Segment_ID = i
+                )
+                
+                if (DF[counter, 2] == "NaN") {
+                  DF[counter, 2] <- tibble(Minus_distance = as.character("nan"))
+                }
+                counter <- counter + 1
+              } else {
+                DF[counter, ] <- tibble(
+                  Interaction_Type = as.numeric(0),
+                  Minus_Distance = as.character("nan"),
+                  Segment_ID = i
+                )
+                counter <- counter + 1
+              }
             }
-          )
-
-          DF[counter, ] <- tibble(
-            Interaction_Type = as.numeric(Minus_Interaction),
-            Minus_Distance = as.character(Minus_distance),
-            Segment_ID = i
-          )
-
-          if (DF[counter, 2] == "NaN") {
-            DF[counter, 2] <- tibble(Minus_distance = as.character("nan"))
-          }
-          counter <- counter + 1
-        } else {
-          DF[counter, ] <- tibble(
-            Interaction_Type = as.numeric(0),
-            Minus_Distance = as.character("nan"),
-            Segment_ID = i
-          )
-          counter <- counter + 1
-        }
+          },
+          error = function(e) {}
+        )
       }
 
       assign(
@@ -912,6 +921,8 @@ Save_Data <- function(input, output, session) {
   )
 
   # Save Data for MT interaction -----------------------------------------------
+  tryCatch(
+    {
     for (i in 1:length(Function_scale)) {
       DF_Name <<- paste("MT_Interaction", Function_scale[i], sep = "_")
       
@@ -940,8 +951,13 @@ Save_Data <- function(input, output, session) {
         error = function(e) {}
       )
     }
-
+    },
+    error = function(e) {}
+  )
+  
   # Save Amira for MT interaction -----------------------------------------------
+  tryCatch(
+    {
   for (j in 1:length(Function_scale)) {
     DF_Name <<- paste("MT_Interaction", Function_scale[j], sep = "_")
     
@@ -1027,7 +1043,9 @@ Save_Data <- function(input, output, session) {
       error = function(e) {}
     ) 
   }
-
+},
+error = function(e) {}
+)
   # Amira output ---------------------------------------------------------------
   if (exists("Amira_df") && AMIRA == TRUE) {
     updateProgressBar(
