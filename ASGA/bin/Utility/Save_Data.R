@@ -163,7 +163,7 @@ Save_Data <- function(input, output, session) {
     {
       for (i in 1:length(Function_Scale_Seed)) {
         DF_Name <<- paste("KMT_Minus_End", Function_Scale_Seed[i], sep = "_")
-        
+
         tryCatch(
           {
             if (exists(paste(DF_Name))) {
@@ -175,12 +175,12 @@ Save_Data <- function(input, output, session) {
               )
               Sys.sleep(0.1)
             }
-            
+
             assign(paste("Data", current_data, paste(DF_Name), sep = "_"),
-                   get(paste(DF_Name)),
-                   envir = .GlobalEnv
+              get(paste(DF_Name)),
+              envir = .GlobalEnv
             )
-            
+
             write.xlsx(
               get(paste("Data", current_data, paste(DF_Name), sep = "_")),
               paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
@@ -794,9 +794,9 @@ Save_Data <- function(input, output, session) {
         Sys.sleep(0.1)
       }
 
-      for (i in 1:length(Function_Scale_Seed)) {
-        DF_Name <<- paste("KMT_Minus_End", Function_Scale_Seed[i], sep = "_")
-        
+      for (j in 1:length(Function_Scale_Seed)) {
+        DF_Name <<- paste("KMT_Minus_End", Function_Scale_Seed[j], sep = "_")
+
         tryCatch(
           {
             DF <- tibble(
@@ -805,14 +805,14 @@ Save_Data <- function(input, output, session) {
               Segment_ID = as.numeric()
             )
             counter <- 1
-            
+
             for (i in Segments$`Segment ID`) {
               if (i %in% get(paste("Data", current_data, DF_Name, sep = "_"))$KMT_ID) {
                 Minus_Interaction <- get(paste("Data", current_data, DF_Name, sep = "_"))[
                   which(get(paste("Data", current_data, DF_Name, sep = "_"))$KMT_ID == i),
                   "MT_type"
                 ]
-                
+
                 if (Minus_Interaction == NaN) { # KMT with no interaction
                   Minus_Interaction <- 0
                 } else if (Minus_Interaction == "KMT") { # KMT with KMT interaction
@@ -820,7 +820,7 @@ Save_Data <- function(input, output, session) {
                 } else if (Minus_Interaction == "SMT") { # KMT with SMT interaction
                   Minus_Interaction <- 2
                 }
-                
+
                 tryCatch(
                   {
                     Minus_distance <- get(paste("Data", current_data, DF_Name, sep = "_"))[
@@ -832,13 +832,13 @@ Save_Data <- function(input, output, session) {
                     Minus_distance <<- NaN
                   }
                 )
-                
+
                 DF[counter, ] <- tibble(
                   Interaction_Type = as.numeric(Minus_Interaction),
                   Minus_Distance = as.character(Minus_distance),
                   Segment_ID = i
                 )
-                
+
                 if (DF[counter, 2] == "NaN") {
                   DF[counter, 2] <- tibble(Minus_distance = as.character("nan"))
                 }
@@ -855,16 +855,17 @@ Save_Data <- function(input, output, session) {
           },
           error = function(e) {}
         )
-      }
 
-      assign(
-        paste("Amira", "Dataset", current_data, sep = "_"),
-        Save_amira(
-          DF,
-          1, "Segments", "int"
-        ),
-        envir = .GlobalEnv
-      )
+        names(DF)[1] <- c(paste("Interaction_Type_", Function_Scale_Seed[j], sep = ""))
+        assign(
+          paste("Amira", "Dataset", current_data, sep = "_"),
+          Save_amira(
+            DF,
+            1, "Segments", "int"
+          ),
+          envir = .GlobalEnv
+        )
+      }
 
       assign(
         paste("Amira", "Dataset", current_data, sep = "_"),
@@ -874,6 +875,7 @@ Save_Data <- function(input, output, session) {
         ),
         envir = .GlobalEnv
       )
+
       rm(DF, Minus_Interaction, Minus_distance)
     },
     error = function(e) {}
@@ -923,129 +925,130 @@ Save_Data <- function(input, output, session) {
   # Save Data for MT interaction -----------------------------------------------
   tryCatch(
     {
-    for (i in 1:length(Function_scale)) {
-      DF_Name <<- paste("MT_Interaction", Function_scale[i], sep = "_")
-      
-      tryCatch(
-        {
-          if (exists(paste(DF_Name))) {
-            updateProgressBar(
-              session = session,
-              id = "Saving_Data",
-              title = "Saving KMT interaction data...",
-              value = 95
+      for (i in 1:length(Function_scale)) {
+        DF_Name <<- paste("MT_Interaction", Function_scale[i], sep = "_")
+
+        tryCatch(
+          {
+            if (exists(paste(DF_Name))) {
+              updateProgressBar(
+                session = session,
+                id = "Saving_Data",
+                title = "Saving KMT interaction data...",
+                value = 95
+              )
+              Sys.sleep(0.1)
+            }
+
+            assign(paste("Data", current_data, paste(DF_Name), sep = "_"),
+              get(paste(DF_Name)),
+              envir = .GlobalEnv
             )
-            Sys.sleep(0.1)
-          }
-          
-          assign(paste("Data", current_data, paste(DF_Name), sep = "_"),
-                 get(paste(DF_Name)),
-                 envir = .GlobalEnv
-          )
-          
-          write.xlsx(
-            get(paste("Data", current_data, paste(DF_Name), sep = "_")),
-            paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
-          )
-        },
-        error = function(e) {}
-      )
-    }
+
+            write.xlsx(
+              get(paste("Data", current_data, paste(DF_Name), sep = "_")),
+              paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
+            )
+          },
+          error = function(e) {}
+        )
+      }
     },
     error = function(e) {}
   )
-  
+
   # Save Amira for MT interaction -----------------------------------------------
   tryCatch(
     {
-  for (j in 1:length(Function_scale)) {
-    DF_Name <<- paste("MT_Interaction", Function_scale[j], sep = "_")
-    
-    tryCatch(
-      {
-        if (exists(paste(DF_Name))) {
-          updateProgressBar(
-            session = session,
-            id = "Saving_Data",
-            title = "Saving KMT interaction Amira data...",
-            value = 98
-          )
-          Sys.sleep(0.1)
-        }
-        
-        Segment_DF <- tibble(
-          Segment_ID = as.numeric(),
-          Interaction_No = as.numeric()
+      for (j in 1:length(Function_scale)) {
+        DF_Name <<- paste("MT_Interaction", Function_scale[j], sep = "_")
+
+        tryCatch(
+          {
+            if (exists(paste(DF_Name))) {
+              updateProgressBar(
+                session = session,
+                id = "Saving_Data",
+                title = "Saving KMT interaction Amira data...",
+                value = 98
+              )
+              Sys.sleep(0.1)
+            }
+
+            Segment_DF <- tibble(
+              Segment_ID = as.numeric(),
+              Interaction_No = as.numeric()
+            )
+            counter <- 1
+
+            for (i in Segments$`Segment ID`) {
+              if (i %in% get(paste("Data", current_data, paste(DF_Name), sep = "_"))$Segments_ID_1) {
+                Interaction_No <- get(paste("Data", current_data, paste(DF_Name), sep = "_"))[
+                  which(get(paste("Data", current_data, paste(DF_Name), sep = "_"))$Segments_ID_1 == i),
+                  1:2
+                ]
+
+                Interaction_No <- nrow(Interaction_No)
+                Segment_DF[counter, 1] <- as.numeric(i)
+                Segment_DF[counter, 2] <- as.numeric(Interaction_No)
+
+                counter <- counter + 1
+              } else {
+                Segment_DF[counter, 1] <- as.numeric(i)
+                Segment_DF[counter, 2] <- as.numeric(0)
+
+                counter <- counter + 1
+              }
+            }
+            names(Segment_DF)[2] <- paste("Interaction_No", Function_scale[j], sep = "_")
+
+            Point_DF <- tibble(
+              Point_ID = as.numeric(),
+              Interaction_No_Point = as.numeric()
+            )
+
+            Point_DF[1:nrow(Points), ] <- tibble(
+              Point_ID = as.numeric(0:as.numeric(nrow(Points) - 1)),
+              Interaction_No_Point = as.numeric(0)
+            )
+
+            for (i in 1:nrow(get(paste("Data", current_data, paste(DF_Name), sep = "_")))) {
+              S_1 <- as.numeric(get(paste("Data", current_data, paste(DF_Name), sep = "_"))[i, 4] + 1)
+              S_2 <- as.numeric(get(paste("Data", current_data, paste(DF_Name), sep = "_"))[i, 5] + 1)
+
+              if (S_1 < S_2) {
+                Point_DF[S_1:S_2, 2] <- Point_DF[S_1:S_2, 2] + 1
+              } else if (S_1 > S_2) {
+                Point_DF[S_2:S_1, 2] <- Point_DF[S_2:S_1, 2] + 1
+              }
+            }
+            names(Point_DF)[2] <- paste("Interaction_No_Point", Function_scale[j], sep = "_")
+
+            assign(
+              paste("Amira", "Dataset", current_data, sep = "_"),
+              Save_amira(
+                Segment_DF,
+                2, "Segments", "int"
+              ),
+              envir = .GlobalEnv
+            )
+
+            assign(
+              paste("Amira", "Dataset", current_data, sep = "_"),
+              Save_amira(
+                Point_DF,
+                2, "Points", "int"
+              ),
+              envir = .GlobalEnv
+            )
+            rm(S_1, S_2, Point_DF, Segment_DF, Interaction_No)
+          },
+          error = function(e) {}
         )
-        counter <- 1
-        
-        for (i in Segments$`Segment ID`) {
-          if (i %in% get(paste("Data", current_data, paste(DF_Name), sep = "_"))$Segments_ID_1) {
-            Interaction_No <- get(paste("Data", current_data, paste(DF_Name), sep = "_"))[
-              which(get(paste("Data", current_data, paste(DF_Name), sep = "_"))$Segments_ID_1 == i),
-              1:2]
-            
-            Interaction_No <- nrow(Interaction_No)
-            Segment_DF[counter, 1] <- as.numeric(i)
-            Segment_DF[counter, 2] <- as.numeric(Interaction_No)
-            
-            counter <- counter + 1
-          } else {
-            Segment_DF[counter, 1] <- as.numeric(i)
-            Segment_DF[counter, 2] <- as.numeric(0)
-            
-            counter <- counter + 1
-          }
-        }
-        names(Segment_DF)[2] <- paste("Interaction_No", Function_scale[j], sep = "_")
-        
-        Point_DF <- tibble(
-          Point_ID = as.numeric(),
-          Interaction_No_Point = as.numeric()
-        )
-        
-        Point_DF[1:nrow(Points), ] <- tibble(
-          Point_ID = as.numeric(0:as.numeric(nrow(Points) - 1)),
-          Interaction_No_Point = as.numeric(0)
-        )
-        
-        for (i in 1:nrow(get(paste("Data", current_data, paste(DF_Name), sep = "_")))) {
-          S_1 <- as.numeric(get(paste("Data", current_data, paste(DF_Name), sep = "_"))[i, 4] + 1)
-          S_2 <- as.numeric(get(paste("Data", current_data, paste(DF_Name), sep = "_"))[i, 5] + 1)
-          
-          if (S_1 < S_2) {
-            Point_DF[S_1:S_2, 2] <- Point_DF[S_1:S_2, 2] + 1
-          } else if (S_1 > S_2) {
-            Point_DF[S_2:S_1, 2] <- Point_DF[S_2:S_1, 2] + 1
-          }
-        }
-        names(Point_DF)[2] <- paste("Interaction_No_Point", Function_scale[j], sep = "_")
-        
-        assign(
-          paste("Amira", "Dataset", current_data, sep = "_"),
-          Save_amira(
-            Segment_DF,
-            2, "Segments", "int"
-          ),
-          envir = .GlobalEnv
-        )
-        
-        assign(
-          paste("Amira", "Dataset", current_data, sep = "_"),
-          Save_amira(
-            Point_DF,
-            2, "Points", "int"
-          ),
-          envir = .GlobalEnv
-        )
-        rm(S_1, S_2, Point_DF, Segment_DF, Interaction_No)
-      },
-      error = function(e) {}
-    ) 
-  }
-},
-error = function(e) {}
-)
+      }
+    },
+    error = function(e) {}
+  )
   # Amira output ---------------------------------------------------------------
   if (exists("Amira_df") && AMIRA == TRUE) {
     updateProgressBar(
@@ -1075,5 +1078,4 @@ error = function(e) {}
   rm(list = ls(pattern = "Pole"))
   rm(list = ls(pattern = "DF"))
   closeSweetAlert(session = session)
-  
 }

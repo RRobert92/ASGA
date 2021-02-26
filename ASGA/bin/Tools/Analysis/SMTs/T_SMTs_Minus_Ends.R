@@ -39,22 +39,32 @@ SMT_Minus_Ends <- function() {
 
     # select closest as minus-end
     if (Minus_end == 1 || Minus_end == 2) {
-      Minus_end <- tibble(Node_1,
-                          Segments_SMT[i, "Node ID #1"]
+      Minus_end <- tibble(
+        Node_1,
+        Segments_SMT[i, "Node ID #1"]
       )
     }
     if (Minus_end == 3 || Minus_end == 4) {
-      Minus_end <- tibble(Node_2,
-                          Segments_SMT[i, "Node ID #2"]
+      Minus_end <- tibble(
+        Node_2,
+        Segments_SMT[i, "Node ID #2"]
       )
     }
-    
+
     # Calculate position on the spindle pole axis between two poles 0 (Pole1) 1 (Pole2)
-    Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / Pole1[1, 2]
-    SMT_Ends[i, 1:3] <- tibble(Segment_ID = as.numeric(Minus_end[4]),
-                               Distance_to_Pole = as.numeric(Dist[1]),
-                               Relativ_Position = as.numeric(Relative_position))
+    if (Pole1[1, 2] < Pole2[1, 2]) {
+      Relative_position <- (Minus_end$Y.Coord - Pole1[1, 2]) / (Pole2[1, 2] - Pole1[1, 2])
+    } else {
+      Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / (Pole1[1, 2] - Pole2[1, 2])
+    }
+
+
+    SMT_Ends[i, 1:3] <- tibble(
+      Segment_ID = as.numeric(Minus_end[4]),
+      Distance_to_Pole = as.numeric(Dist[1]),
+      Relativ_Position = as.numeric(Relative_position)
+    )
   }
-  
+
   return(SMT_Ends)
 }
