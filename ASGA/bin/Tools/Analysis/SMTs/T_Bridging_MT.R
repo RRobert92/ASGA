@@ -69,22 +69,13 @@ Segment_to_point <- function(x) {
   for (i in 1:nrow(Length_estiamtion)) {
     Length_estiamtion_df[i, 1] <- sum(Length_estiamtion$no[1:i]) - 100
   }
-
-  k <- 500
-  if(nrow(MT_Interaction) < 500){
-    k <- nrow(MT_Interaction)
-  }
-  
-  last_iter <- 1
-  Segment_ID <- tibble()
-  
-  while (k <= nrow(MT_Interaction)) {
     
   cores <- detectCores()
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
-  DF <- foreach(i = last_iter:k, .combine = rbind, .export = ls(.GlobalEnv)) %dopar% {
+  Segment_ID <- foreach(i = 1:nrow(MT_Interaction), .combine = rbind, 
+                        .export = c("Length_estiamtion_df", "MT_Interaction", "Segments")) %dopar% {
     j <- which.min(as.matrix(abs(Length_estiamtion_df[1] - MT_Interaction[i, x]))) - 5
 
     if (j < 1) {
@@ -107,23 +98,8 @@ Segment_to_point <- function(x) {
   }
   stopCluster(cl)
   
-  Segment_ID <- rbind(DF, Segment_ID)
-  
-  last_iter <- k + 1
-  k <- k + 500
-  
-  if(k >= nrow(MT_Interaction)){
-    if(last_iter >= nrow(MT_Interaction)){
-      k <- last_iter + 1
-    } else {
-     k <- nrow(MT_Interaction)
-    }
-    
-  }
-  }
-  
   Segment_ID <- tibble(Segments_ID = Segment_ID)
-  DF <- cbind(MT_Interaction, Segment_ID$Segments_ID$V1)
+  DF <- cbind(MT_Interaction, Segment_ID$Segments_ID)
   
   if (x == 2) {
     Compare_ID <- tibble(Test = apply(
@@ -145,20 +121,12 @@ Remove_interaction_duplicates <- function() {
   # select for each segments pair unique points and remove duplicates based on shorter distance --------
   Unique_value <- unique(MT_Interaction[, 4:5])
 
-  Unique_value_BIN <- tibble()
-  j <- 500
-  if(nrow(Unique_value) < 500){
-    j <- nrow(Unique_value)
-  }
-  
-  last_iter <- 1
-  
-  while (j <= nrow(Unique_value)) {
     cores <- detectCores()
     cl <- makeCluster(cores)
     registerDoParallel(cl)
     
-    DF <- foreach(i = last_iter:j, .combine = rbind, .export = c("MT_Interaction", "Unique_value"), .packages = "tidyr") %dopar% {
+    Unique_value_BIN <- foreach(i = 1:nrow(Unique_value), .combine = rbind, .export = c("MT_Interaction", "Unique_value"), 
+                                .packages = "tidyr") %dopar% {
       Unique_value_df <- MT_Interaction[with(MT_Interaction, `Segments_ID_1` == as.numeric(Unique_value[i, 1]) &
                                                `Segments_ID_2` == as.numeric(Unique_value[i, 2])), ]
       Point_ID_2_df <- tibble(unique(Unique_value_df$Point_ID_2))
@@ -174,21 +142,7 @@ Remove_interaction_duplicates <- function() {
       data.table::rbindlist(Unique_value_df)
     }
     stopCluster(cl)
-    
-    Unique_value_BIN <- rbind(DF, Unique_value_BIN)
-    
-    last_iter <- j + 1
-    j <- j + 500
-    
-    if(j >= nrow(Unique_value)){
-      if(last_iter >= nrow(Unique_value)){
-        j <- last_iter + 1
-      } else {
-        j <- nrow(Unique_value)
-      }
-      
-    }
-  }
+
   
   Unique_value_BIN
 }
@@ -196,21 +150,13 @@ Remove_interaction_duplicates <- function() {
 Unique_interaction <- function() {
   # select for each segments pair unique points and remove duplicates based on shorter distance --------
   Unique_value <- unique(MT_Interaction[, 4])
-
-  Unique_value_BIN <- tibble()
-  j <- 500
-  if(nrow(Unique_value) < 500){
-    j <- nrow(Unique_value)
-  }
   
-  last_iter <- 1
-  
-  while (j <= nrow(Unique_value)) {
     cores <- detectCores()
     cl <- makeCluster(cores)
     registerDoParallel(cl)
     
-    DF <- foreach(i = 1:nrow(Unique_value), .combine = rbind, .export = c("MT_Interaction", "Unique_value"), .packages = c("tidyr", "dplyr")) %dopar% {
+    DF <- foreach(i = 1:nrow(Unique_value), .combine = rbind, .export = c("MT_Interaction", "Unique_value"), 
+                  .packages = c("tidyr", "dplyr")) %dopar% {
       Unique_value_df <- MT_Interaction[with(MT_Interaction, `Segments_ID_1` == as.numeric(Unique_value[i, 1])), ]
       Unique_segment <- tibble(unique(Unique_value_df$Segments_ID_2))
       
@@ -243,21 +189,6 @@ Unique_interaction <- function() {
       Unique_value_df
     }
     stopCluster(cl)
-    
-    Unique_value_BIN <- rbind(DF, Unique_value_BIN)
-    
-    last_iter <- j + 1
-    j <- j + 500
-    
-    if(j >= nrow(Unique_value)){
-      if(last_iter >= nrow(Unique_value)){
-        j <- last_iter + 1
-      } else {
-        j <- nrow(Unique_value)
-      }
-      
-    }
-  }
 
-  Unique_value_BIN
+  DF
 }

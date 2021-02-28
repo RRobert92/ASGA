@@ -37,40 +37,16 @@ A_MT_Bridging <- function(input, output, session) {
     )
     Sys.sleep(0.1)
     
-    MT_POINT_CONFIG <<- as.numeric(Function_scale[i])
 
-      MT_Interaction <- tibble()
-      j <- 500
-      if(nrow(Points) < 500){
-        j <- nrow(Points)
-      }
-      
-      last_iter <- 1
-      end <- FALSE
-      
-      while (j < nrow(Points)) {
         cores <<- detectCores()
         cl <<- makeCluster(cores)
         registerDoParallel(cl)
         
-              DF <<- foreach(i = last_iter:j, .combine = rbind, .inorder = FALSE, .export = ls(.GlobalEnv)) %dopar% {
+        MT_Interaction <<- foreach(i = 1:nrow(Points), .combine = rbind, .inorder = FALSE, 
+                             .export = c("Points", "MT_POINT_CONFIG", "Point_interaction")) %dopar% {
                 Point_interaction(i)
                 }
       stopCluster(cl)
-      
-      MT_Interaction <- rbind(DF, MT_Interaction)
-      
-      last_iter <- j + 1
-      j <- j + 500
-      
-      if(j >= nrow(Points)){
-        j <- nrow(Points)
-        end <- TRUE
-      }
-      if(end == TRUE){
-        break
-      }
-      }
     
     assign(paste("MT_Interaction", MT_POINT_CONFIG, sep = "_"),
            MT_Interaction,
