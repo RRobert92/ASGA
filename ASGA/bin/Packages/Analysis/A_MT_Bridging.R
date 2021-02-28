@@ -38,15 +38,39 @@ A_MT_Bridging <- function(input, output, session) {
     Sys.sleep(0.1)
     
     MT_POINT_CONFIG <<- as.numeric(Function_scale[i])
-    
-    cores <<- detectCores()
-    cl <<- makeCluster(cores)
-    registerDoParallel(cl)
 
-    MT_Interaction <<- foreach(i = 1:nrow(Points), .combine = rbind, .inorder = FALSE, .export = ls(.GlobalEnv)) %dopar% {
-      Point_interaction(i)
-    }
-    stopCluster(cl)
+      MT_Interaction <- tibble()
+      j <- 500
+      if(nrow(Points) < 500){
+        j <- nrow(Points)
+      }
+      
+      last_iter <- 1
+      end <- FALSE
+      
+      while (j < nrow(Points)) {
+        cores <<- detectCores()
+        cl <<- makeCluster(cores)
+        registerDoParallel(cl)
+        
+              DF <<- foreach(i = last_iter:j, .combine = rbind, .inorder = FALSE, .export = ls(.GlobalEnv)) %dopar% {
+                Point_interaction(i)
+                }
+      stopCluster(cl)
+      
+      MT_Interaction <- rbind(DF, MT_Interaction)
+      
+      last_iter <- j + 1
+      j <- j + 500
+      
+      if(j >= nrow(Points)){
+        j <- nrow(Points)
+        end <- TRUE
+      }
+      if(end == TRUE){
+        break
+      }
+      }
     
     assign(paste("MT_Interaction", MT_POINT_CONFIG, sep = "_"),
            MT_Interaction,
@@ -70,8 +94,7 @@ A_MT_Bridging <- function(input, output, session) {
            Segment_to_point(1),
            envir = .GlobalEnv
     )
-    names(MT_Interaction)[4] <<- "Segments_ID_1"
-    
+
     updateProgressBar(
       session = session,
       id = "P_MT_Bridginig",
@@ -83,11 +106,12 @@ A_MT_Bridging <- function(input, output, session) {
            Segment_to_point(2),
            envir = .GlobalEnv
     )
-    names(MT_Interaction)[5] <<- "Segments_ID_2"
+    
+    names(MT_Interaction)[4:5] <<- c("Segments_ID_1", "Segments_ID_2")
     
     updateProgressBar(
       session = session,
-      title = paste("Searching for unique interacting points for", Function_scale[i], "um...", sep = " "),
+      title = paste("Remove duplicated interactions for", Function_scale[i], "um...", sep = " "),
       id = "P_MT_Bridginig",
       value = round(((as.numeric(Counter[[1]][[3]]) / as.numeric(length(Function_scale) * 4))) * 100, 0)
     )

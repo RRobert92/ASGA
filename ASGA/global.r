@@ -47,7 +47,7 @@ options(shiny.host = "127.0.0.1")
 options(shiny.port = 7878)
 
 # Global constant settings  ----------------------------------------------------
-SHINY_IO <<- TRUE # Constant defining if app is running localy or online
+SHINY_IO <<- TRUE # Constant defining if app is running locally or online
 DATA_TEST <<- 0
 NUM_FILES <<- 0
 MINUS_THRESHOLD <<- 1.68 # Minus end distance to the pole [um]
