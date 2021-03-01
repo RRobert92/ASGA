@@ -119,7 +119,11 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
     cl <<- makeCluster(cores)
     registerDoParallel(cl)
 
-    KMT_Minus_End <<- foreach(i = 1:nrow(Segments_KMT), .combine = "rbind", .inorder = F, .export = ls(.GlobalEnv), .packages = "tibble") %dopar% {
+    KMT_Minus_End <<- foreach(
+      i = 1:nrow(Segments_KMT), .combine = "rbind", .inorder = F,
+      .export = c("Segments_KMT", "Nodes", "Points", "Pole1", "Pole2", "MINUS_DISTANCE", "KMT_Minus_End_Interaction"),
+      .packages = "tibble"
+    ) %dopar% {
       KMT_Minus_End_Interaction(i)
     }
 
