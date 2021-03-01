@@ -33,7 +33,7 @@ A_MT_Bridging <- function(input, output, session) {
       session = session,
       id = "P_MT_Bridginig",
       title = paste("Calculating microtubule interaction for", Function_scale[i], "um...", sep = " "),
-      value = round(as.numeric(1/length(Function_scale) * i) / 4 * 100, 0)
+      value = round(as.numeric(i/length(Function_scale)) * 100, 0)
     )
     Sys.sleep(0.1)
     
@@ -62,7 +62,7 @@ A_MT_Bridging <- function(input, output, session) {
       session = session,
       id = "P_MT_Bridginig",
       title = paste("Pre-sorting data of MT interaction for", Function_scale[i], "um...", sep = " "),
-      value = round(((as.numeric(Counter[[1]][[1]]) + 0.5) / as.numeric(length(Function_scale) * 4)) * 100, 0)
+      value = round(((as.numeric(Counter[[1]][[1]])) / as.numeric(length(Function_scale) * 4)) * 100, 0)
     )
     Sys.sleep(0.1)
     
