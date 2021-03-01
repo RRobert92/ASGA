@@ -36,7 +36,7 @@ A_MT_Bridging <- function(input, output, session) {
       value = round(as.numeric(j / length(Function_scale)) * 100, 0)
     )
     Sys.sleep(0.1)
-    
+
     MT_POINT_CONFIG <<- as.numeric(Function_scale[j])
 
     cores <<- detectCores()
@@ -52,7 +52,7 @@ A_MT_Bridging <- function(input, output, session) {
 
 
     stopCluster(cl)
-    
+
     assign(paste("MT_Interaction", MT_POINT_CONFIG, sep = "_"),
       MT_Interaction,
       envir = .GlobalEnv

@@ -11,7 +11,7 @@
 # Title of the app -------------------------------------------------------------
 source("bin/Utility/Library.R")
 
-APP_TITLE <- "ASGA v0.33"
+APP_TITLE <- "ASGA v0.34"
 CC <- paste("© Copyright GPL V3.0 2019-",
   str_split(date(), pattern = " ")[[1]][5],
   ", Robert Kiewisz",
