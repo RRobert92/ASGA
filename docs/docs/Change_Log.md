@@ -9,11 +9,14 @@ date: 2021-01-14
 </center>
 
 ---
-## v0.34 - Unpublished
+## v0.34 - Published 01/03/2021
 ---
 
 `Major changes`
 
+- Restructure MT interaction functions
+    - Improved performance of the calculation
+    - Added option to run the calculation as a function of distance
 - Added export of curvature data into Amira file
 - Added function to calculate SMTs minus-end distance
 - Restructured Analysis folder and split function for KMTs/SMTs and Stat
