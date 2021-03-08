@@ -1,4 +1,6 @@
-
+node_modules
+ASGA_Portable*
+R-Portable-Win
 ASGA/.Rproj.user/
 ASGA/Data
 ASGA/.Rhistory
@@ -8,3 +10,4 @@ ASGA/rsconnect/shinyapps.io/kiewisz/ASGA.dcf
 .Rproj.user
 *.jpeg
 docs/site/
+.Rhistory

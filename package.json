@@ -1,0 +1,20 @@
+{
+  "name": "ASGA",
+  "version": "0.34.0",
+  "description": "Automatic Spatial Graph Analysis",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ./",
+    "package-win": "electron-packager ./ --overwrite --platform=win32 --arch=x64 --icon=docs/img/Icon.ico --out=ASGA_Portable --version-string.CompanyName=CFCI --version-string.ProductName=\"ASGA\""
+  },
+  "repository": "https://github.com/RRobert92/ASGA",
+  "keywords": [
+    "Electron",
+    "ASGA"
+  ],
+  "author": "Robert Kiewisz",
+  "license": "GNU-3.0",
+  "devDependencies": {
+    "electron": "^12.0.0"
+  }
+}
