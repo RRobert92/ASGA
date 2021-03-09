@@ -62,7 +62,6 @@ Getfiles_Server <- function(input, output, session) {
           error = function(e) {}
         )
         AMIRA <<- FALSE
-        
       } else if (str_detect(input$file$datapath[i], ".am")) {
         Amira_df <<- readLines(input$file$datapath[i])
         updateProgressBar(
@@ -108,17 +107,21 @@ Getfiles_Server <- function(input, output, session) {
               Load_Amira_Segments(),
               envir = .GlobalEnv
             )
-            updateProgressBar(
-              session = session,
-              id = "LoadData",
-              value = i * 100 / NUM_FILES,
-              title = paste("Loading your data:", " Segment file no.", i, " loaded", sep = "")
-            )
+          },
+          error = function(e) {}
+        )
+        updateProgressBar(
+          session = session,
+          id = "LoadData",
+          value = i * 100 / NUM_FILES,
+          title = paste("Loading your data:", " Segment file no.", i, " loaded", sep = "")
+        )
 
-            Sys.sleep(0.1)
-
+        Sys.sleep(0.1)
+        tryCatch(
+          {
             assign(paste("Amira", "Dataset", i, sep = "_"),
-                   Amira_df,
+              Amira_df,
               envir = .GlobalEnv
             )
 
@@ -192,7 +195,7 @@ Getfiles_Server <- function(input, output, session) {
         },
         error = function(e) {}
       )
-      
+
       Check_Analysis(File_name)
 
       updateProgressBar(
@@ -201,8 +204,8 @@ Getfiles_Server <- function(input, output, session) {
         value = i * 100 / NUM_FILES
       )
       Sys.sleep(0.1)
-      
-      if(AnalysisTest != 1) break
+
+      if (AnalysisTest != 1) break
     }
     closeSweetAlert(session = session)
     hideTab(inputId = "innavbar-GS", target = "Settings")

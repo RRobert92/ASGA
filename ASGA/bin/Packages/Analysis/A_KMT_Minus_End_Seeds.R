@@ -14,7 +14,13 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
 
   # Analyze (-) ends nucleation from the KMT for Pole1 ---------------------------
   total <- as.numeric(length(which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00"))) - 1)
-
+  
+  if (SEED_INT_AS_FUNCTION == TRUE) {
+    MINUS_DISTANCE <<- 0.035
+  } else {
+    Function_Scale_Seed <<- list(MINUS_DISTANCE)
+  }
+  
   progressSweetAlert(
     session = session,
     id = "P_nucleation1",

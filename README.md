@@ -1,4 +1,4 @@
-<img src="https://github.com/RRobert92/ASGA/blob/main/ASGA_dev/img/asga%20baner.png?raw=true">
+<img src="https://github.com/RRobert92/ASGA/blob/main/docs/img/asga%20baner.png?raw=true">
 
 # Open-Source Spindle analysis tool
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/RRobert92/MT_Analysis)
@@ -31,7 +31,7 @@
 * [Copyright](#Copyright)
   
 <a name="Quick_start"></a>
-# Quick start
+# Quick startS
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 You can run the software in an online-version under the [Shinyapp.io](https://kiewisz.shinyapps.io/ASGA/) or localy.
 
@@ -77,7 +77,20 @@ R library
 install.packages("remotes")
 remotes::install_github("RRobert92/ASGA")
 
+library(shiny)
+runApp("ASGA")
 ```
+For portable ASGA application:
+```
+git clone https://github.com/RRobert92/ASGA
+cd ASGA
+
+npm install electron-packager -g
+npm install
+(Required) create R-Portable-Win with portable R version and embedded libraries
+npm run package-win
+```
+
 <a name="Contributing"></a>
 # Contributing
 Contributions, collaborators and/or constructive criticism are welcome! Please see our Contributing Guide "Soon available" for more details.
