@@ -10,4 +10,4 @@ ASGA/rsconnect/shinyapps.io/kiewisz/ASGA.dcf
 .Rproj.user
 *.jpeg
 docs/site/
-.Rhistory
+*.Rhistory

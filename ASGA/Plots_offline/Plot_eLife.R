@@ -379,63 +379,127 @@ Minus_Seed <- Minus_Seed + geom_freqpoly(data = filter(Minus_seed_avg, I_class =
 print(Minus_Seed)
 
 # KMTs minus end interaction
-KMT_Minus_End_Interaction <- rbind(Data_1_KMT_Minus_End_Interaction, Data_2_KMT_Minus_End_Interaction, Data_3_KMT_Minus_End_Interaction)
+KMT_Minus_End_Interaction_25 <- rbind(Data_1_KMT_Minus_End_0.025, Data_2_KMT_Minus_End_0.025, Data_3_KMT_Minus_End_0.025)
+KMT_Minus_End_Interaction_30 <- rbind(Data_1_KMT_Minus_End_0.03, Data_2_KMT_Minus_End_0.03, Data_3_KMT_Minus_End_0.03)
+KMT_Minus_End_Interaction_35 <- rbind(Data_1_KMT_Minus_End_0.035, Data_2_KMT_Minus_End_0.035, Data_3_KMT_Minus_End_0.035)
+KMT_Minus_End_Interaction_45 <- rbind(Data_1_KMT_Minus_End_0.045, Data_2_KMT_Minus_End_0.045, Data_3_KMT_Minus_End_0.045)
+KMT_Minus_End_Interaction_50 <- rbind(Data_1_KMT_Minus_End_0.05, Data_2_KMT_Minus_End_0.05, Data_3_KMT_Minus_End_0.05)
+KMT_Minus_End_Interaction_75 <- rbind(Data_1_KMT_Minus_End_0.075, Data_2_KMT_Minus_End_0.075, Data_3_KMT_Minus_End_0.075)
+KMT_Minus_End_Interaction_100 <- rbind(Data_1_KMT_Minus_End_0.1, Data_2_KMT_Minus_End_0.1, Data_3_KMT_Minus_End_0.1)
 
-KMT_Minus_End_Data <- tibble(ALL_KMT = nrow(filter(KMT_Minus_End_Interaction, MT_type == "KMT"))/ 2689,
-                             ALL_SMT = nrow(filter(KMT_Minus_End_Interaction, MT_type == "SMT"))/ 2689,
-                             ALL_KMT_1 = nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "KMT"))/ 792,
-                             ALL_KMT_2 = nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "KMT") / 1147),
-                             ALL_KMT_3 = nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "KMT") / 750),
-                             ALL_SMT_1 = nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "SMT"))/ 792,
-                             ALL_SMT_2 = nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "SMT") / 1147),
-                             ALL_SMT_3 = nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "SMT") / 750),
-                             
-)
-KMT_Minus_End_Data <- tibble(
-  Data = c( 
-    nrow(filter(KMT_Minus_End_Interaction, MT_type == "KMT")) / 2689,
-    nrow(filter(KMT_Minus_End_Interaction, MT_type == "SMT")) / 2689,
-    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "KMT"))/ 792,
-    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "KMT")) / 1147,
-    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "KMT")) / 750,
-    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "SMT")) / 792,
-    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "SMT")) / 1147,
-    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "SMT")) / 750,
-    nrow(filter(KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 1322,
-    nrow(filter(KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 1322,
-    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53))/ 295,
-    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 726,
-    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 301,
-    nrow(filter(Data_1_KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 295,
-    nrow(filter(Data_2_KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 726,
-    nrow(filter(Data_3_KMT_Minus_End_Interaction, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 301
+KMT_Minus_End_Data_All <- tibble(
+  Data = c(
+    Interaction_25 = nrow(filter(KMT_Minus_End_Interaction_25, MT_type == "KMT")) /
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_30 = nrow(filter(KMT_Minus_End_Interaction_30, MT_type == "KMT")) /
+      nrow(KMT_Minus_End_Interaction_30),
+    Interaction_35 = nrow(filter(KMT_Minus_End_Interaction_35, MT_type == "KMT")) /
+      nrow(KMT_Minus_End_Interaction_35),
+    Interaction_45 = nrow(filter(KMT_Minus_End_Interaction_45, MT_type == "KMT")) /
+      nrow(KMT_Minus_End_Interaction_45),
+    Interaction_50 = nrow(filter(KMT_Minus_End_Interaction_50, MT_type == "KMT")) /
+      nrow(KMT_Minus_End_Interaction_50),
+    Interaction_75 = nrow(filter(KMT_Minus_End_Interaction_75, MT_type == "KMT")) /
+      nrow(KMT_Minus_End_Interaction_75),
+    Interaction_100 = nrow(filter(KMT_Minus_End_Interaction_100, MT_type == "KMT")) /
+      nrow(KMT_Minus_End_Interaction_100),
+    Interaction_25 = nrow(filter(KMT_Minus_End_Interaction_25, MT_type == "SMT")) /
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_30 = nrow(filter(KMT_Minus_End_Interaction_30, MT_type == "SMT")) /
+      nrow(KMT_Minus_End_Interaction_30),
+    Interaction_35 = nrow(filter(KMT_Minus_End_Interaction_35, MT_type == "SMT")) /
+      nrow(KMT_Minus_End_Interaction_35),
+    Interaction_45 = nrow(filter(KMT_Minus_End_Interaction_45, MT_type == "SMT")) /
+      nrow(KMT_Minus_End_Interaction_45),
+    Interaction_50 = nrow(filter(KMT_Minus_End_Interaction_50, MT_type == "SMT")) /
+      nrow(KMT_Minus_End_Interaction_50),
+    Interaction_75 = nrow(filter(KMT_Minus_End_Interaction_75, MT_type == "SMT")) /
+      nrow(KMT_Minus_End_Interaction_75),
+    Interaction_100 = nrow(filter(KMT_Minus_End_Interaction_100, MT_type == "SMT")) /
+      nrow(KMT_Minus_End_Interaction_100)
   ),
   Label = c(
-    "ALL_KMT",
-    "ALL_SMT",
-    "ALL_KMT_1",
-    "ALL_KMT_2",
-    "ALL_KMT_3",
-    "ALL_SMT_1",
-    "ALL_SMT_2",
-    "ALL_SMT_3",
-    "Pole_KMT",
-    "Pole_SMT",
-    "Pole_KMT_1",
-    "Pole_KMT_2",
-    "Pole_KMT_3",
-    "Pole_SMT_1",
-    "Pole_SMT_2",
-    "Pole_SMT_3"
+    "All_25_k",
+    "All_30_K",
+    "All_35_K",
+    "All_45_K",
+    "All_50_K",
+    "All_75_K",
+    "All_100_K",
+    "All_25_s",
+    "All_30_s",
+    "All_35_s",
+    "All_45_s",
+    "All_50_s",
+    "All_75_s",
+    "All_100_s"
+  )
+)
+
+KMT_Minus_End_Data_Pole <- tibble(
+  Data = c(
+    Interaction_25 = nrow(filter(KMT_Minus_End_Interaction_25, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_30 = nrow(filter(KMT_Minus_End_Interaction_30, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_35 = nrow(filter(KMT_Minus_End_Interaction_35, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) /
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_45 = nrow(filter(KMT_Minus_End_Interaction_45, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) /
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_50 = nrow(filter(KMT_Minus_End_Interaction_50, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_75 = nrow(filter(KMT_Minus_End_Interaction_75, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_100 = nrow(filter(KMT_Minus_End_Interaction_100, MT_type == "KMT" & KMT_Minus_Distance >= 1.53)) /
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_25 = nrow(filter(KMT_Minus_End_Interaction_25, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_30 = nrow(filter(KMT_Minus_End_Interaction_30, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_35 = nrow(filter(KMT_Minus_End_Interaction_35, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_45 = nrow(filter(KMT_Minus_End_Interaction_45, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_50 = nrow(filter(KMT_Minus_End_Interaction_50, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_75 = nrow(filter(KMT_Minus_End_Interaction_75, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) / 
+      nrow(KMT_Minus_End_Interaction_25),
+    Interaction_100 = nrow(filter(KMT_Minus_End_Interaction_100, MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+      nrow(KMT_Minus_End_Interaction_25)
+    ),
+  Label = c(
+    "Pole_25_k",
+    "Pole_30_k",
+    "Pole_35_k",
+    "Pole_45_k",
+    "Pole_50_k",
+    "Pole_75_k",
+    "Pole_100_k",
+    "Pole_25_S",
+    "Pole_30_S",
+    "Pole_35_S", 
+    "Pole_45_S",
+    "Pole_50_S",
+    "Pole_75_S",
+    "Pole_100_S"
   ))
 
-ggplot(KMT_Minus_End_Data, aes(Label, weight = Data)) + geom_bar() + theme_classic()
+ggplot(KMT_Minus_End_Data_Pole, aes(Label, weight = Data)) + geom_bar() + theme_classic() + ylim(0, 1)
 
-p1 <- ggplot(KMT_Minus_End_Interaction, aes(Relative_position)) + geom_freqpoly(color="grey20") + theme_classic() + ylim(0,80)
-p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "KMT"), aes(Relative_position),
-                        color = "red")
-p1 <- p1 + geom_freqpoly(data = filter(KMT_Minus_End_Interaction, MT_type == "SMT"), aes(Relative_position),
-                        color = "orange")
+KMT_seed <- rbind(Data_1_KMTs_minus_seed, Data_2_KMTs_minus_seed, Data_3_KMTs_minus_seed)
+p1 <- ggplot(filter(Data_1_KMTs_minus_seed, I_class == "KMT"), aes(Relative_pos)) + geom_freqpoly(color = "red1") + theme_classic()
+p1 <- p1 + geom_freqpoly(data = filter(Data_2_KMTs_minus_seed, I_class == "KMT"), aes(Relative_pos),
+                        color = "red2")
+p1 <- p1 + geom_freqpoly(data = filter(Data_3_KMTs_minus_seed, I_class == "KMT"), aes(Relative_pos),
+                         color = "red3")
+p1
+
+
+p1 <- ggplot(filter(Data__KMTs_minus_seed, I_class == "SMT"), aes(Relative_pos)) + geom_freqpoly(color = "orange1") + theme_classic()
+p1 <- p1 + geom_freqpoly(data = filter(Data_2_KMTs_minus_seed, I_class == "SMT"), aes(Relative_pos),
+                         color = "orange2")
+p1 <- p1 + geom_freqpoly(data = filter(Data_3_KMTs_minus_seed, I_class == "SMT"), aes(Relative_pos),
+                         color = "orange3")
 p1
 
 p1 <- ggplot(filter(KMT_Minus_End_0.1, KMT_Minus_Distance >= 1.53 & MT_type == "KMT" | KMT_Minus_Distance >= 1.53 & MT_type == "SMT"), 
@@ -449,179 +513,121 @@ p1
 
 # MT-MT interactions
 
-for(i in 1:nrow(Data_1_MT_Interaction)){
-  if(Data_1_MT_Interaction$Segments_ID_1[i] %in% Segments_KMT$`Segment ID`){
-    Data_1_MT_Interaction[i,8] <- "KMT"
+Segments_KMT_1 <<- Data_Segments_1 %>% filter_at(vars(starts_with("Pole")), any_vars(. >= 1))
+Segments_KMT_1 <<- Segments_KMT_1 %>% select(
+  "Segment ID",
+  "length",
+  "Node ID #1",
+  "Node ID #2",
+  "Point IDs"
+)
+Segments_KMT_2 <<- Data_Segments_2 %>% filter_at(vars(starts_with("Pole")), any_vars(. >= 1))
+Segments_KMT_2 <<- Segments_KMT_2 %>% select(
+  "Segment ID",
+  "length",
+  "Node ID #1",
+  "Node ID #2",
+  "Point IDs"
+)
+Segments_KMT_3 <<- Data_Segments_3 %>% filter_at(vars(starts_with("Pole")), any_vars(. >= 1))
+Segments_KMT_3 <<- Segments_KMT_3 %>% select(
+  "Segment ID",
+  "length",
+  "Node ID #1",
+  "Node ID #2",
+  "Point IDs"
+)
+
+for(i in 1:nrow(Data_1_MT_Interaction_0.05)){
+  if(Data_1_MT_Interaction_0.05$Segments_ID_1[i] %in% Segments_KMT_1$`Segment ID`){
+    Data_1_MT_Interaction_0.05[i,8] <- "KMT"
   } else {
-    Data_1_MT_Interaction[i,8] <- "SMT"
+    Data_1_MT_Interaction_0.05[i,8] <- "SMT"
   }
 }
 
-for(i in 1:nrow(Data_2_MT_Interaction)){
-  if(Data_2_MT_Interaction$Segments_ID_1[i] %in% Segments_KMT$`Segment ID`){
-    Data_2_MT_Interaction[i,8] <- "KMT"
+for(i in 1:nrow(Data_2_MT_Interaction_0.05)){
+  if(Data_2_MT_Interaction_0.05$Segments_ID_1[i] %in% Segments_KMT_2$`Segment ID`){
+    Data_2_MT_Interaction_0.05[i,8] <- "KMT"
   } else {
-    Data_2_MT_Interaction[i,8] <- "SMT"
+    Data_2_MT_Interaction_0.05[i,8] <- "SMT"
   }
 }
 
-for(i in 1:nrow(Data_3_MT_Interaction)){
-  if(Data_3_MT_Interaction$Segments_ID_1[i] %in% Segments_KMT$`Segment ID`){
-    Data_3_MT_Interaction[i,8] <- "KMT"
+for(i in 1:nrow(Data_3_MT_Interaction_0.05)){
+  if(Data_3_MT_Interaction_0.05$Segments_ID_1[i] %in% Segments_KMT_3$`Segment ID`){
+    Data_3_MT_Interaction_0.05[i,8] <- "KMT"
   } else {
-    Data_3_MT_Interaction[i,8] <- "SMT"
+    Data_3_MT_Interaction_0.05[i,8] <- "SMT"
   }
 }
 
-AVG_MT_Interaction <- tibble()
+AVG_25 <- rbind(Data_1_MT_Interaction_0.025, Data_2_MT_Interaction_0.025, Data_3_MT_Interaction_0.025)
+AVG_30 <- rbind(Data_1_MT_Interaction_0.03, Data_2_MT_Interaction_0.03, Data_3_MT_Interaction_0.03)
+AVG_35 <- rbind(Data_1_MT_Interaction_0.035, Data_2_MT_Interaction_0.035, Data_3_MT_Interaction_0.035)
+AVG_45 <- rbind(Data_1_MT_Interaction_0.045, Data_2_MT_Interaction_0.045, Data_3_MT_Interaction_0.045)
+AVG_50 <- rbind(Data_1_MT_Interaction_0.05, Data_2_MT_Interaction_0.05)
+
+
+AVG_MT_Interaction_25 <- tibble()
 coutnter <- 1
-for(i in unique(Data_1_MT_Interaction$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,1] <- sum(filter(Data_1_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,2] <- nrow(filter(Data_1_MT_Interaction, `Segments_ID_1` == i))
+for(i in unique(filter(AVG_25, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction_25[coutnter,1] <- mean(filter(AVG_25, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction_25[coutnter,2] <- nrow(filter(AVG_25, `Segments_ID_1` == i))
   coutnter <- coutnter+1
 }
 
+
+AVG_MT_Interaction_30 <- tibble()
 coutnter <- 1
-for(i in unique(Data_2_MT_Interaction$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,3] <- sum(filter(Data_2_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,4] <- nrow(filter(Data_2_MT_Interaction, `Segments_ID_1` == i))
-  coutnter <- coutnter+1
-}
-coutnter <- 1
-for(i in unique(Data_3_MT_Interaction$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,5] <- sum(filter(Data_3_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,6] <- nrow(filter(Data_3_MT_Interaction, `Segments_ID_1` == i))
+for(i in unique(filter(AVG_30, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction_30[coutnter,1] <- mean(filter(AVG_30, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction_30[coutnter,2] <- nrow(filter(AVG_30, `Segments_ID_1` == i))
   coutnter <- coutnter+1
 }
 
-AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...1`)) + geom_quasirandom(shape = 15, size = 1.5, color = "grey10") + theme_classic() + 
-  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...3`), shape = 16, size = 1.5, color = "grey20") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#2", `...3`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...5`), shape = 17, size = 1.5, color = "grey30") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#3", `...5`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-
-AVG_Inter_length
-
-AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...2`)) + geom_quasirandom(shape = 15, size = 1.5, color = "grey10") + theme_classic() + 
-  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...4`), shape = 16, size = 1.5, color = "grey20") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#2", `...4`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...6`), shape = 17, size = 1.5, color = "grey30") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#3", `...6`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-
-AVG_Inter_length
-
-AVG_MT_Interaction <- tibble()
+AVG_MT_Interaction_35 <- tibble()
 coutnter <- 1
-for(i in unique(filter(Data_1_MT_Interaction, `...8` == "SMT")$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,1] <- sum(filter(Data_1_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,2] <- nrow(filter(Data_1_MT_Interaction, `Segments_ID_1` == i))
+for(i in unique(filter(AVG_35, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction_35[coutnter,1] <- mean(filter(AVG_35, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction_35[coutnter,2] <- nrow(filter(AVG_35, `Segments_ID_1` == i))
   coutnter <- coutnter+1
 }
 
+AVG_MT_Interaction_45 <- tibble()
 coutnter <- 1
-for(i in unique(filter(Data_2_MT_Interaction, `...8` == "SMT")$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,3] <- sum(filter(Data_2_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,4] <- nrow(filter(Data_2_MT_Interaction, `Segments_ID_1` == i))
-  coutnter <- coutnter+1
-}
-coutnter <- 1
-for(i in unique(filter(Data_3_MT_Interaction, `...8` == "SMT")$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,5] <- sum(filter(Data_3_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,6] <- nrow(filter(Data_3_MT_Interaction, `Segments_ID_1` == i))
+for(i in unique(filter(AVG_45, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction_45[coutnter,1] <- mean(filter(AVG_45, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction_45[coutnter,2] <- nrow(filter(AVG_45, `Segments_ID_1` == i))
   coutnter <- coutnter+1
 }
 
-AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...1`)) + geom_quasirandom(shape = 15, size = 1.5, color = "orange1") + theme_classic() + 
-  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...3`), shape = 16, size = 1.5, color = "orange2") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#2", `...3`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...5`), shape = 17, size = 1.5, color = "orange3") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#3", `...5`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-
-AVG_Inter_length
-
-AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...2`)) + geom_quasirandom(shape = 15, size = 1.5, color = "orange1") + theme_classic() + 
-  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...4`), shape = 16, size = 1.5, color = "orange2") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#2", `...4`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...6`), shape = 17, size = 1.5, color = "orange3") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#3", `...6`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-
-AVG_Inter_length
-
-AVG_MT_Interaction <- tibble()
+AVG_MT_Interaction_50 <- tibble()
 coutnter <- 1
-for(i in unique(filter(Data_1_MT_Interaction, `...8` == "KMT")$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,1] <- sum(filter(Data_1_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,2] <- nrow(filter(Data_1_MT_Interaction, `Segments_ID_1` == i))
+for(i in unique(filter(AVG_50, `...8` == "KMT")$Segments_ID_1)){
+  AVG_MT_Interaction_50[coutnter,1] <- mean(filter(AVG_50, `Segments_ID_1` == i)$Length)
+  AVG_MT_Interaction_50[coutnter,2] <- nrow(filter(AVG_50, `Segments_ID_1` == i))
   coutnter <- coutnter+1
 }
 
-coutnter <- 1
-for(i in unique(filter(Data_2_MT_Interaction, `...8` == "KMT")$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,3] <- sum(filter(Data_2_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,4] <- nrow(filter(Data_2_MT_Interaction, `Segments_ID_1` == i))
-  coutnter <- coutnter+1
-}
-coutnter <- 1
-for(i in unique(filter(Data_3_MT_Interaction, `...8` == "KMT")$Segments_ID_1)){
-  AVG_MT_Interaction[coutnter,5] <- sum(filter(Data_3_MT_Interaction, `Segments_ID_1` == i)$Length)
-  AVG_MT_Interaction[coutnter,6] <- nrow(filter(Data_3_MT_Interaction, `Segments_ID_1` == i))
-  coutnter <- coutnter+1
-}
+data <- tibble(
+  value = c(AVG_MT_Interaction_25$...2, AVG_MT_Interaction_30$...2, AVG_MT_Interaction_35$...2, 
+            AVG_MT_Interaction_45$...2, AVG_MT_Interaction_50$...2),
+  type = c(
+    rep("25", nrow(AVG_MT_Interaction_25)),
+    rep("30", nrow(AVG_MT_Interaction_30)),
+    rep("35", nrow(AVG_MT_Interaction_35)),
+    rep("45", nrow(AVG_MT_Interaction_45)),
+    rep("50", nrow(AVG_MT_Interaction_50))
+  )
+)
 
-AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...1`)) + geom_quasirandom(shape = 15, size = 1.5, color = "red1") + theme_classic() + 
-  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...3`), shape = 16, size = 1.5, color = "red2") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#2", `...3`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...5`), shape = 17, size = 1.5, color = "red3") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#3", `...5`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
+# Represent it
+p <- data %>%
+  ggplot(aes(x=value, fill=type)) +
+  geom_freqpoly() +
+  scale_fill_manual(values=c("grey80", "grey65", "grey50", "grey40", "grey20")) +
+  theme_classic() +
+  labs(fill="")
 
-AVG_Inter_length
-
-AVG_Inter_length <- ggplot(na.omit(AVG_MT_Interaction), aes("#1", `...2`)) + geom_quasirandom(shape = 15, size = 1.5, color = "red1") + theme_classic() + 
-  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange") + ylim(0,32)
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#2", `...4`), shape = 16, size = 1.5, color = "red2") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#2", `...4`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-AVG_Inter_length <- AVG_Inter_length + 
-  geom_quasirandom(data = na.omit(AVG_MT_Interaction), aes("#3", `...6`), shape = 17, size = 1.5, color = "red3") +
-  stat_summary(data = na.omit(AVG_MT_Interaction),
-               aes("#3", `...6`), 
-               fun.data="mean_sdl", fun.args = list(mult=1), geom="pointrange")
-
-AVG_Inter_length
+p

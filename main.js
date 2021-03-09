@@ -2,19 +2,18 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 
-
 const url = require('url')
-const port = "7878"
+const port = "9191"
 const child = require('child_process');
 const MACOS = "darwin"
 const WINDOWS = "win32"
 
 var killStr = ""
-var appPath = path.join(app.getAppPath(), "ASGA")
+appPath = path.join(app.getAppPath(), "ASGA")
 var execPath = "RScript"
 
-
 if(process.platform == WINDOWS){
+  appPath = appPath.replace(/\\/g, "\\\\");
   execPath = path.join(app.getAppPath(), "R-Portable-Win", "bin", "Rscript.exe" )
 } else if(process.platform == MACOS){
   var macAbsolutePath = path.join(app.getAppPath(), "R-Portable-Mac")
@@ -32,7 +31,7 @@ if(process.platform == WINDOWS){
 
 console.log(process.env)
 
-const childProcess = child.spawn(execPath, ["-e", "shiny::runApp(file.path('"+appPath+"'), port = 7878)"])
+const childProcess = child.spawn(execPath, ["-e", "shiny::runApp(file.path('"+appPath+"'), port="+port+")"])
 
 childProcess.stdout.on('data', (data) => {
   console.log(`stdout:${data}`)
@@ -66,7 +65,7 @@ function createWindow () {
 			  show:false, 
 			  width: 800, 
 			  height: 600, 
-			  title:"ASGA"})
+			  title:""})
 
       mainWindow.webContents.once('dom-ready', () => {
         console.log(new Date().toISOString()+'::mainWindow loaded')
@@ -79,12 +78,13 @@ function createWindow () {
           loading.hide()
           loading.close()
 
-        }, 2000)
+        }, 5000)
 
       })
+	  
       console.log(port)
       // long loading html
-      mainWindow.loadURL('http://127.0.0.1:7878')
+      mainWindow.loadURL('http://127.0.0.1:'+port)
     
       mainWindow.webContents.on('did-finish-load', function() {
         console.log(new Date().toISOString()+'::did-finish-load')
