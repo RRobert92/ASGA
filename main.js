@@ -71,7 +71,6 @@ function createWindow () {
         console.log(new Date().toISOString()+'::mainWindow loaded')
         setTimeout( () => {
           mainWindow.show()
-		  mainWindow.maximize()
           if(process.platform==MACOS){
             mainWindow.reload()
           }
@@ -79,13 +78,13 @@ function createWindow () {
           loading.close()
 
         }, 5000)
-
       })
 	  
       console.log(port)
       // long loading html
       mainWindow.loadURL('http://127.0.0.1:'+port)
-    
+	  mainWindow.reload()
+	
       mainWindow.webContents.on('did-finish-load', function() {
         console.log(new Date().toISOString()+'::did-finish-load')
       });
