@@ -925,19 +925,19 @@ Save_Data <- function(input, output, session) {
   # Save Data for MT interaction -----------------------------------------------
   tryCatch(
     {
+      updateProgressBar(
+        session = session,
+        id = "Saving_Data",
+        title = "Saving KMT interaction data...",
+        value = 95
+      )
+      Sys.sleep(0.1)
       for (i in 1:length(Function_scale)) {
         DF_Name <<- paste("MT_Interaction", Function_scale[i], sep = "_")
 
         tryCatch(
           {
             if (exists(paste(DF_Name))) {
-              updateProgressBar(
-                session = session,
-                id = "Saving_Data",
-                title = "Saving KMT interaction data...",
-                value = 95
-              )
-              Sys.sleep(0.1)
             }
 
             assign(paste("Data", current_data, paste(DF_Name), sep = "_"),

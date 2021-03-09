@@ -8,6 +8,13 @@
 # Created: 2020-05-20
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
+
+# Global server settings  ------------------------------------------------------
+options(shiny.maxRequestSize = 1024 * 1024^2)
+options(shiny.host = "127.0.0.1")
+options(shiny.port = 7878)
+options(java.parameters = "- Xmx10240m")
+
 # Title of the app -------------------------------------------------------------
 source("bin/Utility/Library.R")
 
@@ -40,11 +47,6 @@ source("bin/Utility/Load_Amira.R")
 source("bin/Utility/Save_Data.R")
 source("bin/Utility/Save_Amira.R")
 source("bin/Utility/Error_Messages.R")
-
-# Global server settings  ------------------------------------------------------
-options(shiny.maxRequestSize = 1024 * 1024^2)
-options(shiny.host = "127.0.0.1")
-options(shiny.port = 7878)
 
 # Global constant settings  ----------------------------------------------------
 SHINY_IO <<- TRUE # Constant defining if app is running locally or online
