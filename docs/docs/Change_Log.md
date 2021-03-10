@@ -9,6 +9,14 @@ date: 2021-01-14
 </center>
 
 ---
+## v0.34.1 - Published 10/03/2021
+---
+
+`Major changes`
+- Maintenance update
+- Introduced desktop app for Win x64, Linux and mac with electron-packager
+
+---
 ## v0.34 - Published 01/03/2021
 ---
 

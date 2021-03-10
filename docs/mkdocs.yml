@@ -29,7 +29,7 @@ plugins:
   - macros
 
 extra:
-  version: 0.33
-  Data: 28.12.2020
+  version: 0.34.1
+  Data: 10.03.2021
   Author: Robert kiewisz
   License: GPL V3.0

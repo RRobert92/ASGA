@@ -5,7 +5,7 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-20
+# Created: 2021-03-10
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 
@@ -18,7 +18,7 @@ options(java.parameters = "- Xmx1024m")
 # Title of the app -------------------------------------------------------------
 source("bin/Utility/Library.R")
 
-APP_TITLE <- "ASGA v0.34"
+APP_TITLE <- "ASGA v0.34.1"
 CC <- paste("© Copyright GPL V3.0 2019-",
   str_split(Sys.Date(), pattern = "-")[[1]][1],
   ", Robert Kiewisz",
