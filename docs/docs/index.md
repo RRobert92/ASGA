@@ -4,7 +4,7 @@ authors: Robert Kiewisz
 date: 2021-01-14
 ---
 
-<img align="center" src="https://github.com/RRobert92/ASGA/blob/main/ASGA_dev/img/asga%20baner.png?raw=true">
+<img align="center" src="https://github.com/RRobert92/ASGA/blob/main/docs/img/asga%20baner.png?raw=true">
 
 
 # Open-Source Spindle analysis tool
