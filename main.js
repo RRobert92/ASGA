@@ -9,7 +9,7 @@ const MACOS = "darwin"
 const WINDOWS = "win32"
 
 var killStr = ""
-appPath = path.join(app.getAppPath(), "ASGA")
+appPath = path.join(app.getAppPath(), "R")
 var execPath = "RScript"
 
 if(process.platform == WINDOWS){

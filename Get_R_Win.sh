@@ -10,3 +10,6 @@ mv app/* ../R-Portable-Win
 rm -r app latest_r.exe 
 # Remove unneccessary files TODO: What else
 rm -r doc tests
+
+#Install all packages
+.\R-Portable-Win\bin\Rscript.exe .\install_packages.R

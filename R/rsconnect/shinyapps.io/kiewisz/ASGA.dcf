@@ -1,0 +1,13 @@
+name: ASGA
+title: ASGA
+username:
+account: kiewisz
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2285799
+bundleId: 4322269
+url: https://kiewisz.shinyapps.io/ASGA/
+when: 1615314286.86063
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Plots_offline/Plot_eLife.R|Plots_offline/Plots.R|Plots_offline/Plots_Ellipse.R|Plots_offline/Plots_PED.R|Plots_offline/Plots_Uni_Model.R
