@@ -30,6 +30,15 @@ cd ../
 #Deploy distributions 
 npm install electron-packager
 npm install
+
 npm run package-win
+Compress-Archive -Force .\Dist\ASGA-win32-x64 .\Dist\ASGA-win32-x64.zip
+rm -r .\Dist\ASGA-win32-x64
+
 npm run package-linux
+Compress-Archive -Force .\Dist\ASGA-linux-x64 .\Dist\ASGA-linux-x64.zip
+rm -r .\Dist\ASGA-linux-x64
+
 npm run package-mac
+Compress-Archive -Force .\Dist\ASGA-mac-x64 .\Dist\ASGA-mac-x64.zip
+rm -r .\Dist\ASGA-mac-x64
