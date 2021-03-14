@@ -1,6 +1,9 @@
 # Download and extract the Windows binary install
 if(Test-Path R-Portable-Win){
 	rm -r R-Portable-Win
+}
+
+if(Test-Path Dist){
 	rm -r Dist
 }
 

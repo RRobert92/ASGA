@@ -742,41 +742,55 @@ Save_Data <- function(input, output, session) {
   # Save Data for nucleation ---------------------------------------------------
   tryCatch(
     {
-      if (exists("KMTs_minus_seed_P1")) {
-        updateProgressBar(
-          session = session,
-          id = "Saving_Data",
-          title = "Saving MT and KMT nucleation data...",
-          value = 70
+
+      for (i in 1:length(Function_Scale_Seed)) {
+        DF_Name <<- paste("KMTs_minus_seed", Function_Scale_Seed[i], sep = "_")
+        DF_Name_1 <<- paste("KMTs_minus_seed_P1", Function_Scale_Seed[i], sep = "_")
+        DF_Name_2 <<- paste("KMTs_minus_seed_P2", Function_Scale_Seed[i], sep = "_")
+
+        tryCatch(
+          {
+            if (exists(paste(DF_Name_1))) {
+              updateProgressBar(
+                session = session,
+                id = "Saving_Data",
+                title = "Saving MT and KMT nucleation data...",
+                value = 70
+              )
+              Sys.sleep(0.1)
+            }
+
+            assign(paste("Data", current_data, paste(DF_Name_1), sep = "_"),
+                   get(paste(DF_Name_1)),
+                   envir = .GlobalEnv
+            )
+            write.xlsx(
+              get(paste("Data", current_data, paste(DF_Name_1), sep = "_")),
+              paste("Data/", "Data_", current_data, "_", paste(DF_Name_1), ".xlsx", sep = "")
+            )
+
+            assign(paste("Data", current_data, paste(DF_Name_2), sep = "_"),
+                   get(paste(DF_Name_2)),
+                   envir = .GlobalEnv
+            )
+            write.xlsx(
+              get(paste("Data", current_data, paste(DF_Name_2), sep = "_")),
+              paste("Data/", "Data_", current_data, "_", paste(DF_Name_2), ".xlsx", sep = "")
+            )
+
+            assign(paste("Data", current_data, paste(DF_Name), sep = "_"),
+                   rbind(get(paste("Data", current_data, paste(DF_Name_1), sep = "_")),
+                         get(paste("Data", current_data, paste(DF_Name_2), sep = "_"))),
+                   envir = .GlobalEnv
+            )
+            write.xlsx(
+              get(paste("Data", current_data, paste(DF_Name), sep = "_")),
+              paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
+            )
+          },
+          error = function(e) {}
         )
-        Sys.sleep(0.1)
       }
-
-      assign(paste("Data", current_data, "KMTs_minus_seed_P1", sep = "_"),
-        KMTs_minus_seed_P1,
-        envir = .GlobalEnv
-      )
-      assign(paste("Data", current_data, "KMTs_minus_seed_P2", sep = "_"),
-        KMTs_minus_seed_P2,
-        envir = .GlobalEnv
-      )
-      assign(paste("Data", current_data, "KMTs_minus_seed", sep = "_"),
-        rbind(KMTs_minus_seed_P1, KMTs_minus_seed_P2),
-        envir = .GlobalEnv
-      )
-
-      write.xlsx(
-        get(paste("Data", current_data, "KMTs_minus_seed_P1", sep = "_")),
-        paste("Data/", "Data_", current_data, "_KMTs_minus_seed_P1.xlsx", sep = "")
-      )
-      write.xlsx(
-        get(paste("Data", current_data, "KMTs_minus_seed_P2", sep = "_")),
-        paste("Data/", "Data_", current_data, "_KMTs_minus_seed_P2.xlsx", sep = "")
-      )
-      write.xlsx(
-        get(paste("Data", current_data, "KMTs_minus_seed", sep = "_")),
-        paste("Data/", "Data_", current_data, "_KMTs_minus_seed.xlsx", sep = "")
-      )
     },
     error = function(e) {}
   )

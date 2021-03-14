@@ -59,10 +59,11 @@ SMT_Minus_Ends <- function() {
     }
 
 
-    SMT_Ends[i, 1:3] <- tibble(
+    SMT_Ends[i, 1:4] <- tibble(
       Segment_ID = as.numeric(Minus_end[4]),
       Distance_to_Pole = as.numeric(Dist[1]),
-      Relativ_Position = as.numeric(Relative_position)
+      Relativ_Position = as.numeric(Relative_position),
+      Length = as.numeric(Segments_SMT[i, "length"]/10000)
     )
   }
 
