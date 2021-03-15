@@ -85,10 +85,7 @@ For portable ASGA application:
 git clone https://github.com/RRobert92/ASGA
 cd ASGA
 
-npm install electron-packager -g
-npm install
-(Required) create R-Portable-Win with portable R version and embedded libraries
-npm run package-win
+run Distribution_Creat.ps1
 ```
 
 <a name="Contributing"></a>
