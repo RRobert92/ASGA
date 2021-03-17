@@ -16,17 +16,25 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         r-version: [3.5, 3.6, 4.0]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
+      - name: ACTIONS_ALLOW_UNSECURE_COMMANDS
+        id: ACTIONS_ALLOW_UNSECURE_COMMANDS
+        run: 
+          echo 'ACTIONS_ALLOW_UNSECURE_COMMANDS=true' >> $GITHUB_ENV
+          echo "PR_AUTHOR=${{ github.event.pull_request.user.login }}" >> $GITHUB_ENV
+          echo "PR_AUTHOR=${{ github.event.issue.user.login }}" >> $GITHUB_ENV
+
       - name: Set up R ${{ matrix.r-version }}
         uses: r-lib/actions/setup-r@ffe45a39586f073cc2e9af79c4ba563b657dc6e3
         with:
-          r-version: ${{ matrix.r-version }}
+          r-version: ${{ matrix.r-version }} 
+          
       - name: Install dependencies
         run: |
           source("install_packages.R")
