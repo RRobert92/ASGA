@@ -16,18 +16,16 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
+    
     strategy:
       matrix:
         r-version: [4.0]
-        include: 
-          - os: ubuntu-latest
-          - os: windows-latest
         
     steps:
       - uses: actions/checkout@main
         
-      - name: Set up R ${{ matrix.r-version }} and ${{ matrix.os }}
+      - name: Set up R ${{ matrix.r-version }}
         uses: r-lib/actions/setup-r@ffe45a39586f073cc2e9af79c4ba563b657dc6e3
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -42,6 +40,11 @@ jobs:
         shell: Rscript {0}
         
       - name: Check for error
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+        run: |
+          rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+     
+      - name: Run Shiny
+        run: |
+          rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
             
         shell: Rscript {0}
