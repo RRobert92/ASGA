@@ -19,8 +19,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        r-version: [4.0]
         include: 
-          - os: macos-latest 
           - os: ubuntu-latest
           - os: windows-latest
         
@@ -32,7 +32,7 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         with:
-          r-version: 4.0
+          r-version: ${{ matrix.r-version }
           
       - name: Install dependencies
         run: |
