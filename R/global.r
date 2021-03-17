@@ -18,7 +18,7 @@ options(java.parameters = "- Xmx1024m")
 # Title of the app -------------------------------------------------------------
 source("bin/Utility/Library.R")
 
-APP_TITLE <- readChar("R/version", nchars = 10)
+APP_TITLE <- "0.34.1"
 CC <- paste("© Copyright GPL V3.0 2019-",
   str_split(Sys.Date(), pattern = "-")[[1]][1],
   ", Robert Kiewisz",

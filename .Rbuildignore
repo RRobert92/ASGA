@@ -1,2 +1,6 @@
 ^ASGA\.Rproj$
 ^\.Rproj\.user$
+^R-Portable-Win
+^node_modules
+^.github
+^docs
