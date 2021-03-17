@@ -1,6 +1,6 @@
 {
   "name": "ASGA",
-  "version": "0.34.1",
+  "version": "./R/version",
   "description": "Automatic Spatial Graph Analysis",
   "main": "main.js",
   "scripts": {

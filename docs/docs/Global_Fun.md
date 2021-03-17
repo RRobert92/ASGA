@@ -22,7 +22,7 @@ date: 2021-02-15
 <br/>
 <a name="Check_Data"></a>
 <hr /><center>
-###[`Check_Data`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Check_Data.R)
+###[`Check_Data`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Check_Data.R)
 <hr /></center>
 
 ####***Description*** <br/>
@@ -58,7 +58,7 @@ Check_Data object create the following components:
 <br/><br/>
 <a name="Upload_Data"></a>
 <hr /><center>
-###[`Upload_Data`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Upload_Data.R)
+###[`Upload_Data`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Upload_Data.R)
 <hr /></center>
 
 ####***Description*** <br/>
@@ -94,7 +94,7 @@ This module works in tandem with `Check_Data`, `Load_Amira` Global ASGA modules 
 <br/><br/>
 <a name="Load_Amira"></a>
 <hr /><center>
-###[`Load_Amira`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Load_Amira.R)
+###[`Load_Amira`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Load_Amira.R)
 <hr /></center>
 
 ####***Description*** <br/>
@@ -133,7 +133,7 @@ assign(paste("Data", "Segments", i, sep = "_"),
 <br/><br/>
 <a name="Load_Data"></a>
 <hr /><center>
-###[`Load_Data`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Load_Data.R)
+###[`Load_Data`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Load_Data.R)
 <hr /></center>
 
 ####***Description*** <br/>
@@ -166,7 +166,7 @@ Load_Data object create the following components:
 <br/><br/>
 <a name="Save_Data"></a>
 <hr /><center>
-###[`Save_Data`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Save_Data.R)
+###[`Save_Data`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Save_Data.R)
 <hr /></center>
 
 ####***Description*** <br/>
@@ -210,7 +210,7 @@ Only `.xlsx` are saved if Amira files were used for analysis then also an overwr
 <br/><br/>
 <a name="Save_Amira"></a>
 <hr /><center>
-###[`Save_Amira`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Save_Amira.R)
+###[`Save_Amira`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Save_Amira.R)
 <hr /></center>
 
 ####***Description*** <br/>
@@ -256,7 +256,7 @@ tryCatch({
 <br/><br/>
 <a name="Export_Data"></a>
 <hr /><center>
-###[`Export_Data`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Export_Data.R)
+###[`Export_Data`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Export_Data.R)
 <hr /></center>
 
 ####***Description*** <br/>

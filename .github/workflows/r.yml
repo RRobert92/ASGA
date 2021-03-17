@@ -33,7 +33,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          source("install_packages.R")
+          source("Install_Packages_GH_Actions.R")
         shell: Rscript {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")

@@ -30,7 +30,7 @@ rm -r tests
 
 #Install all packages
 cd ../
-.\R-Portable-Win\bin\Rscript.exe .\install_packages.R
+.\R-Portable-Win\bin\Rscript.exe .\Install_Packages_Deploy.R
 
 #Deploy distributions 
 npm install electron-packager

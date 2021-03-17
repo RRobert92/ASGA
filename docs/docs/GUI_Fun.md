@@ -11,7 +11,6 @@ date: 2021-02-15
 </style>
 
 #**ASGA GUI**
-
   ***Version***&nbsp;&nbsp;                      {{ version }} <br/>
   ***Data***&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ Data }} <br/>
   ***Author***&nbsp;&nbsp;&nbsp;                 {{ Author }} <br/>
@@ -23,7 +22,7 @@ date: 2021-02-15
 <br/>
 <a name="Error_Handler"></a>
 <hr /><center>
-###[`Error_Handler`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Error_Messages.R)
+###[`Error_Handler`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Error_Messages.R)
 <hr /></center>
 
 ####***Description***<br/>
@@ -49,7 +48,7 @@ The `Error_Handler` module read out the `DATA_TEST` test output value from `Chec
 <br/><br/>
 <a name="Setting_Buttons"></a>
 <hr /><center>
-###[`Setting_Buttons`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Setting_Buttons.R)
+###[`Setting_Buttons`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Setting_Buttons.R)
 <hr /></center>
 
 ####***Description*** <br/>
@@ -124,7 +123,7 @@ materialSwitch(
 <br/><br/>
 <a name="Report"></a>
 <hr /><center>
-###[`Report`](https://github.com/RRobert92/ASGA/blob/main/ASGA/bin/Utility/Report.R)
+###[`Report`](https://github.com/RRobert92/ASGA/blob/main/R/bin/Utility/Report.R)
 <hr /></center>
 
 ####***Description*** <br/>
