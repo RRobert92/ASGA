@@ -5,8 +5,7 @@ for (x in packages) {
   if(!is.element(x, installed.packages()[,1])){
     install.packages(x,
                      repos='http://cran.us.r-project.org',
-                     dependencies = TRUE,
-                     type = "binary")
+                     dependencies = TRUE)
   } else {
     print(paste(x, " library already installed"))
     }
