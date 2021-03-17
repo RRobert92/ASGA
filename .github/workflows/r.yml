@@ -40,4 +40,4 @@ jobs:
         shell: Rscript {0}
         
       - name: Check for error in Shiny app
-        run:  timeout 1 Rscript -e "shiny::runApp('R')" || code=$?; if ([[ $code -ne 124 && $code -ne 0 ]]); then exit $code; fi
+        run:  timeout 1 Rscript -e "shiny::runApp('R')" || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
