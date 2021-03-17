@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         r-version: [3.5, 3.6, 4.0]
@@ -29,8 +29,7 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck"))
-          remotes::install_deps(dependencies = TRUE)
+          source("install_packages.R")
         shell: Rscript {0}
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
