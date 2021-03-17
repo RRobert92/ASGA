@@ -33,13 +33,10 @@ jobs:
           r-version: ${{ matrix.r-version }}
           
       - name: Install dependencies
-        run: |
-          source("Install_Packages_GH_Actions.R")
-          install.packages(c("remotes", "rcmdcheck"))
-          remotes::install_deps(dependencies = TRUE)
+        run: source("Install_Packages_GH_Actions.R")
         shell: Rscript {0}
         
-      - name: Check for error
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-            
+      - name: Check for error in Shiny app
+        timeout-minutes: 1
+        run: shiny::runApp("R")
         shell: Rscript {0}
