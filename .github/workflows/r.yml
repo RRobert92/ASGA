@@ -16,20 +16,21 @@ on:
 
 jobs:
   build:
-    r-version: ${{ matrix.r-version }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         runs-on: [ubuntu-latest,macos-latest,windows-latest]
         r-version: [4.0]
+        
     steps:
       - uses: actions/checkout@main
 
-      - name: Set up R ${{ matrix.r-version }} na ${{ matrix.os }}
+      - name: Set up R ${{ matrix.r-version }} and ${{ matrix.os }}
         uses: r-lib/actions/setup-r@ffe45a39586f073cc2e9af79c4ba563b657dc6e3
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         with:
+          runs-on: ${{ matrix.os }}
           r-version: ${{ matrix.r-version }} 
           
       - name: Install dependencies
@@ -38,8 +39,6 @@ jobs:
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-        
-      - name: Install dependencies
         
       - name: Check for error
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
