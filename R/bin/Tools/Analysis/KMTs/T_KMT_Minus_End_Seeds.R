@@ -217,6 +217,7 @@ Minus_end_seed <- function(x) {
 KMT_Minus_End_Interaction <- function(x) {
   DF <- tibble(
     KMT_ID = as.numeric(),
+    Interaction_ID = as.character(),
     KMT_Minus_Distance = as.numeric(),
     MT_type = as.character(),
     MT_distance = as.numeric()
@@ -248,7 +249,8 @@ KMT_Minus_End_Interaction <- function(x) {
     if (Minus_end == 2) {
       Relative_Position <- (Node_1[2] - Pole2[2]) / (Node_2[2] - Pole2[2])
     }
-    Minus_end <- tibble(Node_1,
+    Minus_end <- tibble(
+      Node_1,
       KMT_ID = Segments_KMT[x, "Segment ID"],
       ID = Segments_KMT[x, "Node ID #1"],
       Distance = Dist[1, "...1"],
@@ -262,7 +264,8 @@ KMT_Minus_End_Interaction <- function(x) {
     if (Minus_end == 4) {
       Relative_Position <- (Node_2[2] - Pole2[2]) / (Node_1[2] - Pole2[2])
     }
-    Minus_end <- tibble(Node_2,
+    Minus_end <- tibble(
+      Node_2,
       KMT_ID = Segments_KMT[x, "Segment ID"],
       ID = Segments_KMT[x, "Node ID #2"],
       Distance = Dist[1, "...1"],
@@ -335,8 +338,28 @@ KMT_Minus_End_Interaction <- function(x) {
   if (nrow(p_to_P) > 0) {
     p_to_P <- p_to_P[which.min(as.matrix(p_to_P[2])), 1:4]
 
+    j <- which.min(as.matrix(abs(LENGTH_ESTIMATION_DF[1] - p_to_P[1,1]))) - 5
+
+    if (j < 1) {
+      j <- 1
+    }
+
+    test_condition <- TRUE
+    while (test_condition == TRUE) {
+      if (0 < gregexpr(paste(",", as.character(p_to_P[1,1]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1] ||
+          0 < gregexpr(paste(as.character(p_to_P[1,1]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1] ||
+          0 < gregexpr(paste(",", as.character(p_to_P[1,1]), sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1]) {
+        test_condition <- FALSE
+      } else {
+        j <- j + 1
+      }
+    }
+
+    Segment_ID_DF <- j - 1
+
     DF <- tibble(
       KMT_ID = as.numeric(Segments_KMT[x, "Segment ID"]),
+      Interaction_ID = as.character(Segment_ID_DF),
       KMT_Minus_Distance = as.numeric(Minus_end$Distance),
       MT_type = as.character(p_to_P[3]),
       MT_distance = as.numeric(p_to_P[2]),
@@ -346,6 +369,7 @@ KMT_Minus_End_Interaction <- function(x) {
   } else {
     DF <- tibble(
       KMT_ID = as.numeric(Segments_KMT[x, "Segment ID"]),
+      Interaction_ID = as.character(NaN),
       KMT_Minus_Distance = as.numeric(Minus_end$Distance),
       MT_type = as.character(NaN),
       MT_distance = as.numeric(NaN),

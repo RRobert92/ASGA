@@ -113,13 +113,21 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
 
     MINUS_DISTANCE <<- as.numeric(Function_Scale_Seed[i])
 
+    LENGTH_ESTIMATION <- tibble(round(Segments$length / 190, 0))
+    names(LENGTH_ESTIMATION)[1] <- "no"
+
+    LENGTH_ESTIMATION_DF <- tibble()
+    for (i in 1:nrow(LENGTH_ESTIMATION)) {
+      LENGTH_ESTIMATION_DF[i, 1] <- sum(LENGTH_ESTIMATION$no[1:i]) - 100
+    }
+
     cores <<- detectCores()
     cl <<- makeCluster(cores)
     registerDoParallel(cl)
 
     KMT_Minus_End <<- foreach(
       i = 1:nrow(Segments_KMT), .combine = "rbind", .inorder = F,
-      .export = c("Segments_KMT", "Nodes", "Points", "Pole1", "Pole2", "MINUS_DISTANCE", "KMT_Minus_End_Interaction"),
+      .export = c("Segments_KMT", "Nodes", "Points", "Pole1", "Pole2", "MINUS_DISTANCE", "KMT_Minus_End_Interaction", "LENGTH_ESTIMATION_DF"),
       .packages = "tibble"
     ) %dopar% {
       KMT_Minus_End_Interaction(i)

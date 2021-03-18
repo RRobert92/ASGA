@@ -8,6 +8,7 @@ date: 2021-01-14
 
 
 # Open-Source Spindle analysis tool
+[![R](https://github.com/RRobert92/ASGA/actions/workflows/r.yml/badge.svg?branch=main)](https://github.com/RRobert92/ASGA/actions/workflows/r.yml)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/RRobert92/MT_Analysis)
 ![GitHub](https://img.shields.io/github/license/RRobert92/MT_Analysis)
 ![GitHub Release Date](https://img.shields.io/github/release-date/RRobert92/MT_Analysis)
