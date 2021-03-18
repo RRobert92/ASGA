@@ -34,7 +34,9 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         with:
           r-version: ${{ matrix.r-version }}
-          
+      
+      - name: set up ${{ runs-on }}
+        run: sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev xorg libx11-dev libglu1-mesa-dev
       - name: Install dependencies
         run: source("Install_Packages_GH_Actions.R")
         shell: Rscript {0}
