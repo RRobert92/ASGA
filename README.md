@@ -1,6 +1,7 @@
 <img src="https://github.com/RRobert92/ASGA/blob/main/docs/img/asga%20baner.png?raw=true">
 
 # Open-Source Spindle analysis tool
+[![R](https://github.com/RRobert92/ASGA/actions/workflows/r.yml/badge.svg?branch=main)](https://github.com/RRobert92/ASGA/actions/workflows/r.yml)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/RRobert92/MT_Analysis)
 ![GitHub top language](https://img.shields.io/github/languages/top/RRobert92/MT_Analysis)
 ![GitHub](https://img.shields.io/github/license/RRobert92/MT_Analysis)
