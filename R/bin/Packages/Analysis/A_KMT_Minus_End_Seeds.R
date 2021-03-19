@@ -127,7 +127,8 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
 
     KMT_Minus_End <<- foreach(
       i = 1:nrow(Segments_KMT), .combine = "rbind", .inorder = F,
-      .export = c("Segments_KMT", "Nodes", "Points", "Pole1", "Pole2", "MINUS_DISTANCE", "KMT_Minus_End_Interaction", "LENGTH_ESTIMATION_DF"),
+      .export = c("Segments", "Segments_KMT", "Nodes", "Points", "Pole1", "Pole2",
+                  "MINUS_DISTANCE", "KMT_Minus_End_Interaction", "LENGTH_ESTIMATION_DF"),
       .packages = "tibble"
     ) %dopar% {
       KMT_Minus_End_Interaction(i)
