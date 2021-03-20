@@ -37,13 +37,16 @@ npm install electron-packager
 npm install
 
 npm run package-win
+mkdir .\Dist\ASGA-win32-x64\resources\app\R\Data
 Compress-Archive -Force .\Dist\ASGA-win32-x64 .\Dist\ASGA-win32-x64.zip
 rm -r .\Dist\ASGA-win32-x64
 
 npm run package-linux
+mkdir .\Dist\ASGA-linux-x64\resources\app\R\Data
 Compress-Archive -Force .\Dist\ASGA-linux-x64 .\Dist\ASGA-linux-x64.zip
 rm -r .\Dist\ASGA-linux-x64
 
 npm run package-mac
+mkdir .\Dist\ASGA-mac-x64\resources\app\R\Data
 Compress-Archive -Force .\Dist\ASGA-mac-x64 .\Dist\ASGA-mac-x64.zip
 rm -r .\Dist\ASGA-mac-x64

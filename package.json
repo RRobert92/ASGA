@@ -1,14 +1,14 @@
 {
   "name": "ASGA",
-  "version": "./R/version",
+  "version": "0.34.1",
   "description": "Automatic Spatial Graph Analysis",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "./Get_R_Win.sh",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --out=Dist",
-    "package-win": "electron-packager . --overwrite --platform=win32 --arch=x64 --icon=docs/img/Icon.ico --out=Dist --version-string.CompanyName=CFCI --version-string.FileDescription=CE --version-string.ProductName=\"ASGA\"",
-    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=Cdocs/img/ASGA_logo.png --prune=true --out=Dist"
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --out=Dist --ignore=R/Data --ignore=node_modules --ignore=.Rproj.user",
+    "package-win": "electron-packager . --overwrite --platform=win32 --arch=x64 --icon=docs/img/Icon.ico --out=Dist --version-string.CompanyName=CFCI --version-string.FileDescription=CE --version-string.ProductName=\"ASGA\" --ignore=R/Data --ignore=node_modules --ignore=.Rproj.user",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=Cdocs/img/ASGA_logo.png --prune=true --out=Dist --ignore=R/Data --ignore=node_modules --ignore=.Rproj.user"
   },
   "repository": "https://github.com/RRobert92/ASGA",
   "keywords": [
