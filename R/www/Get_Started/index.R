@@ -52,8 +52,7 @@ GetStarted_UI <- function(id) {
 
             tags$div(class = "splash-input-GS",
               "Upload analyzed data:",
-
-              fileInput(ns("file1"), 
+               fileInput(ns("file1"), 
                         label = "", 
                         multiple = TRUE, 
                         accept = ".xlsx")
@@ -112,9 +111,9 @@ GetStarted_UI <- function(id) {
           )
         ),
 
-        tags$div(class = "footer l-box is-center",
-          tags$p(CC)
-        )
+        #tags$div(class = "footer l-box is-center",
+        #  tags$p(CC)
+        #)
       )
     ),
 
@@ -137,9 +136,9 @@ GetStarted_UI <- function(id) {
         uiOutput(ns("Report_Page"))
       ),
 
-      tags$div(class = "footer-report l-box is-center",
-        tags$p(CC)
-      )
+      #tags$div(class = "footer-report l-box is-center",
+      #  tags$p(CC)
+      #)
     ),
     tabPanel(
       "Wiki",

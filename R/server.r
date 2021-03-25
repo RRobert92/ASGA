@@ -299,20 +299,24 @@ function(input, output, session) {
 
       callModule(Report_Plot, "Home")
     } else {
+      Amira_df <<- readLines("tests/ASGA_Test_Data_Set.am")
       Nodes <<- read_excel(
         "tests/ASGA_Test_Data_Set.xlsx",
         sheet = "Nodes"
       )
+      Nodes <<- Load_Amira_Nodes()
 
       Segments <<- read_excel(
         "tests/ASGA_Test_Data_Set.xlsx",
         sheet = "Segments"
       )
+      Segments <<- Load_Amira_Segments()
 
       Points <<- read_excel(
         "tests/ASGA_Test_Data_Set.xlsx",
         sheet = "Points"
       )
+      Points <<- Load_Amira_Points()
 
       callModule(Load_Data, "Home")
       callModule(Test_Functions, "Home")

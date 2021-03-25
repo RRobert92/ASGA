@@ -169,7 +169,7 @@ label {
 }
 
 .table-GS{
-    width: 45%;
+    width: 75%;
     height: 50%;
     margin: auto;
     position: absolute;
@@ -187,10 +187,22 @@ label {
   margin: auto;
 }
 
+.form-group shiny-input-container {
+  align-items: center;
+}
+
+.shiny-input-container {
+  align-items: center;
+}
+
+.shiny-input-container-inline {
+  align-items: center;
+}
+
 .splash-input-GS{
-  width: 63%;
-  padding-left: 31%;
-  margin-left: 3%;
+  width: 100%;
+  padding-left: 25%;
+  padding-right: 20%;
 }
 
 .splash-input-GS-test{
@@ -339,7 +351,7 @@ label {
 # CSS MEDIA QUERIES  -------------------------------------------------------------------
 */
 
-@media (min-width: 60em) {
+@media (min-width:60em) {
 
     body {
         font-size: 13px;
@@ -396,6 +408,8 @@ label {
     }
     .splash-input-GS{
       float: left;
+      padding-left: 40%;
+      padding-right: 40%;
     }
     .table-GS{
       height: 50%;
