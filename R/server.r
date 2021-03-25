@@ -41,7 +41,7 @@ function(input, output, session) {
       updateTabsetPanel(session, "innavbar", selected = "Home")
     }
   })
-  
+
   observeEvent(input$"innavbar-GS", {
     if(input$"innavbar-GS" == "Wiki"){
       js$browseURL("https://rrobert92.github.io/ASGA/")
@@ -182,7 +182,7 @@ function(input, output, session) {
       withProgress(message = "Analyzing:", value = 1, {
         for (y in 1:NUM_FILES) {
           current_data <<- y
-          incProgress(1 / NUM_FILES, 
+          incProgress(1 / NUM_FILES,
                       detail = paste("Data set no.", y, sep = " "))
           Sys.sleep(0.1)
 
@@ -257,7 +257,7 @@ function(input, output, session) {
         for (i in 1:nrow(File_name)) {
           name <- as.data.frame(str_split(File_name[i, 1], "_"))
           df[i, 1] <- as.numeric(name[2, 1])
-          name <- as.data.frame(str_split(File_name[i, 1], 
+          name <- as.data.frame(str_split(File_name[i, 1],
                                           paste("Data_", df[i, 1], "_", sep = "")))
           df[i, 2] <- as.character(name[2, 1])
         }
@@ -269,7 +269,7 @@ function(input, output, session) {
 
       # Download data-set ------------------------------------------------------
       output$`Home-Download_Button` <- renderUI({
-        downloadBttn("downloadData", label = "Download", 
+        downloadBttn("downloadData", label = "Download",
                      style = "material-flat", color = "success")
       })
 
@@ -299,7 +299,17 @@ function(input, output, session) {
 
       callModule(Report_Plot, "Home")
     } else {
-      Amira_df <<- readLines("tests/ASGA_Test_Data_Set.am")
+      tryCatch({
+        Amira_df <<- as_tibble(readLines("tests/ASGA_Test_Data_Set.am"))
+      },
+      error = function(e){})
+      tryCatch({
+        Amira_df <<- as_tibble(readLines("R/tests/ASGA_Test_Data_Set.am"))
+      },
+      warning = function(w){},
+      error = function(e){})
+      names(Amira_df)[1] <<- "X1"
+
       Nodes <<- read_excel(
         "tests/ASGA_Test_Data_Set.xlsx",
         sheet = "Nodes"

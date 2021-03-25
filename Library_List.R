@@ -9,4 +9,15 @@ packages <- c("shiny", "shinyjs", "shinycssloaders", "shinyWidgets", "shinyBS", 
               "htmlTable", "bslib", "magrittr", "vctrs", "utf8", "pkgconfig", "tidyselect", "backports", "DBI", "scales", "haven",
               "abind", "rJava", "xlsxjars", "base64enc", "png", "jpeg", "checkmate", "sass", "jquerylib", "ellipsis", "lifecycle",
               "withr", "generics", "assertthat", "munsell", "hms", "httr", "fs", "xml2", "rstudioapi", "cli", "knitr", "RColorBrewer",
-              "glue", "colorspace", 'httpuv', 'mime', 'promises', "fastmap", "fansi", "lubridate", "xfun", "data.table")
+              "glue", "colorspace", 'httpuv', 'mime', 'promises', "fastmap", "fansi", "lubridate", "xfun", "data.table", "RcppProgress",
+              "blob", "cpp11", "farver", "highr", "isoband", "labeling", "linprog", "lpSolve", "markd", "markdown", "progress","selectr",
+              "uuid", "viridis", "viridisLite")
+
+for (x in packages) {
+
+  if(!is.element(x, installed.packages()[,1])){
+    install.packages(x, dependencies = T)
+  } else {
+    print(paste(x, " library already installed"))
+  }
+}
