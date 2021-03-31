@@ -18,7 +18,7 @@ options(java.parameters = "- Xmx1024m")
 # Title of the app -------------------------------------------------------------
 source("bin/Utility/Library.R")
 
-APP_TITLE <- "0.34.1"
+APP_TITLE <- "ASGA v0.35:b1"
 CC <- paste("© Copyright GPL V3.0 2019-",
   str_split(Sys.Date(), pattern = "-")[[1]][1],
   ", Robert Kiewisz",
@@ -37,6 +37,7 @@ shinyjs.browseURL = function(url) {
 # Global HTML  -----------------------------------------------------------------
 source("www/Home/index.R")
 source("www/Get_Started/index.R")
+source("www/3D_Viewer/index.R")
 
 # Global Utility  --------------------------------------------------------------
 source("bin/Utility/Check_Data.R")
@@ -57,6 +58,7 @@ MINUS_DISTANCE <<- 0.035 # Minus end distance of any MT to the KMT [um]
 MT_POINT_CONFIG <<- 0.035 # Distance of any MT to the MT [um]
 FIBER_AREA_CONFIG <<- 24 # 500 nm bin length
 CURVATURE_CONFIG <<- 24 # 500 nm bin length
+WINDOW_HEIGHT <<- NULL
 
 # Global Functions  ------------------------------------------------------------
 # Pre_Analysis

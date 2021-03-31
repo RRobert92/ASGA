@@ -31,6 +31,11 @@ fluidPage(
     ),
 
     tabPanel(
+      "3D Viewer",
+      Viewer_UI("Home")
+    ),
+
+    tabPanel(
       "Home",
       fluidRow(
         homeUI("Home")

@@ -46,7 +46,9 @@ label {
 .is-center {
     text-align: center;
 }
-
+.col-sm-10 {
+  margin-right: 0;
+}
 /*
 # CSS button  -------------------------------------------------------------------
 */
@@ -177,7 +179,14 @@ label {
     text-align: left;
     text-transform: none;
 }
-
+.table-3D{
+    width: 100%
+    margin: auto;
+    position: absolute;
+    top: 51px; left: 0; bottom: 0; right: 0;
+    text-align: left;
+    text-transform: none;
+}
 .table-GS-Center{
   text-align: center;
   padding-top: 20px;
@@ -356,13 +365,13 @@ label {
     body {
         font-size: 13px;
     }
-    
+
     .shiny-input-container:not(.shiny-input-container-inline) {
       width: 300px;
       max-width: 100%;
       margin: 10px;
     }
-    
+
     .home-menu {
         text-align: left;
     }
@@ -390,7 +399,7 @@ label {
     padding-left: 250px;
     padding-right: 250px;
     text-align: center;
-      
+
     }
     .splash-content-report{
     padding-top: 20px;
@@ -399,7 +408,7 @@ label {
     padding-right: 15%;
     text-align: center;
     }
-    
+
     .splash-head {
         font-size: 250%;
     }
