@@ -58,7 +58,6 @@ MINUS_DISTANCE <<- 0.035 # Minus end distance of any MT to the KMT [um]
 MT_POINT_CONFIG <<- 0.035 # Distance of any MT to the MT [um]
 FIBER_AREA_CONFIG <<- 24 # 500 nm bin length
 CURVATURE_CONFIG <<- 24 # 500 nm bin length
-WINDOW_HEIGHT <<- NULL
 
 # Global Functions  ------------------------------------------------------------
 # Pre_Analysis
