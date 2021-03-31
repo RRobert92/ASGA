@@ -9,7 +9,7 @@ Viewer_UI <- function(id) {
                     sliderInput("MT_NO", "Number of MT to visualize", value = 1, min = 1, max = 100)
            )),
     column(10,
-             rglwidgetOutput("wdg", width = "100%", height = "640px")
+             rglwidgetOutput("wdg", width = "100%", height = "640px") %>% withSpinner()
            )
     )
   )
