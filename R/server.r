@@ -91,9 +91,9 @@ function(input, output, session) {
     updateTabsetPanel(session, "innavbar-3D", selected = "3D_Viewer")
   })
 
-  observeEvent(input$MT_NO, {
+  observeEvent(input$`Home-MT_NO`, {
     assign("MT_NO_IMPUT",
-      as.numeric(input[["MT_NO"]]),
+      as.numeric(input[["Home-MT_NO"]]),
       envir = .GlobalEnv
     )
 

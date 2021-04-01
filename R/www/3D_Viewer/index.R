@@ -94,7 +94,7 @@ Viewer_UI <- function(id) {
             tags$div(
               class = "setting_main", style = "margin: 10px",
 
-              sliderInput("MT_NO", "Number of MT to visualize", value = 1, min = 1, max = 100)
+              sliderInput(ns("MT_NO"), "Number of MT to visualize", value = 1, min = 1, max = 100)
             )
           ),
           column(
