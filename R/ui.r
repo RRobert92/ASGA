@@ -26,28 +26,33 @@ fluidPage(
     selected = "Home",
     # footer = footnoteUI("footnote"),
     tabPanel(
-      "GetStarted",
+      title = "Get Started",
+      value = "GetStarted",
       GetStarted_UI("Home")
     ),
 
     tabPanel(
-      "3D Viewer",
+      title = "3D Viewer",
+      value = "3D_Viewer",
       Viewer_UI("Home")
     ),
 
     tabPanel(
-      "Home",
+      title = "Home",
+      value = "Home",
       fluidRow(
         homeUI("Home")
       )
     ),
 
     tabPanel(
-      "Wiki"
+      title = "Wiki",
+      value = "Wiki"
     ),
 
     tabPanel(
-      "About"
+      title = "About",
+      value = "About"
     )
   )
 )

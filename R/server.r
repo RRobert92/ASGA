@@ -11,16 +11,18 @@
 
 # Shiny Server  ----------------------------------------------------------------
 function(input, output, session) {
-    assign("Data_Points_1",
-           readRDS("tests/Data_Points_1"),
-           envir = .GlobalEnv)
-    assign("Data_Segments_1",
-           readRDS("tests/Data_Segments_1"),
-           envir = .GlobalEnv)
+  assign("Data_Points_1",
+    readRDS("tests/Data_Points_1"),
+    envir = .GlobalEnv
+  )
+  assign("Data_Segments_1",
+    readRDS("tests/Data_Segments_1"),
+    envir = .GlobalEnv
+  )
 
   # Hide pages  ----------------------------------------------------------------
   hideTab(inputId = "innavbar", target = "GetStarted")
-  hideTab(inputId = "innavbar", target = "3D Viewer")
+  hideTab(inputId = "innavbar", target = "3D_Viewer")
   hideTab(inputId = "innavbar-GS", target = "Settings")
   hideTab(inputId = "innavbar-GS", target = "Report")
 
@@ -38,57 +40,81 @@ function(input, output, session) {
   })
 
   # Wiki & about button  -------------------------------------------------------
+  observeEvent(input$Wiki, {
+    js$browseURL("https://rrobert92.github.io/ASGA/")
+  })
+
   observeEvent(input$innavbar, {
-    if(input$innavbar == "Wiki"){
+    if (input$innavbar == "Wiki") {
       js$browseURL("https://rrobert92.github.io/ASGA/")
       updateTabsetPanel(session, "innavbar", selected = "Home")
     }
-    if(input$innavbar == "About"){
+    if (input$innavbar == "About") {
       js$browseURL("https://rrobert92.github.io/ASGA/Cit/")
       updateTabsetPanel(session, "innavbar", selected = "Home")
     }
   })
 
   observeEvent(input$"innavbar-GS", {
-    if(input$"innavbar-GS" == "Wiki"){
+    if (input$"innavbar-GS" == "Wiki") {
       js$browseURL("https://rrobert92.github.io/ASGA/")
     }
-    if(input$"innavbar-GS" == "About"){
+    if (input$"innavbar-GS" == "About") {
       js$browseURL("https://rrobert92.github.io/ASGA/Cit/")
     }
   })
 
-  # 3D_Viewer button  --------------------------------------------------------
+  observeEvent(input$"innavbar-3D", {
+    if (input$"innavbar-3D" == "Wiki") {
+      js$browseURL("https://rrobert92.github.io/ASGA/")
+    }
+    if (input$"innavbar-3D" == "About") {
+      js$browseURL("https://rrobert92.github.io/ASGA/Cit/")
+    }
+  })
+
+  # 3D_Viewer page  ------------------------------------------------------------
   observeEvent(input$DataViewer, {
     hideTab(inputId = "innavbar", target = "GetStarted")
-    showTab(inputId = "innavbar", target = "3D Viewer")
     hideTab(inputId = "innavbar-GS", target = "Settings")
     hideTab(inputId = "innavbar-GS", target = "Report")
-    updateTabsetPanel(session, "innavbar", selected = "3D Viewer")
+    hideTab(inputId = "innavbar-3D", target = "3D_Viewer")
+    showTab(inputId = "innavbar", target = "3D_Viewer")
+
+    updateTabsetPanel(session, "innavbar", selected = "3D_Viewer")
+    updateTabsetPanel(session, "innavbar-3D", selected = "3D_Data_Select")
+  })
+
+  # 3D_Viewer open model logic  ------------------------------------------------
+  observeEvent(input$`3D_Viewer_Pub_1`, {
+    showTab(inputId = "innavbar-3D", target = "3D_Viewer")
+    updateTabsetPanel(session, "innavbar-3D", selected = "3D_Viewer")
   })
 
   observeEvent(input$MT_NO, {
     assign("MT_NO_IMPUT",
-           as.numeric(input[["MT_NO"]]),
-           envir = .GlobalEnv
+      as.numeric(input[["MT_NO"]]),
+      envir = .GlobalEnv
     )
 
     output$wdg <- renderRglwidget({
       open3d()
       rgl.bg(color = "black", fogtype = "none")
-      rgl.light(diffuse = "gray75",
-                specular = "gray75", viewpoint.rel = FALSE)
+      rgl.light(
+        diffuse = "gray75",
+        specular = "gray75", viewpoint.rel = FALSE
+      )
 
-      for(i in 1:MT_NO_IMPUT){
-        MT <- as.numeric(unlist(strsplit(Data_Segments_1[i,"Point IDs"], split = ",")))
-        MT <- Data_Points_1[as.numeric(MT[which.min(MT)]+1):as.numeric(MT[which.max(MT)]+1), 2:4]
-        #MT <- cylinder3d(MT/10000, radius=0.01)
-        if(length(Data_Segments_1[i,2:94][Data_Segments_1[i,2:94]== TRUE]) == 1){
-          #shade3d(MT, col="red")
-          lines3d(MT, col="red")
+      for (i in 1:MT_NO_IMPUT) {
+        MT <- as.numeric(unlist(strsplit(Data_Segments_1[i, "Point IDs"], split = ",")))
+        MT <- Data_Points_1[as.numeric(MT[which.min(MT)] + 1):as.numeric(MT[which.max(MT)] + 1), 2:4]
+        # MT <- cylinder3d(MT/10000, radius=0.01)
+        if (length(Data_Segments_1[i, 2:94][Data_Segments_1[i, 2:94] == TRUE]) == 1) {
+          # shade3d(MT, col="red")
+          lines3d(MT, col = "red")
         } else {
-          #shade3d(MT, col="white")
-          lines3d(MT, col="white", alpha =1)
+          # shade3d(MT, col="white")
+          lines3d(MT, col = "white", alpha = 1)
         }
       }
       scene <- scene3d()
@@ -209,7 +235,7 @@ function(input, output, session) {
     }
   })
 
-  # Relativity for the Home and GS button  -------------------------------------
+  # Relativity for the Home and GS page  ----------------------------------------
   observe({
     if (req(input$`innavbar-GS`) == "Home") {
       updateTabsetPanel(session, "innavbar", selected = "Home")
@@ -221,6 +247,13 @@ function(input, output, session) {
     }
   })
 
+  # Relativity for the Home and 3D Page  ---------------------------------------
+  observe({
+    if (req(input$`innavbar-3D`) == "Home") {
+      updateTabsetPanel(session, "innavbar", selected = "Home")
+      hideTab(inputId = "innavbar", target = "3D_Viewer")
+    }
+  })
   # Relativity for the Settings button  ----------------------------------------
   callModule(Setting_Buttons_Server, "Home")
 
@@ -231,7 +264,8 @@ function(input, output, session) {
         for (y in 1:NUM_FILES) {
           current_data <<- y
           incProgress(1 / NUM_FILES,
-                      detail = paste("Data set no.", y, sep = " "))
+            detail = paste("Data set no.", y, sep = " ")
+          )
           Sys.sleep(0.1)
 
           callModule(Load_Data, "Home")
@@ -246,7 +280,7 @@ function(input, output, session) {
             callModule(A_Fiber_Area, "Home")
             callModule(A_Fiber_Length_Curv, "Home")
             callModule(A_K_Core_Area, "Home")
-            if(SHINY_IO == FALSE){
+            if (SHINY_IO == FALSE) {
               callModule(A_KMT_Minus_End_Seeds, "Home")
               callModule(A_MT_Bridging, "Home")
             }
@@ -305,8 +339,10 @@ function(input, output, session) {
         for (i in 1:nrow(File_name)) {
           name <- as.data.frame(str_split(File_name[i, 1], "_"))
           df[i, 1] <- as.numeric(name[2, 1])
-          name <- as.data.frame(str_split(File_name[i, 1],
-                                          paste("Data_", df[i, 1], "_", sep = "")))
+          name <- as.data.frame(str_split(
+            File_name[i, 1],
+            paste("Data_", df[i, 1], "_", sep = "")
+          ))
           df[i, 2] <- as.character(name[2, 1])
         }
 
@@ -317,8 +353,10 @@ function(input, output, session) {
 
       # Download data-set ------------------------------------------------------
       output$`Home-Download_Button` <- renderUI({
-        downloadBttn("downloadData", label = "Download",
-                     style = "material-flat", color = "success")
+        downloadBttn("downloadData",
+          label = "Download",
+          style = "material-flat", color = "success"
+        )
       })
 
       # Collect information to start a plot after analysis ---------------------
@@ -347,15 +385,19 @@ function(input, output, session) {
 
       callModule(Report_Plot, "Home")
     } else {
-      tryCatch({
-        Amira_df <<- as_tibble(readLines("tests/ASGA_Test_Data_Set.am"))
-      },
-      error = function(e){})
-      tryCatch({
-        Amira_df <<- as_tibble(readLines("R/tests/ASGA_Test_Data_Set.am"))
-      },
-      warning = function(w){},
-      error = function(e){})
+      tryCatch(
+        {
+          Amira_df <<- as_tibble(readLines("tests/ASGA_Test_Data_Set.am"))
+        },
+        error = function(e) {}
+      )
+      tryCatch(
+        {
+          Amira_df <<- as_tibble(readLines("R/tests/ASGA_Test_Data_Set.am"))
+        },
+        warning = function(w) {},
+        error = function(e) {}
+      )
       names(Amira_df)[1] <<- "X1"
 
       Nodes <<- read_excel(
@@ -407,24 +449,19 @@ function(input, output, session) {
       if (length(File_name[File_name$V2 == "KMT_No", 2]) >= 1) {
         tagList(
           tags$p(class = "splash-subhead-Report", "KMTs number per kinetochore"),
-
           Report_Plot_KMT_No("Report")
         )
       },
-
       if (length(File_name[File_name$V2 == "LD", 2]) >= 1) {
         tagList(
           tags$p(class = "splash-subhead-Report", "KMT length distribution"),
-
           Report_Plot_LD("Report"),
           Report_Plot_LD2("Report")
         )
       },
-
       if (length(File_name[File_name$V2 == "IKD", 2]) >= 1) {
         tagList(
           tags$p(class = "splash-subhead-Report", "Inter-kinetochore distance"),
-
           Report_Plot_IKD("Report")
         )
       }

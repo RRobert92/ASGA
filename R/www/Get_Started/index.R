@@ -27,41 +27,45 @@ GetStarted_UI <- function(id) {
 
     # UI-GetStarted-UploadData  ------------------------------------------------
 
-    tabPanel("Upload Data", value = "UploadData",
-             
-      tags$div(class = "splash-container-GS",
-        tags$div(class = "splash-GS",
-          tags$h1(class = "splash-head-GS",
+    tabPanel("Upload Data",
+      value = "UploadData",
+      tags$div(
+        class = "splash-container-GS",
+        tags$div(
+          class = "splash-GS",
+          tags$h1(
+            class = "splash-head-GS",
             "Upload your files"
           ),
-
-          tags$p(class = "splash-subhead-GS",
+          tags$p(
+            class = "splash-subhead-GS",
             "Upload multiple .xlsx or .am files. For more information see Wiki page."
           ),
-
-          tags$div(class = "splash-input-GS-row",
-            tags$div(class = "splash-input-GS",
+          tags$div(
+            class = "splash-input-GS-row",
+            tags$div(
+              class = "splash-input-GS",
               "Upload Amira file for analysis:",
-
               fileInput(ns("file"),
-                label = "", 
+                label = "",
                 multiple = TRUE,
                 accept = c(".xlsx", ".am")
               )
             ),
-
-            tags$div(class = "splash-input-GS",
+            tags$div(
+              class = "splash-input-GS",
               "Upload analyzed data:",
-               fileInput(ns("file1"), 
-                        label = "", 
-                        multiple = TRUE, 
-                        accept = ".xlsx")
+              fileInput(ns("file1"),
+                label = "",
+                multiple = TRUE,
+                accept = ".xlsx"
+              )
             )
           ),
-
-          tags$div(class = "splash-input-GS-row",
-            tags$div(class = "splash-input-GS-test",
-
+          tags$div(
+            class = "splash-input-GS-row",
+            tags$div(
+              class = "splash-input-GS-test",
               actionBttn(
                 inputId = "Test_unit",
                 label = "Test",
@@ -71,8 +75,8 @@ GetStarted_UI <- function(id) {
             )
           )
         ),
-
-        tags$div(class = "footer l-box is-center",
+        tags$div(
+          class = "footer l-box is-center",
           tags$p(CC)
         )
       )
@@ -80,22 +84,25 @@ GetStarted_UI <- function(id) {
 
     # UI-GetStarted-Settings  --------------------------------------------------
 
-    tabPanel("Settings", value = "Settings",
-             
-      tags$div(class = "splash-container-GS",
-        tags$div(class = "splash-GS",
-          tags$h1( class = "splash-head-GS",
+    tabPanel("Settings",
+      value = "Settings",
+      tags$div(
+        class = "splash-container-GS",
+        tags$div(
+          class = "splash-GS",
+          tags$h1(
+            class = "splash-head-GS",
             "Set-Up the analysis"
           )
         ),
-
-        tags$div(class = "table-GS",
+        tags$div(
+          class = "table-GS",
           fluidRow(
             Setting_Buttons_UI("Home"),
             column(8, uiOutput(ns("Tool_Info_1")))
           ),
-
-          tags$div(class = "table-GS-Center",
+          tags$div(
+            class = "table-GS-Center",
             fluidRow(
               actionBttn(
                 inputId = "Submit",
@@ -103,48 +110,49 @@ GetStarted_UI <- function(id) {
                 style = "material-flat",
                 color = "primary"
               ),
-
-              tags$div(class = "asga-button asga-button-primary",
+              tags$div(
+                class = "asga-button asga-button-primary",
                 uiOutput(ns("Download_Button"))
               )
             )
           )
         ),
 
-        #tags$div(class = "footer l-box is-center",
+        # tags$div(class = "footer l-box is-center",
         #  tags$p(CC)
-        #)
+        # )
       )
     ),
 
     # UI-GetStarted-Settings  --------------------------------------------------
 
-    tabPanel("Report",value = "Report",
-             
-      tags$div(class = "splash-container-report",
-        tags$h1(class = "splash-head-GS",
+    tabPanel("Report",
+      value = "Report",
+      tags$div(
+        class = "splash-container-report",
+        tags$h1(
+          class = "splash-head-GS",
           "Analysis Report"
         )
       ),
-
-      tags$div(class = "splash-content-report",
-        tags$p(class = "splash-subhead-Report",
+      tags$div(
+        class = "splash-content-report",
+        tags$p(
+          class = "splash-subhead-Report",
           "Settings for the plots"
         ),
-
         uiOutput(ns("Plot_Settings")),
         uiOutput(ns("Report_Page"))
       ),
 
-      #tags$div(class = "footer-report l-box is-center",
+      # tags$div(class = "footer-report l-box is-center",
       #  tags$p(CC)
-      #)
+      # )
     ),
     tabPanel(
       "Wiki",
       value = "Wiki"
     ),
-    
     tabPanel(
       "About",
       value = "About"

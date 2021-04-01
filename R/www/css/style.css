@@ -70,6 +70,10 @@ label {
 .sweet-alert button.cancel{
   background-color: #f8bb86;
 }
+
+.btn-default-3D {
+  margin: 5px;
+}
  /*
 # CSS Main Page  -----------------------------------------------------------------
 */
@@ -214,6 +218,12 @@ label {
   padding-right: 20%;
 }
 
+.splash-input-3D{
+  width: 80%;
+  padding-left: 25%;
+  padding-right: 0%;
+}
+
 .splash-input-GS-test{
   max-width: 100%;
   margin: auto;
@@ -224,6 +234,12 @@ label {
 
 .splash-input-GS-row:after{
   width: 50%;
+  content: "";
+  display: table;
+  clear: both;
+}
+.splash-input-3D-row:after{
+  width: 90%;
   content: "";
   display: table;
   clear: both;
@@ -351,11 +367,6 @@ label {
     z-index: 1;
 }
 
-.shiny-input-container:not(.shiny-input-container-inline) {
-  width: 300px;
-  max-width: 100%;
-  margin: 5px;
-}
  /*
 # CSS MEDIA QUERIES  -------------------------------------------------------------------
 */
@@ -364,12 +375,6 @@ label {
 
     body {
         font-size: 13px;
-    }
-
-    .shiny-input-container:not(.shiny-input-container-inline) {
-      width: 300px;
-      max-width: 100%;
-      margin: 10px;
     }
 
     .home-menu {
@@ -417,8 +422,8 @@ label {
     }
     .splash-input-GS{
       float: left;
-      padding-left: 40%;
-      padding-right: 40%;
+      padding-left: 20%;
+      padding-right: 20%;
     }
     .table-GS{
       height: 50%;
