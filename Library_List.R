@@ -12,12 +12,3 @@ packages <- c("shiny", "shinyjs", "shinycssloaders", "shinyWidgets", "shinyBS", 
               "glue", "colorspace", 'httpuv', 'mime', 'promises', "fastmap", "fansi", "lubridate", "xfun", "data.table", "RcppProgress",
               "blob", "cpp11", "farver", "highr", "isoband", "labeling", "linprog", "lpSolve", "markd", "markdown", "progress","selectr",
               "uuid", "viridis", "viridisLite", "rmarkdown", "htmlwidgets", "rgl")
-
-for (x in packages) {
-
-  if(!is.element(x, installed.packages()[,1])){
-    install.packages(x, dependencies = T)
-  } else {
-    print(paste(x, " library already installed"))
-  }
-}
