@@ -11,14 +11,15 @@
 
 # Shiny Server  ----------------------------------------------------------------
 function(input, output, session) {
-  assign("Data_Points_1",
-    readRDS("tests/Data_Points_1"),
-    envir = .GlobalEnv
-  )
-  assign("Data_Segments_1",
-    readRDS("tests/Data_Segments_1"),
-    envir = .GlobalEnv
-  )
+  observe({
+    if (START_UP == TRUE) {
+      req(input$dimension)
+      assign("WINDOW_HEIGHT",
+        paste(as.numeric(input$dimension[2] - 51), "px", sep = ""),
+        envir = .GlobalEnv
+      )
+    }
+  })
 
   # Hide pages  ----------------------------------------------------------------
   hideTab(inputId = "innavbar", target = "GetStarted")
@@ -86,7 +87,7 @@ function(input, output, session) {
   })
 
   # 3D_Viewer open model logic  ------------------------------------------------
-  observeEvent(input$`3D_Viewer_Pub_1`, {
+  observeEvent(input$`Demo_3D_View`, {
     showTab(inputId = "innavbar-3D", target = "3D_Viewer")
     updateTabsetPanel(session, "innavbar-3D", selected = "3D_Viewer")
   })
@@ -106,10 +107,10 @@ function(input, output, session) {
       )
 
       for (i in 1:MT_NO_IMPUT) {
-        MT <- as.numeric(unlist(strsplit(Data_Segments_1[i, "Point IDs"], split = ",")))
-        MT <- Data_Points_1[as.numeric(MT[which.min(MT)] + 1):as.numeric(MT[which.max(MT)] + 1), 2:4]
+        MT <- as.numeric(unlist(strsplit(Data_Segments_1_Demo[i, "Point IDs"], split = ",")))
+        MT <- Data_Points_1_Demo[as.numeric(MT[which.min(MT)] + 1):as.numeric(MT[which.max(MT)] + 1), 2:4]
         # MT <- cylinder3d(MT/10000, radius=0.01)
-        if (length(Data_Segments_1[i, 2:94][Data_Segments_1[i, 2:94] == TRUE]) == 1) {
+        if (length(Data_Segments_1_Demo[i, 2:94][Data_Segments_1_Demo[i, 2:94] == TRUE]) == 1) {
           # shade3d(MT, col="red")
           lines3d(MT, col = "red")
         } else {
@@ -126,6 +127,14 @@ function(input, output, session) {
 
   # Get file and Load data  ----------------------------------------------------
   callModule(Getfiles_Server, "Home")
+
+  observeEvent(input$`Home-file_3D`, {
+    callModule(Getfiles_3D, "Home")
+    Sys.sleep(1)
+
+    showTab(inputId = "innavbar-3D", target = "3D_Viewer")
+    updateTabsetPanel(session, "innavbar-3D", selected = "3D_Viewer")
+  })
 
   # Upload data UI  ------------------------------------------------------------
   output$Upload <- renderUI({
@@ -254,6 +263,7 @@ function(input, output, session) {
       hideTab(inputId = "innavbar", target = "3D_Viewer")
     }
   })
+
   # Relativity for the Settings button  ----------------------------------------
   callModule(Setting_Buttons_Server, "Home")
 

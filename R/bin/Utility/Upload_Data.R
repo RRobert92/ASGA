@@ -9,7 +9,7 @@
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
 ################################################################################
 
-# Upload Data  -----------------------------------------------------------------
+# Upload Data for main module --------------------------------------------------
 Getfiles_Server <- function(input, output, session) {
   observeEvent(input$file, {
     infile <- input$file
@@ -19,7 +19,6 @@ Getfiles_Server <- function(input, output, session) {
       NUM_FILES <<- nrow(infile)
     }
 
-    # Load Data  ---------------------------------------------------------------
     progressSweetAlert(
       session = session, id = "LoadData",
       title = "Loading your data",
@@ -130,7 +129,7 @@ Getfiles_Server <- function(input, output, session) {
           error = function(e) {}
         )
       }
-      # Check Data  -------------------------------------------------------------
+      # Check Data for main module ---------------------------------------------
       Check_Data(i)
       updateProgressBar(
         session = session,
@@ -155,14 +154,12 @@ Getfiles_Server <- function(input, output, session) {
       datatype <<- "Excel ASCII"
     }
 
-    # Pop-UP windows with Completion/Errors  ----------------------------------------
+    # Pop-UP windows with Completion/Errors  -----------------------------------
     callModule(Error_Handler, "Home")
-
     showTab(inputId = "innavbar-GS", target = "Settings")
   })
 
-  ## Upload of analyzed data sets
-
+  ## Upload of analyzed data sets ----------------------------------------------
   observeEvent(input$file1, {
     infile <- input$file1
     if (is.null(infile)) {

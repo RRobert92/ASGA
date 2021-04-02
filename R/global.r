@@ -42,6 +42,7 @@ source("www/3D_Viewer/index.R")
 # Global Utility  --------------------------------------------------------------
 source("bin/Utility/Check_Data.R")
 source("bin/Utility/Upload_Data.R")
+source("bin/Utility/Upload_Data_3D.R")
 source("bin/Utility/Setting_Buttons.R")
 source("bin/Utility/Load_Data.R")
 source("bin/Utility/Load_Amira.R")
@@ -51,6 +52,8 @@ source("bin/Utility/Error_Messages.R")
 
 # Global constant settings  ----------------------------------------------------
 SHINY_IO <<- TRUE # Constant defining if app is running locally or online
+START_UP <<- TRUE
+WINDOW_HEIGHT <<- "640px"
 DATA_TEST <<- 0
 NUM_FILES <<- 0
 MINUS_THRESHOLD <<- 1.68 # Minus end distance to the pole [um]
@@ -105,3 +108,7 @@ source("bin/Packages/Analysis/A_MT_Bridging.R")
 # Test Unit --------------------------------------------------------------------
 source("tests/Test_Output.R")
 source("tests/Tests.R")
+
+# Examples ---------------------------------------------------------------------
+Data_Points_1_Demo <<- readRDS("tests/Data_Points_1")
+Data_Segments_1_Demo <<- readRDS("tests/Data_Segments_1")
