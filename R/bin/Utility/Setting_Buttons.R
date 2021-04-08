@@ -457,7 +457,7 @@ Setting_Buttons_Server <- function(input, output, session) {
           input = "text",
           title = "Want to confirm ?",
           text = "Would you like to run MT interaction analysis as a function of interaction distance?
-          If yes the interaction distance will be vary between 25, 35, 50, 75 and 100 nm.
+          If yes the interaction distance will be vary between 25, 35, and 50.
           Keep in mind it will also take substancial longer amount of time. Preferable run over night :)",
           btn_labels = c("Cancel", "Confirm"),
           btn_colors = c("#C95050", "#a5dc86")
