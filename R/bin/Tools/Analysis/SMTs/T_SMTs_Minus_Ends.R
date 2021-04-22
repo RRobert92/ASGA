@@ -58,7 +58,6 @@ SMT_Minus_Ends <- function() {
       Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / (Pole1[1, 2] - Pole2[1, 2])
     }
 
-
     SMT_Ends[i, 1:4] <- tibble(
       Segment_ID = as.numeric(Minus_end[4]),
       Distance_to_Pole = as.numeric(Dist[1]),

@@ -24,10 +24,10 @@ A_End_Morphology <- function(input, output, session) {
     Minus_end_morphology_Pole1 <<- End_distribution_Minus(which(colnames(Segments) == "Pole1_00"), 1)
 
     progressSweetAlert(
-      session = session, 
+      session = session,
       id = "P_End_Morphology1",
       title = "Calcualting (+) & (-) end morphology for the Pole_1...",
-      display_pct = TRUE, 
+      display_pct = TRUE,
       value = 0
     )
 
@@ -109,7 +109,7 @@ A_End_Morphology <- function(input, output, session) {
       )
       names(Minus_end_morphology_Pole1)[2] <- "EndType_1"
     }
-    
+
     Plus_end_morphology_Pole1 <<- Plus_end_morphology_Pole1
     Minus_end_morphology_Pole1 <<- Minus_end_morphology_Pole1
 
@@ -126,10 +126,10 @@ A_End_Morphology <- function(input, output, session) {
     )
 
     progressSweetAlert(
-      session = session, 
+      session = session,
       id = "P_End_Morphology2",
       title = "Calcualting (+) & (-) end morphology for the Pole_2...",
-      display_pct = TRUE, 
+      display_pct = TRUE,
       value = 0
     )
 
@@ -164,13 +164,25 @@ A_End_Morphology <- function(input, output, session) {
       updateProgressBar(
         session = session,
         id = "P_End_Morphology2",
+        title = "Calcualting (+) & (-) end morphology for all other MTs...",
         value = round((i - as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) / total * 100, 0)
       )
       Sys.sleep(0.1)
     }
 
-    closeSweetAlert(session = session)
+    updateProgressBar(
+      session = session,
+      id = "P_End_Morphology2",
+      value = 100
+    )
+    Sys.sleep(0.1)
 
+    tryCatch({
+      assign("MT_Ends_Type",
+             MT_Ends_Distribution(),
+             envir = .GlobalEnv)
+    })
+    closeSweetAlert(session = session)
     # Bin data for the Pole2 --------------------------------------------------------
     tryCatch(
       {
@@ -215,7 +227,7 @@ A_End_Morphology <- function(input, output, session) {
       },
       error = function(e) {}
     )
-    
+
     tryCatch(
       {
         Plus_end_morphology_Pole2 <<- Plus_end_morphology_Pole2

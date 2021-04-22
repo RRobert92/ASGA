@@ -231,6 +231,9 @@ Save_Data <- function(input, output, session) {
         rbind(Minus_end_morphology_Pole1, Minus_end_morphology_Pole2),
         envir = .GlobalEnv
       )
+      assign(paste("Data", current_data, "MT_Ends_Type", sep = "_"),
+             MT_Ends_Type,
+             envir = .GlobalEnv)
 
       write.xlsx(
         get(paste("Data", current_data, "Minus_end_morphology_Pole1", sep = "_")),
@@ -255,6 +258,10 @@ Save_Data <- function(input, output, session) {
       write.xlsx(
         get(paste("Data", current_data, "Minus_end_morphology", sep = "_")),
         paste("Data/", "Data_", current_data, "_Minus_end_morphology.xlsx", sep = "")
+      )
+      write.xlsx(
+        get(paste("Data", current_data, "MT_Ends_Type", sep = "_")),
+        paste("Data/", "Data_", current_data, "_MT_Ends_Type.xlsx", sep = "")
       )
     },
     error = function(e) {}
