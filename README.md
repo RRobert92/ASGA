@@ -94,7 +94,6 @@ run Distribution_Creat.ps1
 Contributions, collaborators and/or constructive criticism are welcome! Please see our Contributing Guide "Soon available" for more details.
 
 <a href="https://sourcerer.io/rrobert92"><img src="https://avatars0.githubusercontent.com/u/56911280?v=4" height="50px" width="50px" alt=""/></a>
-<a href="https://github.com/gunar-f"><img src="https://avatars0.githubusercontent.com/u/70518136?s=400&v=4" height="50px" width="50px" alt=""/></a>
 <a name="Copyright"></a>
 ## Copyright
 This project is distributed under the General Public License (GPL) version 3.0 - see the [LICENSE.md](LICENSE.md) file for details.
