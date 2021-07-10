@@ -9,7 +9,7 @@ if(Test-Path Dist){
 
 mkdir R-Portable-Win
 
-wget https://cloud.r-project.org/bin/windows/base/R-4.0.4-win.exe -OutFile R-Portable-Win/latest_r.exe
+wget https://cloud.r-project.org/bin/windows/base/R-4.1.0-win.exe -OutFile R-Portable-Win/latest_r.exe
 
 wget https://constexpr.org/innoextract/files/innoextract-1.9-windows.zip -OutFile R-Portable-Win/innoextract.zip
 Expand-Archive -Force .\R-Portable-Win\innoextract.zip .\R-Portable-Win\innoextract
