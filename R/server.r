@@ -15,8 +15,8 @@ function(input, output, session) {
     if (START_UP == TRUE) {
       req(input$dimension)
       assign("WINDOW_HEIGHT",
-        paste(as.numeric(input$dimension[2] - 51), "px", sep = ""),
-        envir = .GlobalEnv
+             paste(as.numeric(input$dimension[2] - 51), "px", sep = ""),
+             envir = .GlobalEnv
       )
     }
   })
@@ -94,8 +94,8 @@ function(input, output, session) {
 
   observeEvent(input$`Home-MT_NO`, {
     assign("MT_NO_IMPUT",
-      as.numeric(input[["Home-MT_NO"]]),
-      envir = .GlobalEnv
+           as.numeric(input[["Home-MT_NO"]]),
+           envir = .GlobalEnv
     )
 
     output$wdg <- renderRglwidget({
@@ -216,22 +216,22 @@ function(input, output, session) {
       lapply(1:NUM_FILES, function(i) {
         observeEvent(input[[paste("Data_label", i, sep = "_")]], {
           assign(paste("Data_label", i, sep = "_"),
-            input[[paste("Data_label", i, sep = "_")]],
-            envir = .GlobalEnv
+                 input[[paste("Data_label", i, sep = "_")]],
+                 envir = .GlobalEnv
           )
         })
 
         observeEvent(input[[paste("Data_color", i, sep = "_")]], {
           assign(paste("Data_color", i, sep = "_"),
-            input[[paste("Data_color", i, sep = "_")]],
-            envir = .GlobalEnv
+                 input[[paste("Data_color", i, sep = "_")]],
+                 envir = .GlobalEnv
           )
         })
 
         observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
           assign(paste("Data_bin", i, sep = "_"),
-            input[[paste("Data_bin", i, sep = "_")]],
-            envir = .GlobalEnv
+                 input[[paste("Data_bin", i, sep = "_")]],
+                 envir = .GlobalEnv
           )
         })
       })
@@ -274,7 +274,7 @@ function(input, output, session) {
         for (y in 1:NUM_FILES) {
           current_data <<- y
           incProgress(1 / NUM_FILES,
-            detail = paste("Data set no.", y, sep = " ")
+                      detail = paste("Data set no.", y, sep = " ")
           )
           Sys.sleep(0.1)
 
@@ -364,8 +364,8 @@ function(input, output, session) {
       # Download data-set ------------------------------------------------------
       output$`Home-Download_Button` <- renderUI({
         downloadBttn("downloadData",
-          label = "Download",
-          style = "material-flat", color = "success"
+                     label = "Download",
+                     style = "material-flat", color = "success"
         )
       })
 
@@ -373,22 +373,22 @@ function(input, output, session) {
       lapply(1:NUM_FILES, function(i) {
         observeEvent(input[[paste("Data_label", i, sep = "_")]], {
           assign(paste("Data_label", i, sep = "_"),
-            input[[paste("Data_label", i, sep = "_")]],
-            envir = .GlobalEnv
+                 input[[paste("Data_label", i, sep = "_")]],
+                 envir = .GlobalEnv
           )
         })
 
         observeEvent(input[[paste("Data_color", i, sep = "_")]], {
           assign(paste("Data_color", i, sep = "_"),
-            input[[paste("Data_color", i, sep = "_")]],
-            envir = .GlobalEnv
+                 input[[paste("Data_color", i, sep = "_")]],
+                 envir = .GlobalEnv
           )
         })
 
         observeEvent(input[[paste("Data_bin", i, sep = "_")]], {
           assign(paste("Data_bin", i, sep = "_"),
-            input[[paste("Data_bin", i, sep = "_")]],
-            envir = .GlobalEnv
+                 input[[paste("Data_bin", i, sep = "_")]],
+                 envir = .GlobalEnv
           )
         })
       })
@@ -396,17 +396,17 @@ function(input, output, session) {
       callModule(Report_Plot, "Home")
     } else {
       tryCatch(
-        {
-          Amira_df <<- as_tibble(readLines("tests/ASGA_Test_Data_Set.am"))
-        },
-        error = function(e) {}
+      {
+        Amira_df <<- as_tibble(readLines("tests/ASGA_Test_Data_Set.am"))
+      },
+        error = function(e) { }
       )
       tryCatch(
-        {
-          Amira_df <<- as_tibble(readLines("R/tests/ASGA_Test_Data_Set.am"))
-        },
-        warning = function(w) {},
-        error = function(e) {}
+      {
+        Amira_df <<- as_tibble(readLines("R/tests/ASGA_Test_Data_Set.am"))
+      },
+        warning = function(w) { },
+        error = function(e) { }
       )
       names(Amira_df)[1] <<- "X1"
 

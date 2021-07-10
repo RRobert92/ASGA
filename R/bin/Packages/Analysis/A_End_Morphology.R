@@ -33,30 +33,30 @@ A_End_Morphology <- function(input, output, session) {
 
     for (i in as.numeric(which(colnames(Segments) == "Pole1_00") + 1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
       tryCatch(
-        {
-          DF <- data.frame()
+      {
+        DF <- data.frame()
 
-          assign(
-            "DF",
-            End_distribution_Plus(i, 1)
-          )
+        assign(
+          "DF",
+          End_distribution_Plus(i, 1)
+        )
 
-          assign(
-            "Plus_end_morphology_Pole1",
-            rbind(Plus_end_morphology_Pole1, DF)
-          )
+        assign(
+          "Plus_end_morphology_Pole1",
+          rbind(Plus_end_morphology_Pole1, DF)
+        )
 
-          assign(
-            "DF",
-            End_distribution_Minus(i, 1)
-          )
+        assign(
+          "DF",
+          End_distribution_Minus(i, 1)
+        )
 
-          assign(
-            "Minus_end_morphology_Pole1",
-            rbind(Minus_end_morphology_Pole1, DF)
-          )
-        },
-        error = function(e) {}
+        assign(
+          "Minus_end_morphology_Pole1",
+          rbind(Minus_end_morphology_Pole1, DF)
+        )
+      },
+        error = function(e) { }
       )
 
       updateProgressBar(
@@ -80,7 +80,7 @@ A_End_Morphology <- function(input, output, session) {
         "Node_ID"
       )
       for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
-        names(Plus_end_morphology_Pole1)[i] <- paste("EndType_", as.numeric(i - 1), sep = "")
+        names(Plus_end_morphology_Pole1)[i] <- paste0("EndType_", as.numeric(i - 1), sep = "")
       }
 
       Minus_end_morphology_Pole1 <- Minus_end_morphology_Pole1 %>% select(
@@ -91,7 +91,7 @@ A_End_Morphology <- function(input, output, session) {
         "Node_ID"
       )
       for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
-        names(Minus_end_morphology_Pole1)[i] <- paste("EndType_", as.numeric(i - 1), sep = "")
+        names(Minus_end_morphology_Pole1)[i] <- paste0("EndType_", as.numeric(i - 1), sep = "")
       }
     } else {
       Plus_end_morphology_Pole1 <- Plus_end_morphology_Pole1 %>% select(
@@ -118,11 +118,11 @@ A_End_Morphology <- function(input, output, session) {
       as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
     tryCatch(
-      {
-        Plus_end_morphology_Pole2 <<- End_distribution_Plus(which(colnames(Segments) == "Pole2_00"), 2)
-        Minus_end_morphology_Pole2 <<- End_distribution_Minus(which(colnames(Segments) == "Pole2_00"), 2)
-      },
-      error = function(e) {}
+    {
+      Plus_end_morphology_Pole2 <<- End_distribution_Plus(which(colnames(Segments) == "Pole2_00"), 2)
+      Minus_end_morphology_Pole2 <<- End_distribution_Minus(which(colnames(Segments) == "Pole2_00"), 2)
+    },
+      error = function(e) { }
     )
 
     progressSweetAlert(
@@ -135,30 +135,30 @@ A_End_Morphology <- function(input, output, session) {
 
     for (i in as.numeric(which(colnames(Segments) == "Pole2_00") + 1):as.numeric(ncol(Segments) - 4)) {
       tryCatch(
-        {
-          DF <- data.frame()
+      {
+        DF <- data.frame()
 
-          assign(
-            "DF",
-            End_distribution_Plus(i, 2)
-          )
+        assign(
+          "DF",
+          End_distribution_Plus(i, 2)
+        )
 
-          assign(
-            "Plus_end_morphology_Pole2",
-            rbind(Plus_end_morphology_Pole2, DF)
-          )
+        assign(
+          "Plus_end_morphology_Pole2",
+          rbind(Plus_end_morphology_Pole2, DF)
+        )
 
-          assign(
-            "DF",
-            End_distribution_Minus(i, 2)
-          )
+        assign(
+          "DF",
+          End_distribution_Minus(i, 2)
+        )
 
-          assign(
-            "Minus_end_morphology_Pole2",
-            rbind(Minus_end_morphology_Pole2, DF)
-          )
-        },
-        error = function(e) {}
+        assign(
+          "Minus_end_morphology_Pole2",
+          rbind(Minus_end_morphology_Pole2, DF)
+        )
+      },
+        error = function(e) { }
       )
 
       updateProgressBar(
@@ -185,55 +185,55 @@ A_End_Morphology <- function(input, output, session) {
     closeSweetAlert(session = session)
     # Bin data for the Pole2 --------------------------------------------------------
     tryCatch(
-      {
-        if (ncol(Nodes %>% select(starts_with("EndType"))) >= 2) {
-          Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select(
-            "Fiber",
-            starts_with("EndType"),
-            "Entype_Different",
-            "Relative_plus_position",
-            "Node_ID"
-          )
-          for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
-            names(Plus_end_morphology_Pole2)[i] <- paste("EndType_", as.numeric(i - 1), sep = "")
-          }
-
-          Minus_end_morphology_Pole2 <- Minus_end_morphology_Pole2 %>% select(
-            "Fiber",
-            starts_with("EndType"),
-            "Entype_Different",
-            "Relative_minus_position",
-            "Node_ID"
-          )
-          for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
-            names(Minus_end_morphology_Pole2)[i] <- paste("EndType_", as.numeric(i - 1), sep = "")
-          }
-        } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 1) {
-          Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select(
-            "Fiber",
-            starts_with("EndType"),
-            "Relative_plus_position",
-            "Node_ID"
-          )
-          names(Plus_end_morphology_Pole2)[2] <- "EndType_1"
-          Minus_end_morphology_Pole2 <- Minus_end_morphology_Pole2 %>% select(
-            "Fiber",
-            starts_with("EndType"),
-            "Relative_minus_position",
-            "Node_ID"
-          )
-          names(Minus_end_morphology_Pole2)[2] <- "EndType_1"
+    {
+      if (ncol(Nodes %>% select(starts_with("EndType"))) >= 2) {
+        Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select(
+          "Fiber",
+          starts_with("EndType"),
+          "Entype_Different",
+          "Relative_plus_position",
+          "Node_ID"
+        )
+        for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
+          names(Plus_end_morphology_Pole2)[i] <- paste0("EndType_", as.numeric(i - 1), sep = "")
         }
-      },
-      error = function(e) {}
+
+        Minus_end_morphology_Pole2 <- Minus_end_morphology_Pole2 %>% select(
+          "Fiber",
+          starts_with("EndType"),
+          "Entype_Different",
+          "Relative_minus_position",
+          "Node_ID"
+        )
+        for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
+          names(Minus_end_morphology_Pole2)[i] <- paste0("EndType_", as.numeric(i - 1), sep = "")
+        }
+      } else if (ncol(Nodes %>% select(starts_with("EndType"))) == 1) {
+        Plus_end_morphology_Pole2 <- Plus_end_morphology_Pole2 %>% select(
+          "Fiber",
+          starts_with("EndType"),
+          "Relative_plus_position",
+          "Node_ID"
+        )
+        names(Plus_end_morphology_Pole2)[2] <- "EndType_1"
+        Minus_end_morphology_Pole2 <- Minus_end_morphology_Pole2 %>% select(
+          "Fiber",
+          starts_with("EndType"),
+          "Relative_minus_position",
+          "Node_ID"
+        )
+        names(Minus_end_morphology_Pole2)[2] <- "EndType_1"
+      }
+    },
+      error = function(e) { }
     )
 
     tryCatch(
-      {
-        Plus_end_morphology_Pole2 <<- Plus_end_morphology_Pole2
-        Minus_end_morphology_Pole2 <<- Minus_end_morphology_Pole2
-      },
-      error = function(e) {}
+    {
+      Plus_end_morphology_Pole2 <<- Plus_end_morphology_Pole2
+      Minus_end_morphology_Pole2 <<- Minus_end_morphology_Pole2
+    },
+      error = function(e) { }
     )
   }
 }

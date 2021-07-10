@@ -134,21 +134,21 @@ Pre_Analysis <- function(input, output, session) {
     Z_Mean = c(mean(as.matrix(Pole_avg[3])))
   )
 
-  Rx100 <<- tibble()
-  Rx100[1, 1] <<- max(Kinetochore_Avg[1])
-  Rx100[1, 1] <<- abs(Rx100[1, 1] - Pole_avg[1])
-  Rx100[1, 2] <<- min(Kinetochore_Avg[1])
-  Rx100[1, 2] <<- abs(Rx100[1, 2] - Pole_avg[1])
+  Rx100 <- tibble()
+  Rx100[1, 1] <- max(Kinetochore_Avg[1])
+  Rx100[1, 1] <- abs(Rx100[1, 1] - Pole_avg[1])
+  Rx100[1, 2] <- min(Kinetochore_Avg[1])
+  Rx100[1, 2] <- abs(Rx100[1, 2] - Pole_avg[1])
 
   Rx100 <<- max(Rx100)
   Rx50 <<- Rx100 * 0.70
   Rx25 <<- Rx100 * 0.45
 
-  Rz100 <<- tibble()
-  Rz100[1, 1] <<- max(Kinetochore_Avg[3])
-  Rz100[1, 1] <<- abs(Rz100[1, 1] - Pole_avg[3])
-  Rz100[1, 2] <<- min(Kinetochore_Avg[3])
-  Rz100[1, 2] <<- abs(Rz100[1, 2] - Pole_avg[3])
+  Rz100 <- tibble()
+  Rz100[1, 1] <- max(Kinetochore_Avg[3])
+  Rz100[1, 1] <- abs(Rz100[1, 1] - Pole_avg[3])
+  Rz100[1, 2] <- min(Kinetochore_Avg[3])
+  Rz100[1, 2] <- abs(Rz100[1, 2] - Pole_avg[3])
 
   Rz100 <<- max(Rz100)
   Rz50 <<- Rz100 * 0.70

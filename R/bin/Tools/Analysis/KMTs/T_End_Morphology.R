@@ -18,7 +18,7 @@ End_Type_Error <- function() {
   if (ncol(Nodes %>% select(starts_with("EndType"))) == 2) {
     End_type_error <- data.frame(
       Correct = c(round(table(Nodes[, 7])["TRUE"] * 100 / nrow(Nodes), 2)),
-      Wrong = c(round(table(Nodes[, 7])["FALSE"] * 100 / nrow(Nodes),2))
+      Wrong = c(round(table(Nodes[, 7])["FALSE"] * 100 / nrow(Nodes), 2))
     )
   } else {
     break
@@ -50,12 +50,12 @@ End_distribution_Plus <- function(x, y) {
       S_ID <- get(colnames(Segments)[x])[i, 1]
 
       N_ID_1 <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
-      Node_1 <- Nodes[as.numeric(N_ID_1 + 1), ]
+      Node_1 <- Nodes[as.numeric(N_ID_1 + 1),]
 
       N_ID_2 <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
-      Node_2 <- Nodes[as.numeric(N_ID_2 + 1), ]
+      Node_2 <- Nodes[as.numeric(N_ID_2 + 1),]
 
-      if(y_df ==1){
+      if (y_df == 1) {
         if (abs(Node_1["Y Coord"] - y["Y.Coord"]) > abs(Node_2["Y Coord"] - y["Y.Coord"])) {
           Plus[i, 1:8] <- cbind(
             Node_1,
@@ -126,10 +126,10 @@ End_distribution_Minus <- function(x, y) {
       S_ID <- get(colnames(Segments)[x])[i, 1]
 
       N_ID_1 <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #1"])
-      Node_1 <- Nodes[as.numeric(N_ID_1 + 1), ]
+      Node_1 <- Nodes[as.numeric(N_ID_1 + 1),]
 
       N_ID_2 <- as.numeric(Segments[as.numeric(S_ID + 1), "Node ID #2"])
-      Node_2 <- Nodes[as.numeric(N_ID_2 + 1), ]
+      Node_2 <- Nodes[as.numeric(N_ID_2 + 1),]
 
 
       if (abs(Node_1["Y Coord"] - y["Y.Coord"]) < abs(Node_2["Y Coord"] - y["Y.Coord"])) {
@@ -160,11 +160,11 @@ End_distribution_Minus <- function(x, y) {
   }
 }
 
-MT_Ends_Distribution <- function(){
+MT_Ends_Distribution <- function() {
   MT_Class <- tibble()
   MT_End_Type <- tibble()
   df <- tibble()
-  for(i in 1:nrow(Segments)){
+  for (i in 1:nrow(Segments)) {
     Node_1 <- as.numeric(Segments[i, "Node ID #1"])
     Node_1 <- filter(Nodes, `Node ID` == Node_1)[2:4]
     names(Node_1)[1:3] <- c("X.Coord", "Y.Coord", "Z.Coord")
@@ -205,14 +205,19 @@ MT_Ends_Distribution <- function(){
       )
     }
 
-    Minus_end <- tibble(Minus_end,
-                        Type = Nodes[as.numeric(Minus_end[1,4] + 1), "EndType"])
-    Plus_end <- tibble(Plus_end,
-                       Type = Nodes[as.numeric(Plus_end[1,4] + 1), "EndType"])
+    Minus_end_RK <- tibble(Minus_end,
+                           Type = Nodes[as.numeric(Minus_end[1, 4] + 1), "EndType_RK"])
+    Plus_End_RK <- tibble(Plus_end,
+                          Type = Nodes[as.numeric(Plus_end[1, 4] + 1), "EndType_RK"])
+
+    Minus_end_AL <- tibble(Minus_end,
+                           Type = Nodes[as.numeric(Minus_end[1, 4] + 1), "EndType_AL"])
+    Plus_End_AL <- tibble(Plus_end,
+                          Type = Nodes[as.numeric(Plus_end[1, 4] + 1), "EndType_AL"])
 
     # Define MT class
-    MT_Class <- as_tibble(Segments[i, ]) %>% filter_at(vars(starts_with("Pole")), any_vars(. > 0))
-    if(nrow(MT_Class) != 0){
+    MT_Class <- as_tibble(Segments[i,]) %>% filter_at(vars(starts_with("Pole")), any_vars(. > 0))
+    if (nrow(MT_Class) != 0) {
       MT_Class <- "KMT"
     } else {
       MT_Class <- "NoN-KMT"
@@ -225,10 +230,12 @@ MT_Ends_Distribution <- function(){
     }
 
     MT <- tibble(
-      `Segment ID` = as.numeric(Segments[i,1]),
+      `Segment ID` = as.numeric(Segments[i, 1]),
       Class = as.character(MT_Class),
-      Plus_End = as.numeric(Plus_end[1,"Type"]),
-      Minus_end = as.numeric(Minus_end[1,"Type"]),
+      Plus_End_RK = as.numeric(Plus_End_RK[1, "Type"]),
+      Minus_end_RK = as.numeric(Minus_end_RK[1, "Type"]),
+      Plus_End_AL = as.numeric(Plus_End_AL[1, "Type"]),
+      Minus_end_AL = as.numeric(Minus_end_AL[1, "Type"]),
       Minus_RP = as.numeric(Relative_position)
     )
 
