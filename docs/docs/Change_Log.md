@@ -9,6 +9,14 @@ date: 2021-01-14
 </center>
 
 ---
+## v0.36 - Published 10/07/2021
+---
+
+`Major changes`
+- Maintenance update to calculate non-KMT ends type
+
+
+---
 ## v0.34.1 - Published 10/03/2021
 ---
 
