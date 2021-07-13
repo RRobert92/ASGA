@@ -11,12 +11,12 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/rrobert92/asga/badge)](https://www.codefactor.io/repository/github/rrobert92/asga)
 
 **Spindle analysis tool** is an open-source cluster of tools with its ongoing development for meiotic and mitotic spindle analysis. Key futures:
-  
+
 1. Online access
 
 2. Simple and intuitive to use with implemented UI. Only require installation of the R software environment and optional Rstudio.
 
-3. It is designed from the ground up to incrementally scale up this tool based on evolving use cases. 
+3. It is designed from the ground up to incrementally scale up this tool based on evolving use cases.
 
 4. Allows working on projects reproducibly and compare data.
 
@@ -25,12 +25,12 @@
 # Table of Contents
 
 * [Quick start](#Quick_start)
-  * [Data Preparation](#Quick_start_DP)
-  * [Dependency](#Dependency)
-  * [Installation](#Quick_start_IN)
+    * [Data Preparation](#Quick_start_DP)
+    * [Dependency](#Dependency)
+    * [Installation](#Quick_start_IN)
 * [Contributing](#Contributing)
 * [Copyright](#Copyright)
-  
+
 <a name="Quick_start"></a>
 # Quick startS
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
