@@ -181,7 +181,7 @@ MT_Ends_Distribution <- function() {
     DF[3, 1] <- as.numeric(dist(rbind(Node_2, Pole1), method = "euclidean")) # Pole2 Node1
     DF[4, 1] <- as.numeric(dist(rbind(Node_2, Pole2), method = "euclidean")) # Pole2 Node2
     Minus_end <- which.min(DF$...1)
-    Dist <- DF[Minus_end, 1]
+    Distance <- DF[Minus_end,1]
 
     # select closest as minus-end
     if (Minus_end == 1 || Minus_end == 2) {
@@ -189,6 +189,7 @@ MT_Ends_Distribution <- function() {
         Node_1,
         `Segment ID` = Segments[i, "Node ID #1"]
       )
+      Minus_end_type <- "Pole1"
       Plus_end <- tibble(
         Node_2,
         `Segment ID` = Segments[i, "Node ID #2"]
@@ -199,6 +200,7 @@ MT_Ends_Distribution <- function() {
         Node_2,
         `Node ID` = Segments[i, "Node ID #2"]
       )
+      Minus_end_type <- "Pole2"
       Plus_end <- tibble(
         Node_1,
         `Node ID` = Segments[i, "Node ID #1"]
@@ -236,7 +238,9 @@ MT_Ends_Distribution <- function() {
       Minus_end_RK = as.numeric(Minus_end_RK[1, "Type"]),
       Plus_End_AL = as.numeric(Plus_End_AL[1, "Type"]),
       Minus_end_AL = as.numeric(Minus_end_AL[1, "Type"]),
-      Minus_RP = as.numeric(Relative_position)
+      Minus_RP = as.numeric(Relative_position),
+      Distance_to_Poel = as.numeric(Distance),
+      Pole_association = as.character(Minus_end_type)
     )
 
     df <- rbind(df,

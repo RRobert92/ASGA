@@ -22,7 +22,7 @@ leading_KMTsv2 <- function(x, y) {
 
   while (j <= as.numeric(nrow(get(colnames(Segments)[x])))) {
     KMT_lenght <- Segments[as.numeric(get(colnames(Segments)[x])[j, 1] + 1), as.numeric(ncol(Segments) - 3)] / 10000
-    
+
     m_end_to_pole <- data.frame(
       x = c(y[1, 1]),
       y = c(y[1, 2]),
@@ -33,24 +33,24 @@ leading_KMTsv2 <- function(x, y) {
     )
 
     m_end_to_pole$distance <- apply(
-      m_end_to_pole, 
-      1, 
+      m_end_to_pole,
+      1,
       function(z) {dist(matrix(z,nrow = 2, byrow = TRUE))}
       )
-    
+
     leading[j, 1] <- KMT_lenght / m_end_to_pole$distance[1]
     j <- j + 1
   }
-  
+
   bind_cols(
-    get(paste(colnames(Segments)[x])), 
+    get(paste(colnames(Segments)[x])),
     leading)
 }
 
 # Function: Find point for lading KMTs, for j = j+5 == 0.5um ------------------------------------
 Leadig_Points <- function(x) {
   j <- 5
-  
+
   leading_points <- data.frame(Leading_ID = as.numeric())
 
   while (j <= nrow(get(paste(colnames(Segments)[x], which.max(as.matrix(get(colnames(Segments)[x])["Leading"])), sep = "_")))) {
@@ -99,7 +99,7 @@ find_polygon <- function(x) {
       Distance[i, j] <- lead_points_id_full[as.numeric(which.min(lead_points_id_full$distance)), 1]
       lead_points_id_full <- data.frame(t = as.numeric())
     }
-    
+
     i <- i + 1
   }
   bind_cols(
@@ -114,7 +114,7 @@ duplicated_points <- function(x) {
   for (i in 1:ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_")))) {
     DF[, i][duplicated(DF[, i])] <- NA
   }
-  
+
   # Check if there is no hole in data-set if yes remove
   for (i in 1:ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_")))) {
     for (j in 2:nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_")))) {
@@ -124,7 +124,7 @@ duplicated_points <- function(x) {
       else {}
     }
   }
-  
+
   DF
 }
 
@@ -161,13 +161,13 @@ median_point <- function(x) {
   }
 
   DF <- cbind(Median_id, get(paste(colnames(Segments)[x], "fiber", sep = "_")))
-  
+
   for (i in 1:nrow(DF)) {
     if (sum(na.omit(colSums(DF[i, which(colnames(DF) == "V1"):ncol(DF)] != 0))) < 3) {
       DF[i, 1:12] <- NA
     } else {}
   }
-  
+
   if (sum(which(is.na(DF[1]))) != 0) {
     DF[-c(which(is.na(DF[1]))), ]
   } else {
@@ -178,7 +178,7 @@ median_point <- function(x) {
 # Function: Find polygon for selected areas ---------------------------------------------------------
 find_polygon_for_all <- function(x) {
   i <- 1
-  
+
   lead_points_id <- data.frame(Distance = as.numeric())
   Distance <- data.frame(V1 = as.numeric())
 
@@ -213,10 +213,10 @@ find_polygon_for_all <- function(x) {
       Distance[i, j] <- lead_points_id_full[as.numeric(which.min(lead_points_id_full$distance)), 1]
       lead_points_id_full <- data.frame(t = as.numeric())
     }
-    
+
     i <- i + 1
   }
-  
+
   bind_cols(Distance)
 }
 
@@ -236,15 +236,15 @@ polygon_area <- function(x) {
       get(paste(colnames(Segments)[x], "fiber", sep = "_")),
       starts_with("V")
     )[i, ]))
-    
+
     DF <- data.frame(
       X_Coord = as.numeric(),
       Y_Coord = as.numeric(),
       Z_Coord = as.numeric()
     )
-    
+
     j <- 4
-    
+
     for (j in 4:as.numeric(ncol(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
       DF[j, 1] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i, j] + 1), 2]
       DF[j, 2] <- Points[as.numeric(get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i, j] + 1), 3]
@@ -254,14 +254,14 @@ polygon_area <- function(x) {
     DF1 <- as.matrix(na.omit(DF))
     DF2 <- as.matrix(DF1 + 1)
     DF3 <- as.matrix(merge(DF1, DF2, all = TRUE))
-    
+
     DF4 <- cbind(DF1, get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i, 1:3], row.names = NULL)
     DF4$distance <- apply(
       DF4[1:6],
       1,
       function(x) {dist(matrix(x, nrow = 2, byrow = TRUE))}
     )
-    
+
     if (as.numeric(nrow(DF1)) < 3) {
       area[i, 1] <- 0
       area[i, 2] <- 0
@@ -271,7 +271,7 @@ polygon_area <- function(x) {
         pert = TRUE,
         alpha = 10
       )
-      
+
       area[i, 1] <- round(volume_ashape3d(alphashape.obj) / 1, 3)
       area[i, 2] <- area[i, 1] / (pi * max(DF4$distance)^2)
     }
@@ -300,14 +300,14 @@ Neighorhood_densit <- function(x) {
   }
   dist <- na.omit(dist)
   dist[4:6] <- Mean_DF[1, 1:3]
-  
+
   dist$distance <- apply(
     dist,
     1,
     function(y) {dist(matrix(y, nrow = 2, byrow = TRUE))}
   )
-  
-  fiber_radius <- round(as.numeric(max(dist$distance) * 2), 2)
+
+  fiber_radius <- round(as.numeric(max(dist$distance)), 2)
 
   DF_full <- data.frame()
 
@@ -319,7 +319,7 @@ Neighorhood_densit <- function(x) {
       dist[j, 2] <- Points[as.numeric(DF[i, j] + 1), "Y Coord"]
       dist[j, 3] <- Points[as.numeric(DF[i, j] + 1), "Z Coord"]
     }
-    
+
     dist <- na.omit(dist)
     dist[4:6] <- Mean_DF[i, 1:3]
 
@@ -341,7 +341,7 @@ Neighorhood_densit <- function(x) {
   names(DF_full)[3] <- "Focused KMTs %"
   names(DF_full)[4] <- "plus_dist_to_pole"
   names(DF_full)[5] <- "Elipse_Position"
-  
+
   DF_full
 }
 
