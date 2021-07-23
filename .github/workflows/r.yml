@@ -20,7 +20,7 @@ jobs:
     
     strategy:
       matrix:
-        r-version: [4.0]
+        r-version: ['4.0', '4.1']
         
     steps:
       - uses: actions/checkout@main
