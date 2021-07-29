@@ -17,7 +17,7 @@ source("bin/Utility/Library.R")
 ###############################################################################
 #                       Figure 2-figure supplement 1B                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 PTP <- tibble(X_Coord_P1 = c(51385.63281, 52571.19531, 80278.8125),
               Y_Coord_P1 = c(18100.44141, 113530.8203, 81406.53906),
               Z_Coord_P1 = c(25617.02148, 28686.98242, 17718.85156),
@@ -50,7 +50,7 @@ print(Pole_to_Pole)
 ###############################################################################
 #                       Figure 2-figure supplement 1D                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 IKD_avg <- rbind(Data_1_IKD, Data_2_IKD, Data_3_IKD)
 
 # Plot #
@@ -88,7 +88,7 @@ print(IKD)
 ###############################################################################
 #                       Figure 3-figure supplement 1A                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 No_KMTs_avg <- rbind(Data_1_KMT_No,
                      Data_2_KMT_No,
                      Data_3_KMT_No)
@@ -130,7 +130,7 @@ print(No_KMTs)
 ###############################################################################
 #                       Figure 3-figure supplement 1C                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 Kinetochores_size_avg <- rbind(Data_1_K_Core_Area,
                                Data_2_K_Core_Area,
                                Data_3_K_Core_Area)
@@ -154,7 +154,7 @@ print(K_Core_size)
 ###############################################################################
 #                       Figure 4-figure supplement 1A                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 LD_avg <- rbind(Data_1_LD,
                 Data_2_LD,
                 Data_3_LD)
@@ -195,7 +195,7 @@ print(LD)
 ###############################################################################
 #                       Figure 4-figure supplement 1B                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 LD_avg <- rbind(Data_1_LD,
                 Data_2_LD,
                 Data_3_LD)
@@ -236,7 +236,7 @@ print(LD)
 ###############################################################################
 #                       Figure 4-figure supplement 1C                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 Minus_Ends_avg <- rbind(Data_1_KMT_Minus_End_0.1,
                         Data_2_KMT_Minus_End_0.1,
                         Data_3_KMT_Minus_End_0.1)
@@ -277,7 +277,7 @@ print(MInus_Ends)
 ###############################################################################
 #                       Figure 4-figure supplement 1D                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 LD_non <- rbind(Data_1_SMT_Ends,
                 Data_2_SMT_Ends,
                 Data_3_SMT_Ends)
@@ -318,7 +318,7 @@ print(LD_non)
 ###############################################################################
 #                       Figure 4-figure supplement 1E                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 Minus_Ends_avg <- rbind(Data_1_SMT_Ends,
                         Data_2_SMT_Ends,
                         Data_3_SMT_Ends)
@@ -359,7 +359,24 @@ print(MInus_Ends)
 ###############################################################################
 #                       Figure 4-figure supplement 1F                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
+for (i in c("Data_1_SMT_Ends", "Data_2_SMT_Ends", "Data_3_SMT_Ends")){
+    print(i)
+    data <- get(i)
+
+    for(j in seq(nrow(data))){
+        RP <- as.numeric(data[j, "Relativ_Position"])
+
+        if(RP > 0.5){
+            RP <- -RP + 1
+
+            data[j, "Relativ_Position"] <- RP
+        }
+    }
+    assign(i,
+           data)
+}
+
 Minus_Ends_avg <- rbind(Data_1_SMT_Ends,
                         Data_2_SMT_Ends,
                         Data_3_SMT_Ends)
@@ -400,7 +417,7 @@ print(MInus_Ends)
 ###############################################################################
 #                       Figure 7-figure supplement 1A                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 KMT_Minus_seed <- tibble(
         Data = c(
                 Interaction_25 = mean(
@@ -554,7 +571,7 @@ ggplot(KMT_Minus_seed, aes(Label, weight = Data)) +
 ###############################################################################
 #                       Figure 7-figure supplement 1B                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 KMT_seed <- rbind(Data_1_KMTs_minus_seed_0.035,
                   Data_2_KMTs_minus_seed_0.035,
                   Data_3_KMTs_minus_seed_0.035)
@@ -577,7 +594,7 @@ print((nrow(KMT_no_in_CIA) / nrow(KMT_no_with_Association)) * 100)
 ###############################################################################
 #                       Figure 7-figure supplement 1C                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 KMT_Minus_seed <- tibble(
         Data = c(
                 Interaction_25 = mean(
@@ -731,7 +748,7 @@ ggplot(KMT_Minus_seed, aes(Label, weight = Data)) +
 ###############################################################################
 #                       Figure 7-figure supplement 1D                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 KMT_seed <- rbind(Data_1_KMTs_minus_seed_0.035,
                   Data_2_KMTs_minus_seed_0.035,
                   Data_3_KMTs_minus_seed_0.035)
@@ -754,7 +771,7 @@ print((nrow(KMT_no_in_CIA) / nrow(KMT_no_with_Association)) * 100)
 ###############################################################################
 #                       Figure 8-figure supplement 1A                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 Segments_KMT_1 <<- Data_Segments_1 %>% filter_at(vars(starts_with("Pole")), any_vars(. >= 1))
 Segments_KMT_1 <<- Segments_KMT_1 %>% select(
         "Segment ID",
@@ -946,7 +963,7 @@ data %>%
 ###############################################################################
 #                       Figure 8-figure supplement 1B                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 Segments_KMT_1 <<- Data_Segments_1 %>% filter_at(vars(starts_with("Pole")), any_vars(. >= 1))
 Segments_KMT_1 <<- Segments_KMT_1 %>% select(
         "Segment ID",
@@ -1082,7 +1099,7 @@ data %>%
 ###############################################################################
 #                       Figure 8-figure supplement 1C                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 Segments_KMT_1 <<- Data_Segments_1 %>% filter_at(vars(starts_with("Pole")),
                                                  any_vars(. >= 1))
 Segments_KMT_1 <<- Segments_KMT_1 %>% select(
@@ -1259,7 +1276,7 @@ ggscatter(data, x = "No", y = "length", add = "reg.line", conf.int = T,
 ###############################################################################
 #                       Figure 8-figure supplement 1D                         #
 ###############################################################################
-# Combind data for average #
+# Combined data for average #
 Segments_KMT_1 <<- Data_Segments_1 %>% filter_at(vars(starts_with("Pole")),
                                                  any_vars(. >= 1))
 Segments_KMT_1 <<- Segments_KMT_1 %>% select(

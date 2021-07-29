@@ -624,15 +624,20 @@ Fiber_denisty <- Fiber_denisty +
 print(Fiber_denisty)
 
 Fiber_denisty_mean <- tibble(
-    Ratio = c(
+    Mean = c(
         mean(Data_1_N_Density$`Focused KMTs %`),
         mean(Data_2_N_Density$`Focused KMTs %`),
         mean(Data_3_N_Density$`Focused KMTs %`)
+    ),
+    sd = c(
+      sd(Data_1_N_Density$`Focused KMTs %`),
+      sd(Data_2_N_Density$`Focused KMTs %`),
+      sd(Data_3_N_Density$`Focused KMTs %`)
     )
 )
-paste(round(mean(Fiber_denisty_mean$Ratio), 2),
+paste(round(mean(Fiber_denisty_mean$Mean), 2),
       "+/-",
-      round(sd(Fiber_denisty_mean$Ratio), 2),
+      round(sd(Fiber_denisty_mean$Mean), 2),
       sep = " ")
 
 ###############################################################################
