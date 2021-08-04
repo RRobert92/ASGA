@@ -88,7 +88,8 @@ A_End_Morphology <- function(input, output, session) {
         starts_with("EndType"),
         "Entype_Different",
         "Relative_minus_position",
-        "Node_ID"
+        "Node_ID",
+        "Minus_end_Distance"
       )
       for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
         names(Minus_end_morphology_Pole1)[i] <- paste0("EndType_", as.numeric(i - 1), sep = "")
@@ -105,7 +106,8 @@ A_End_Morphology <- function(input, output, session) {
         "Fiber",
         starts_with("EndType"),
         "Relative_minus_position",
-        "Node_ID"
+        "Node_ID",
+        "Minus_end_Distance"
       )
       names(Minus_end_morphology_Pole1)[2] <- "EndType_1"
     }
@@ -203,7 +205,8 @@ A_End_Morphology <- function(input, output, session) {
           starts_with("EndType"),
           "Entype_Different",
           "Relative_minus_position",
-          "Node_ID"
+          "Node_ID",
+          "Minus_end_Distance"
         )
         for (i in 2:as.numeric(ncol(Nodes %>% select(starts_with("EndType"))) + 1)) {
           names(Minus_end_morphology_Pole2)[i] <- paste0("EndType_", as.numeric(i - 1), sep = "")
@@ -220,7 +223,8 @@ A_End_Morphology <- function(input, output, session) {
           "Fiber",
           starts_with("EndType"),
           "Relative_minus_position",
-          "Node_ID"
+          "Node_ID",
+          "Minus_end_Distance"
         )
         names(Minus_end_morphology_Pole2)[2] <- "EndType_1"
       }
