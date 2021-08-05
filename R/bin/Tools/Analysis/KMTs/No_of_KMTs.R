@@ -16,5 +16,5 @@
 
 # Tool  -----------------------------------------------------------------------------
 No_of_KMTs <- function(x) {
-  nrow(get(colnames(Segments)[x]))
+    nrow(get(colnames(Segments)[x]))
 }

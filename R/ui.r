@@ -11,21 +11,21 @@
 
 # Shiny UI-Home  ---------------------------------------------------------------
 fluidPage(
-  includeCSS("www/css/style.css"),
+        includeCSS("www/css/style.css"),
 
-  useShinyalert(),
-  useShinyjs(),
-  extendShinyjs(text = JS_CODE, functions = 'browseURL'),
+        useShinyalert(),
+        useShinyjs(),
+        extendShinyjs(text = JS_CODE, functions = 'browseURL'),
 
-  navbarPage(
-    title = APP_TITLE,
-    collapsible = TRUE,
-    inverse = TRUE,
-    position = "fixed-top",
-    id = "innavbar",
-    selected = "Home",
-    # footer = footnoteUI("footnote"),
-    tags$head(tags$script('
+        navbarPage(
+                title = APP_TITLE,
+                collapsible = TRUE,
+                inverse = TRUE,
+                position = "fixed-top",
+                id = "innavbar",
+                selected = "Home",
+                # footer = footnoteUI("footnote"),
+                tags$head(tags$script('
                                 var dimension = [0, 0];
                                 $(document).on("shiny:connected", function(e) {
                                     dimension[0] = window.innerWidth;
@@ -38,36 +38,36 @@ fluidPage(
                                     Shiny.onInputChange("dimension", dimension);
                                 });
                             ')
-              ),
+                ),
 
-    tabPanel(
-      title = "Get Started",
-      value = "GetStarted",
-      GetStarted_UI("Home")
-    ),
+                tabPanel(
+                        title = "Get Started",
+                        value = "GetStarted",
+                        GetStarted_UI("Home")
+                ),
 
-    tabPanel(
-      title = "3D Viewer",
-      value = "3D_Viewer",
-      Viewer_UI("Home")
-    ),
+                tabPanel(
+                        title = "3D Viewer",
+                        value = "3D_Viewer",
+                        Viewer_UI("Home")
+                ),
 
-    tabPanel(
-      title = "Home",
-      value = "Home",
-      fluidRow(
-        homeUI("Home")
-      )
-    ),
+                tabPanel(
+                        title = "Home",
+                        value = "Home",
+                        fluidRow(
+                                homeUI("Home")
+                        )
+                ),
 
-    tabPanel(
-      title = "Wiki",
-      value = "Wiki"
-    ),
+                tabPanel(
+                        title = "Wiki",
+                        value = "Wiki"
+                ),
 
-    tabPanel(
-      title = "About",
-      value = "About"
-    )
-  )
+                tabPanel(
+                        title = "About",
+                        value = "About"
+                )
+        )
 )

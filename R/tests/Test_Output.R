@@ -11,161 +11,161 @@
 
 # Run analysis -----------------------------------------------------------------
 Test_Functions <- function(input, output, session) {
-  withProgress(message = "Analyzing:", value = 1, {
-    incProgress(1, detail = "Test in progress...")
-    Sys.sleep(0.1)
+    withProgress(message = "Analyzing:", value = 1, {
+        incProgress(1, detail = "Test in progress...")
+        Sys.sleep(0.1)
 
-    Test_value <<- tibble()
-    current_data <<- 1
-    SHINY_IO <<- FALSE
-    
-    tryCatch(
-      {
-        callModule(Pre_Analysis, "Home")
-        Test_value[1, 1] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 1] <<- FALSE
-      }
-    )
-    names(Test_value)[1] <<- "Pre_Analsis"
+        Test_value <<- tibble()
+        current_data <<- 1
+        SHINY_IO <<- FALSE
 
-    tryCatch(
-      {
-        callModule(A_KMT_number, "Home")
-        Test_value[1, 2] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 2] <<- FALSE
-      }
-    )
-    names(Test_value)[2] <<- "KMT_number"
+        tryCatch(
+        {
+            callModule(Pre_Analysis, "Home")
+            Test_value[1, 1] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 1] <<- FALSE
+                }
+        )
+        names(Test_value)[1] <<- "Pre_Analsis"
 
-    tryCatch(
-      {
-        callModule(A_IKD, "Home")
-        Test_value[1, 3] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 3] <<- FALSE
-      }
-    )
-    names(Test_value)[3] <<- "IKD"
+        tryCatch(
+        {
+            callModule(A_KMT_number, "Home")
+            Test_value[1, 2] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 2] <<- FALSE
+                }
+        )
+        names(Test_value)[2] <<- "KMT_number"
 
-    tryCatch(
-      {
-        callModule(A_Curvature, "Home")
-        Test_value[1, 4] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 4] <<- FALSE
-      }
-    )
-    names(Test_value)[4] <<- "Curvature"
+        tryCatch(
+        {
+            callModule(A_IKD, "Home")
+            Test_value[1, 3] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 3] <<- FALSE
+                }
+        )
+        names(Test_value)[3] <<- "IKD"
 
-    tryCatch(
-      {
-        callModule(A_End_Morphology, "Home")
-        Test_value[1, 5] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 5] <<- FALSE
-      }
-    )
-    names(Test_value)[5] <<- "End_Morphology"
+        tryCatch(
+        {
+            callModule(A_Curvature, "Home")
+            Test_value[1, 4] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 4] <<- FALSE
+                }
+        )
+        names(Test_value)[4] <<- "Curvature"
 
-    tryCatch(
-      {
-        callModule(A_KMT_Torque, "Home")
-        Test_value[1, 6] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 6] <<- FALSE
-      }
-    )
-    names(Test_value)[6] <<- "KMT_Torque"
+        tryCatch(
+        {
+            callModule(A_End_Morphology, "Home")
+            Test_value[1, 5] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 5] <<- FALSE
+                }
+        )
+        names(Test_value)[5] <<- "End_Morphology"
 
-    tryCatch(
-      {
-        callModule(A_Fiber_Area, "Home")
-        Test_value[1, 7] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 7] <<- FALSE
-      }
-    )
-    names(Test_value)[7] <<- "Fiber_area"
+        tryCatch(
+        {
+            callModule(A_KMT_Torque, "Home")
+            Test_value[1, 6] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 6] <<- FALSE
+                }
+        )
+        names(Test_value)[6] <<- "KMT_Torque"
 
-    tryCatch(
-      {
-        callModule(A_Fiber_Length_Curv, "Home")
-        Test_value[1, 8] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 8] <<- FALSE
-      }
-    )
-    names(Test_value)[8] <<- "Fiber_L&C"
+        tryCatch(
+        {
+            callModule(A_Fiber_Area, "Home")
+            Test_value[1, 7] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 7] <<- FALSE
+                }
+        )
+        names(Test_value)[7] <<- "Fiber_area"
 
-    tryCatch(
-      {
-        callModule(A_KMT_Minus_End_Seeds, "Home")
-        Test_value[1, 9] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 9] <<- FALSE
-      }
-    )
-    names(Test_value)[9] <<- "Nucleation"
+        tryCatch(
+        {
+            callModule(A_Fiber_Length_Curv, "Home")
+            Test_value[1, 8] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 8] <<- FALSE
+                }
+        )
+        names(Test_value)[8] <<- "Fiber_L&C"
 
-    tryCatch(
-      {
-        callModule(A_K_Core_Area, "Home")
-        Test_value[1, 10] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 10] <<- FALSE
-      }
-    )
-    names(Test_value)[10] <<- "K_Core_Area"
-    
-    tryCatch(
-      {
-        callModule(Save_Data, "Home")
-        Test_value[1, 11] <<- TRUE
-      },
-      error = function(e) {
-        Test_value[1, 11] <<- FALSE
-      }
-    )
-    names(Test_value)[11] <<- "Save_data"
-    File_name <<- as_tibble(ls(pattern = "Data_", envir = .GlobalEnv))
-    File_name <<- na.omit(File_name)
-  })
+        tryCatch(
+        {
+            callModule(A_KMT_Minus_End_Seeds, "Home")
+            Test_value[1, 9] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 9] <<- FALSE
+                }
+        )
+        names(Test_value)[9] <<- "Nucleation"
+
+        tryCatch(
+        {
+            callModule(A_K_Core_Area, "Home")
+            Test_value[1, 10] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 10] <<- FALSE
+                }
+        )
+        names(Test_value)[10] <<- "K_Core_Area"
+
+        tryCatch(
+        {
+            callModule(Save_Data, "Home")
+            Test_value[1, 11] <<- TRUE
+        },
+                error = function(e) {
+                    Test_value[1, 11] <<- FALSE
+                }
+        )
+        names(Test_value)[11] <<- "Save_data"
+        File_name <<- as_tibble(ls(pattern = "Data_", envir = .GlobalEnv))
+        File_name <<- na.omit(File_name)
+    })
 }
 
 # Show results  ----------------------------------------------------------------
 Test_Result <- function(input, output, session) {
-  if (Test_df == TRUE) {
-    confirmSweetAlert(
-      session,
-      inputId = "Test_data_output",
-      title = "Test result",
-      text = paste("The test result was positive. All work as intended.", " Error no. ", as.character(Bad_funtions), sep = ""),
-      type = "success",
-      btn_labels = "Confirm",
-      btn_colors = "#a5dc86"
-    )
-  } else {
-    confirmSweetAlert(
-      session,
-      inputId = "Test_data_output",
-      title = "Test result",
-      text = paste("One of the test went wrong, check more infor in RStudio.
+    if (Test_df == TRUE) {
+        confirmSweetAlert(
+                session,
+                inputId = "Test_data_output",
+                title = "Test result",
+                text = paste("The test result was positive. All work as intended.", " Error no. ", as.character(Bad_funtions), sep = ""),
+                type = "success",
+                btn_labels = "Confirm",
+                btn_colors = "#a5dc86"
+        )
+    } else {
+        confirmSweetAlert(
+                session,
+                inputId = "Test_data_output",
+                title = "Test result",
+                text = paste("One of the test went wrong, check more infor in RStudio.
       Test results are included in `Test_value` data.frame.", "Error no. ", as.character(Bad_funtions[, 2]), sep = ""),
-      type = "warning",
-      btn_labels = "Confirm",
-      btn_colors = "#f8bb86"
-    )
-  }
+                type = "warning",
+                btn_labels = "Confirm",
+                btn_colors = "#f8bb86"
+        )
+    }
 }

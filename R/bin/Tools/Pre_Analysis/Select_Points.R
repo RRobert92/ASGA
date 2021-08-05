@@ -16,6 +16,6 @@
 
 # Sort Points of each KMT  --------------------------------------------------------------------------
 Select_Points <- function(x, y) {
-  selected_points <- data.frame(str_split(gsub("[^[:digit:]]", ",", y[x, 2]), pattern = ","))
-  points <- data.frame(Point_ID = selected_points[, 1])
+    selected_points <- data.frame(str_split(gsub("[^[:digit:]]", ",", y[x, 2]), pattern = ","))
+    points <- data.frame(Point_ID = selected_points[, 1])
 }

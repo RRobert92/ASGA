@@ -40,15 +40,17 @@ label {
 
 .l-box-lrg {
     padding: 2em;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .is-center {
     text-align: center;
 }
+
 .col-sm-10 {
-  margin-right: 0;
+    margin-right: 0;
 }
+
 /*
 # CSS button  -------------------------------------------------------------------
 */
@@ -67,38 +69,41 @@ label {
     font-size: 120%;
 }
 
-.sweet-alert button.cancel{
-  background-color: #f8bb86;
+.sweet-alert button.cancel {
+    background-color: #f8bb86;
 }
 
 .btn-default-3D {
-  margin: 5px;
+    margin: 5px;
 }
 
 .Setting_button {
-  margin: 3%;
+    margin: 3%;
 }
- /*
+
+/*
 # CSS Main Page  -----------------------------------------------------------------
 */
 
-.container-fluid{
-  width: 100%;
-  padding-right: 0;
-  padding-left: 0;
-  margin-right: auto;
-  margin-left: auto
+.container-fluid {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto
 }
-.nav{
+
+.nav {
     float: right;
     margin: auto;
 }
-.navbar-header{
+
+.navbar-header {
     float: left;
     padding-left: 15px
 }
 
- /*
+/*
 # CSS Splash  -------------------------------------------------------------------
 */
 
@@ -125,7 +130,7 @@ label {
     position: fixed !important;
 }
 
-.splash-container-report{
+.splash-container-report {
     background: #fdfdfd;
     padding-top: 30%;
     padding-bottom: 30px;
@@ -134,7 +139,7 @@ label {
     text-align: center;
 }
 
-.splash-content-report{
+.splash-content-report {
     padding-top: 0;
     padding-bottom: 50px;
     padding-left: 5%;
@@ -143,18 +148,18 @@ label {
 }
 
 .splash-content {
-  padding-left: 250px;
-  padding-right: 250px;
+    padding-left: 250px;
+    padding-right: 250px;
 }
 
 .sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 .sticky + .content {
-  padding-top: 102px;
+    padding-top: 102px;
 }
 
 .splash {
@@ -163,90 +168,105 @@ label {
     height: 50%;
     margin: auto;
     position: absolute;
-    top: 100px; left: 0; bottom: 0; right: 0;
+    top: 100px;
+    left: 0;
+    bottom: 0;
+    right: 0;
     text-align: center;
     text-transform: uppercase;
 }
 
-.splash-GS{
+.splash-GS {
     width: 80%;
     height: 85%;
     margin: auto;
     position: absolute;
-    top: 100px; left: 0; bottom: 0; right: 0;
+    top: 100px;
+    left: 0;
+    bottom: 0;
+    right: 0;
     text-align: center;
     text-transform: uppercase;
 }
 
-.table-GS{
+.table-GS {
     width: 75%;
     height: 50%;
     margin: auto;
     position: absolute;
-    top: 350px; left: 0; bottom: 0; right: 0;
+    top: 350px;
+    left: 0;
+    bottom: 0;
+    right: 0;
     text-align: left;
     text-transform: none;
 }
-.table-3D{
-    width: 100%
+
+.table-3D {
+    width: 100%;
     margin: auto;
     position: absolute;
-    top: 51px; left: 0; bottom: 0; right: 0;
+    top: 51px;
+    left: 0;
+    bottom: 0;
+    right: 0;
     text-align: left;
     text-transform: none;
 }
-.table-GS-Center{
-  text-align: center;
-  padding-top: 20px;
+
+.table-GS-Center {
+    text-align: center;
+    padding-top: 20px;
 }
 
 .form-group {
-  margin: auto;
+    margin: auto;
 }
 
 .form-group shiny-input-container {
-  align-items: center;
+    align-items: center;
 }
 
 .shiny-input-container {
-  align-items: center;
+    align-items: center;
 }
 
 .shiny-input-container-inline {
-  align-items: center;
+    align-items: center;
 }
 
-.splash-input-GS{
-  width: 100%;
-  padding-left: 25%;
-  padding-right: 20%;
+.splash-input-GS {
+    width: 100%;
+    padding-left: 25%;
+    padding-right: 20%;
 }
 
-.splash-input-3D{
-  width: 80%;
-  padding-left: 25%;
-  padding-right: 0%;
+.splash-input-3D {
+    width: 80%;
+    padding-left: 25%;
+    padding-right: 0%;
 }
 
-.splash-input-GS-test{
-  max-width: 100%;
-  margin: auto;
-  float: none;
-  width: 50%;
-  padding: 10px;
+.splash-input-GS-test {
+    max-width: 100%;
+    margin: auto;
+    float: none;
+    width: 50%;
+    padding: 10px;
 }
 
-.splash-input-GS-row:after{
-  width: 50%;
-  content: "";
-  display: table;
-  clear: both;
+.splash-input-GS-row:after {
+    width: 50%;
+    content: "";
+    display: table;
+    clear: both;
 }
-.splash-input-3D-row:after{
-  width: 90%;
-  content: "";
-  display: table;
-  clear: both;
+
+.splash-input-3D-row:after {
+    width: 90%;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .splash-head {
@@ -260,7 +280,7 @@ label {
     line-height: 1em;
 }
 
-.splash-head-GS{
+.splash-head-GS {
     font-size: 20px;
     font-weight: bold;
     color: black;
@@ -276,33 +296,36 @@ label {
     opacity: 0.8;
 }
 
-.splash-subhead-GS{
-  color: black;
-   letter-spacing: 0.05em;
+.splash-subhead-GS {
+    color: black;
+    letter-spacing: 0.05em;
     opacity: 0.8;
 }
 
-.splash-subhead-Report{
-  color: black;
-   letter-spacing: 0.05em;
+.splash-subhead-Report {
+    color: black;
+    letter-spacing: 0.05em;
     opacity: 0.8;
     font-size: 150%;
     margin-top: 5%;
 }
 
-.splash-report{
-  width: 65%;
-  height: 80%;
-  padding: 10px;
-  margin: auto;
-  position: absolute;
-  top: 300px; bottom: 0; right: 0; left: 0;
-  text-align: center;
-  text-transform: uppercase;
+.splash-report {
+    width: 65%;
+    height: 80%;
+    padding: 10px;
+    margin: auto;
+    position: absolute;
+    top: 300px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .splash-report-code {
-    background: rgba(0,0,0,0.08);
+    background: rgba(0, 0, 0, 0.08);
     color: black;
     border-radius: 10px;
     font-size: 80%;
@@ -346,9 +369,10 @@ label {
 .content-subhead {
     color: #1f8dd6;
 }
-    .content-subhead i {
-        margin-right: 7px;
-    }
+
+.content-subhead i {
+    margin-right: 7px;
+}
 
 .ribbon {
     background: #2d3e50;
@@ -363,7 +387,8 @@ label {
     z-index: 1;
     bottom: 0;
 }
-.footer-report{
+
+.footer-report {
     background: #111;
     position: absolute;
     width: 100%;
@@ -371,11 +396,11 @@ label {
     z-index: 1;
 }
 
- /*
+/*
 # CSS MEDIA QUERIES  -------------------------------------------------------------------
 */
 
-@media (min-width:60em) {
+@media (min-width: 60em) {
 
     body {
         font-size: 13px;
@@ -384,53 +409,62 @@ label {
     .home-menu {
         text-align: left;
     }
-        .home-menu ul {
-            float: right;
-        }
+
+    .home-menu ul {
+        float: right;
+    }
 
     .splash {
         width: 65%;
         height: 50%;
     }
+
     .splash-GS {
         width: 55%;
         height: 75%;
     }
-    .splash-report{
-      height: 50%;
+
+    .splash-report {
+        height: 50%;
     }
-    .splash-report-code{
-      margin-left: 45px;
+
+    .splash-report-code {
+        margin-left: 45px;
     }
-    .splash-container-report{
-    padding-top: 16%;
-    padding-bottom: 0;
-    padding-left: 250px;
-    padding-right: 250px;
-    text-align: center;
+
+    .splash-container-report {
+        padding-top: 16%;
+        padding-bottom: 0;
+        padding-left: 250px;
+        padding-right: 250px;
+        text-align: center;
 
     }
-    .splash-content-report{
-    padding-top: 20px;
-    padding-bottom: 50px;
-    padding-left: 15%;
-    padding-right: 15%;
-    text-align: center;
+
+    .splash-content-report {
+        padding-top: 20px;
+        padding-bottom: 50px;
+        padding-left: 15%;
+        padding-right: 15%;
+        text-align: center;
     }
 
     .splash-head {
         font-size: 250%;
     }
+
     .splash-head-GS {
         font-size: 250%;
     }
-    .splash-input-GS{
-      float: left;
-      padding-left: 20%;
-      padding-right: 20%;
+
+    .splash-input-GS {
+        float: left;
+        padding-left: 20%;
+        padding-right: 20%;
     }
-    .table-GS{
-      height: 50%;
+
+    .table-GS {
+        height: 50%;
     }
 
     .l-box-lrg {

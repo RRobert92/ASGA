@@ -20,9 +20,9 @@ source("bin/Utility/Library.R")
 
 APP_TITLE <- "ASGA v0.36"
 CC <- paste("© Copyright GPL V3.0 2019-",
-  str_split(Sys.Date(), pattern = "-")[[1]][1],
-  ", Robert Kiewisz",
-  sep = ""
+            str_split(Sys.Date(), pattern = "-")[[1]][1],
+            ", Robert Kiewisz",
+            sep = ""
 )
 
 # Global CSS  ------------------------------------------------------------------

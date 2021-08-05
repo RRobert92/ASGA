@@ -360,14 +360,14 @@ print(MInus_Ends)
 #                       Figure 4-figure supplement 1F                         #
 ###############################################################################
 # Combined data for average #
-for (i in c("Data_1_SMT_Ends", "Data_2_SMT_Ends", "Data_3_SMT_Ends")){
+for (i in c("Data_1_SMT_Ends", "Data_2_SMT_Ends", "Data_3_SMT_Ends")) {
     print(i)
     data <- get(i)
 
-    for(j in seq(nrow(data))){
+    for (j in seq(nrow(data))) {
         RP <- as.numeric(data[j, "Relativ_Position"])
 
-        if(RP > 0.5){
+        if (RP > 0.5) {
             RP <- -RP + 1
 
             data[j, "Relativ_Position"] <- RP
