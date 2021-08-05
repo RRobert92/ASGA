@@ -12,59 +12,70 @@
 # This code is licensed under GPL V3.0 license (see LICENSE.txt for details)
 #
 # Author: Robert Kiewisz
-# Created: 2020-05-29
-# Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
+# Created: 2021-08-05
 ################################################################################################
 
 KMTs_torque_in_fiber <- function(x) {
-    angle1 <- data.frame()
-    for (j in 1:ncol(select(get(paste(colnames(Segments)[x], "fiber", sep = "_")), starts_with("V")))) {
-        tryCatch(
-        {
-            angle <- data.frame()
-            for (i in 2:as.numeric(nrow(get(paste(colnames(Segments)[x], "fiber", sep = "_"))))) {
-                df1 <- data.frame(
-                        get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i, "X_Coord"],
-                        get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i, "Z_Coord"]
-                )
-                df2 <- data.frame(
-                        get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i + 1, "X_Coord"],
-                        get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i + 1, "Z_Coord"]
-                )
-                DF1 <- select(
-                        get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i,],
-                        starts_with("V")
-                )
-                DF1 <- DF1[j]
-                DF2 <- select(
-                        get(paste(colnames(Segments)[x], "fiber", sep = "_"))[i + 1,],
-                        starts_with("V")
-                )
-                DF2 <- DF2[j]
+    # Poygon center x,y,z
+    Centers <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[, c("X_Coord", "Z_Coord")]
+    angle <- tibble()
 
-                DF1_Coord <- data.frame()
-                DF1_Coord[1, 1] <- Points[as.numeric(DF1[1, 1] + 1), "X Coord"]
-                DF1_Coord[1, 2] <- Points[as.numeric(DF1[1, 1] + 1), "Z Coord"]
-
-                DF2_Coord <- data.frame()
-                DF2_Coord[1, 1] <- Points[as.numeric(DF2[1, 1] + 1), "X Coord"]
-                DF2_Coord[1, 2] <- Points[as.numeric(DF2[1, 1] + 1), "Z Coord"]
-
-                tryCatch(
-                {
-                    rad1 <- atan2(DF1_Coord[1, 2], DF1_Coord[1, 1])
-                    rad2 <- atan2(DF2_Coord[1, 2], DF2_Coord[1, 1])
-                    angle[i, 1] <- rad1 - rad2
-                },
-                        error = function(e) {}
-                )
-            }
-            angle <- sum(na.omit(angle))
-            angle1[j, 1] <- angle * (180 / pi)
-        },
-                error = function(e) {}
+    for (j in seq(1,
+                  ncol(select(get(paste(colnames(Segments)[x], "fiber", sep = "_")), starts_with("V"))))) {
+        Positions <- select(
+                get(paste(colnames(Segments)[x], "fiber", sep = "_")),
+                starts_with("V")
         )
+
+        Positions <- Positions[j]
+
+        Pos_Coord <- Points[purrr::flatten_dbl(Positions + 1),
+                            c("X Coord", "Z Coord")]
+
+        angle_df <- tibble()
+        for (i in seq(1,
+                      nrow(Pos_Coord))) {
+            Pos <- as.numeric(Pos_Coord[i, c("X Coord", "Z Coord")])
+            #Pos_2 <- as.numeric(Pos_Coord[i + 1, c("X Coord", "Z Coord")])
+            Center_Pos <- as.numeric(Centers[i,])
+
+            angle_df[i, 1] <- atan2(Pos[2] - Center_Pos[2], Pos[1] - Center_Pos[1]) * (180 / pi)
+        }
+
+        # Zero out from first entry
+        angle_df <- angle_df[, 1] - as.numeric(angle_df[1, 1])
+        angle[1:nrow(Centers), j] <- angle_df
+        names(angle)[j] <- paste0("V", j)
     }
-    angle1 <- median(as.matrix(angle1))
-    angle1
+
+    angle_df <- tibble(
+            fiber = character(),
+            mean = double(),
+            STD = double()
+    )
+    for (i in seq(1, nrow(angle))) {
+        angle_df[i, 2] <- mean(as.numeric(angle[i,]), na.rm = TRUE)
+        angle_df[i, 3] <- sd(as.numeric(angle[i,]), na.rm = TRUE)
+    }
+    angle_df[, 1] <- colnames(Segments)[x]
+    return(angle_df)
+}
+
+Fiber_torque_around_center <- function(x) {
+    # Poygon center x,y,z
+    Poses <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[, c("X_Coord", "Z_Coord")]
+    Center <- as.numeric(Pole1[, c("X.Coord", "Z.Coord")])
+    angle <- tibble()
+
+    for (j in seq(1, nrow(Poses))) {
+        Pos <- as.numeric(Poses[j,])
+        angle[j, 1] <- atan2(Pos[2] - Center[2], Pos[1] - Center[1]) * (180 / pi)
+    }
+
+    # Zero out from first entry
+    angle <- angle[, 1] - as.numeric(angle[1, 1])
+    names(angle) <- "angle"
+    angle[, 2] <- colnames(Segments)[x]
+
+    return(angle)
 }

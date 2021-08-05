@@ -34,15 +34,15 @@ Save_Data <- function(input, output, session) {
         )
         write.xlsx(
                 get(paste("Data", current_data, "LD_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_LD_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_LD_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "LD_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_LD_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_LD_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "LD", sep = "_")),
-                paste("Data/", "Data_", current_data, "_LD.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_LD.xlsx")
         )
     },
             error = function(e) {}
@@ -65,7 +65,7 @@ Save_Data <- function(input, output, session) {
         )
         write.xlsx(
                 get(paste("Data", current_data, "SMT_Ends", sep = "_")),
-                paste("Data/", "Data_", current_data, "_SMT_Ends.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_SMT_Ends.xlsx")
         )
     },
             error = function(e) {}
@@ -100,15 +100,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "KMT_No_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_No_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_No_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "KMT_No_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_No_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_No_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "KMT_No", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_No.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_No.xlsx")
         )
     },
             error = function(e) {}
@@ -143,15 +143,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Pole_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Pole_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Pole_P1.xlsx",)
         )
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Pole_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Pole_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Pole_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Pole", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Pole.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Pole.xlsx")
         )
     },
             error = function(e) {}
@@ -182,7 +182,7 @@ Save_Data <- function(input, output, session) {
 
                 write.xlsx(
                         get(paste("Data", current_data, paste(DF_Name), sep = "_")),
-                        paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
+                        paste0("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx")
                 )
             },
                     error = function(e) {}
@@ -235,31 +235,31 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "Minus_end_morphology_Pole1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Minus_end_morphology_Pole1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Minus_end_morphology_Pole1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Plus_end_morphology_Pole1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Plus_end_morphology_Pole1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Plus_end_morphology_Pole1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Minus_end_morphology_Pole2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Minus_end_morphology_Pole2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Minus_end_morphology_Pole2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Plus_end_morphology_Pole2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Plus_end_morphology_Pole2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Plus_end_morphology_Pole2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Plus_end_morphology", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Plus_end_morphology.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Plus_end_morphology.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Minus_end_morphology", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Minus_end_morphology.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Minus_end_morphology.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "MT_Ends_Type", sep = "_")),
-                paste("Data/", "Data_", current_data, "_MT_Ends_Type.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_MT_Ends_Type.xlsx")
         )
     },
             error = function(e) {}
@@ -360,33 +360,54 @@ Save_Data <- function(input, output, session) {
             Sys.sleep(0.1)
         }
 
-        names(Fiber_Torque_P1)[1] <- "Angle"
-        names(Fiber_Torque_P2)[1] <- "Angle"
-
         assign(paste("Data", current_data, "Fiber_Torque_P1", sep = "_"),
                Fiber_Torque_P1,
+               envir = .GlobalEnv
+        )
+        assign(paste("Data", current_data, "Spindle_Torque_P1", sep = "_"),
+               Spindle_Torque_P1,
                envir = .GlobalEnv
         )
         assign(paste("Data", current_data, "Fiber_Torque_P2", sep = "_"),
                Fiber_Torque_P2,
                envir = .GlobalEnv
         )
+        assign(paste("Data", current_data, "Spindle_Torque_P2", sep = "_"),
+               Spindle_Torque_P2,
+               envir = .GlobalEnv
+        )
         assign(paste("Data", current_data, "Fiber_Torque", sep = "_"),
+               rbind(Fiber_Torque_P1, Fiber_Torque_P2),
+               envir = .GlobalEnv
+        )
+        assign(paste("Data", current_data, "Spindle_Torque", sep = "_"),
                rbind(Fiber_Torque_P1, Fiber_Torque_P2),
                envir = .GlobalEnv
         )
 
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Torque_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Torque_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Torque_P1.xlsx")
+        )
+        write.xlsx(
+                get(paste("Data", current_data, "Spindle_Torque_P1", sep = "_")),
+                paste0("Data/", "Data_", current_data, "_Spindle_Torque_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Torque_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Torque_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Torque_P2.xlsx")
+        )
+        write.xlsx(
+                get(paste("Data", current_data, "Spindle_Torque_P2", sep = "_")),
+                paste0("Data/", "Data_", current_data, "_Spindle_Torque_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Torque", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Torque.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Torque.xlsx")
+        )
+        write.xlsx(
+                get(paste("Data", current_data, "Spindle_Torque", sep = "_")),
+                paste0("Data/", "Data_", current_data, "_Spindle_Torque.xlsx")
         )
     },
             error = function(e) {}
@@ -418,15 +439,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "IKD", sep = "_")),
-                paste("Data/", "Data_", current_data, "_IKD.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_IKD.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "IKD_KMT_Delta", sep = "_")),
-                paste("Data/", "Data_", current_data, "_IKD_KMT_Delta.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_IKD_KMT_Delta.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "IKD_KMT_No", sep = "_")),
-                paste("Data/", "Data_", current_data, "_IKD_KMT_No.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_IKD_KMT_No.xlsx")
         )
     },
             error = function(e) {}
@@ -464,15 +485,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Total_Curv_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Total_Curv_P1.xlsx", sep = "")
         )
         write.xlsx(
-                get(paste("Data", current_data, "KMT_Total_Curv_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Total_Curv_P2.xlsx", sep = "")
+                get(paste("Data", current_data, "KMT_Total_Curv_P2")),
+                paste0("Data/", "Data_", current_data, "_KMT_Total_Curv_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Total_Curv", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Total_Curv.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Total_Curv.xlsx")
         )
     },
             error = function(e) {}
@@ -573,15 +594,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Local_Curv_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Local_Curv_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Local_Curv_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Local_Curv_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Local_Curv_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Local_Curv_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Local_Curv", sep = "_")),
-                paste("Data/", "Data_", current_data, "_KMT_Local_Curv.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Local_Curv.xlsx")
         )
     },
             error = function(e) {}
@@ -615,15 +636,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Area_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Area_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Area_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Area_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Area_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Area_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Area", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Area.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Area.xlsx")
         )
     },
             error = function(e) {}
@@ -647,15 +668,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "N_Density_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_N_Density_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_N_Density_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "N_Density_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_N_Density_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_N_Density_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "N_Density", sep = "_")),
-                paste("Data/", "Data_", current_data, "_N_Density.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_N_Density.xlsx")
         )
     },
             error = function(e) {}
@@ -706,39 +727,39 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Length_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Length_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Length_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Length_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Length_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Length_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Length", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Length.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Length.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Total_Curv_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Total_Curv_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Total_Curv_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Total_Curv_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Total_Curv_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Total_Curv_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Total_Curv", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Total_Curv.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Total_Curv.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Local_Curv_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Local_Curv_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Local_Curv_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Local_Curv_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Local_Curv_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Local_Curv_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Fiber_Local_Curv", sep = "_")),
-                paste("Data/", "Data_", current_data, "_Fiber_Local_Curv.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_Fiber_Local_Curv.xlsx")
         )
     },
             error = function(e) {}
@@ -771,7 +792,7 @@ Save_Data <- function(input, output, session) {
                 )
                 write.xlsx(
                         get(paste("Data", current_data, paste(DF_Name_1), sep = "_")),
-                        paste("Data/", "Data_", current_data, "_", paste(DF_Name_1), ".xlsx", sep = "")
+                        paste0("Data/", "Data_", current_data, "_", paste(DF_Name_1), ".xlsx")
                 )
 
                 assign(paste("Data", current_data, paste(DF_Name_2), sep = "_"),
@@ -780,7 +801,7 @@ Save_Data <- function(input, output, session) {
                 )
                 write.xlsx(
                         get(paste("Data", current_data, paste(DF_Name_2), sep = "_")),
-                        paste("Data/", "Data_", current_data, "_", paste(DF_Name_2), ".xlsx", sep = "")
+                        paste0("Data/", "Data_", current_data, "_", paste(DF_Name_2), ".xlsx")
                 )
 
                 assign(paste("Data", current_data, paste(DF_Name), sep = "_"),
@@ -790,7 +811,7 @@ Save_Data <- function(input, output, session) {
                 )
                 write.xlsx(
                         get(paste("Data", current_data, paste(DF_Name), sep = "_")),
-                        paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
+                        paste0("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx")
                 )
             },
                     error = function(e) {}
@@ -875,7 +896,7 @@ Save_Data <- function(input, output, session) {
                     error = function(e) {}
             )
 
-            names(DF)[1] <- c(paste("Interaction_Type_", Function_Scale_Seed[j], sep = ""))
+            names(DF)[1] <- c(paste0("Interaction_Type_", Function_Scale_Seed[j]))
             assign(
                     paste("Amira", "Dataset", current_data, sep = "_"),
                     Save_amira(
@@ -927,15 +948,15 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "K_Core_Area_P1", sep = "_")),
-                paste("Data/", "Data_", current_data, "_K_Core_Area_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_K_Core_Area_P1.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "K_Core_Area_P2", sep = "_")),
-                paste("Data/", "Data_", current_data, "_K_Core_Area_P2.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_K_Core_Area_P2.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "K_Core_Area", sep = "_")),
-                paste("Data/", "Data_", current_data, "_K_Core_Area.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_K_Core_Area.xlsx")
         )
     },
             error = function(e) {}
@@ -966,7 +987,7 @@ Save_Data <- function(input, output, session) {
 
                 write.xlsx(
                         get(paste("Data", current_data, paste(DF_Name), sep = "_")),
-                        paste("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx", sep = "")
+                        paste0("Data/", "Data_", current_data, "_", paste(DF_Name), ".xlsx")
                 )
             },
                     error = function(e) {}
@@ -1079,7 +1100,7 @@ Save_Data <- function(input, output, session) {
         Sys.sleep(0.1)
 
         write.table(get(paste("Amira", "Dataset", current_data, sep = "_")),
-                    paste("Data/", "Amira_", "Dataset_", current_data, ".am", sep = ""),
+                    paste0("Data/", "Amira_", "Dataset_", current_data, ".am"),
                     quote = FALSE, row.names = FALSE, col.names = FALSE
         )
     } else {

@@ -69,7 +69,7 @@ Setting_Buttons_UI <- function(id) {
                     class = "Setting_button",
                     materialSwitch(
                             inputId = ns("KMT_Torque"),
-                            label = "KMT Torque (Beta)",
+                            label = "KMT Torque",
                             value = FALSE,
                             right = TRUE,
                             status = "info"
@@ -119,7 +119,7 @@ Setting_Buttons_UI <- function(id) {
                     class = "Setting_button",
                     materialSwitch(
                             inputId = ns("MT_Interaction"),
-                            label = "MT Interaction (Alpha)",
+                            label = "MT Interaction",
                             value = FALSE,
                             right = TRUE,
                             status = "info"

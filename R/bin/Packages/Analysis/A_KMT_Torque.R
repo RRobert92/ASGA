@@ -23,7 +23,8 @@ A_KMT_Torque <- function(input, output, session) {
     )
 
     bin <<- data.frame()
-    Torque <<- data.frame()
+    Torque_sp <<- data.frame()
+    Torque_fb <<- data.frame()
     for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
         tryCatch(
         {
@@ -64,12 +65,20 @@ A_KMT_Torque <- function(input, output, session) {
                    median_point(i),
                    envir = .GlobalEnv
             )
-            assign("bin",
+            assign("bin_fiber",
                    KMTs_torque_in_fiber(i),
                    envir = .GlobalEnv
             )
-            assign("Torque",
-                   rbind(Torque, bin),
+            assign("bin_spindle",
+                   Fiber_torque_around_center(i),
+                   envir = .GlobalEnv
+            )
+            assign("Torque_fb",
+                   rbind(Torque_fb, bin_fiber),
+                   envir = .GlobalEnv
+            )
+            assign("Torque_sp",
+                   rbind(Torque_sp, bin_spindle),
                    envir = .GlobalEnv
             )
         },
@@ -85,7 +94,8 @@ A_KMT_Torque <- function(input, output, session) {
     }
     closeSweetAlert(session = session)
 
-    Fiber_Torque_P1 <<- Torque
+    Fiber_Torque_P1 <<- Torque_fb
+    Spindle_Torque_P1 <<- Torque_sp
 
     # Analyze KMT torque for Pole1 -------------------------------
     total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) -
@@ -100,7 +110,8 @@ A_KMT_Torque <- function(input, output, session) {
     )
 
     bin <<- data.frame()
-    Torque <<- data.frame()
+    Torque_sp <<- data.frame()
+    Torque_fb <<- data.frame()
     for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
         tryCatch(
         {
@@ -141,12 +152,20 @@ A_KMT_Torque <- function(input, output, session) {
                    median_point(i),
                    envir = .GlobalEnv
             )
-            assign("bin",
+            assign("bin_fiber",
                    KMTs_torque_in_fiber(i),
                    envir = .GlobalEnv
             )
-            assign("Torque",
-                   rbind(Torque, bin),
+            assign("bin_spindle",
+                   Fiber_torque_around_center(i),
+                   envir = .GlobalEnv
+            )
+            assign("Torque_fb",
+                   rbind(Torque_fb, bin_fiber),
+                   envir = .GlobalEnv
+            )
+            assign("Torque_sp",
+                   rbind(Torque_sp, bin_spindle),
                    envir = .GlobalEnv
             )
         },
@@ -162,5 +181,6 @@ A_KMT_Torque <- function(input, output, session) {
     }
     closeSweetAlert(session = session)
 
-    Fiber_Torque_P2 <<- Torque
+    Fiber_Torque_P2 <<- Torque_fb
+    Spindle_Torque_P2 <<- Torque_sp
 }
