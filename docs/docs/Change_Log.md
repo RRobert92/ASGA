@@ -9,6 +9,14 @@ date: 2021-01-14
 </center>
 
 ---
+## v0.37 - Published 10/07/2021
+---
+
+`Major changes`
+- Added full functionality for torque analysis
+
+
+---
 ## v0.36 - Published 10/07/2021
 ---
 
