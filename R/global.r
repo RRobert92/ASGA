@@ -51,7 +51,7 @@ source("bin/Utility/Save_Amira.R")
 source("bin/Utility/Error_Messages.R")
 
 # Global constant settings  ----------------------------------------------------
-SHINY_IO <<- TRUE # Constant defining if app is running locally or online
+SHINY_IO <<- FALSE # If true, app is running online and heavy calculation are disable
 START_UP <<- TRUE
 WINDOW_HEIGHT <<- "640px"
 DATA_TEST <<- 0

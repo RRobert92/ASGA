@@ -159,6 +159,96 @@ print(K_Core_size)
 
 poisson.model <- glm(KMT_no ~ Kinetochore_area, Kinetochores_size_avg, family = poisson(link = "log"))
 summary(poisson.model)
+
+###############################################################################
+#                       Figure 3-figure supplement 1E                         #
+###############################################################################
+KMT_density_all <- rbind(Data_1_K_Core_Area,
+                         Data_2_K_Core_Area,
+                         Data_3_K_Core_Area)
+
+
+# Plot #
+KMT_density <- ggplot(Data_1_K_Core_Area, aes("Metaphase #1", KMT_density)) +
+    geom_quasirandom(method = "tukeyDense", color = "brown1",
+                     shape = 15, size = 1.5) +
+    stat_summary(fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange") +
+    theme_classic()
+KMT_density <- KMT_density +
+    geom_quasirandom(data = Data_2_K_Core_Area, aes("Metaphase #2", KMT_density),
+                     method = "tukeyDense", color = "brown3",
+                     shape = 16, size = 1.5) +
+    stat_summary(data = Data_2_K_Core_Area,
+                 aes("Metaphase #2", KMT_density),
+                 fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange")
+KMT_density <- KMT_density +
+    geom_quasirandom(data = Data_3_K_Core_Area, aes("Metaphase #3", KMT_density),
+                     method = "tukeyDense", color = "brown4",
+                     shape = 17, size = 1.5) +
+    stat_summary(data = Data_3_K_Core_Area,
+                 aes("Metaphase #3", KMT_density),
+                 fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange")
+KMT_density <- KMT_density +
+    geom_quasirandom(data = KMT_density_all, aes("Avg.", KMT_density),
+                     method = "tukeyDense", color = "darkred",
+                     shape = 16, size = 1.5) +
+    stat_summary(data = KMT_density_all,
+                 aes("Avg.", KMT_density),
+                 fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange")
+
+print(KMT_density)
+paste0("Average density ", round(mean(KMT_density_all$Kinetochore_area), 3), " +/- ",
+       round(sd(KMT_density_all$Kinetochore_area), 3))
+
+###############################################################################
+#                       Figure 3-figure supplement 1F                         #
+###############################################################################
+KMT_density_all <- rbind(Data_1_K_Core_Area,
+                         Data_2_K_Core_Area,
+                         Data_3_K_Core_Area)
+
+
+# Plot #
+KMT_density <- ggplot(Data_1_K_Core_Area, aes("Metaphase #1", neigbour_mean)) +
+    geom_quasirandom(method = "tukeyDense", color = "brown1",
+                     shape = 15, size = 1.5) +
+    stat_summary(fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange") +
+    theme_classic()
+KMT_density <- KMT_density +
+    geom_quasirandom(data = Data_2_K_Core_Area, aes("Metaphase #2", neigbour_mean),
+                     method = "tukeyDense", color = "brown3",
+                     shape = 16, size = 1.5) +
+    stat_summary(data = Data_2_K_Core_Area,
+                 aes("Metaphase #2", neigbour_mean),
+                 fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange")
+KMT_density <- KMT_density +
+    geom_quasirandom(data = Data_3_K_Core_Area, aes("Metaphase #3", neigbour_mean),
+                     method = "tukeyDense", color = "brown4",
+                     shape = 17, size = 1.5) +
+    stat_summary(data = Data_3_K_Core_Area,
+                 aes("Metaphase #3", neigbour_mean),
+                 fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange")
+KMT_density <- KMT_density +
+    geom_quasirandom(data = KMT_density_all, aes("Avg.", neigbour_mean),
+                     method = "tukeyDense", color = "darkred",
+                     shape = 16, size = 1.5) +
+    stat_summary(data = KMT_density_all,
+                 aes("Avg.", neigbour_mean),
+                 fun.data = "mean_sdl", fun.args = list(mult = 1),
+                 geom = "pointrange")
+
+print(KMT_density)
+paste0("Average density ", round(mean(KMT_density_all$neigbour_mean), 3), " +/- ",
+       round(mean(KMT_density_all$neigbour_std), 3))
+
+
 ###############################################################################
 #                       Figure 4-figure supplement 1A                         #
 ###############################################################################
