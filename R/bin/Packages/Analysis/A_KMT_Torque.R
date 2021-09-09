@@ -25,6 +25,7 @@ A_KMT_Torque <- function(input, output, session) {
     bin <<- data.frame()
     Torque_sp <<- data.frame()
     Torque_fb <<- data.frame()
+    Helicity <<- data.frame()
     for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
         tryCatch(
         {
@@ -81,6 +82,8 @@ A_KMT_Torque <- function(input, output, session) {
                    rbind(Torque_sp, bin_spindle),
                    envir = .GlobalEnv
             )
+            assign("Helicity",
+                   rbind(Helicity, Helicity_of_fiber(i)))
         },
                 error = function(e) {}
         )
@@ -96,6 +99,7 @@ A_KMT_Torque <- function(input, output, session) {
 
     Fiber_Torque_P1 <<- Torque_fb
     Spindle_Torque_P1 <<- Torque_sp
+    Helicity_P1 <<- Helicity
 
     # Analyze KMT torque for Pole1 -------------------------------
     total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) -
@@ -112,6 +116,9 @@ A_KMT_Torque <- function(input, output, session) {
     bin <<- data.frame()
     Torque_sp <<- data.frame()
     Torque_fb <<- data.frame()
+    Helicity <<- data.frame()
+    names(Helicity_P1)[1] <<- "Rotation"
+
     for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
         tryCatch(
         {
@@ -168,6 +175,8 @@ A_KMT_Torque <- function(input, output, session) {
                    rbind(Torque_sp, bin_spindle),
                    envir = .GlobalEnv
             )
+            assign("Helicity",
+                   rbind(Helicity, Helicity_of_fiber(i)))
         },
                 error = function(e) {}
         )
@@ -183,4 +192,6 @@ A_KMT_Torque <- function(input, output, session) {
 
     Fiber_Torque_P2 <<- Torque_fb
     Spindle_Torque_P2 <<- Torque_sp
+    Helicity_P2 <<- Helicity
+    names(Helicity_P2)[1] <<- "Rotation"
 }

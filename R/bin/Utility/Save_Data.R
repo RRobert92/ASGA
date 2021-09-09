@@ -368,6 +368,10 @@ Save_Data <- function(input, output, session) {
                Spindle_Torque_P1,
                envir = .GlobalEnv
         )
+        assign(paste("Data", current_data, "Helicity_P1", sep = "_"),
+               Helicity_P1,
+               envir = .GlobalEnv
+        )
         assign(paste("Data", current_data, "Fiber_Torque_P2", sep = "_"),
                Fiber_Torque_P2,
                envir = .GlobalEnv
@@ -376,12 +380,20 @@ Save_Data <- function(input, output, session) {
                Spindle_Torque_P2,
                envir = .GlobalEnv
         )
+        assign(paste("Data", current_data, "Helicity_P2", sep = "_"),
+               Helicity_P2,
+               envir = .GlobalEnv
+        )
         assign(paste("Data", current_data, "Fiber_Torque", sep = "_"),
                rbind(Fiber_Torque_P1, Fiber_Torque_P2),
                envir = .GlobalEnv
         )
         assign(paste("Data", current_data, "Spindle_Torque", sep = "_"),
-               rbind(Fiber_Torque_P1, Fiber_Torque_P2),
+               rbind(Spindle_Torque_P1, Spindle_Torque_P2),
+               envir = .GlobalEnv
+        )
+        assign(paste("Data", current_data, "Helicity", sep = "_"),
+               rbind(Helicity_P1, Helicity_P2),
                envir = .GlobalEnv
         )
 
@@ -394,6 +406,10 @@ Save_Data <- function(input, output, session) {
                 paste0("Data/", "Data_", current_data, "_Spindle_Torque_P1.xlsx")
         )
         write.xlsx(
+                get(paste("Data", current_data, "Helicity_P1", sep = "_")),
+                paste0("Data/", "Data_", current_data, "_Helicity_P1.xlsx")
+        )
+        write.xlsx(
                 get(paste("Data", current_data, "Fiber_Torque_P2", sep = "_")),
                 paste0("Data/", "Data_", current_data, "_Fiber_Torque_P2.xlsx")
         )
@@ -402,12 +418,20 @@ Save_Data <- function(input, output, session) {
                 paste0("Data/", "Data_", current_data, "_Spindle_Torque_P2.xlsx")
         )
         write.xlsx(
+                get(paste("Data", current_data, "Helicity_P2", sep = "_")),
+                paste0("Data/", "Data_", current_data, "_Helicity_P2.xlsx")
+        )
+        write.xlsx(
                 get(paste("Data", current_data, "Fiber_Torque", sep = "_")),
                 paste0("Data/", "Data_", current_data, "_Fiber_Torque.xlsx")
         )
         write.xlsx(
                 get(paste("Data", current_data, "Spindle_Torque", sep = "_")),
                 paste0("Data/", "Data_", current_data, "_Spindle_Torque.xlsx")
+        )
+        write.xlsx(
+                get(paste("Data", current_data, "Helicity", sep = "_")),
+                paste0("Data/", "Data_", current_data, "_Helicity.xlsx")
         )
     },
             error = function(e) {}

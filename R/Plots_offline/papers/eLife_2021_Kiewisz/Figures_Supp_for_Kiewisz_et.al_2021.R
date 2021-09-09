@@ -127,8 +127,14 @@ No_KMTs <- No_KMTs +
 
 print(No_KMTs)
 
+
 ###############################################################################
-#                       Figure 3-figure supplement 1C                         #
+#                       Figure 3-figure supplement 1B                         #
+###############################################################################
+
+
+###############################################################################
+#                       Figure 3-figure supplement 1D                         #
 ###############################################################################
 # Combined data for average #
 Kinetochores_size_avg <- rbind(Data_1_K_Core_Area,
@@ -151,6 +157,8 @@ K_Core_size <- K_Core_size +
 
 print(K_Core_size)
 
+poisson.model <- glm(KMT_no ~ Kinetochore_area, Kinetochores_size_avg, family = poisson(link = "log"))
+summary(poisson.model)
 ###############################################################################
 #                       Figure 4-figure supplement 1A                         #
 ###############################################################################
@@ -413,6 +421,46 @@ MInus_Ends <- MInus_Ends +
                      fun.data = "mean_sdl", fun.args = list(mult = 1),
                      geom = "pointrange")
 print(MInus_Ends)
+
+###############################################################################
+#                       Figure 5-figure supplement 1A                         #
+###############################################################################
+# Combined data for average #
+Tortuosity_avg <- rbind(Data_1_KMT_Total_Curv,
+                        Data_2_KMT_Total_Curv,
+                        Data_3_KMT_Total_Curv)
+Tortuosity_avg_inner <- Tortuosity_avg %>% filter(`Elipse Position` == "25%")
+Tortuosity_avg_middle <- Tortuosity_avg %>% filter(`Elipse Position` == "50%")
+Tortuosity_avg_outer <- Tortuosity_avg %>% filter(`Elipse Position` == "100%")
+
+
+
+###############################################################################
+#                       Figure 5-figure supplement 1N                         #
+###############################################################################
+# Combined data for average #
+Tortuosity_avg <- rbind(Data_1_KMT_Total_Curv,
+                        Data_2_KMT_Total_Curv,
+                        Data_3_KMT_Total_Curv)
+Tortuosity_avg_inner <- Tortuosity_avg %>% filter(`Elipse Position` == "25%")
+Tortuosity_avg_middle <- Tortuosity_avg %>% filter(`Elipse Position` == "50%")
+Tortuosity_avg_outer <- Tortuosity_avg %>% filter(`Elipse Position` == "100%")
+
+
+# Plot #
+P1 <- ggplot(Tortuosity_avg_inner, aes(Curvature)) +
+    geom_histogram(bins = 30, fill = "green", color = "black") +
+    theme_classic() +
+    ylab("No. of KMTs") +
+    xlab("Tortuosity of KMTs")
+P1 <- P1 + geom_histogram(data = Tortuosity_avg_middle, aes(Curvature),
+                          bins = 30, fill = "blue", color = "black")
+P1 <- P1 + geom_histogram(data = Tortuosity_avg_outer, aes(Curvature),
+                          bins = 30, fill = "purple", color = "black")
+print(P1)
+paste("Mean: ", mean(Tortuosity_avg_inner$Curvature), "n=", nrow(Tortuosity_avg_inner))
+paste("Mean: ", mean(Tortuosity_avg_middle$Curvature), "n=", nrow(Tortuosity_avg_middle))
+paste("Mean: ", mean(Tortuosity_avg_outer$Curvature), "n=", nrow(Tortuosity_avg_outer))
 
 ###############################################################################
 #                       Figure 7-figure supplement 1A                         #

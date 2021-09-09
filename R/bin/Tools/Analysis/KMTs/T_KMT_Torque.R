@@ -79,3 +79,30 @@ Fiber_torque_around_center <- function(x) {
 
     return(angle)
 }
+
+Helicity_of_fiber <- function(x) {
+    # Poygon center x,y,z
+    Poses <- get(paste(colnames(Segments)[x], "fiber", sep = "_"))[, c("X_Coord", "Z_Coord", "Y_Coord")]
+    C <- as.numeric(Pole1[, c("X.Coord", "Z.Coord", "Y.Coord")])
+    angle <- as.numeric()
+
+    Pose_kinetochore <- Poses[1,]
+    Poses_pole <- Poses[nrow(Poses),]
+
+    height <- abs(as.numeric(Pose_kinetochore$Y_Coord) - as.numeric(Poses_pole$Y_Coord))
+    Pos_K <- as.numeric(Pose_kinetochore)
+    Pos_K <- atan2(Pos_K[2] - C[2], Pos_K[1] - C[1]) * (180 / pi)
+
+    Pos_P <- as.numeric(Poses_pole)
+    Pos_P <- atan2(Pos_P[2] - C[2], Pos_P[1] - C[1]) * (180 / pi)
+
+    rotation <- (Pos_K - Pos_P)
+
+    if (Pos_K > Pos_P) {
+        rotation <- -abs(rotation)
+    } else {
+        rotation <- abs(rotation)
+    }
+
+    return(rotation / height) # [θ/μm]
+}
