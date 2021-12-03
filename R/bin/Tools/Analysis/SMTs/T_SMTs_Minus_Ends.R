@@ -33,10 +33,18 @@ SMT_Minus_Ends <- function(RP_Pole, kinetochore) {
 
     DF[3, 1] <- as.numeric(dist(rbind(Node_2, Pole1), method = "euclidean")) # Pole2 Node1
     DF[4, 1] <- as.numeric(dist(rbind(Node_2, Pole2), method = "euclidean")) # Pole2 Node2
+
+    # select closest as minus-end
     Minus_end <- which.min(DF$...1)
     Dist <- DF[Minus_end, 1]
 
-    # select closest as minus-end
+    if (Minus_end == 1 || Minus_end == 3) {
+      Pole = 1
+    }
+    if (Minus_end == 2 || Minus_end == 4) {
+      Pole = 2
+    }
+
     if (Minus_end == 1 || Minus_end == 2) {
       Minus_end <- tibble(
         Node_1,
@@ -58,10 +66,8 @@ SMT_Minus_Ends <- function(RP_Pole, kinetochore) {
         Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / (Pole1[1, 2] - Pole2[1, 2])
       }
     } else {
-      if (Pole1[1, 2] < Pole2[1, 2]) {
+      if (Pole == 1) {
         Relative_position <- (Minus_end$Y.Coord - Pole1[1, 2]) / (kinetochore[1, 2] - Pole1[1, 2])
-      } else {
-        Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / (kinetochore[1, 2] - Pole2[1, 2])
       }
     }
 
