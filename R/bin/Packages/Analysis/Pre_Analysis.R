@@ -461,30 +461,28 @@ Pre_Analysis <- function(input, output, session) {
     )
     Sys.sleep(0.1)
 
-    tryCatch(
-    {
+    tryCatch({
         if (exists("Segments_SMT")) {
             if (nrow(Segments_SMT) > 0) {
-                SMT_Ends <<- SMT_Minus_Ends()
+                SMT_Ends <<- SMT_Minus_Ends(RP_Pole, Kinetochore_projected)
                 Minus_end_position <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["minus_dist_to_pole"]
                 Relative_position <<- get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["Relative_minus_position"]
                 Minus_end_position <<- cbind(Minus_end_position, Relative_position)
             }
         }
-    },
-            error = function(e) {}
-    )
 
     for (i in as.numeric(which(colnames(Segments) == "Pole1_00") + 1):as.numeric(ncol(Segments) - 4)) {
-        tryCatch(
-        {
+        tryCatch({
             DF_Minus_end_position <<- get(paste(colnames(Segments)[i]))["minus_dist_to_pole"]
             DF_Relative_position <<- get(paste(colnames(Segments)[i]))["Relative_minus_position"]
             DF <<- cbind(DF_Minus_end_position, DF_Relative_position)
             Minus_end_position <<- rbind(Minus_end_position, DF)
-        },
+            },
                 error = function(e) {}
-        )
-    }
+                )
+                }
+        },
+            error = function(e) {}
+            )
     closeSweetAlert(session = session)
 }
