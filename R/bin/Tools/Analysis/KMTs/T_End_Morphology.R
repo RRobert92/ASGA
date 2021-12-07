@@ -169,7 +169,7 @@ End_distribution_Minus <- function(x, y) {
     }
 }
 
-MT_Ends_Distribution <- function() {
+MT_Ends_Distribution <- function(RP_Pole, kinetochore) {
     df <- tibble()
 
     for (i in 1:nrow(Segments)) {
@@ -192,6 +192,13 @@ MT_Ends_Distribution <- function() {
         Distance <- DF[Minus_end, 1]
 
         # select closest as minus-end
+        if (Minus_end == 1 || Minus_end == 3) {
+          Pole = 1
+        }
+        if (Minus_end == 2 || Minus_end == 4) {
+          Pole = 2
+        }
+
         if (Minus_end == 1 || Minus_end == 2) {
             Minus_end <- tibble(
                     Node_1,
@@ -237,10 +244,19 @@ MT_Ends_Distribution <- function() {
             MT_Class <- "NoN-KMT"
         }
 
-        if (Pole1[1, 2] < Pole2[1, 2]) {
-            Relative_position <- (Minus_end$Y.Coord - Pole1[1, 2]) / (Pole2[1, 2] - Pole1[1, 2])
+        if (RP_Pole == TRUE) {
+          if (Pole1[1, 2] < Pole2[1, 2]) {
+
+              Relative_position <- (Minus_end$Y.Coord - Pole1[1, 2]) / (Pole2[1, 2] - Pole1[1, 2])
+          } else {
+              Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / (Pole1[1, 2] - Pole2[1, 2])
+          }
         } else {
-            Relative_position <- (Minus_end$Y.Coord - Pole2[1, 2]) / (Pole1[1, 2] - Pole2[1, 2])
+          if (Pole == 1) {
+            Relative_position <- (Minus_end$Y.Coord - Pole1[1, 2]) / (kinetochore[1, 2] - Pole1[1, 2])
+          } else {
+            Relative_position <- (Minus_end$Y.Coord - kinetochore[1, 2]) / (Pole2[1, 2] - kinetochore[1, 2])
+          }
         }
 
         MT <- tibble(

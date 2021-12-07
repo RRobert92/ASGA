@@ -180,7 +180,7 @@ A_End_Morphology <- function(input, output, session) {
 
         tryCatch({
             assign("MT_Ends_Type",
-                   MT_Ends_Distribution(),
+                   MT_Ends_Distribution(RP_Pole, Kinetochore_projected),
                    envir = .GlobalEnv)
         })
         closeSweetAlert(session = session)
