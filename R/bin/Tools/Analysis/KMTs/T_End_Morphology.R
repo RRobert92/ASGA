@@ -194,9 +194,11 @@ MT_Ends_Distribution <- function(RP_Pole, kinetochore) {
         # select closest as minus-end
         if (Minus_end == 1 || Minus_end == 3) {
           Pole = 1
+          Minus_end_type <- "Pole1"
         }
         if (Minus_end == 2 || Minus_end == 4) {
           Pole = 2
+          Minus_end_type <- "Pole2"
         }
 
         if (Minus_end == 1 || Minus_end == 2) {
@@ -204,7 +206,6 @@ MT_Ends_Distribution <- function(RP_Pole, kinetochore) {
                     Node_1,
                     `Segment ID` = Segments[i, "Node ID #1"]
             )
-            Minus_end_type <- "Pole1"
             Plus_end <- tibble(
                     Node_2,
                     `Segment ID` = Segments[i, "Node ID #2"]
@@ -215,7 +216,6 @@ MT_Ends_Distribution <- function(RP_Pole, kinetochore) {
                     Node_2,
                     `Node ID` = Segments[i, "Node ID #2"]
             )
-            Minus_end_type <- "Pole2"
             Plus_end <- tibble(
                     Node_1,
                     `Node ID` = Segments[i, "Node ID #1"]
