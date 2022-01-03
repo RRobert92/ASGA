@@ -12,3 +12,4 @@ ASGA/rsconnect/shinyapps.io/kiewisz/ASGA.dcf
 docs/site/
 *.Rhistory
 .idea
+.DS_Store
