@@ -30,22 +30,34 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
         updateProgressBar(
                 session = session,
                 id = "P_nucleation1",
-                title = paste("Calculating (-) nucleated from the KMT for ", Function_Scale_Seed[i], "um...", sep = " "),
-                value = round(as.numeric(i / length(Function_Scale_Seed)) * 100, 0)
+                title = paste("Calculating (-) nucleated from the KMT for Pole 1", Function_Scale_Seed[i], "um...", sep = " "),
+                value = 0
         )
-        Sys.sleep(0.1)
 
         MINUS_DISTANCE <<- as.numeric(Function_Scale_Seed[i])
+        total <- length(as.numeric(which(colnames(Segments) == "Pole1_00")):as.numeric(which(colnames(Segments) == "Pole2_00")))
 
         # Analyze (-) ends nucleation from the KMT for Pole1 ---------------------------
         KMTs_minus_seed_P1 <- Minus_end_seed(which(colnames(Segments) == "Pole1_00"))
+        updateProgressBar(
+          session = session,
+          id = "P_nucleation1",
+          value = round(as.numeric(1 / total) * 100, 0)
+        )
 
-        for (i in as.numeric(which(colnames(Segments) == "Pole1_00") + 1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
+        id = 1
+        for (j in as.numeric(which(colnames(Segments) == "Pole1_00")):as.numeric(which(colnames(Segments) == "Pole2_00"))) {
+          updateProgressBar(
+            session = session,
+            id = "P_nucleation1",
+            value = round(as.numeric(id / total) * 100, 0)
+          )
+          id = id + 1
             tryCatch(
             {
                 assign(
                         "DF",
-                        Minus_end_seed(i)
+                        Minus_end_seed(j)
                 )
                 KMTs_minus_seed_P1 <- rbind(KMTs_minus_seed_P1, DF)
             },
@@ -58,18 +70,38 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
         )
 
         # Analyze (-) ends nucleation from the KMT for Pole2 ---------------------------
+        updateProgressBar(
+          session = session,
+          id = "P_nucleation1",
+          title = paste("Calculating (-) nucleated from the KMT for Pole 2", Function_Scale_Seed[i], "um...", sep = " "),
+          value = 0
+        )
+
         if (nrow(Pole2_00) == 0) {
             KMTs_minus_seed_P2 <- data.frame()
         } else {
             KMTs_minus_seed_P2 <- Minus_end_seed(which(colnames(Segments) == "Pole2_00"))
         }
+        total <- length(as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4))
+        updateProgressBar(
+          session = session,
+          id = "P_nucleation1",
+          value = round(as.numeric(1 / total) * 100, 0)
+        )
+        id = 1
 
-        for (i in as.numeric(which(colnames(Segments) == "Pole2_00") + 1):as.numeric(ncol(Segments) - 4)) {
+        for (j in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
+          updateProgressBar(
+            session = session,
+            id = "P_nucleation1",
+            value = round(as.numeric(id / total) * 100, 0)
+          )
+          id = id + 1
             tryCatch(
             {
                 assign(
                         "DF",
-                        Minus_end_seed(i)
+                        Minus_end_seed(j)
                 )
                 KMTs_minus_seed_P2 <- rbind(KMTs_minus_seed_P2, DF)
             },
@@ -106,31 +138,33 @@ A_KMT_Minus_End_Seeds <- function(input, output, session) {
                 session = session,
                 id = "KMT_ends",
                 title = paste("Calculating KMTs (-) end position around other MTs for ", Function_Scale_Seed[i], "um...", sep = " "),
-                value = round(as.numeric(i / length(Function_Scale_Seed)) * 100, 0)
+                value = 0
         )
-        Sys.sleep(0.1)
-
         MINUS_DISTANCE <<- as.numeric(Function_Scale_Seed[i])
 
         LENGTH_ESTIMATION <- tibble(round(Segments$length / 190, 0))
         names(LENGTH_ESTIMATION)[1] <- "no"
 
         LENGTH_ESTIMATION_DF <- tibble()
-        for (i in 1:nrow(LENGTH_ESTIMATION)) {
-            LENGTH_ESTIMATION_DF[i, 1] <- sum(LENGTH_ESTIMATION$no[1:i]) - 100
+        for (j in 1:nrow(LENGTH_ESTIMATION)) {
+            LENGTH_ESTIMATION_DF[j, 1] <- sum(LENGTH_ESTIMATION$no[1:j]) - 100
         }
+        LENGTH_ESTIMATION_DF <<- LENGTH_ESTIMATION_DF
 
-        cores <<- detectCores()
-        cl <<- makeCluster(cores)
-        registerDoParallel(cl)
+        KMT_Minus_End = KMT_Minus_End_Interaction(1)
+        updateProgressBar(
+          session = session,
+          id = "KMT_ends",
+          value = round(as.numeric(1 / nrow(Segments_KMT)) * 100, 0)
+        )
 
-        KMT_Minus_End <<- foreach(
-                i = 1:nrow(Segments_KMT), .combine = "rbind", .inorder = F,
-                .export = c("Segments", "Segments_KMT", "Nodes", "Points", "Pole1", "Pole2",
-                            "MINUS_DISTANCE", "KMT_Minus_End_Interaction", "LENGTH_ESTIMATION_DF"),
-                .packages = "tibble"
-        ) %dopar% {
-            KMT_Minus_End_Interaction(i)
+        for (k in 2:nrow(Segments_KMT)){
+          updateProgressBar(
+            session = session,
+            id = "KMT_ends",
+            value = round(as.numeric(k / nrow(Segments_KMT)) * 100, 0)
+          )
+          KMT_Minus_End = rbind(KMT_Minus_End, KMT_Minus_End_Interaction(k))
         }
 
         assign(paste("KMT_Minus_End", MINUS_DISTANCE, sep = "_"),

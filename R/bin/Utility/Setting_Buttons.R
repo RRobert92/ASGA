@@ -332,7 +332,7 @@ Setting_Buttons_Server <- function(input, output, session) {
     })
   })
 
-  # Reactivity for minu end seeds -----------------------------------------------
+  # Reactivity for minus end seeds -----------------------------------------------
   observeEvent(input$`KMT_Minus_End_Seeds`, {
     All_Closed()
     Any_One()

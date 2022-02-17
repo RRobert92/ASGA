@@ -11,9 +11,37 @@
 # Author: Robert Kiewisz
 # Created: 2020-04-21
 # Reviewed: Robert Kiewisz 28/08/2020 (v0.31.1)
-#####################################################################################
+################################################################################
 
-# Tool End Morphology ---------------------------------------------------------------
+# Tool to analyse density around KMTs minus ens --------------------------------
+# x is coordinate of point or node
+# voxal is int value defining voxal size in um
+# type is str value defining type of data on which density is computed, node or point
+KMT_ends_density <- function(xyz, voxal, type){
+  voxal_cube = voxal * voxal * voxal * 1e+9 # nm/3
+  x = as.numeric(xyz[1])
+  y = as.numeric(xyz[2])
+  z = as.numeric(xyz[3])
+
+  if (type == 'node'){
+    points_in_voxal = Nodes %>% filter(`X Coord` >= (x-voxal/2) & `X Coord` <= (x+voxal/2) &
+                                         `Y Coord` >= (y-voxal/2) & `Y Coord` <= (y+voxal/2) &
+                                         `Z Coord` >= (z-voxal/2) & `Z Coord` <= (z+voxal/2))
+    points_in_voxal = nrow(points_in_voxal)
+  }
+  if (type == 'point'){
+    points_in_voxal = Points %>% filter(`X Coord` >= (x-voxal/2) & `X Coord` <= (x+voxal/2) &
+                                          `Y Coord` >= (y-voxal/2) & `Y Coord` <= (y+voxal/2) &
+                                          `Z Coord` >= (z-voxal/2) & `Z Coord` <= (z+voxal/2))
+    points_in_voxal = nrow(points_in_voxal)
+  }
+
+  density = points_in_voxal / voxal_cube
+
+  density
+}
+
+# Tool End Morphology ----------------------------------------------------------
 End_Type_Error <- function() {
     if (ncol(Nodes %>% select(starts_with("EndType"))) == 2) {
         End_type_error <- data.frame(
@@ -27,12 +55,12 @@ End_Type_Error <- function() {
     End_type_error
 }
 
-# Analyze the end distribution according to the relative position of the KMT end ----
-# X is here no. of column in the "Segment" ------------------------------------------
-# Y is a no. of a Pole 1 or 2 -------------------------------------------------------
+# Analyze the end distribution according to the relative position of the KMT end
+# X is here no. of column in the "Segment" -------------------------------------
+# Y is a no. of a Pole 1 or 2 --------------------------------------------------
 End_distribution_Plus <- function(x, y) {
 
-    # Function setting ------------------------------------------------------------------
+    # Function setting ---------------------------------------------------------
     if (y == 1) {
         y <- Pole1
         y_df <- 1
@@ -43,7 +71,7 @@ End_distribution_Plus <- function(x, y) {
 
     Plus <- data.frame()
 
-    # For x find Node ID that belong to Segment ID ---------------------------------------
+    # For x find Node ID that belong to Segment ID -----------------------------
     if (nrow(get(colnames(Segments)[x])) >= 1) {
         for (i in 1:nrow(get(colnames(Segments)[x]))) {
             S_ID <- get(colnames(Segments)[x])[i, 1]

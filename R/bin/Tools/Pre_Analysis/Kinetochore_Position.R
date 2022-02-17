@@ -83,9 +83,9 @@ Kinetochore_ellipse <- function() {
             )
 
             Kinetochore_Avg[counter, 1:3] <- Plus_end
+            counter <- counter + 1
         }
         Plus_end <- tibble()
-        counter <- counter + 1
     }
 
     Kinetochore_Avg
