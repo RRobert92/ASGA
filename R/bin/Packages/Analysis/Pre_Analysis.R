@@ -198,6 +198,8 @@ Pre_Analysis <- function(input, output, session) {
     }
 
     # Collect Length Distribution Data for Pole1 --------------------------------------------------
+    tryCatch(
+      {
     assign("LD_P1",
            get(paste(colnames(Segments)[which(colnames(Segments) == "Pole1_00")]))["length"],
            envir = .GlobalEnv
@@ -226,6 +228,9 @@ Pre_Analysis <- function(input, output, session) {
     assign("LD_P1",
            cbind(LD_P1, Plus_end_pos, Dist_pole, Elips, Minus_dist, k_fiber),
            envir = .GlobalEnv
+    )
+      },
+    error = function(e) {}
     )
 
     for (i in as.numeric(which(colnames(Segments) == "Pole1_00") + 1):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
