@@ -53,7 +53,7 @@ IKD_KMT_avg <- rbind(
 IKD_KMT_NO <- ggplot(Data_1_IKD_KMT_No, aes(`Inter-kinetochore distance`, `KMTs no.`)) +
         geom_point(color = "brown1", shape = 15, size = 2) +
         theme_classic() +
-        xlim(0.5, 1.75)
+        xlim(0.5, CIA5)
 IKD_KMT_NO <- IKD_KMT_NO +
         geom_point(
                 data = Data_2_IKD_KMT_No, aes(`Inter-kinetochore distance`, `KMTs no.`),
@@ -103,7 +103,7 @@ IKD_dekta_avg <- rbind(
 IKD_delta_NO <- ggplot(Data_1_IKD_KMT_Delta, aes(`Inter-kinetochore distance`, `Delta of KMTs`)) +
         geom_point(color = "brown1", shape = 15, size = 2) +
         theme_classic() +
-        xlim(0.5, 1.75)
+        xlim(0.5, CIA5)
 IKD_delta_NO <- IKD_delta_NO +
         geom_point(
                 data = Data_2_IKD_KMT_Delta, aes(`Inter-kinetochore distance`, `Delta of KMTs`),
@@ -269,35 +269,36 @@ print(round(sd, 1))
 ###############################################################################
 # Combined data for average #
 LD_avg <- rbind(
-        Data_1_KMTs_minus_seed_0.1,
-        Data_2_KMTs_minus_seed_0.1,
-        Data_3_KMTs_minus_seed_0.1
+        Data_1_KMT_Minus_End_0.1,
+        Data_2_KMT_Minus_End_0.1,
+        Data_3_KMT_Minus_End_0.1
 )
 
 # Plot #
-ggplot(LD_avg, aes(Relative_pos)) +
+ggplot(LD_avg, aes(Relative_position)) +
         geom_histogram(bins = 30) +
         theme_classic() +
         ylab("No. of KMTs") +
-        xlab("Minus ends distance to the pole [um]")
+        xlab("Minus ends distance to the pole [um]") +
+        xlim(-0.5, 1)
 
 # Analysis of KMT distribution at CIA #
 mean_LD <- mean(c(
-        (nrow(filter(Data_1_KMTs_minus_seed_0.1, Relative_pos <= 0.2)) /
-                nrow(Data_1_KMTs_minus_seed_0.1)) * 100,
-        (nrow(filter(Data_2_KMTs_minus_seed_0.1, Relative_pos <= 0.2)) /
-                nrow(Data_2_KMTs_minus_seed_0.1)) * 100,
-        (nrow(filter(Data_3_KMTs_minus_seed_0.1, Relative_pos <= 0.2)) /
-                nrow(Data_3_KMTs_minus_seed_0.1)) * 100
+        (nrow(filter(Data_1_KMT_Minus_End_0.1, Relative_position <= 0.2)) /
+                nrow(Data_1_KMT_Minus_End_0.1)) * 100,
+        (nrow(filter(Data_2_KMT_Minus_End_0.1, Relative_position <= 0.2)) /
+                nrow(Data_2_KMT_Minus_End_0.1)) * 100,
+        (nrow(filter(Data_3_KMT_Minus_End_0.1, Relative_position <= 0.2)) /
+                nrow(Data_3_KMT_Minus_End_0.1)) * 100
 ))
 print(round(mean_LD, 2))
 sd <- sd(c(
-        (nrow(filter(Data_1_KMTs_minus_seed_0.1, Relative_pos <= 0.2)) /
-                nrow(Data_1_KMTs_minus_seed_0.1)) * 100,
-        (nrow(filter(Data_2_KMTs_minus_seed_0.1, Relative_pos <= 0.2)) /
-                nrow(Data_2_KMTs_minus_seed_0.1)) * 100,
-        (nrow(filter(Data_3_KMTs_minus_seed_0.1, Relative_pos <= 0.2)) /
-                nrow(Data_3_KMTs_minus_seed_0.1)) * 100
+        (nrow(filter(Data_1_KMT_Minus_End_0.1, Relative_position <= 0.2)) /
+                nrow(Data_1_KMT_Minus_End_0.1)) * 100,
+        (nrow(filter(Data_2_KMT_Minus_End_0.1, Relative_position <= 0.2)) /
+                nrow(Data_2_KMT_Minus_End_0.1)) * 100,
+        (nrow(filter(Data_3_KMT_Minus_End_0.1, Relative_position <= 0.2)) /
+                nrow(Data_3_KMT_Minus_End_0.1)) * 100
 ))
 print(round(sd, 2))
 
@@ -491,9 +492,9 @@ Tortuosity_of_long <- tibble(
                         nrow(filter(Data_3_KMT_Total_Curv, `KMTs length` >= PTP$distance[3]))
         )
 )
-paste(round(mean(Tortuosity_of_long$Ratio), 2),
+paste(round(mean(Tortuosity_of_long$Ratio), 2) * 100,
       "+/-",
-      round(sd(Tortuosity_of_long$Ratio), 2),
+      round(sd(Tortuosity_of_long$Ratio), 2) * 100,
       sep = " ")
 
 ###############################################################################
@@ -510,7 +511,7 @@ Tortuosity_local_avg <- rbind(
 Tortuosity_local <- ggplot(Data_1_KMT_Local_Curv, aes(Relative_Position, Curvature)) +
         geom_jitter(shape = 15, color = "brown1") +
         theme_classic() +
-        ylim(1, 1.1)
+        ylim(1, 1.1) + xlim(-0.5, 1)
 Tortuosity_local <- Tortuosity_local +
         geom_point(
                 data = Data_2_KMT_Local_Curv, aes(Relative_Position, Curvature),
@@ -524,7 +525,7 @@ Tortuosity_local <- Tortuosity_local +
 Tortuosity_local <- Tortuosity_local +
         geom_smooth(
                 data = Tortuosity_local_avg, aes(Relative_Position, Curvature),
-                se = F, color = "grey20", size = 2, method = "loess"
+                se = F, color = "grey20", size = 2, method = "lm"
         )
 
 print(Tortuosity_local)
@@ -664,7 +665,7 @@ KMT_Minus_End_Interaction_45 <- rbind(
 )
 KMT_Minus_End_Interaction_50 <- rbind(
         Data_1_KMT_Minus_End_0.05,
-        ata_2_KMT_Minus_End_0.05,
+        Data_2_KMT_Minus_End_0.05,
         Data_3_KMT_Minus_End_0.05
 )
 KMT_Minus_End_Interaction_75 <- rbind(
@@ -861,80 +862,80 @@ KMT_Minus_End_Interaction_100 <- rbind(
 KMT_Minus_End_Data_Pole <- tibble(
         Data = c(
                 Interaction_25 = mean(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.025),
-                        nrow(filter(Data_2_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.025),
-                        nrow(filter(Data_3_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.025)
                 )),
                 Interaction_30 = mean(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.03),
-                        nrow(filter(Data_2_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.03),
-                        nrow(filter(Data_3_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.03)
                 )),
                 Interaction_35 = mean(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.035),
-                        nrow(filter(Data_2_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.035),
-                        nrow(filter(Data_3_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.035)
                 )),
                 Interaction_45 = mean(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.045),
-                        nrow(filter(Data_2_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.045),
-                        nrow(filter(Data_3_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.045)
                 )),
                 Interaction_50 = mean(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.05),
-                        nrow(filter(Data_2_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.05),
-                        nrow(filter(Data_3_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.05)
                 )),
                 Interaction_75 = mean(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.075),
-                        nrow(filter(Data_2_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.075),
-                        nrow(filter(Data_3_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.075)
                 )),
                 Interaction_100 = mean(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.1),
-                        nrow(filter(Data_2_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.1),
-                        nrow(filter(Data_3_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.1)
                 ))
         ),
@@ -949,80 +950,80 @@ KMT_Minus_End_Data_Pole <- tibble(
         ),
         STD = c(
                 Interaction_25 = sd(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.025),
-                        nrow(filter(Data_2_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.025),
-                        nrow(filter(Data_3_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.025, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.025)
                 )),
                 Interaction_30 = sd(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.03),
-                        nrow(filter(Data_2_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.03),
-                        nrow(filter(Data_3_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.03, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.03)
                 )),
                 Interaction_35 = sd(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.035),
-                        nrow(filter(Data_2_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.035),
-                        nrow(filter(Data_3_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.035, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.035)
                 )),
                 Interaction_45 = sd(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.045),
-                        nrow(filter(Data_2_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.045),
-                        nrow(filter(Data_3_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.045, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.045)
                 )),
                 Interaction_50 = sd(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.05),
-                        nrow(filter(Data_2_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.05),
-                        nrow(filter(Data_3_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.05, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.05)
                 )),
                 Interaction_75 = sd(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.075),
-                        nrow(filter(Data_2_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.075),
-                        nrow(filter(Data_3_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.075, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.075)
                 )),
                 Interaction_100 = sd(c(
-                        nrow(filter(Data_1_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_1_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_1_KMT_Minus_End_0.1),
-                        nrow(filter(Data_2_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_2_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_2_KMT_Minus_End_0.1),
-                        nrow(filter(Data_3_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= 1.53 |
-                                MT_type == "SMT" & KMT_Minus_Distance >= 1.53)) /
+                        nrow(filter(Data_3_KMT_Minus_End_0.1, MT_type == "KMT" & KMT_Minus_Distance >= CIA |
+                                MT_type == "SMT" & KMT_Minus_Distance >= CIA)) /
                                 nrow(Data_3_KMT_Minus_End_0.1)
                 ))
         )
@@ -1056,6 +1057,41 @@ ggplot(filter(KMT_Minus_End_Interaction_35, MT_type == "KMT"), aes(Relative_posi
         ylab("No. of KMT minus ends interacting with KMT lattices") +
         xlab("Relative position on the spindle axis")
 
+data <- tibble()
+data[1, 1] <- 0 # Normalized number
+data[1, 2] <- 1 # Relative potions
+kmt_association <- filter(KMT_Minus_End_Interaction_35, MT_type == "KMT")
+df_min <- min(kmt_association$Density)
+df_max <- max(kmt_association$Density)
+for (i in 1:nrow(kmt_association)){
+  kmt_association[i, 'Density'] <- (as.numeric(kmt_association[i, 'Density']) - df_min)/(df_max - df_min)
+}
+
+red <- 0.05
+df_max <- 1
+df_min <- df_max - red
+for (i in 1:(1.25/red)){
+  df <- kmt_association %>% filter(Relative_position > df_min & Relative_position <= df_max)
+  data[i+1, 1] <- sum(1 - df[, 'Density'])
+  data[i+1, 2] <- df_max
+
+  df_max <- df_max - red
+  df_min <- df_min - red
+}
+
+df_min <- min(data$...1)
+df_max <- max(data$...1)
+for (i in 1:nrow(data)){
+  data[i, 1] <- (as.numeric(data[i, 1]) - df_min)/(df_max - df_min)
+}
+
+#Plot
+ggplot(data, aes(...2, ...1)) +
+  geom_col() +
+  theme_classic() +
+  ylab("No. of KMT minus ends interacting with KMT lattices") +
+  xlab("Relative position on the spindle axis")
+
 # Analysis of KMT number in CIA with minus end associated to other MT #
 KMT_no_with_Association <- filter(KMT_Minus_End_Interaction_35, MT_type == "KMT")
 KMT_no_in_CIA <- KMT_no_with_Association %>%
@@ -1081,7 +1117,40 @@ ggplot(filter(KMT_Minus_End_Interaction_35, MT_type == "SMT"), aes(Relative_posi
         ylab("No. of KMT minus ends interacting with non-KMT lattices") +
         xlab("Relative position on the spindle axis")
 
-print(KMT_Minus_End_Pos)
+data <- tibble()
+data[1, 1] <- 0 # Normalized number
+data[1, 2] <- 1 # Relative potions
+kmt_association <- filter(KMT_Minus_End_Interaction_35, MT_type == "SMT")
+df_min <- min(kmt_association$Density)
+df_max <- max(kmt_association$Density)
+for (i in 1:nrow(kmt_association)){
+  kmt_association[i, 'Density'] <- (as.numeric(kmt_association[i, 'Density']) - df_min)/(df_max - df_min)
+}
+
+red <- 0.05
+df_max <- 1
+df_min <- df_max - red
+for (i in 1:(1.25/red)){
+  df <- kmt_association %>% filter(Relative_position > df_min & Relative_position <= df_max)
+  data[i+1, 1] <- sum(1 - df[, 'Density'])
+  data[i+1, 2] <- df_max
+
+  df_max <- df_max - red
+  df_min <- df_min - red
+}
+
+df_min <- min(data$...1)
+df_max <- max(data$...1)
+for (i in 1:nrow(data)){
+  data[i, 1] <- (as.numeric(data[i, 1]) - df_min)/(df_max - df_min)
+}
+
+#Plot
+ggplot(data, aes(...2, ...1)) +
+  geom_col() +
+  theme_classic() +
+  ylab("No. of KMT minus ends interacting with non-KMT lattices") +
+  xlab("Relative position on the spindle axis")
 
 # Analysis non-KMTs number in CIA with minus end associated to other MT #
 KMT_no_with_Association <- filter(KMT_Minus_End_Interaction_35, MT_type == "SMT")
@@ -1292,6 +1361,14 @@ paste0(
         round(sd(filter(data, type == 50)$value), 1)
 )
 
+# Plot #
+data %>%
+  ggplot(aes(x = value, fill = type)) +
+  geom_freqpoly() +
+  scale_fill_manual(values = c("grey80", "grey65", "grey50", "grey40", "grey20")) +
+  theme_classic() +
+  labs(fill = "")
+
 data <- tibble(
         value = c(
                 AVG_MT_Interaction_25$...2, AVG_MT_Interaction_30$...2,
@@ -1306,6 +1383,7 @@ data <- tibble(
                 rep("50", nrow(AVG_MT_Interaction_50))
         )
 )
+
 paste0(
         round(mean(filter(data, type == 25)$value), 1),
         " +/- ",
@@ -1339,6 +1417,7 @@ data %>%
         scale_fill_manual(values = c("grey80", "grey65", "grey50", "grey40", "grey20")) +
         theme_classic() +
         labs(fill = "")
+
 
 ###############################################################################
 #                                Figure 8D                                    #
@@ -1425,6 +1504,14 @@ paste0(
         round(sd(filter(data, type == 50)$value), 1)
 )
 
+# Plot #
+data %>%
+  ggplot(aes(x = value, fill = type)) +
+  geom_freqpoly() +
+  scale_fill_manual(values = c("grey80", "grey65", "grey50", "grey40", "grey20")) +
+  theme_classic() +
+  labs(fill = "") + xlim(0, 1000)
+
 data <- tibble(
         value = c(
                 AVG_MT_Interaction_25$...2, AVG_MT_Interaction_30$...2,
@@ -1472,3 +1559,4 @@ data %>%
         scale_fill_manual(values = c("grey80", "grey65", "grey50", "grey40", "grey20")) +
         theme_classic() +
         labs(fill = "")
+

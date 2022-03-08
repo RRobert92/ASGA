@@ -13,7 +13,6 @@
 fluidPage(
         includeCSS("www/css/style.css"),
 
-        useShinyalert(),
         useShinyjs(),
         extendShinyjs(text = JS_CODE, functions = 'browseURL'),
 

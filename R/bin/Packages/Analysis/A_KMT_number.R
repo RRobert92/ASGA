@@ -78,29 +78,34 @@ A_KMT_number <- function(input, output, session) {
 
     tryCatch(
     {
-        KMTs_at_the_Pole1 <<- data.frame(KMTs_at_the_Pole1[, 1])
-        names(KMTs_at_the_Pole1)[1] <- "No. of KMTs"
-        KMTs_to_the_Pole1_and_length <<- KMTs_to_the_Pole1_and_length
+      KMTs_at_the_Pole1 <<- data.frame(KMTs_at_the_Pole1[, 1])
+      names(KMTs_at_the_Pole1)[1] <- "No. of KMTs"
+      KMTs_to_the_Pole1_and_length <<- KMTs_to_the_Pole1_and_length
     },
-            error = function(e) {}
+      error = function(e) {}
     )
 
     # Set-up for Pole2  ------------------------------------------------------------
-    KMTs_at_the_Pole2 <- KMTs_to_the_Pole(which(colnames(Segments) == "Pole2_00"))
-    names(KMTs_at_the_Pole2)[1] <- "No. of KMTs"
+    tryCatch(
+      {
+        KMTs_at_the_Pole2 <- KMTs_to_the_Pole(which(colnames(Segments) == "Pole2_00"))
+        names(KMTs_at_the_Pole2)[1] <- "No. of KMTs"
 
-    KMTs_to_the_Pole2_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments) == "Pole2_00"))
-    names(KMTs_to_the_Pole2_and_length)[1] <- "No. of KMTs"
-    names(KMTs_to_the_Pole2_and_length)[2] <- "KMTs length"
-    names(KMTs_to_the_Pole2_and_length)[3] <- "Minus end dist."
-    names(KMTs_to_the_Pole2_and_length)[4] <- "Plus end dist. to k-core"
-    names(KMTs_to_the_Pole2_and_length)[5] <- "Plus end dist. to pole"
+        KMTs_to_the_Pole2_and_length <- KMTs_to_the_Pole_vs_length(which(colnames(Segments) == "Pole2_00"))
+        names(KMTs_to_the_Pole2_and_length)[1] <- "No. of KMTs"
+        names(KMTs_to_the_Pole2_and_length)[2] <- "KMTs length"
+        names(KMTs_to_the_Pole2_and_length)[3] <- "Minus end dist."
+        names(KMTs_to_the_Pole2_and_length)[4] <- "Plus end dist. to k-core"
+        names(KMTs_to_the_Pole2_and_length)[5] <- "Plus end dist. to pole"
 
-    total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) -
-            as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
+        total <- which(colnames(Segments) == colnames(Segments %>% select(starts_with("Pole")))[ncol(Segments %>% select(starts_with("Pole")))]) -
+          as.numeric(which(colnames(Segments) == "Pole2_00") - 1)
 
-    DF1 <- data.frame()
-    DF2 <- data.frame()
+        DF1 <- data.frame()
+        DF2 <- data.frame()
+      },
+      error = function(e) {}
+    )
 
     progressSweetAlert(
             session = session,

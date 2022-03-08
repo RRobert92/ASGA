@@ -509,10 +509,10 @@ Save_Data <- function(input, output, session) {
 
         write.xlsx(
                 get(paste("Data", current_data, "KMT_Total_Curv_P1", sep = "_")),
-                paste0("Data/", "Data_", current_data, "_KMT_Total_Curv_P1.xlsx", sep = "")
+                paste0("Data/", "Data_", current_data, "_KMT_Total_Curv_P1.xlsx")
         )
         write.xlsx(
-                get(paste("Data", current_data, "KMT_Total_Curv_P2")),
+                get(paste("Data", current_data, "KMT_Total_Curv_P2", sep = "_")),
                 paste0("Data/", "Data_", current_data, "_KMT_Total_Curv_P2.xlsx")
         )
         write.xlsx(

@@ -53,7 +53,6 @@ Pre_Analysis <- function(input, output, session) {
                 id = "SingleKMT",
                 value = i / total * 100
         )
-        Sys.sleep(0.1)
     }
     closeSweetAlert(session = session)
 
@@ -95,7 +94,6 @@ Pre_Analysis <- function(input, output, session) {
             title = "Sorting points based on (+) and (-) ends for the Pole_2...",
             value = round((z - 1) / total * 100, 0)
     )
-    Sys.sleep(0.1)
 
     for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
         j <- 1
@@ -162,7 +160,6 @@ Pre_Analysis <- function(input, output, session) {
             title = "Calcualting legnth and ends positions for Pole_1...",
             value = round((z - 1) / total * 100, 0)
     )
-    Sys.sleep(0.1)
 
     for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
         tryCatch(
@@ -185,7 +182,6 @@ Pre_Analysis <- function(input, output, session) {
             title = "Calcualting legnth and ends positions for Pole_2...",
             value = round((z - 1) / total * 100, 0)
     )
-    Sys.sleep(0.1)
 
     for (i in as.numeric(which(colnames(Segments) == "Pole2_00")):as.numeric(ncol(Segments) - 4)) {
         j <- 1
@@ -360,7 +356,6 @@ Pre_Analysis <- function(input, output, session) {
             title = "Calcualting relative position for Pole_1...",
             value = round((z - 1) / total * 100, 0)
     )
-    Sys.sleep(0.1)
 
     for (i in which(colnames(Segments) == "Pole1_00"):as.numeric(which(colnames(Segments) == "Pole2_00") - 1)) {
         tryCatch(
@@ -409,8 +404,6 @@ Pre_Analysis <- function(input, output, session) {
             title = "Calcualting relative position for Pole_2...",
             value = round((z - 1) / total * 100, 0)
     )
-    Sys.sleep(0.1)
-
     for (i in which(colnames(Segments) == "Pole2_00"):as.numeric(ncol(Segments) - 4)) {
         tryCatch(
         {
@@ -459,7 +452,6 @@ Pre_Analysis <- function(input, output, session) {
             title = "Calcualting SMTs minus end position and saving data...",
             value = round((z - 1) / total * 100, 0)
     )
-    Sys.sleep(0.1)
 
     tryCatch({
         if (exists("Segments_SMT")) {

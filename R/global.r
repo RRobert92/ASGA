@@ -84,11 +84,13 @@ source("bin/Tools/Analysis/KMTs/T_Fiber_Length_Curvature.R")
 source("bin/Tools/Analysis/KMTs/T_Kinetochore_Area.R")
 source("bin/Tools/Analysis/KMTs/T_KMT_Torque.R")
 
-# Analysis for KMTs
+# Analysis for SMTs
 source("bin/Tools/Analysis/SMTs/T_Bridging_MT.R")
 source("bin/Tools/Analysis/SMTs/T_SMTs_Minus_Ends.R")
+
 # Output report plots
 source("bin/Utility/Report.R")
+
 # Statistic analysis tools
 source("bin/Tools/Analysis/Stat/FWHM.R")
 
