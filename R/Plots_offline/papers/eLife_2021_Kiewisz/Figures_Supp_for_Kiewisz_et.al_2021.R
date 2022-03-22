@@ -253,7 +253,7 @@ Kinetochores_size_avg <- rbind(
 # Plot #
 K_Core_size <- ggplot(Kinetochores_size_avg, aes(Kinetochore_area, KMT_no)) +
   stat_ellipse(color = "grey20", size = 1, level = 0.95) +
-  theme_classic()
+  theme_classic() + xlim(0, 0.3)
 K_Core_size <- K_Core_size +
   geom_point(
     data = Data_1_K_Core_Area, aes(Kinetochore_area, KMT_no),
@@ -1412,15 +1412,16 @@ df_max <- max(data$...1)
 for (i in 1:nrow(data)){
   data[i, 1] <- (as.numeric(data[i, 1]) - df_min)/(df_max - df_min)
 }
-
-#Plot
+library(zoo)
+i#Plot
 ggplot(data, aes(...2, ...1)) +
   geom_col() +
   ylim(0, 1) +
   xlim(-0.25, 1) +
   theme_classic() +
   ylab("No. of KMT minus ends interacting with KMT lattices") +
-  xlab("Relative position on the spindle axis")
+  xlab("Relative position on the spindle axis") +
+  geom_line(aes(y=rollmean(...1, 3, na.pad=TRUE)))
 
 # Analysis of KMT number in CIA #
 KMT_no_with_Association <- filter(Data_1_KMTs_minus_seed_0.035, I_class == "KMT")
@@ -1651,7 +1652,8 @@ ggplot(data, aes(...2, ...1)) +
   geom_col() +
   theme_classic() +
   ylab("No. of SMT minus ends interacting with non-KMT lattices") +
-  xlab("Relative position on the spindle axis")
+  xlab("Relative position on the spindle axis") +
+  geom_line(aes(y=rollmean(...1, 3, na.pad=TRUE)))
 
 # Analysis of non-KMT number at CIA #
 KMT_no_with_Association <- filter(Data_1_KMTs_minus_seed_0.035, I_class == "SMT")
@@ -1744,7 +1746,7 @@ for (x in List_Name) {
   )
 }
 
-# Analysis of KMT-MT interactio ndistributions #
+# Analysis of KMT-MT interaction distributions #
 AVG_25 <- rbind(
   Data_1_MT_Interaction_0.025,
   Data_2_MT_Interaction_0.025,

@@ -212,9 +212,9 @@ MT_Ends_Distribution <- function(RP_Pole, kinetochore) {
 
         # Calculate distance to both poles for each Node_1 and _2
         DF[1, 1] <- as.numeric(dist(rbind(Node_1, Pole1), method = "euclidean")) # Pole1 Node1
-        DF[2, 1] <- as.numeric(dist(rbind(Node_1, Pole2), method = "euclidean")) # Pole1 Node2
+        DF[2, 1] <- as.numeric(dist(rbind(Node_1, Pole2), method = "euclidean")) # Pole2 Node1
 
-        DF[3, 1] <- as.numeric(dist(rbind(Node_2, Pole1), method = "euclidean")) # Pole2 Node1
+        DF[3, 1] <- as.numeric(dist(rbind(Node_2, Pole1), method = "euclidean")) # Pole1 Node2
         DF[4, 1] <- as.numeric(dist(rbind(Node_2, Pole2), method = "euclidean")) # Pole2 Node2
         Minus_end <- which.min(DF$...1)
         Distance <- DF[Minus_end, 1]

@@ -188,6 +188,7 @@ A_End_Morphology <- function(input, output, session) {
       )
     })
     closeSweetAlert(session = session)
+
     # Bin data for the Pole2 --------------------------------------------------------
     tryCatch(
       {

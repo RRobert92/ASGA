@@ -53,7 +53,7 @@ IKD_KMT_avg <- rbind(
 IKD_KMT_NO <- ggplot(Data_1_IKD_KMT_No, aes(`Inter-kinetochore distance`, `KMTs no.`)) +
         geom_point(color = "brown1", shape = 15, size = 2) +
         theme_classic() +
-        xlim(0.5, CIA5)
+        xlim(0.5, CIA)
 IKD_KMT_NO <- IKD_KMT_NO +
         geom_point(
                 data = Data_2_IKD_KMT_No, aes(`Inter-kinetochore distance`, `KMTs no.`),
