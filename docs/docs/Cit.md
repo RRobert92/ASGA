@@ -27,16 +27,16 @@ Kiewisz R., Müller-Reichert T. (2021) *Spindle visualization tool*. Zenodo.
 <a align="center">
 Kiewisz R. et. al., 2022. *Three-dimensional structure of kinetochore-fibers in human mitotic spindles*. eLife.
 </a>
-[![DOI: 10.7554/eLife.75459](http://img.shields.io/badge/DOI-10.7554/eLife.75459-B31B1B.svg)](https://doi.org/10.7554/eLife.75459)
+[![DOI: 10.7554/eLife.75459](http://img.shields.io/badge/DOI%3A-10.7554/eLife.75459-B31B1B)](https://doi.org/10.7554/eLife.75459)
 
 <a align="center">
 Conway W. et. al., 2022. *Self-organization of kinetochore-fibers in human mitotic spindles*. eLife.
 </a>
-[![DOI: 10.7554/eLife.75458](http://img.shields.io/badge/DOI-10.7554/eLife.75458-B31B1B.svg)](https://doi.org/10.7554/eLife.75458)
+[![DOI: 10.7554/eLife.75458](http://img.shields.io/badge/DOI%3A-10.7554/eLife.75458-B31B1B)](https://doi.org/10.7554/eLife.75458)
 
 <a align="center">
 Laguillo-Diego A. & Kiewisz R. et. al., 2022. *MCRS1 modulates the heterogeneity of microtubule minus-end morphologies in mitotic spindles*. eLife.
 </a>
-[![DOI: 10.1091/mbc.E22-08-0306-T](http://img.shields.io/badge/DOI-10.1091/mbc.E22-08-0306-T-B31B1B.svg)](https://doi.org/10.1091/mbc.E22-08-0306-T)
+[![DOI: 10.1091/mbc.E22-08-0306-T](https://img.shields.io/badge/DOI%3A-10.1091%2Fmbc.E22--08--0306--T-B31B1B)](https://doi.org/10.1091/mbc.E22-08-0306-T)
 
 <hr /></center>
