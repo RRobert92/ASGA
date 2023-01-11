@@ -9,11 +9,13 @@ date: 2021-01-14
 ###Software Citation
 <hr /></center>
 
+##ASGA <br>
 <a align="center">
 Kiewisz R., Müller-Reichert T. (2020) *Spindle analysis tool*. Zenodo.
 </a>
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3732108.svg)](https://doi.org/10.5281/zenodo.3732108)
 
+##ASGA-3DViewer <br>
 <a align="center">
 Kiewisz R., Müller-Reichert T. (2021) *Spindle visualization tool*. Zenodo.
 </a>
@@ -21,7 +23,7 @@ Kiewisz R., Müller-Reichert T. (2021) *Spindle visualization tool*. Zenodo.
 
 <br/>
 <a name="Software_Used"></a>
-<hr /><center>
+<hr/><center>
 ###The software was used in the following publications
 <br>
 <a align="center">
