@@ -31,6 +31,7 @@ includeCSS("www/css/style.css")
 JS_CODE <- "
 shinyjs.browseURL = function(url) {
   window.open(url,'_blank');
+
 }
 "
 

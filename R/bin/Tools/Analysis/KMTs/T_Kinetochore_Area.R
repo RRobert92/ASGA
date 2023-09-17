@@ -39,7 +39,7 @@ Kinetochore_Size <- function(x) {
   fiber_radius <- as.numeric(max(dist$distance))
 
   # calculate density KMTs/um^2
-  density_packing <- round(nrow(dist) / (pi*fiber_radius^2), 1)
+  density_packing <- round(as.numeric(nrow(get(paste(colnames(Segments)[x])))) / (pi*fiber_radius^2), 1)
 
   # Calculate distance between KMTs with fast nearest neighbour search
   neighbour_matrix <- data.frame()

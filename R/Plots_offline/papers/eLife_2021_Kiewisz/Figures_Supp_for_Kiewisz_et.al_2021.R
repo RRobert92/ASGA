@@ -290,7 +290,7 @@ KMT_density <- ggplot(Data_1_K_Core_Area, aes("Metaphase #1", KMT_density)) +
   geom_quasirandom(
     method = "tukeyDense", color = "brown1",
     shape = 15, size = 3
-  ) +
+  ) + ylim(0, 250) +
   stat_summary(
     fun.data = "mean_sdl", fun.args = list(mult = 1),
     geom = "pointrange"
@@ -335,8 +335,8 @@ KMT_density <- KMT_density +
 
 print(KMT_density)
 paste0(
-  "Average density ", round(mean(KMT_density_all$Kinetochore_area), 3), " +/- ",
-  round(sd(KMT_density_all$Kinetochore_area), 3)
+  "Average density ", round(mean(KMT_density_all$KMT_density), 3), " +/- ",
+  round(sd(KMT_density_all$KMT_density), 3)
 )
 
 ###############################################################################
