@@ -15,6 +15,7 @@ Load_Amira_Nodes <- function() {
     No_column <- Amira_df %>%
             filter(str_detect(X1, "VERTEX")) %>%
             filter(str_detect(X1, "@"))
+
     No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
 
     No_column_Node <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
@@ -76,6 +77,7 @@ Load_Amira_Points <- function() {
     No_column <- Amira_df %>%
             filter(str_detect(X1, "POINT")) %>%
             filter(str_detect(X1, "@"))
+
     No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
 
     No_column_Points <- No_column[6] %>% separate(V6, c("V1", "V2"), sep = "@")
@@ -132,6 +134,7 @@ Load_Amira_Segments <- function() {
     No_column <- Amira_df %>%
             filter(str_detect(X1, "EDGE")) %>%
             filter(str_detect(X1, "@"))
+
     No_column <- No_column %>% separate(X1, c("V1", "V2", "V3", "V4", "V5", "V6"), sep = " ")
     No_column <- No_column[order(No_column$V4),]
 
