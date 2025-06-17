@@ -76,6 +76,11 @@ Segment_to_point <- function(x) {
 
     Segment_ID <- foreach(i = 1:nrow(MT_Interaction), .combine = rbind,
                           .export = c("Length_estiamtion_df", "MT_Interaction", "Segments")) %dopar% {
+        # Debugging: Check input data for row i
+        if (is.na(MT_Interaction[i, x]) || is.null(MT_Interaction[i, x])) {
+            stop(paste("Invalid MT_Interaction at row", i, "column", x, "value:", MT_Interaction[i, x]))
+        }
+
         j <- which.min(as.matrix(abs(Length_estiamtion_df[1] - MT_Interaction[i, x]))) - 5
 
         if (j < 1) {
@@ -83,10 +88,36 @@ Segment_to_point <- function(x) {
         }
 
         test_condition <- TRUE
-        while (test_condition == TRUE) {
-            if (0 < gregexpr(paste(",", as.character(MT_Interaction[i, x]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1] ||
-                    0 < gregexpr(paste(as.character(MT_Interaction[i, x]), ",", sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1] ||
-                    0 < gregexpr(paste(",", as.character(MT_Interaction[i, x]), sep = ""), Segments[j, "Point IDs"], fixed = T)[[1]][1]) {
+        while (test_condition) {
+            # Check if j exceeds Segments rows
+            if (j > nrow(Segments)) {
+                stop(paste("Index j exceeded Segments rows at i =", i, "j =", j))
+            }
+
+            # Check if Segments[j, "Point IDs"] is valid
+            point_ids <- Segments[j, "Point IDs"]
+            if (is.na(point_ids) || is.null(point_ids) || point_ids == "") {
+                stop(paste("Invalid Segments Point IDs at row", j, "value:", point_ids))
+            }
+
+            # Compute gregexpr results with error handling
+            pattern1 <- paste(",", as.character(MT_Interaction[i, x]), ",", sep = "")
+            pattern2 <- paste(as.character(MT_Interaction[i, x]), ",", sep = "")
+            pattern3 <- paste(",", as.character(MT_Interaction[i, x]), sep = "")
+
+            match1 <- gregexpr(pattern1, point_ids, fixed = TRUE)[[1]][1]
+            match2 <- gregexpr(pattern2, point_ids, fixed = TRUE)[[1]][1]
+            match3 <- gregexpr(pattern3, point_ids, fixed = TRUE)[[1]][1]
+
+            # Debugging: Log matches
+            if (any(is.na(c(match1, match2, match3)))) {
+                stop(paste("NA in gregexpr at i =", i, "j =", j,
+                           "pattern1 =", pattern1, "match1 =", match1,
+                           "pattern2 =", pattern2, "match2 =", match2,
+                           "pattern3 =", pattern3, "match3 =", match3))
+            }
+
+            if (match1 > 0 || match2 > 0 || match3 > 0) {
                 test_condition <- FALSE
             } else {
                 j <- j + 1
