@@ -18,9 +18,9 @@
   "author": "Robert Kiewisz",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "electron": "^12.0.14"
+    "electron": "^39.2.0"
   },
   "dependencies": {
-    "electron-packager": "^15.2.0"
+    "electron-packager": "^17.1.2"
   }
 }

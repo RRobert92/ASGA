@@ -39,14 +39,18 @@ Analyse_LD <- function(x, y) {
 
     elipse <- data.frame()
 
-    R25 <- (((Plus_end[1, 1] - Kinetochore_projected[1, 1])^2 / (Rx25^2)) +
-            ((Plus_end[1, 3] - Kinetochore_projected[1, 3])^2 / (Rz25^2))) <= 1
+    R25 <- (((Plus_end[1, 1] - as.numeric(Kinetochore_projected[1, 1]))^2 / (Rx25^2)) +
+            ((Plus_end[1, 3] - as.numeric(Kinetochore_projected[1, 3]))^2 / (Rz25^2))) <= 1
 
-    R50 <- (((Plus_end[1, 1] - Kinetochore_projected[1, 1])^2 / (Rx50^2)) +
-            ((Plus_end[1, 3] - Kinetochore_projected[1, 3])^2 / (Rz50^2))) <= 1
+    R50 <- (((Plus_end[1, 1] - as.numeric(Kinetochore_projected[1, 1]))^2 / (Rx50^2)) +
+            ((Plus_end[1, 3] - as.numeric(Kinetochore_projected[1, 3]))^2 / (Rz50^2))) <= 1
 
-    R100 <- (((Plus_end[1, 1] - Kinetochore_projected[1, 1])^2 / (Rx100^2)) +
-            ((Plus_end[1, 3] - Kinetochore_projected[1, 3])^2 / (Rz100^2))) <= 1
+    R100 <- (((Plus_end[1, 1] - as.numeric(Kinetochore_projected[1, 1]))^2 / (Rx100^2)) +
+            ((Plus_end[1, 3] - as.numeric(Kinetochore_projected[1, 3]))^2 / (Rz100^2))) <= 1
+
+    R25 <- as.logical(R25)[1]
+    R50 <- as.logical(R50)[1]
+    R100 <- as.logical(R100)[1]
 
     if (R25 == TRUE && R50 == TRUE && R100 == TRUE) {
         elipse[1, 1] <- "25%"

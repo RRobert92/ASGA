@@ -169,7 +169,9 @@ Pre_Analysis <- function(input, output, session) {
                    envir = .GlobalEnv
             )
         },
-                error = function(e) {}
+                error = function(e) {
+                    warning(paste0("Analyse_LD failed for Pole1 segment ", i, " (", colnames(Segments)[i], "): ", e$message))
+                }
         )
     }
 
@@ -193,7 +195,9 @@ Pre_Analysis <- function(input, output, session) {
                    envir = .GlobalEnv
             )
         },
-                error = function(e) {}
+                error = function(e) {
+                    warning(paste0("Analyse_LD failed for Pole2 segment ", i, " (", colnames(Segments)[i], "): ", e$message))
+                }
         )
     }
 
